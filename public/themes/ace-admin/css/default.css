@@ -1,0 +1,27 @@
+/*
+ * Globals
+ */
+.height20 {
+  height: 20px; overflow: auto;
+}
+.height40 {
+  height: 40px; overflow: auto;
+}
+.height100 {
+  height: 100px; overflow: auto;
+}
+.height120 {
+  height: 120px; overflow: auto;
+}
+.height150 {
+  height: 150px; overflow: auto;
+}
+.height170 {
+  height: 170px; overflow: auto;
+}
+.height200 {
+  height: 200px; overflow: auto;
+}
+.well.well-sm.height200 {
+	padding: 20px;
+}

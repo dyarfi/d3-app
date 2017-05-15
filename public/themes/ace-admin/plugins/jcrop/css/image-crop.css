@@ -1,0 +1,52 @@
+/* Apply these styles only when #preview-pane has
+   been placed within the Jcrop widget */
+#preview-pane {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  right: -220px;
+  /*padding: 6px;*/
+  border:3px rgba(255,255,255,.4) solid;
+  background-color: white;
+
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+
+  -webkit-box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: -0px 0px 0 0px;
+  /*
+    border: 2px solid #fff;
+    border-radius: 100%;
+    margin: -4px 8px 0 0;
+    max-width: 40px;
+  */
+}
+
+@media (max-width: 1024px) { 
+  #preview-pane {
+    right: 0;
+  }
+}
+
+/* The Javascript code will set the aspect ratio of the crop
+   area based on the size of the thumbnail preview,
+   specified here */
+
+#preview-pane .preview-container {
+  width: 160px;
+  height: 160px;
+  overflow: hidden;
+}
+
+  #demo7 {
+    background-color: #eee;
+    width: 500px;
+    height: 330px;
+    font-size: 24px;
+    font-weight: 300;
+    display: block;
+  }

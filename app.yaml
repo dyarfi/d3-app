@@ -1,0 +1,28 @@
+runtime: php
+env: flex
+
+runtime_config:
+  document_root: public
+
+# required on some platforms so ".env" is not skipped
+skip_files: false
+
+env_variables:
+  # The values here will override those in ".env". This is useful for
+  # production-specific configuration. However, feel free to set these
+  # values in ".env" instead if you prefer.
+  APP_LOG: errorlog
+  STORAGE_DIR: /tmp
+  #CACHE_DRIVER: database
+  #SESSION_DRIVER: database
+  ## Set these environment variables according to your CloudSQL configuration.
+  DB_HOST: localhost
+  DB_DATABASE: laravel_apanel
+  DB_USERNAME: root
+  DB_PASSWORD: "#4bps3yD3Gnh"
+  DB_SOCKET: /cloudsql/sound-psyche-160309:asia-east1:mysql-instance-1
+
+beta_settings:
+    # for Cloud SQL, set this value to the Cloud SQL connection name,
+    # e.g. "project:region:cloudsql-instance"
+    cloud_sql_instances: "sound-psyche-160309:asia-east1:mysql-instance-1"

@@ -1,5 +1,15 @@
-vendor/
-node_modules/
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/storage
+/vendor
+/public/uploads
+/.idea
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
 
 # Laravel 4 specific
 bootstrap/compiled.php
