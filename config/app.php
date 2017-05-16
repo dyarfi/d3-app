@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost/laravel_apanel/',
+	'url' => 'http://localhost/d3-app/',
 
 	/*
 	|--------------------------------------------------------------------------

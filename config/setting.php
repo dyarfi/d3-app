@@ -8,8 +8,8 @@ return [
 	|--------------------------------------------------------------------------
 	|
 	| Change this settings to desire name and defaults
-	| this will be the url for administration CMS 
-	| 
+	| this will be the url for administration CMS
+	|
 	|
 	*/
 
@@ -18,15 +18,15 @@ return [
 
 	// Administrator label name
 	'admin_app' => 'Admin Panel',
-	
+
 	// Administrator url
 	'admin_url' => 'apanel',
 
-	/*	 
+	/*
 	 |--------------------------------------------------------------------------
 	 | Access Controller Lists in administrator panel
 	 |--------------------------------------------------------------------------
-	 | 
+	 |
 	 | Modify or add new configuration
 	 | Always add new array [action],[controller] for registering new controller
 	 |
@@ -44,13 +44,13 @@ return [
 							]
 						],
 						//------ Admin roles controller
-						['Roles' => [ 						
+						['Roles' => [
 								// Action for first index
-								'action' => ['roles.index'],						
+								'action' => ['roles.index'],
 								// Controller method list
 								'method' => ['roles.index','roles.edit','roles.update','roles.change','roles.create','roles.trash','roles.delete','roles.restored','roles.store','roles.show']
 							]
-						],	
+						],
 						//------ Admin permissions controller
 						['Permissions' => [
 								// Action for first index
@@ -62,7 +62,7 @@ return [
 						//------ Admin settings controller
 						['Settings' => [
 								// Action for first index
-								'action' => ['settings.index'],						
+								'action' => ['settings.index'],
 								// Controller method list
 								'method' => ['settings.index','settings.edit','settings.update','settings.create','settings.store','settings.trash','settings.delete','settings.restored','settings.show','settings.change']
 							]
@@ -70,9 +70,9 @@ return [
 						//------ Admin logs controller
 						['Logs' => [
 								// Action for first index
-								'action' => ['logs.index'],						
-								// Controller method list							
-								'method' => ['logs.index','logs.edit','logs.create','logs.store','logs.show']					
+								'action' => ['logs.index'],
+								// Controller method list
+								'method' => ['logs.index','logs.edit','logs.create','logs.store','logs.show']
 							]
 						]
 					]
@@ -95,6 +95,18 @@ return [
 								'method' => ['menus.index','menus.edit','menus.update','menus.change','menus.create','menus.store','menus.show'],
 							]
 						],
+					]
+				],
+				// Banner modules will be in the App Modules directory
+				['Banner' => [
+						//------ Banners controller
+						['Banners' => [
+								// Action for first index
+								'action' => ['banners.index'],
+								// Controller method list
+								'method' => ['banners.index','banners.edit','banners.update','banners.change','banners.create','banners.store','banners.trash','banners.delete','banners.restored','banners.show']
+							]
+						]
 					]
 				],
 				// Tasks modules will be in the App Modules directory
@@ -137,7 +149,7 @@ return [
 						]
 
 					]
-				],	
+				],
 				// Participant modules will be in the App Modules directory
 				['Participant' => [
 						//------ Participants controller
@@ -157,41 +169,41 @@ return [
 							]
 						]
 					]
-				]	
+				]
 			 ],
 
 
- 	/*	 
+ 	/*
 	 |--------------------------------------------------------------------------
 	 | Users attributes default in administrator panel
 	 |--------------------------------------------------------------------------
-	 | 
+	 |
 	 | Modify or add new configuration
 	 | Always add new array [attribute],[value] for registering new attribute
 	 |
 	 */
-	 
-	 'attributes' => 
-		['skins' => 
+
+	 'attributes' =>
+		['skins' =>
 			['#438EB9' => true, '#222A2D' => false, '#C6487E' => false, '#D0D0D0' => false]
 	 	],
-	 	['show_email' => 
-	 		['Yes' => 1, 'No' => 0]
-	 	],	 	
-	 	['show_profile' => 
+	 	['show_email' =>
 	 		['Yes' => 1, 'No' => 0]
 	 	],
-	
-	/*	 
+	 	['show_profile' =>
+	 		['Yes' => 1, 'No' => 0]
+	 	],
+
+	/*
 	 |--------------------------------------------------------------------------
 	 | Table status inactive or active attributes default in administrator panel
 	 |--------------------------------------------------------------------------
-	 | 
+	 |
 	 | Modify or add new configuration
 	 | Always add new array [attribute],[value] for registering new attribute
 	 |
 	 */
-	 'status' => 
+	 'status' =>
 		[
 			'Active' => 1,
 			'Inactive' => 0

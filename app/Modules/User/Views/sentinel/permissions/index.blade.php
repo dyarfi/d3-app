@@ -17,8 +17,8 @@
 		<th class="col-lg-3">Users Permissions</th>
 	</thead>
 	<tbody>
-		@foreach ($permissions as $role) 
-		<tr>			
+		@foreach ($permissions as $role)
+		<tr>
 			<td>{{ $role->name }} @if($role->slug) <span class="green" data-placement="right" data-rel="tooltip" data-original-title="Slug">[{{ $role->slug }}]</span> @endif</td>
 			<!--td>
 				@if($role->users()->count()) <a href="{{route('admin.permissions.edit', $role->id)}}">Add Users ({{ $role->users()->count() }})</a>
@@ -28,7 +28,7 @@
 			<td>
 				@if(is_array($role->permissions))
 					@foreach ($role->permissions as $permission => $val)
-						<?php 
+						<?php
 						/*
 						@if ($val) {{ ucfirst($permission) }}
 						@else <span class="label label-danger label-sm">No Access</span>
@@ -43,17 +43,17 @@
 			</td>
 			<td>
 				{!! Form::open() !!}
-				@if($role->users()->count()) 
+				@if($role->users()->count())
 					<select name="access_user" data-placement="top" data-rel="tooltip" data-original-title="Select to View">
 					<?php
-						$users = $role->users()->get();						
-						foreach ($users as $user) { 
+						$users = $role->users()->get();
+						foreach ($users as $user) {
 						?>
 							<option value="{{$user->id}}" onclick="location.href = base_url + '/{{ $admin_url }}/permission/'+this.value+'?access=user'">
 								{{ $user->first_name, $user->last_name }}
 							</option>
 						<?php
-						}	
+						}
 					?>
 					</select>
 					<!-- {!! link_to_route('admin.users.create', '[Add User]', ['id'=>$role->id,'access=user'], ['class'=>'btn btn-link']) !!} -->

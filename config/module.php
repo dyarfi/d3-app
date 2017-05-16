@@ -6,8 +6,8 @@
 	|--------------------------------------------------------------------------
 	|
 	| Change this settings to desire name and defaults
-	| this will be the url for administration CMS 
-	| 
+	| this will be the url for administration CMS
+	|
 	|
 	*/
 	# config/module.php
@@ -31,6 +31,12 @@
 		       		'Controller' => ['Menus','Pages'],
 		       		// Model
 		       		'Model' => ['Menu','Page']
+		       	],
+		       	'Banner' => [
+		       		// Controller
+		       		'Controller' => ['Banners'],
+		       		// Model
+		       		'Model' => ['Banner']
 		       	],
 		       	'Task' => [
 		       		// Controller

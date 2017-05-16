@@ -27,10 +27,10 @@ class Permissions extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
@@ -45,14 +45,14 @@ class Permissions extends BaseAdmin {
 	 */
 	public function index()
 	{
-		
+
 		$permissions = Role::all();
-		
+
 		//$permissions->each(function($value) {
 			//$value->permissions = json_decode($value->permissions,true);
 			//return $value;
 		//});
-		
+
 		$data = ['permissions'=>$permissions];
 
 		return $this->view('User::sentinel.permissions.index')->data($data)->title('Permission Listing');
@@ -60,15 +60,15 @@ class Permissions extends BaseAdmin {
 
 
 	public function change($id=null) {
-		
+
 		// Default variable checking
-		$updated = false;	    
+		$updated = false;
 
 	    // Check if requested contain 'access_permission'
 		if (Request::has('user_form')) {
-						
+
 			// Get user model
-	    	$user = Sentinel::getUserRepository()->findById($id);		
+	    	$user = Sentinel::getUserRepository()->findById($id);
 
 			// Check if value posted is not empty and array valued
 			if (is_array(Request::input('access_permission'))) {
@@ -88,12 +88,12 @@ class Permissions extends BaseAdmin {
 				//$user->removePermission('*.*')->save();
 				$user->permissions = [];
 
-				
+
 				// Save user data
 				$user->save();
 
 				//dd ($user->permissions);
-				
+
 
 			}
 
@@ -101,7 +101,7 @@ class Permissions extends BaseAdmin {
 			// Saved checking
 			$updated = true;
 
-		} else 
+		} else
 		// Check if requested contain 'access_permission'
 		if (Request::has('role_form')) {
 
@@ -110,19 +110,19 @@ class Permissions extends BaseAdmin {
 
 			// Check if value posted is not empty and array valued
 			if (is_array(Request::input('role_permission'))) {
-				
+
 				// Reset database column
 				unset($role->permissions);
 
-				//// remarks find a logic to mark admin to false {"admin":false} if not checked in form			
+				//// remarks find a logic to mark admin to false {"admin":false} if not checked in form
 				$request = Request::input('role_permission');
 
 				if(Request::has('role_permission.admin') == false) {
 
 					$request['admin'] = false;
 
-				} 
-										
+				}
+
 				ksort($request);
 
 				// Set Role Permissions
@@ -130,7 +130,7 @@ class Permissions extends BaseAdmin {
 
 					$role->updatePermission($permission, ($value) ? true : false, true)->save();
 
-				}	
+				}
 
 			} else {
 
@@ -157,7 +157,7 @@ class Permissions extends BaseAdmin {
 
 		if ($updated) {
 
-			return response()->json(['status'=>'200','message'=>'Update Successfull!']);			
+			return response()->json(['status'=>'200','message'=>'Update Successfull!']);
 
 		} else {
 
@@ -243,9 +243,9 @@ class Permissions extends BaseAdmin {
 		if ($id && $access == 'role') {
 
 			if ( ! $role = $this->permissions->findOrFail($id)) {
-				
+
 				return Redirect::to('admin.permissions.index');
-				
+
 			}
 
 		} else if ($id && $access == 'user') {
@@ -256,12 +256,12 @@ class Permissions extends BaseAdmin {
 
 			}
 
-	        // Change permissions data to array 
+	        // Change permissions data to array
 	        // $user->permissions = json_decode($user->permissions, true);
 
 		}
 		else {
-			
+
 			// Role data default
 			$role = $this->permissions;
 
@@ -269,7 +269,7 @@ class Permissions extends BaseAdmin {
 
 		// Read ACL settings config for any permission access
     	$acl = config('setting.acl');
-	               	      
+
 		return $this->view('User::sentinel.permissions.'.$access.'_form')->data(compact('mode','role','acl','user','access'))->title(ucfirst($access).' Permission');
 	}
 
