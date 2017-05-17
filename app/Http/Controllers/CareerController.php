@@ -30,6 +30,9 @@ class CareerController extends BasePublic {
 		// Set return data
 	   	$careers = Career::active()->paginate(2);
 
+		// Set return data
+		$career_list = Career::active()->get();
+
 	   	// Set pagination path
 	   	$careers->setPath('career');
 
@@ -37,7 +40,7 @@ class CareerController extends BasePublic {
 		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
 
 	   	// Set data to return
-	   	$data = ['careers'=>$careers,'menu'=>$this->menu->where('slug', $path)->first()];
+	   	$data = ['careers'=>$careers,'career_list'=>$career_list,'menu'=>$this->menu->where('slug', $path)->first()];
 
 	   	// Return data and view
 	   	return $this->view('careers.index')->data($data)->title('Career - Laravel Careers');

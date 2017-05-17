@@ -43,7 +43,7 @@
                 <nav id="primary-menu" class="dark">
                     <ul>
                         @foreach ($menus as $menu)
-                            <li><a href="{{ $menu->slug == route('home') ? '' : route($menu->slug) }}">{{ $menu->name }}</a></li>
+                            <li {{ $menu->slug == Route::current()->getName() ? 'class=current' : '' }}><a href="{{ $menu->slug == route('home') ? '' : route($menu->slug) }}">{{ $menu->name }}</a></li>
                         @endforeach
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
