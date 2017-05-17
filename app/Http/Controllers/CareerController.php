@@ -28,7 +28,7 @@ class CareerController extends BasePublic {
 	public function index() {
 
 		// Set return data
-	   	$careers = Career::active()->paginate(2);
+	   	$careers = Career::active()->paginate(1);
 
 		// Set return data
 		$career_list = Career::active()->get();

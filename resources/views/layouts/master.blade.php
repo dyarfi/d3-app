@@ -115,7 +115,7 @@
                         </a>
                     </div>
                     <div class="clear"></div>
-                    <i class="icon-envelope2"></i>&nbsp;<a href="mailto:info@dentsu.digital"> info@dentsu.digital </a><span class="middot">&middot;</span> <i class="icon-headphones"></i> +62-21-6541-6369 <span class="middot">&middot;
+                    <i class="icon-envelope2"></i>&nbsp;<a href="mailto:info@dentsu.digital"> info@dentsu.digital </a><span class="middot">&middot;</span> <i class="icon-headphones"></i> +62-21-6541-6369 <span class="middot">&middot;</span>
                 </div>
             </div>
         </div>

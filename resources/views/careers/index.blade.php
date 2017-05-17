@@ -2,7 +2,6 @@
 
 @section('content')
 
-<!-- Page Title ============================================= -->
 		<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('{{ asset("images/about/parallax.jpg") }}'); padding: 120px 0;" data-stellar-background-ratio="0.3">
 			<div class="container clearfix">
 				<h1>Job Openings</h1>
@@ -13,9 +12,7 @@
 					<li class="active">{{ trans('label.career') }}</li>
 				</ol>
 			</div>
-		</section><!-- #page-title end -->
-		<!-- Content
-		============================================= -->
+		</section>
 		<section id="content">
 			<div class="content-wrap">
 				<div class="container clearfix">
@@ -27,39 +24,33 @@
 							?>
 							@foreach($careers as $career)
 							<div class="fancy-title title-bottom-border">
-								<h3>{{ $career->name }}</h3>
+								<h3>{{ $career->name }} <span class="pull-right"><i class="icon-ok"></i> {{ $career->end_date }}</span></h3>
 							</div>
-							<p>{{ str_limit($career->description, 400,' [...]')}}</p>
+							<p>{{ str_limit($career->description, 500,' [...]')}}</p>
 							<div class="accordion accordion-bg clearfix">
+								@if ($career->requirement)
 								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Requirements</div>
 								<div class="acc_content clearfix">
-									<ul class="iconlist iconlist-color nobottommargin">
-										<li><i class="icon-ok"></i>B.Tech./ B.E / MCA degree in Computer Science, Engineering or a related stream.</li>
-										<li><i class="icon-ok"></i>3+ years of software development experience.</li>
-										<li><i class="icon-ok"></i>3+ years of Python / Java development projects experience.</li>
-										<li><i class="icon-ok"></i>Minimum of 4 live project roll outs.</li>
-										<li><i class="icon-ok"></i>Experience with third-party libraries and APIs.</li>
-										<li><i class="icon-ok"></i>In depth understanding and experience  of either SDLC or PDLC.</li>
-										<li><i class="icon-ok"></i>Good Communication Skills</li>
-										<li><i class="icon-ok"></i>Team Player</li>
-									</ul>
+									{!! $career->requirement !!}
 								</div>
-								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>What we Expect from you?</div>
+								@endif
+								@if ($career->responsibility)
+								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Responsibility</div>
 								<div class="acc_content clearfix">
-									<ul class="iconlist iconlist-color nobottommargin">
-										<li><i class="icon-plus-sign"></i>Design and build applications/ components using open source technology.</li>
-										<li><i class="icon-plus-sign"></i>Taking complete ownership of the deliveries assigned.</li>
-										<li><i class="icon-plus-sign"></i>Collaborate with cross-functional teams to define, design, and ship new features.</li>
-										<li><i class="icon-plus-sign"></i>Work with outside data sources and API's.</li>
-										<li><i class="icon-plus-sign"></i>Unit-test code for robustness, including edge cases, usability, and general reliability.</li>
-										<li><i class="icon-plus-sign"></i>Work on bug fixing and improving application performance.</li>
-									</ul>
+									{!! $career->responsibility !!}
 								</div>
-								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>What you've got?</div>
-								<div class="acc_content clearfix">You'll be familiar with agile practices and have a highly technical background, comfortable discussing detailed technical aspects of system design and implementation, whilst remaining business driven. With 5+ years of systems analysis, technical analysis or business analysis experience, you'll have an expansive toolkit of communication techniques to enable shared, deep understanding of financial and technical concepts by diverse stakeholders with varying backgrounds and needs. In addition, you will have exposure to financial systems or accounting knowledge.</div>
+								@endif
+								@if($career->facility)
+								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Facility</div>
+								<div class="acc_content clearfix">
+									{!! $career->facility !!}
+								</div>
+								@endif
 							</div>
 							<a href="#" data-scrollto="#job-apply" class="button button-3d button-black nomargin">Apply Now</a>
-							@if ($i != $c) <div class="divider divider-short"><i class="icon-star3"></i></div> @endif
+							@if ($i != $c)
+								<div class="divider divider-short"><i class="icon-star3"></i></div>
+						 	@endif
 							<?php $i++ ;?>
 							@endforeach
 						</div>
@@ -137,7 +128,7 @@
 				</div>
 				{!! $careers->render() !!}
 			</div>
-		</section><!-- #content end -->
+		</section>
 
 <!--h1>{{ trans('label.career') }} List</h1>
 <p class="lead">Welcome to our {{ $menu->description }}<br/>Here's a list of all our career.</p>

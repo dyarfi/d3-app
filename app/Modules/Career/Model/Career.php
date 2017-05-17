@@ -17,17 +17,20 @@ class Career extends Model {
 
 	/**
      * Fillable fields
-     * 
+     *
      * @var array
      */
     protected $fillable = [
         'slug',
         'name',
         'description',
+        'requirement',
+        'responsibility',
+        'facility',
         'image',
         'attributes',
         'options',
-        'end_date',        
+        'end_date',
         'division_id',
         'status'
     ];
@@ -35,7 +38,7 @@ class Career extends Model {
     // Instead, a deleted_at timestamp is set on the record.
     protected $dates = ['deleted_at'];
 
-    public function division() {  
+    public function division() {
 
         return $this->belongsTo('App\Modules\Career\Model\Division','division_id','id');
 
@@ -54,5 +57,5 @@ class Career extends Model {
         return $query->where('slug', $string)->firstOrFail();
 
     }
-        
+
 }

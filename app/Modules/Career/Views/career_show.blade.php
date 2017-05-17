@@ -5,11 +5,31 @@
 <h1>{{ $row->name }}</h1>
 <p class="lead">
 @if ($row->image != '')
+<div class="container clearfix">
     <a href="{{ asset('uploads/'.$row->image) }}" target="_blank" title="{{ $row->image }}"/>
-        <img src="{{ asset('uploads/'.$row->image) }}" class="pull-left img-responsive"/>
+        <img src="{{ asset('uploads/'.$row->image) }}" class="img-responsive"/>
     </a>
+</div>    
 @endif
-{!!  $row->description !!}
+<div class="container clearfix">
+    <div class="col-md-12">
+        <h3>Description</h3>
+        {!! $row->description !!}
+    </div>
+    <div class="col-md-12">
+        <h3>Requirement</h3>
+        {!! $row->requirement !!}
+    </div>
+    <div class="col-md-12">
+        <h3>Responsibility</h3>
+        {!! $row->responsibility !!}
+    </div>
+    <div class="col-md-12">
+        <h3>Facility</h3>
+        {!! $row->facility !!}
+    </div>
+</div>
+
 </p>
 <hr>
 
