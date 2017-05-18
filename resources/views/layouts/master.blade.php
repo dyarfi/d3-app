@@ -25,9 +25,9 @@
 @if(isset($styles)) @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach @endif
     <!--script src="{{ asset('js/jquery.min.js') }}"></script-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.ias.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/jquery.easing.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/jquery.ias.min.js') }}"></script> -->
     <script type="text/javascript">var base_URL = '{{ url() }}/';</script>
 </head>
 <body class="stretched">
@@ -139,29 +139,6 @@ $(window).scroll(function() {
     }
 });
 */
-jQuery.ias({
-    container   : "#entry-listing",
-    item        : ".entry",
-    pagination  : ".pagination",
-    next        : 'a[rel="next"]',
-    loader      : '<div class="clearfix"><img class="center-block" src="{{ asset("img/ajax-loader.gif") }}"/></div>',
-    delay       : 1000,
-    history     : false,
-    negativeMargin : 100,
-    //debug : true,
-    //dataType : 'html',
-    //maxPage : 1,*
-    onRenderComplete: function(items) {
-    /*
-      var $newElems = jQuery(items).addClass("newItem");
-      $newElems.hide().imagesLoaded(function(){
-            jQuery(this).show();
-            jQuery('#infscr-loading').fadeOut('normal');
-            jQuery("#entry-listing").isotope('appended', $newElems );
-      });
-    */
-    }
-});
 </script>
 </body>
 </html>

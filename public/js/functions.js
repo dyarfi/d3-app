@@ -2128,6 +2128,7 @@ var SEMICOLON = SEMICOLON || {};
 			SEMICOLON.widget.quickContact();
 			SEMICOLON.widget.cookieNotify();
 			SEMICOLON.widget.extras();
+			SEMICOLON.widget.iasContent();
 
 		},
 
@@ -3463,6 +3464,31 @@ var SEMICOLON = SEMICOLON || {};
 			// el.darkRetinaLogo.prependTo("body");
 			// el.darkLogo.css({'position':'absolute','z-index':'-100'});
 			// el.darkRetinaLogo.css({'position':'absolute','z-index':'-100'});
+		},
+
+		iasContent: function() {
+			var ias = $.ias({
+				    container   : '#entry-listing',
+				    item        : '.entry',
+				    pagination  : '.pagination',
+				    next        : 'a[rel="next"]',
+				    loader      : '<div class="clearfix"><img class="center-block" src="'+ base_URL + 'img/ajax-loader.gif"/></div>',
+				    delay       : 1000,
+				    history     : false,
+				    negativeMargin : 100,
+				    //debug : true,
+				    //dataType : 'html',
+				    //maxPage : 1,
+				    onRenderComplete: function(items) {
+						SEMICOLON.widget.accordions();
+				      	//var $newElems = jQuery(items).addClass("newItem");
+				      	//$newElems.hide().imagesLoaded(function(){
+				            //jQuery(this).show();
+				            //jQuery('#infscr-loading').fadeOut('normal');
+				            //jQuery("#entry-listing").isotope('appended', $newElems );
+				      	//});
+				    }
+			});
 		}
 
 	};

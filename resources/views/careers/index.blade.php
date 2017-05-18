@@ -126,7 +126,7 @@
 						</div>
 					</div>
 				</div>
-				{!! $careers->render() !!}
+				<div class="container clearfix">{!! $careers->render() !!}</div>
 			</div>
 		</section>
 
