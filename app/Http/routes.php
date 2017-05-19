@@ -52,7 +52,7 @@ Route::get('page', [
 Sentinel::disableCheckpoints();
 
 /* **************************************
- * 
+ *
  * Load Administrator config setting
  *
  * **************************************
@@ -71,7 +71,9 @@ View::share('admin_app', $setting['admin_app']);
 View::share('company_name', $setting['company_name']);
 Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
 Route::get('career/{slug}', ['as'=>'career.show','uses'=>'CareerController@show']);
+Route::get('career/detail/{slug}', ['as'=>'career.detail','uses'=>'CareerController@detail']);
 Route::get('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@apply']);
+Route::post('career/apply', ['as'=>'career.post','uses'=>'CareerController@apply']);
 Route::post('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@store']);
 
 Route::get('gallery', ['as'=>'gallery','uses'=>'GalleryController@index']);
@@ -90,7 +92,7 @@ Route::post('contact', ['as'=>'contact.send','uses'=>'ContactController@sendCont
 Route::get('profile',['as'=>'profile','uses'=>'UsersController@profile']);
 Route::get('profile/{id}', ['as'=>'profile.edit', 'uses'=>'UsersController@edit']);
 Route::patch('profile/{id}', ['as'=>'profile.update', 'uses'=>'UsersController@update']);
-    
+
 // Route::get('auth/profile', 'Auth\AuthSocialController@profile');
 // Route::get('auth/logout', 'Auth\AuthSocialController@logout');
 

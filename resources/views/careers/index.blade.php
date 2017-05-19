@@ -47,7 +47,7 @@
 								</div>
 								@endif
 							</div>
-							<a href="#" data-scrollto="#job-apply" class="button button-3d button-black nomargin">Apply Now</a>
+							<a href="#" data-scrollto="#job-apply" class="button button-3d button-black nomargin apply" data-rel="{!! $career->slug !!}">Apply Now</a>
 							@if ($i != $c)
 								<div class="divider divider-short"><i class="icon-star3"></i></div>
 						 	@endif
@@ -62,7 +62,16 @@
 						</div>
 						<div class="contact-widget">
 							<div class="contact-form-result"></div>
-							<form action="include/jobs.php" id="template-jobform" name="template-jobform" method="post" role="form">
+							{!! Form::model($applicant,
+								[
+									'route' => ['career.post'],
+									'class' => '',
+									'name' => 'template-jobform',
+									'method' => 'POST',
+									'role' => 'form',
+									'id' => 'template-jobform'
+								])
+							!!}
 								<div class="form-process"></div>
 								<div class="col_half">
 									<label for="template-jobform-fname">First Name <small>*</small></label>
@@ -91,7 +100,7 @@
 									<select name="template-jobform-position" id="template-jobform-position"  tabindex="9" class="sm-form-control required">
 										<option value="">-- Select Position --</option>
 										@foreach($career_list as $list)
-										<option value="{{ $career->name }}">{{ $list->name }}</option>
+										<option value="{{ $list->slug }}">{{ $list->name }}</option>
 										@endforeach
 									</select>
 								</div>
@@ -122,11 +131,11 @@
 								<div class="col_full">
 									<button class="button button-3d button-large btn-block nomargin" name="template-jobform-apply" type="submit" value="apply">Send Application</button>
 								</div>
-							</form>
+							{!! Form::close() !!}
 						</div>
 					</div>
 				</div>
-				<div class="container clearfix">{!! $careers->render() !!}</div>
+				{!! $careers->render() !!}
 			</div>
 		</section>
 

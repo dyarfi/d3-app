@@ -152,6 +152,8 @@ var SEMICOLON = SEMICOLON || {};
 			SEMICOLON.initialize.pageTransition();
 			SEMICOLON.initialize.dataResponsiveClasses();
 			SEMICOLON.initialize.dataResponsiveHeights();
+			SEMICOLON.initialize.iasContent();
+			SEMICOLON.initialize.pageContent();
 
 			$('.fslider').addClass('preloader2');
 
@@ -1045,8 +1047,60 @@ var SEMICOLON = SEMICOLON || {};
 			} else {
 				$content.css({ 'margin-bottom': 0 });
 			}
-		}
+		},
 
+		iasContent: function() {
+			var ias = $.ias({
+				    container   : '#entry-listing',
+				    item        : '.entry',
+				    pagination  : '.pagination',
+				    next        : 'a[rel="next"]',
+				    loader      : '<div class="clearfix"><img class="center-block" src="'+ base_URL + 'img/ajax-loader.gif"/></div>',
+				    delay       : 1000,
+				    history     : false,
+				    negativeMargin : 100,
+				    //debug : true,
+				    //dataType : 'html',
+				    //maxPage : 1,
+				    onRenderComplete: function(items) {
+						// Rebuild jquery binding on widget
+						SEMICOLON.widget.accordions();
+						SEMICOLON.widget.linkScroll();
+						// Rebuild jquery binding on initialize
+						SEMICOLON.initialize.pageContent();
+
+				      	//var $newElems = jQuery(items).addClass("newItem");
+				      	//$newElems.hide().imagesLoaded(function(){
+				            //jQuery(this).show();
+				            //jQuery('#infscr-loading').fadeOut('normal');
+				            //jQuery("#entry-listing").isotope('appended', $newElems );
+				      	//});
+				    }
+			});
+		},
+
+		pageContent: function() {
+			/** CAREER PAGE *** [start] ***/
+			var $applyobj = $('.apply');
+			var $applyfrm = $('#template-jobform-position');
+			var $applyinp = $applyfrm.parents('form').find('label:eq(0)');
+			$applyobj.bind('click', function() {
+				// Click first input child
+				$applyinp.click();
+				// Find options of the title and animate
+				$applyfrm.find('option[value="'+$(this).data('rel')+'"]').attr('selected',true);
+				$applyfrm.parent()
+				.animate({backgroundColor:'#ff9900',easing:'easeInBack'},1500)
+				.animate({backgroundColor:'#ffffff',easing:'easeOutBack'},1500)
+				.find('label')
+				.removeClass('text-danger')
+				.addClass('text-danger');
+				//var $elc = $.get(base_URL + 'career/detail/' + $applyobj.data('rel'));
+			});
+
+			/** CAREER PAGE *** [end] ***/
+
+		}
 	};
 
 	SEMICOLON.header = {
@@ -2128,7 +2182,6 @@ var SEMICOLON = SEMICOLON || {};
 			SEMICOLON.widget.quickContact();
 			SEMICOLON.widget.cookieNotify();
 			SEMICOLON.widget.extras();
-			SEMICOLON.widget.iasContent();
 
 		},
 
@@ -3465,31 +3518,6 @@ var SEMICOLON = SEMICOLON || {};
 			// el.darkLogo.css({'position':'absolute','z-index':'-100'});
 			// el.darkRetinaLogo.css({'position':'absolute','z-index':'-100'});
 		},
-
-		iasContent: function() {
-			var ias = $.ias({
-				    container   : '#entry-listing',
-				    item        : '.entry',
-				    pagination  : '.pagination',
-				    next        : 'a[rel="next"]',
-				    loader      : '<div class="clearfix"><img class="center-block" src="'+ base_URL + 'img/ajax-loader.gif"/></div>',
-				    delay       : 1000,
-				    history     : false,
-				    negativeMargin : 100,
-				    //debug : true,
-				    //dataType : 'html',
-				    //maxPage : 1,
-				    onRenderComplete: function(items) {
-						SEMICOLON.widget.accordions();
-				      	//var $newElems = jQuery(items).addClass("newItem");
-				      	//$newElems.hide().imagesLoaded(function(){
-				            //jQuery(this).show();
-				            //jQuery('#infscr-loading').fadeOut('normal');
-				            //jQuery("#entry-listing").isotope('appended', $newElems );
-				      	//});
-				    }
-			});
-		}
 
 	};
 

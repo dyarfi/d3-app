@@ -18,6 +18,10 @@ class CareerController extends BasePublic {
 	public function __construct() {
 		parent::__construct();
 
+		// Set career object
+		$this->career = new Career;
+		// Set applicant object
+		$this->applicant = new Applicant;
 	}
 
 	/**
@@ -40,7 +44,7 @@ class CareerController extends BasePublic {
 		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
 
 	   	// Set data to return
-	   	$data = ['careers'=>$careers,'career_list'=>$career_list,'menu'=>$this->menu->where('slug', $path)->first()];
+	   	$data = ['careers'=>$careers,'career_list'=>$career_list,'menu'=>$this->menu->where('slug', $path)->first(),'applicant'=>$this->applicant];
 
 	   	// Return data and view
 	   	return $this->view('careers.index')->data($data)->title('Career - Laravel Careers');
@@ -154,6 +158,25 @@ class CareerController extends BasePublic {
 
 	   	// Return data and view
 	   	return $this->view('careers.show')->data($data)->title('View Careers - Laravel Careers');
+
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  string  $slug
+	 * @return Response
+	 */
+	public function detail($slug)
+	{
+
+		// Get data from database
+		//$career = Career::where('slug',$slug)->first(['id','name','slug']);
+		//$data = ['career'=>$career];
+
+		// Return data and view
+		// return $this->view('careers.show')->data($data)->title('View Careers - Laravel Careers');
+		// return response()->json($career);
 
 	}
 
