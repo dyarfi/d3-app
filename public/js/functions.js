@@ -1097,7 +1097,34 @@ var SEMICOLON = SEMICOLON || {};
 				.addClass('text-danger');
 				//var $elc = $.get(base_URL + 'career/detail/' + $applyobj.data('rel'));
 			});
-
+			var $form = $('#template-jobform');
+				$form.on( "submit",function(e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					var $value = $form.serialize();
+					$.ajax({
+					  	dataType: 'json',
+					  	type: "POST",
+					  	url: $form.attr('action'),
+					  	data: $value,
+					  	success: function(msg) {
+							if (msg.response === false) {
+								var result = msg.message;
+								$form.find('label').removeClass('text-danger');
+								$form.find('label span').empty();
+								$.each(result, function (i, val) {
+									var $container = $form.find('input[name="'+i+'"]').parent();
+									var $label = $container.find('label');
+									var $text = $label.text();
+									$label.addClass('text-danger');
+									$('<span><small style="text-transform:none" class="text-warning">*' + val + '</small></span>').appendTo($label);
+									// Scroll to top ???									
+							    })
+							}
+						}
+					});
+					return false;
+				})
 			/** CAREER PAGE *** [end] ***/
 
 		}

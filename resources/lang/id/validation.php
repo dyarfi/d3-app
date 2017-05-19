@@ -125,7 +125,15 @@ return [
 		'meta-robots' 			=> 'Meta Robots',
 		'meta-keywords' 		=> 'Meta Keywords',
 		'meta-description' 		=> 'Meta Description',
-		'meta-generator' 		=> 'Meta Generator'
+		'meta-generator' 		=> 'Meta Generator',
+		// Career apply form
+		'jobform_fname'			=> 'Nama Depan',
+		'jobform_lname'			=> 'Nama Belakang',
+		'jobform_email'			=> 'Email',
+		'jobform_phone'			=> 'Telpon'
+		'jobform_position' 		=> 'Posisi',
+		'jobform_start' 		=> 'Tanggal Mulai',
+		'jobform_application'   => 'Aplikasi'
 		],
 
 ];

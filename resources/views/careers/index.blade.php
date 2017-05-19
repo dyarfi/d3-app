@@ -74,30 +74,34 @@
 							!!}
 								<div class="form-process"></div>
 								<div class="col_half">
-									<label for="template-jobform-fname">First Name <small>*</small></label>
-									<input type="text" id="template-jobform-fname" name="template-jobform-fname" value="" class="sm-form-control required" />
+									<label for="jobform_fname">First Name </label>
+									<input type="text" id="jobform_fname" name="jobform_fname" value="" class="sm-form-control required" />
 								</div>
 								<div class="col_half col_last">
-									<label for="template-jobform-lname">Last Name <small>*</small></label>
-									<input type="text" id="template-jobform-lname" name="template-jobform-lname" value="" class="sm-form-control required" />
+									<label for="jobform_lname">Last Name </label>
+									<input type="text" id="jobform_lname" name="jobform_lname" value="" class="sm-form-control required" />
 								</div>
 								<div class="clear"></div>
 								<div class="col_full">
-									<label for="template-jobform-email">Email <small>*</small></label>
-									<input type="email" id="template-jobform-email" name="template-jobform-email" value="" class="required email sm-form-control" />
+									<label for="jobform_email">Email </label>
+									<input type="email" id="jobform_email" name="jobform_email" value="" class="required email sm-form-control" />
+								</div>
+								<div class="col_full">
+									<label for="jobform_phone">Phone </label>
+									<input type="email" id="jobform_phone" name="jobform_phone" value="" class="required email sm-form-control" />
 								</div>
 								<div class="col_half">
-									<label for="template-jobform-age">Age <small>*</small></label>
-									<input type="text" name="template-jobform-age" id="template-jobform-age" value="" size="22" tabindex="4" class="sm-form-control required" />
+									<label for="jobform_age">Age </label>
+									<input type="text" name="jobform_age" id="jobform_age" value="" size="22" tabindex="4" class="sm-form-control required" />
 								</div>
 								<div class="col_half col_last">
-									<label for="template-jobform-city">City <small>*</small></label>
-									<input type="text" name="template-jobform-city" id="template-jobform-city" value="" size="22" tabindex="5" class="sm-form-control required" />
+									<label for="jobform_city">City </label>
+									<input type="text" name="jobform_city" id="jobform_city" value="" size="22" tabindex="5" class="sm-form-control required" />
 								</div>
 								<div class="clear"></div>
 								<div class="col_full">
-									<label for="template-jobform-service">Position <small>*</small></label>
-									<select name="template-jobform-position" id="template-jobform-position"  tabindex="9" class="sm-form-control required">
+									<label for="jobform_service">Position </label>
+									<select name="jobform_position" id="jobform_position"  tabindex="9" class="sm-form-control required">
 										<option value="">-- Select Position --</option>
 										@foreach($career_list as $list)
 										<option value="{{ $list->slug }}">{{ $list->name }}</option>
@@ -105,31 +109,31 @@
 									</select>
 								</div>
 								<div class="col_half">
-									<label for="template-jobform-salary">Expected Salary</label>
-									<input type="text" name="template-jobform-salary" id="template-jobform-salary" value="" size="22" tabindex="6" class="sm-form-control" />
+									<label for="jobform_salary">Expected Salary </label>
+									<input type="text" name="jobform_salary" id="jobform_salary" value="" size="22" tabindex="6" class="sm-form-control" />
 								</div>
 								<div class="col_half col_last">
-									<label for="template-jobform-time">Start Date</label>
-									<input type="text" name="template-jobform-start" id="template-jobform-start" value="" size="22" tabindex="7" class="sm-form-control" />
+									<label for="jobform_time">Start Date </label>
+									<input type="text" name="jobform_start" id="jobform_start" value="" size="22" tabindex="7" class="sm-form-control" />
 								</div>
 								<div class="clear"></div>
 								<div class="col_full">
-									<label for="template-jobform-website">Website (if any)</label>
-									<input type="text" name="template-jobform-website" id="template-jobform-website" value="" size="22" tabindex="8" class="sm-form-control" />
+									<label for="jobform_website">Website (if any) </label>
+									<input type="text" name="jobform_website" id="jobform_website" value="" size="22" tabindex="8" class="sm-form-control" />
 								</div>
 								<div class="col_full">
-									<label for="template-jobform-experience">Experience (optional)</label>
-									<textarea name="template-jobform-experience" id="template-jobform-experience" rows="3" tabindex="10" class="sm-form-control"></textarea>
+									<label for="jobform_experience">Experience (optional) </label>
+									<textarea name="jobform_experience" id="jobform_experience" rows="3" tabindex="10" class="sm-form-control"></textarea>
 								</div>
 								<div class="col_full">
-									<label for="template-jobform-application">Application <small>*</small></label>
-									<textarea name="template-jobform-application" id="template-jobform-application" rows="6" tabindex="11" class="sm-form-control required"></textarea>
+									<label for="jobform_application">Application </label>
+									<textarea name="jobform_application" id="jobform_application" rows="6" tabindex="11" class="sm-form-control required"></textarea>
 								</div>
 								<div class="col_full hidden">
-									<input type="text" id="template-jobform-botcheck" name="template-jobform-botcheck" value="" class="sm-form-control" />
+									<input type="text" id="jobform_botcheck" name="jobform_botcheck" value="" class="sm-form-control" />
 								</div>
 								<div class="col_full">
-									<button class="button button-3d button-large btn-block nomargin" name="template-jobform-apply" type="submit" value="apply">Send Application</button>
+									<button class="button button-3d button-large btn-block nomargin" name="jobform_apply" type="submit" value="apply">Send Application</button>
 								</div>
 							{!! Form::close() !!}
 						</div>

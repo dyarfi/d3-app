@@ -69,11 +69,13 @@ View::share('admin_app', $setting['admin_app']);
 
 // Share a var with all views : $admin_url
 View::share('company_name', $setting['company_name']);
+
 Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
+Route::post('career_post', ['as'=>'career.post','uses'=>'CareerController@post']);
+
 Route::get('career/{slug}', ['as'=>'career.show','uses'=>'CareerController@show']);
 Route::get('career/detail/{slug}', ['as'=>'career.detail','uses'=>'CareerController@detail']);
 Route::get('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@apply']);
-Route::post('career/apply', ['as'=>'career.post','uses'=>'CareerController@apply']);
 Route::post('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@store']);
 
 Route::get('gallery', ['as'=>'gallery','uses'=>'GalleryController@index']);

@@ -103,7 +103,7 @@ return [
 	*/
 
 	'attributes' => [
-		// Catcha 
+		// Catcha
 		'g-recaptcha-response'=>'captcha',
 		// Setting
 		'email-contact'			=> 'Email Contact',
@@ -126,6 +126,14 @@ return [
 		'meta-keywords' 		=> 'Meta Keywords',
 		'meta-description' 		=> 'Meta Description',
 		'meta-generator' 		=> 'Meta Generator',
+		// Career apply form
+		'jobform_fname'			=> 'First Name',
+		'jobform_lname'			=> 'Last Name',
+		'jobform_email'			=> 'Email',
+		'jobform_phone'			=> 'Phone',
+		'jobform_position' 		=> 'Position',
+		'jobform_start' 		=> 'Start Date',
+		'jobform_application'   => 'Application'
 		],
 
 ];
