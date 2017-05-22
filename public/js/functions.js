@@ -1082,7 +1082,7 @@ var SEMICOLON = SEMICOLON || {};
 		pageContent: function() {
 			/** CAREER PAGE *** [start] ***/
 			var $applyobj = $('.apply');
-			var $applyfrm = $('#template-jobform-position');
+			var $applyfrm = $('#jobform_position');
 			var $applyinp = $applyfrm.parents('form').find('label:eq(0)');
 			$applyobj.bind('click', function() {
 				// Click first input child
@@ -1097,7 +1097,7 @@ var SEMICOLON = SEMICOLON || {};
 				.addClass('text-danger');
 				//var $elc = $.get(base_URL + 'career/detail/' + $applyobj.data('rel'));
 			});
-			var $form = $('#template-jobform');
+			var $form = $('#template-jobformssss');
 				$form.on( "submit",function(e) {
 					e.preventDefault();
 					e.stopImmediatePropagation();
@@ -1113,18 +1113,21 @@ var SEMICOLON = SEMICOLON || {};
 								$form.find('label').removeClass('text-danger');
 								$form.find('label span').empty();
 								$.each(result, function (i, val) {
-									var $container = $form.find('input[name="'+i+'"]').parent();
+									var $container = $form.find('input[name="'+i+'"], select[name="'+i+'"], textarea[name="'+i+'"], checkbox[name="'+i+'"]').parent('div');
 									var $label = $container.find('label');
 									var $text = $label.text();
 									$label.addClass('text-danger');
 									$('<span><small style="text-transform:none" class="text-warning">*' + val + '</small></span>').appendTo($label);
-									// Scroll to top ???									
+									// Scroll to top ???
+									//$('#gotoTop').click();
+									//$.scrollTo('#content');
 							    })
 							}
 						}
 					});
 					return false;
 				})
+			$( "#birthdate, .datepicker, #jobform_birthdate" ).datepicker({dateFormat: "dd/mm/yy",changeMonth:true,changeYear:true,yearRange:"-65:+0",});
 			/** CAREER PAGE *** [end] ***/
 
 		}

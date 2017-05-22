@@ -61,7 +61,9 @@
 							<span>And we'll get back to you within 48 hours.</span>
 						</div>
 						<div class="contact-widget">
-							<div class="contact-form-result"></div>
+							@if (count($errors) > 0)
+							<div class="contact-form-result has-error"><span class="help-block"><i class="icon-ok-circle"></i> {{{ 'There\'s and error in the fields' }}}</span></div>
+							@endif
 							{!! Form::model($applicant,
 								[
 									'route' => ['career.post'],
@@ -73,64 +75,76 @@
 								])
 							!!}
 								<div class="form-process"></div>
-								<div class="col_half">
+								<div class="col_half{{ $errors->first('jobform_fname', ' has-error') }}">
 									<label for="jobform_fname">First Name </label>
 									<input type="text" id="jobform_fname" name="jobform_fname" value="" class="sm-form-control required" />
+									<span class="help-block">{{{ $errors->first('jobform_fname', ':message') }}}</span>
 								</div>
-								<div class="col_half col_last">
+								<div class="col_half col_last{{ $errors->first('jobform_lname', ' has-error') }}">
 									<label for="jobform_lname">Last Name </label>
 									<input type="text" id="jobform_lname" name="jobform_lname" value="" class="sm-form-control required" />
+									<span class="help-block">{{{ $errors->first('jobform_lname', ':message') }}}</span>
 								</div>
 								<div class="clear"></div>
-								<div class="col_full">
+								<div class="col_full{{ $errors->first('jobform_email', ' has-error') }}">
 									<label for="jobform_email">Email </label>
 									<input type="email" id="jobform_email" name="jobform_email" value="" class="required email sm-form-control" />
-								</div>
-								<div class="col_full">
-									<label for="jobform_phone">Phone </label>
-									<input type="email" id="jobform_phone" name="jobform_phone" value="" class="required email sm-form-control" />
+									<span class="help-block">{{{ $errors->first('jobform_email', ':message') }}}</span>
 								</div>
 								<div class="col_half">
-									<label for="jobform_age">Age </label>
-									<input type="text" name="jobform_age" id="jobform_age" value="" size="22" tabindex="4" class="sm-form-control required" />
+									<label for="jobform_phone{{ $errors->first('jobform_phone', ' has-error') }}">Phone </label>
+									<input type="email" id="jobform_phone" name="jobform_phone" value="" class="required email sm-form-control" />
+									<span class="help-block">{{{ $errors->first('jobform_phone', ':message') }}}</span>
 								</div>
-								<div class="col_half col_last">
-									<label for="jobform_city">City </label>
-									<input type="text" name="jobform_city" id="jobform_city" value="" size="22" tabindex="5" class="sm-form-control required" />
+								<div class="col_half col_last{{ $errors->first('jobform_birthdate', ' has-error') }}">
+									<label for="jobform_birthdate">Birthdate </label>
+									<input type="text" name="jobform_birthdate" id="jobform_birthdate" value="" size="22" tabindex="4" class="sm-form-control required" placeholder="dd/mm/yyyy"/>
+									<span class="help-block">{{{ $errors->first('jobform_birthdate', ':message') }}}</span>
 								</div>
 								<div class="clear"></div>
-								<div class="col_full">
-									<label for="jobform_service">Position </label>
-									<select name="jobform_position" id="jobform_position"  tabindex="9" class="sm-form-control required">
+								<div class="col_full{{ $errors->first('jobform_position', ' has-error') }}">
+									<label for="jobform_position">Position </label>
+									<select name="jobform_position" id="jobform_position" tabindex="9" class="sm-form-control required">
 										<option value="">-- Select Position --</option>
 										@foreach($career_list as $list)
 										<option value="{{ $list->slug }}">{{ $list->name }}</option>
 										@endforeach
 									</select>
+									<span class="help-block">{{{ $errors->first('jobform_position', ':message') }}}</span>
 								</div>
-								<div class="col_half">
+								<div class="col_half{{ $errors->first('jobform_salary', ' has-error') }}">
 									<label for="jobform_salary">Expected Salary </label>
 									<input type="text" name="jobform_salary" id="jobform_salary" value="" size="22" tabindex="6" class="sm-form-control" />
+									<span class="help-block">{{{ $errors->first('jobform_salary', ':message') }}}</span>
 								</div>
-								<div class="col_half col_last">
+								<div class="col_half col_last{{ $errors->first('jobform_start', ' has-error') }}">
 									<label for="jobform_time">Start Date </label>
-									<input type="text" name="jobform_start" id="jobform_start" value="" size="22" tabindex="7" class="sm-form-control" />
+									<input type="text" name="jobform_start" id="jobform_start" value="" size="22" tabindex="7" class="sm-form-control" placeholder="dd/mm/yyyy" />
+									<span class="help-block">{{{ $errors->first('jobform_start', ':message') }}}</span>
 								</div>
 								<div class="clear"></div>
-								<div class="col_full">
+								<div class="col_full{{ $errors->first('jobform_website', ' has-error') }}">
 									<label for="jobform_website">Website (if any) </label>
 									<input type="text" name="jobform_website" id="jobform_website" value="" size="22" tabindex="8" class="sm-form-control" />
+									<span class="help-block">{{{ $errors->first('jobform_website', ':message') }}}</span>
 								</div>
-								<div class="col_full">
+								<div class="col_full{{ $errors->first('jobform_experience', ' has-error') }}">
 									<label for="jobform_experience">Experience (optional) </label>
 									<textarea name="jobform_experience" id="jobform_experience" rows="3" tabindex="10" class="sm-form-control"></textarea>
+									<span class="help-block">{{{ $errors->first('jobform_experience', ':message') }}}</span>
 								</div>
-								<div class="col_full">
+								<div class="col_full{{ $errors->first('jobform_application', ' has-error') }}">
 									<label for="jobform_application">Application </label>
 									<textarea name="jobform_application" id="jobform_application" rows="6" tabindex="11" class="sm-form-control required"></textarea>
+									<span class="help-block">{{{ $errors->first('jobform_application', ':message') }}}</span>
 								</div>
-								<div class="col_full hidden">
+								<!--div class="col_full hidden">
 									<input type="text" id="jobform_botcheck" name="jobform_botcheck" value="" class="sm-form-control" />
+								</div-->
+								<div class="form-group{{ $errors->first('g-recaptcha-response', ' has-error') }}">
+									{!! Form::label('captcha', 'Captcha', ['class'=>'control-label']); !!}
+									{!! app('captcha')->display(); !!}
+									<span class="help-block">{{{ $errors->first('g-recaptcha-response', ':message') }}}</span>
 								</div>
 								<div class="col_full">
 									<button class="button button-3d button-large btn-block nomargin" name="jobform_apply" type="submit" value="apply">Send Application</button>

@@ -43,11 +43,22 @@ class CareerController extends BasePublic {
    		// Get the page path that requested
 		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
 
+		// External Scripts
+		$scripts = [
+			'jquery-ui' => asset('js/jquery-ui-1.11.0.min.js'),
+			'jquery-datepicker' => asset('js/plugins/jquery.datepicker-min.js')
+		];
+
+		// External Styles
+	   	$styles 	= [
+	   		'jquery-ui' => asset('css/jquery-ui.css'),
+	   	];
+
 	   	// Set data to return
 	   	$data = ['careers'=>$careers,'career_list'=>$career_list,'menu'=>$this->menu->where('slug', $path)->first(),'applicant'=>$this->applicant];
 
 	   	// Return data and view
-	   	return $this->view('careers.index')->data($data)->title('Career - Laravel Careers');
+	   	return $this->view('careers.index')->data($data)->scripts($scripts)->styles($styles)->title('Career - Laravel Careers');
 	}
 
 	/**
@@ -100,9 +111,12 @@ class CareerController extends BasePublic {
 				  'jobform_lname' => 'required',
 				  'jobform_email' => 'required|email',
 				  'jobform_phone' => 'required',
+				  'jobform_birthdate' => 'date_format:d/m/Y|required',
+				  'jobform_website' => 'url',				  
 				  'jobform_position' => 'required',
 				  'jobform_application' => 'required',
-				  'jobform_start' => 'required'
+				  'jobform_start' => 'required',
+			  	  'g-recaptcha-response' => 'required|captcha',
 			  	];
 
 		// doing the validation, passing post data, rules and the messages
@@ -112,7 +126,8 @@ class CareerController extends BasePublic {
 			// send back to the page with the input data and errors
 			// return Redirect::to(route('career').'/'.$slug.'/apply')->withInput()->withErrors($validator);
 			//dd($validator);
-			return response()->json(['response'=>false,'message'=>$validator->errors()]);
+			//return response()->json(['response'=>false,'message'=>$validator->errors()]);
+			return Redirect::to(route('career').'#content')->withInput()->withErrors($validator);
 		}
 		else {
 
@@ -134,23 +149,25 @@ class CareerController extends BasePublic {
 
 		}
 
+		return Redirect::to(route('career'));
+		//dd($input);
 		// Get all request
-		$result = $input;
+		//$result = $input;
 
 		// Slip image file
-		$result = is_array(@$result['image']) ? array_set($result, 'image', '') : array_set($result, 'image', $fileName);
+		//$result = is_array(@$result['image']) ? array_set($result, 'image', '') : array_set($result, 'image', $fileName);
 
 		// Set to database if $result is true
-		Applicant::create($result);
+		//Applicant::create($result);
 
 		// Set session flash to user
-		Session::flash('flash_message', 'Career applied successfully!');
+		//Session::flash('flash_message', 'Career applied successfully!');
 
 		// Set data
-		$data = ['career'=>'','applicant'=>$input];
+		//$data = ['career'=>'','applicant'=>$input];
 		// Return view
 		//return $this->view('careers.index')->data($data)->title(@$career->name . ' | Apply Careers - Laravel Careers');
-		return response()->json($data);
+		//return response()->json($data);
 
 	}
 
