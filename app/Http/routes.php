@@ -70,6 +70,15 @@ View::share('admin_app', $setting['admin_app']);
 // Share a var with all views : $admin_url
 View::share('company_name', $setting['company_name']);
 
+/*** Site Menus ***/
+Route::get('about_us', ['as'=>'about_us','uses'=>'AboutUsController@index']);
+Route::get('services', ['as'=>'services','uses'=>'ServicesController@index']);
+Route::get('portfolio', ['as'=>'portfolio','uses'=>'PortfolioController@index']);
+Route::get('blog', ['as'=>'blog','uses'=>'BlogController@index']);
+
+Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
+Route::post('career/post', ['as'=>'career.post','uses'=>'CareerController@post']);
+
 Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
 Route::post('career/post', ['as'=>'career.post','uses'=>'CareerController@post']);
 

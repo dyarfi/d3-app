@@ -22,9 +22,10 @@
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/additional.css') }}" type="text/css" />
 @if(isset($styles)) @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach @endif
-    <!--script src="{{ asset('js/jquery.min.js') }}"></script-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ asset("js/jquery.min.js") }}"><\/script>')</script>
     <!-- <script src="{{ asset('js/jquery.easing.min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/jquery.ias.min.js') }}"></script> -->
@@ -46,8 +47,8 @@
                             <li {{ $menu->slug == Route::current()->getName() ? 'class=current' : '' }}><a href="{{ $menu->slug == route('home') ? '' : route($menu->slug) }}">{{ $menu->name }}</a></li>
                         @endforeach
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <!--li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li-->
                         @else
                             <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu2" role="button">{{ Auth::getUser()->username }} <span class="caret"></span></a>

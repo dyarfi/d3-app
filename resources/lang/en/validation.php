@@ -130,10 +130,14 @@ return [
 		'jobform_fname'			=> 'First Name',
 		'jobform_lname'			=> 'Last Name',
 		'jobform_email'			=> 'Email',
+		'jobform_website'		=> 'Website',
+		'jobform_birthdate'   	=> 'Birth Date',
 		'jobform_phone'			=> 'Phone',
 		'jobform_position' 		=> 'Position',
 		'jobform_start' 		=> 'Start Date',
-		'jobform_application'   => 'Application'
+		'jobform_application'   => 'Application',
+		'jobform_cv'   			=> 'CV'
 		],
 
+	'captcha'	=> 'Captcha must be checked',
 ];

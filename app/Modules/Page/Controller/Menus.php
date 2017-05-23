@@ -22,18 +22,18 @@ class Menus extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
 		// Load menus and get repository data from database
 		$this->menus = new Menu;
-		
+
 	}
-	
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -41,12 +41,12 @@ class Menus extends BaseAdmin {
 	 */
 	public function index() {
 
-		// Set return data 
-	   	$menus = Input::get('path') === 'trashed' ? $this->menus->onlyTrashed()->get() : $this->menus->get();
+		// Set return data
+	   	$menus = Input::get('path') === 'trashed' ? $this->menus->onlyTrashed()->get() : $this->menus->orderBy('index', 'asc')->get();
 
 	   	// Get deleted count
-		$deleted = $this->menus->onlyTrashed()->get()->count();		   
-		
+		$deleted = $this->menus->onlyTrashed()->get()->count();
+
 	   	// Set data to return
 	   	$data = ['rows' => $menus,'deleted' => $deleted,'junked' => Input::get('path')];
 
@@ -57,9 +57,9 @@ class Menus extends BaseAdmin {
 	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
 	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
 	   				];
-	   	
+
 		// Return data and view
-	   	return $this->view('Page::menu_index')->data($data)->scripts($scripts)->title('Menu List'); 
+	   	return $this->view('Page::menu_index')->data($data)->scripts($scripts)->title('Menu List');
 	}
 
 	/**
@@ -72,12 +72,12 @@ class Menus extends BaseAdmin {
 	{
 		// Get data from database
         $menu = $this->menus->find($id);
-        	       
+
 		// Set data to return
 	   	$data = ['row'=>$menu];
 
 	   	// Return data and view
-	   	return $this->view('Page::menu_show')->data($data)->title('View Menu'); 
+	   	return $this->view('Page::menu_show')->data($data)->title('View Menu');
 
 	}
 
@@ -108,7 +108,7 @@ class Menus extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -122,7 +122,7 @@ class Menus extends BaseAdmin {
 	{
 		return $this->processForm('update', $id);
 	}
-	
+
 	/**
 	 * Remove the specified menu.
 	 *
@@ -153,10 +153,10 @@ class Menus extends BaseAdmin {
 	{
 		if ($menu = $this->menus->onlyTrashed()->find($id))
 		{
-			
+
 			// Restored back from deleted_at database
 			$menu->restore();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.menus.index'))->with('success', 'Menu Restored!');
 		}
@@ -193,7 +193,7 @@ class Menus extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
 		{
@@ -218,22 +218,19 @@ class Menus extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function processForm($mode, $id = null)
-	{	
-		//$request = new Request;
-
+	{
+		// Filter all input
 		$input = array_filter(Input::all());
-		//$input = $request;
-		//print_r($input);
-		//exit;
-		$input['slug'] = isset($input['name']) ? snake_case($input['name']) : '';
 
-		//$request = $input;		
-		
+		// Set menu slug
+		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'_') : '';
+
 		$rules = [
-			'name' 	   => 'required',
+			'name' 	   	   => 'required',
 			//'slug' 		   => 'required',
 			'description'  => 'required',
-			'status'	   => 'boolean'
+			'status'	   => 'boolean',
+			'index'	   	   => 'numeric|digits_between:1,999',
 		];
 
 		if ($id)
@@ -251,7 +248,7 @@ class Menus extends BaseAdmin {
 		      $fileName = rand(11111,99999).'.'.$extension; // renameing image
 		      $input['image']->move($destinationPath, $fileName); // uploading file to given path
 		      // sending back with message
-		      //Session::flash('success', 'Upload successfully'); 
+		      //Session::flash('success', 'Upload successfully');
 		      //return Redirect::to(route('admin.apanel.menus.create'));
 		    }
 		    else {
@@ -264,9 +261,9 @@ class Menus extends BaseAdmin {
 			if ($messages->isEmpty())
 			{
 				// Get all request
-				$result = $input;	
-				
-				// Slip user id 
+				$result = $input;
+
+				// Slip user id
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				// Slip image file
@@ -288,7 +285,7 @@ class Menus extends BaseAdmin {
 		      $fileName = rand(11111,99999).'.'.$extension; // renameing image
 		      $input['image']->move($destinationPath, $fileName); // uploading file to given path
 		      // sending back with message
-		      //Session::flash('success', 'Upload successfully'); 
+		      //Session::flash('success', 'Upload successfully');
 		      //return Redirect::to(route('admin.apanel.menus.create'));
 		    }
 		    else {
@@ -300,9 +297,9 @@ class Menus extends BaseAdmin {
 			if ($messages->isEmpty())
 			{
 				// Get all request
-				$result = $input;	
+				$result = $input;
 
-				// Slip user id 
+				// Slip user id
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				// Slip image file
@@ -310,7 +307,7 @@ class Menus extends BaseAdmin {
 
 				//$menu = $this->menus->create($input);
 				$menu = $this->menus->create($result);
-				
+
 			}
 		}
 
@@ -329,7 +326,7 @@ class Menus extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
-		
+
 		if (Input::get('check') !='') {
 
 		    $rows	= Input::get('check');
@@ -342,7 +339,7 @@ class Menus extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.menus.index'))->with('success', 'Menu Status Changed!');
 
-		} else {	
+		} else {
 
 		    // Set message
 		    return Redirect::to(route('admin.menus.index'))->with('error','Data not Available!');

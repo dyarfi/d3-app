@@ -14,7 +14,7 @@
 @if ($rows->count())
 <div class="row">
 	<div class="col-xs-12">
-		<div class="clearfix">	
+		<div class="clearfix">
 			<div class="pull-right tableTools-container"></div>
 		</div>
 		{!! Form::open(['route'=>'admin.menus.change']) !!}
@@ -23,7 +23,7 @@
 				<tr>
 					<th class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></th>
 					<th class="col-lg-3">Name</th>
-					<th class="col-lg-3">Description</th>
+					<th class="col-lg-2">Description</th>
 					<th class="col-lg-2">Status</th>
 					<th class="col-lg-2">Created At</th>
 					<th class="col-lg-6 col-xs-3">Actions</th>
@@ -37,8 +37,11 @@
 							<input type="checkbox" class="ace" name="check[]" id="check_<?php echo $row->id; ?>" value="{{ $row->id }}" />
 							<span class="lbl"></span>
 						</label>
-					</td>					
+					</td>
 					<td>
+					@if($row->index)
+						{{ $row->index }}.
+					@endif
 					{{ $row->name }}
 						@if($row->slug)
 							({{ $row->slug }})
@@ -46,14 +49,14 @@
 					</td>
 					<td>{{ str_limit($row->description, 30, '...') }}</td>
 					<td>
-						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">							
-							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span> 
-							@foreach (config('setting.status') as $config => $val)							
+						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
+							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span>
+							@foreach (config('setting.status') as $config => $val)
 								{{ $val == $row->status ? $config : '' }}
 							@endforeach
 		                </span>
 					</td>
-					<td>{{ $row->created_at }}</td>						
+					<td>{{ $row->created_at }}</td>
 					<td>
 						<div class="btn-group">
 							@if (!$row->deleted_at)
@@ -69,7 +72,7 @@
 							<!--a data-rel="tooltip" data-original-title="Permanent Delete" href="" class="btn btn-xs btn-warning tooltip-default">
 								<i class="ace-icon fa fa-flag bigger-120"></i>
 							</a-->
-							@else 
+							@else
 							<a data-rel="tooltip" data-original-title="Restore!" href="{{route('admin.menus.restored', $row->id)}}" class="btn btn-xs btn-primary tooltip-default">
 								<i class="ace-icon fa fa-save bigger-120"></i>
 							</a>
@@ -80,7 +83,7 @@
 						</div>
 					</td>
 				</tr>
-				@endforeach				
+				@endforeach
 			</tbody>
 			<tr>
 			    <td id="corner"><span class="glyphicon glyphicon-minus"></span></td>
@@ -97,7 +100,7 @@
 						</select>
 						</div>
 				      </div>
-				 </div>   
+				 </div>
 			    </td>
 			</tr>
 		</table>

@@ -19,7 +19,7 @@
 			'id'=>'name',
 			'class'=>'form-control']); !!}
 		<span class="help-block">{{{ $errors->first('name', ':message') }}}</span>
-	</div>	
+	</div>
 
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		{!! Form::label('description', 'Description'); !!}
@@ -31,6 +31,16 @@
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 
+	<div class="form-group{{ $errors->first('index', ' has-error') }}">
+		{!! Form::label('index', 'Index'); !!}
+		{!! Form::text('index',Input::old('index', $row->index),[
+			'placeholder'=>'Enter the Menu Index.',
+			'name'=>'index',
+			'id'=>'index',
+			'class'=>'form-control']); !!}
+		<span class="help-block">{{{ $errors->first('index', ':message') }}}</span>
+	</div>
+
 	<div class="form-group{{ $errors->first('status', ' has-error') }}">
 		<label for="status">Status</label>
 		<select id="status" name="status" class="form-control input-sm">
@@ -39,7 +49,7 @@
 				<option value="{{ Input::old('status', $val) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
 			@endforeach
 		</select>
-	</div>	
+	</div>
 
 	<button type="submit" class="btn btn-default">Submit</button>
 {!! Form::close() !!}

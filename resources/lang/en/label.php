@@ -55,6 +55,6 @@ return [
 	// Other Input Labels
 	"subject"=>"Subject",
 	// Alert text
-	"problems" => "There were some problems with your input"
-
+	"problems" => "There were some problems with your input",
+	'check_form' => 'Check your input fields for errors',
 ];

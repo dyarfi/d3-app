@@ -1,0 +1,5 @@
+.has-error .sm-form-control { border-color: #e42c3e; }
+.has-error label { color : #e42c3e; }
+.help-block { margin-bottom: 0px; }
+span.help-block { line-height: 1.25em}
+.contact-form-result { margin-bottom: 15px; }

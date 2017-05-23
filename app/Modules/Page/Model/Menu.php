@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Menu extends Model {
-	
+
 	// Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;
 
@@ -17,7 +17,7 @@ class Menu extends Model {
 
 		/**
      * Fillable fields
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -26,7 +26,8 @@ class Menu extends Model {
         'description',
         'attributes',
         'options',
-        'status'
+        'status',
+		'index'
     ];
 
     // Instead, a deleted_at timestamp is set on the record.
@@ -41,7 +42,7 @@ class Menu extends Model {
 	    'attributes'  => 'object',
 	    'permissions' => 'array'
 	    // 'is_admin' => 'boolean',
-	];    
+	];
 
 	/**
 	 * A user can have many tasks.
@@ -58,9 +59,9 @@ class Menu extends Model {
 	 */
 	public function user()
     {
-        
+
         return $this->belongsTo('App\Modules\User\Model\User','user_id','id');
-        
+
     }
 
     // Scope query for active status field
@@ -69,7 +70,7 @@ class Menu extends Model {
       return $query->where('status', 1);
 
     }
-    
+
 	// Scope query for slug field
     public function scopeSlug($query, $string) {
 

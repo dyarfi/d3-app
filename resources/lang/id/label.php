@@ -55,5 +55,6 @@ return [
 	// Other Input Labels
 	"subject"=>"Subjek",
 	// Alert text
-	"problems" => "Ada beberapa kesalahan dalam input"
+	"problems" => "Ada beberapa kesalahan dalam input",
+	'check_form' => 'Periksa kembali form input untuk kesalahan'
 ];

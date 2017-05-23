@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 // Load Laravel classes
-use Route, Request, Input, Validator, Redirect, Session;
+use Request, Input, Validator, Redirect;
 
 // Load main models
 use App\Modules\User\Model\Contact;
@@ -30,11 +30,17 @@ class ContactController extends BasePublic {
 		// Get the page path that requested
 		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
 
+		// Set scripts
+		$scripts = [
+			'google-map-api' => 'https://maps.google.com/maps/api/js?key=AIzaSyBKhz0m2SnwvXZUX3moyc2WYq7PfS3tpLk',
+			'jquery-gmap' => asset("js/jquery.gmap.js"),
+			'gmaps' => asset('js/gmaps.js')
+		];
 		// Set data to return
 	   	$data = ['menu'=>$this->menu->where('slug', $path)->first(),'contact'=>$this->contact];
 
 	   	// Return data and view
-	   	return $this->view('contacts.form')->data($data)->title('Contact - Laravel Contacts');
+	   	return $this->view('contacts.form')->scripts($scripts)->data($data)->title('Page | Contact');
 	}
 
 	/**

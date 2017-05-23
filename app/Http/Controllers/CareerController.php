@@ -3,7 +3,10 @@
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 // Load Laravel classes
-use Route, Request, Input, Validator, Redirect, Session;
+//use Route, Request, Input, Validator, Redirect, Session;
+//use Illuminate\Http\Request;
+//use Illuminate\Routing\Controller;
+use Route, Input, Request, Validator, Redirect, Session;
 // Load main models
 use App\Modules\Career\Model\Applicant;
 use App\Modules\Career\Model\Career;
@@ -22,6 +25,7 @@ class CareerController extends BasePublic {
 		$this->career = new Career;
 		// Set applicant object
 		$this->applicant = new Applicant;
+
 	}
 
 	/**
@@ -111,11 +115,12 @@ class CareerController extends BasePublic {
 				  'jobform_lname' => 'required',
 				  'jobform_email' => 'required|email',
 				  'jobform_phone' => 'required',
-				  'jobform_birthdate' => 'date_format:d/m/Y|required',
-				  'jobform_website' => 'url',				  
+				  'jobform_birthdate' => 'date_format:Y-m-d|required',
+				  'jobform_website' => 'url',
 				  'jobform_position' => 'required',
+				  'jobform_start' => 'date_format:Y-m-d|required',
 				  'jobform_application' => 'required',
-				  'jobform_start' => 'required',
+				  'jobform_cv' => 'required|mimes:zip|max:600',
 			  	  'g-recaptcha-response' => 'required|captcha',
 			  	];
 
@@ -132,11 +137,12 @@ class CareerController extends BasePublic {
 		else {
 
 			// checking file is valid.
-			if (!empty($input['image']) && !$input['image']->getError()) {
+			$fileName = '';
+			if (!empty($input['jobform_cv']) && !$input['jobform_cv']->getError()) {
 				$destinationPath = public_path().'/uploads'; // upload path
-				$extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
+				$extension = $input['jobform_cv']->getClientOriginalExtension(); // getting image extension
 				$fileName = rand(11111,99999).'.'.$extension; // renaming image
-				$input['image']->move($destinationPath, $fileName); // uploading file to given path
+				$input['jobform_cv']->move($destinationPath, $fileName); // uploading file to given path
 				$uploaded = 1;
 				// sending back with message
 				// Session::flash('success', 'Upload successfully');
@@ -146,6 +152,47 @@ class CareerController extends BasePublic {
 				//Session::flash('error', 'uploaded file is not valid');
 				//return Redirect::to('career/'.$slug.'/apply');
 			//}
+			$fields = [
+				'provider_id'		=> '',
+				'provider'			=> '',
+				'profile_url'		=> '',
+				'photo_url'			=> '',
+				'name' 				=> $input['jobform_fname'].' '.$input['jobform_lname'],
+				'username'			=> '',
+				'email' 			=> $input['jobform_email'],
+				'birthdate' 		=> $input['jobform_birthdate'],
+				'password' 			=> '',
+				'avatar' 			=> '',
+				'about' 			=> $input['jobform_application'],
+				'availability_date' => $input['jobform_start'],
+				'phone_number' 		=> $input['jobform_phone'],
+				'phone_home'		=> '',
+				'address'			=> '',
+				'region'			=> '',
+				'province'			=> '',
+				'urban_district'	=> '',
+				'sub_urban'			=> '',
+				'zip_code'			=> '',
+				'website'			=> $input['jobform_website'],
+				'gender'			=> '',
+				'age'				=> '',
+				'nationality'		=> '',
+				'id_number'			=> '',
+				'file_name'			=> $fileName,
+				'verify'			=> '',
+				'completed'			=> '',
+				'logged_in'			=> '',
+				'last_login'		=> '',
+				'session_id'		=> '',
+				'join_date'			=> '',
+				'status'			=> 1
+			];
+
+			// Create new applicants
+			Applicant::create($fields);
+
+			// Set session flash to user
+			Session::flash('flash_message', 'Career applied successfully!');
 
 		}
 

@@ -1085,10 +1085,12 @@ var SEMICOLON = SEMICOLON || {};
 			var $applyfrm = $('#jobform_position');
 			var $applyinp = $applyfrm.parents('form').find('label:eq(0)');
 			$applyobj.bind('click', function() {
+				// Set object
+				var $this = $(this);
 				// Click first input child
 				$applyinp.click();
 				// Find options of the title and animate
-				$applyfrm.find('option[value="'+$(this).data('rel')+'"]').attr('selected',true);
+				$applyfrm.find('option[value="'+$this.attr('data-rel')+'"]').attr('selected',true);
 				$applyfrm.parent()
 				.animate({backgroundColor:'#ff9900',easing:'easeInBack'},1500)
 				.animate({backgroundColor:'#ffffff',easing:'easeOutBack'},1500)
@@ -1127,7 +1129,7 @@ var SEMICOLON = SEMICOLON || {};
 					});
 					return false;
 				})
-			$( "#birthdate, .datepicker, #jobform_birthdate" ).datepicker({dateFormat: "dd/mm/yy",changeMonth:true,changeYear:true,yearRange:"-65:+0",});
+			$( "#birthdate, .datepicker, #jobform_birthdate, #jobform_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth:true,changeYear:true,yearRange:"-65:+0",});
 			/** CAREER PAGE *** [end] ***/
 
 		}
@@ -3295,11 +3297,14 @@ var SEMICOLON = SEMICOLON || {};
 							defButton.html('<i class="icon-line-loader icon-spin nomargin"></i>');
 						} else {
 							$(form).find('.form-process').fadeIn();
+							return true;
+							//window.location.replace($(form).attr('action'));
 						}
 
 						$(form).ajaxSubmit({
 							target: elementResult,
 							dataType: 'json',
+							type : 'POST',
 							success: function( data ) {
 								if( elementLoader == 'button' ) {
 									defButton.html( defButtonText );

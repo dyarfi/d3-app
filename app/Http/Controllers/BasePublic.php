@@ -27,12 +27,12 @@ class BasePublic extends Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->user = Auth::getUser();
 
 		$this->menu = new Menu;
 
-		View::share('menus', $this->menu->where('status',1)->take(10)->get());
+		View::share('menus', $this->menu->where('status',1)->take(10)->orderBy('index','ASC')->get());
 		View::share('settings', Setting::all());
 
 	}
@@ -64,8 +64,8 @@ class BasePublic extends Controller {
 				// return abort(403);
 				// return abort(403, 'Unauthorized action.');
 				// return Redirect::back()->withInput()->withErrors('Unauthorized access!');
-				
-			}			
+
+			}
 
 			// Return no access view
 			return View::make('admin.errors.noaccess');
@@ -76,9 +76,9 @@ class BasePublic extends Controller {
 			return Redirect::to(route('admin.login'))->withErrors('Unauthorized access!');
 
 		}
-		
+
 	}
-    
+
 
     /**
     * First time setup for developers only
@@ -88,7 +88,7 @@ class BasePublic extends Controller {
 	public function setup() {
 
 		// Default variable setup
-		$exitCode = ''; 
+		$exitCode = '';
 		$message = '';
 		$user = '';
 
@@ -100,20 +100,20 @@ class BasePublic extends Controller {
 
 			// Check user
 			if (!$user_check) {
-				
+
 
 				$set_acl = [];
 
 				foreach (config('setting.acl') as $acl) {
 					if (isset($acl['Admin'])) {
 						$set_acl = array_flatten($acl['Admin']);
-					}	
+					}
 				}
 
 				$set_acl = array_fill_keys($set_acl,true);
 
 				$is_admin = Request::input('is_admin') == 1 ? $set_acl : [];
-				
+
 				$credentials = [
 				    'email'    => Request::input('email'),
 				    'password' => Request::input('password'),
@@ -166,7 +166,7 @@ class BasePublic extends Controller {
 		if ($message) {
 			// Flash a key / value pair to the session
 	 		//Session::flash('success', $message .' '. $exitCode > 0 ? '- '. $exitCode .' migration' : 'But no migration');
-	 		Session::flash('success', $message);		
+	 		Session::flash('success', $message);
 		}
  		// Forget the message
  		//Session::forget('success');
