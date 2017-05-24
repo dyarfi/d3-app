@@ -13,7 +13,7 @@
 @endif
 @if ($rows->count())
 <div class="row">
-	<div class="col-xs-12">		
+	<div class="col-xs-12">
 		<div class="clearfix">
 			<div class="pull-right tableTools-container"></div>
 		</div>
@@ -23,9 +23,9 @@
 				<tr>
 					<th class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></th>
 					<th class="col-lg-3">Name</th>
-					<th class="col-lg-2">End Date</th>					
+					<th class="col-lg-2">End Date</th>
 					<th class="col-lg-3">Status</th>
-					<th class="col-lg-2">Created At</th>				
+					<th class="col-lg-2">Created At</th>
 					<th class="col-lg-6 col-xs-3">Actions</th>
 				</tr>
 			</thead>
@@ -38,18 +38,18 @@
 							<span class="lbl"></span>
 						</label>
 					</td>
-					<td>{{ str_limit($row->name,30) }}</td>					
+					<td>{{ str_limit($row->name,30) }}</td>
 					<td>{{ $row->end_date }}</td>
 		        	<td>
-						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">							
-							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span> 
-							@foreach (config('setting.status') as $config => $val)							
+						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
+							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span>
+							@foreach (config('setting.status') as $config => $val)
 								{{ $val == $row->status ? $config : '' }}
 							@endforeach
 		                </span>
 					</td>
 					<!-- <td>{{ $row->updated_at }}</td> -->
-					<td>{{ $row->created_at }}</td>					
+					<td>{{ $row->created_at }}</td>
 					<td>
 						<div class="btn-group">
 							@if (!$row->deleted_at)
@@ -65,11 +65,11 @@
 							<!--a data-rel="tooltip" data-original-title="Permanent Delete" href="" class="btn btn-xs btn-warning tooltip-default">
 								<i class="ace-icon fa fa-flag bigger-120"></i>
 							</a-->
-							@else 
+							@else
 							<a data-rel="tooltip" data-original-title="Restore!" href="{{route('admin.careers.restored', $row->id)}}" class="btn btn-xs btn-primary tooltip-default">
 								<i class="ace-icon fa fa-save bigger-120"></i>
 							</a>
-							<a data-rel="tooltip" data-original-title="Permanent Delete!" href="{{route('admin.careers.delete', $row->id)}}" class="btn btn-xs btn-danger tooltip-default">
+							<a title="Permanent Delete!" href="{{route('admin.careers.delete', $row->id)}}" class="btn btn-xs btn-danger">
 								<i class="ace-icon fa fa-trash bigger-120"></i>
 							</a>
 							@endif
@@ -93,10 +93,10 @@
 						</select>
 						</div>
 				      </div>
-				 </div>   
+				 </div>
 			    </td>
 			</tr>
-		</table>		
+		</table>
 		{!! Form::close() !!}
 	</div>
 </div>

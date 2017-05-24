@@ -136,7 +136,13 @@ return [
 		'jobform_position' 		=> 'Position',
 		'jobform_start' 		=> 'Start Date',
 		'jobform_application'   => 'Application',
-		'jobform_cv'   			=> 'CV'
+		'jobform_cv'   			=> 'CV',
+		// Contact form
+		'contactform_name'		=> 'Name',
+		'contactform_email'		=> 'Email',
+		'contactform_phone'		=> 'Phone',
+		'contactform_subject'	=> 'Subject',
+		'contactform_message'	=> 'Message'
 		],
 
 	'captcha'	=> 'Captcha must be checked',

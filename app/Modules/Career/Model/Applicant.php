@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Applicant extends Model implements AuthenticatableContract {
-	
+
 	use Authenticatable;
 
 	// Soft deleting a model, it is not actually removed from your database.
@@ -25,6 +25,7 @@ class Applicant extends Model implements AuthenticatableContract {
 	 * @var array
 	 */
 	protected $fillable = [
+			'attribute_id',
 			'provider_id',
 			'provider',
 			'profile_url',
@@ -75,10 +76,17 @@ class Applicant extends Model implements AuthenticatableContract {
      */
     protected $casts = [
         'verify'      => 'boolean',
-        'completed'   => 'boolean',        
+        'completed'   => 'boolean',
         'logged_in'   => 'boolean',
         'status'      => 'boolean'
     ];
+
+	// Every Applicant Belongs to Career
+    public function career() {
+
+        return $this->belongsTo('App\Modules\Career\Model\Career','attribute_id','id');
+
+    }
 
     // Scope query for active status field
     public function scopeActive($query) {

@@ -14,7 +14,7 @@
 @if ($rows->count())
 <div class="row">
 	<div class="col-xs-12">
-		<div class="clearfix">	
+		<div class="clearfix">
 			<div class="pull-right tableTools-container"></div>
 		</div>
 		{!! Form::open(['route'=>'admin.participants.change']) !!}
@@ -26,7 +26,7 @@
 					<th class="col-lg-2">Name</th>
 					<th class="col-lg-3">Email</th>
 					<th class="col-lg-3">Status</th>
-					<th class="col-lg-2">Join Date</th>	
+					<th class="col-lg-2">Join Date</th>
 					<th class="col-lg-6 col-xs-3">Actions</th>
 				</tr>
 			</thead>
@@ -38,13 +38,13 @@
 							<input type="checkbox" class="ace" name="check[]" id="check_<?php echo $row->id; ?>" value="{{ $row->id }}" />
 							<span class="lbl"></span>
 						</label>
-					</td>					
+					</td>
 					<td>{{ $row->name }} {{ '('.$row->provider.')' }} </td>
-					<td>{{ $row->email }}</td>					
+					<td>{{ $row->email }}</td>
 					<td>
-						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">							
-							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span> 
-							@foreach (config('setting.status') as $config => $val)							
+						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
+							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span>
+							@foreach (config('setting.status') as $config => $val)
 								{{ $val == $row->status ? $config : '' }}
 							@endforeach
 		                </span>
@@ -65,18 +65,18 @@
 							<!--a data-rel="tooltip" data-original-title="Permanent Delete" href="" class="btn btn-xs btn-warning tooltip-default">
 								<i class="ace-icon fa fa-flag bigger-120"></i>
 							</a-->
-							@else 
+							@else
 							<a data-rel="tooltip" data-original-title="Restore!" href="{{route('admin.participants.restored', $row->id)}}" class="btn btn-xs btn-primary tooltip-default">
 								<i class="ace-icon fa fa-save bigger-120"></i>
 							</a>
-							<a data-rel="tooltip" data-original-title="Permanent Delete!" href="{{route('admin.participants.delete', $row->id)}}" class="btn btn-xs btn-danger tooltip-default">
+							<a title="Permanent Delete!" href="{{route('admin.participants.delete', $row->id)}}" class="btn btn-xs btn-danger">
 								<i class="ace-icon fa fa-trash bigger-120"></i>
 							</a>
 							@endif
 						</div>
 					</td>
 				</tr>
-				@endforeach				
+				@endforeach
 			</tbody>
 			<tr>
 			    <td id="corner"><span class="glyphicon glyphicon-minus"></span></td>
@@ -93,7 +93,7 @@
 						</select>
 						</div>
 				      </div>
-				 </div>   
+				 </div>
 			    </td>
 			</tr>
 		</table>

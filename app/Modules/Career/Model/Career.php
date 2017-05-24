@@ -38,9 +38,17 @@ class Career extends Model {
     // Instead, a deleted_at timestamp is set on the record.
     protected $dates = ['deleted_at'];
 
+    // Every Career Belongs to Division
     public function division() {
 
         return $this->belongsTo('App\Modules\Career\Model\Division','division_id','id');
+
+    }
+
+    // Every Career has many applicants
+    public function applicants() {
+
+        return $this->hasMany('App\Modules\Career\Model\Applicant','attribute_id');
 
     }
 

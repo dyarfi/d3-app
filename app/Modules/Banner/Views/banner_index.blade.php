@@ -69,7 +69,7 @@
 							<a data-rel="tooltip" data-original-title="Restore!" href="{{route('admin.banners.restored', $row->id)}}" class="btn btn-xs btn-primary tooltip-default">
 								<i class="ace-icon fa fa-save bigger-120"></i>
 							</a>
-							<a data-rel="tooltip" data-original-title="Permanent Delete!" href="{{route('admin.banners.delete', $row->id)}}" class="btn btn-xs btn-danger tooltip-default">
+							<a title="Permanent Delete!" href="{{route('admin.banners.delete', $row->id)}}" class="btn btn-xs btn-danger">
 								<i class="ace-icon fa fa-trash bigger-120"></i>
 							</a>
 							@endif

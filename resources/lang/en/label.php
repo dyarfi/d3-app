@@ -44,6 +44,7 @@ return [
 	'enter_phone' => 'Enter your Phone.',
 	'enter_subject' => 'Enter your Subject.',
 	'enter_description' => 'Enter your Description.',
+	'enter_message' => 'Enter your Message.',
 	// Register form
 	"register"=> "Register",
 	"name"=>"Name",
@@ -53,7 +54,11 @@ return [
 	"password"=>"Password",
 	"confirm_password"=>"Confirm Password",
 	// Other Input Labels
-	"subject"=>"Subject",
+	'subject'=>'Subject',
+	'email'=>'email',
+	'phone'=>'Phone',
+	'message'=>'Message',
+	'send_message'=>'Send Message',
 	// Alert text
 	"problems" => "There were some problems with your input",
 	'check_form' => 'Check your input fields for errors',

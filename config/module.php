@@ -56,6 +56,12 @@
 		       		// Model
 		       		'Model' => ['Applicant','Career','Division']
 		       	],
+		       	'Contact' => [
+		       		// Controller
+		       		'Controller' => ['Contacts'],
+		       		// Model
+		       		'Model' => ['Contact']
+		       	],
 		       	'Participant' => [
 		       		// Controller
 		       		'Controller' => ['Participants','Images'],

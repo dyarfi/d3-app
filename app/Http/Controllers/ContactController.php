@@ -53,11 +53,12 @@ class ContactController extends BasePublic {
  		$data = Input::all();
 
 	    $rules = array(
-		  	'name' => 'required',
-		  	'email' => 'required|email',
-			'subject' => 'required',
+		  	'contactform_name' => 'required',
+		  	'contactform_email' => 'required|email',
+			'contactform_subject' => 'required',
+			'contactform_phone' => 'required',
+			'contactform_message' => 'required',
 			'g-recaptcha-response' => 'required|captcha',
-			'description' => 'required',
 		);
 
 		$validator = Validator::make($data, $rules);

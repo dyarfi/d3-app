@@ -1129,7 +1129,9 @@ var SEMICOLON = SEMICOLON || {};
 					});
 					return false;
 				})
-			$( "#birthdate, .datepicker, #jobform_birthdate, #jobform_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth:true,changeYear:true,yearRange:"-65:+0",});
+			if ($.fn.datepicker) {
+				$( "#birthdate, .datepicker, #jobform_birthdate, #jobform_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth:true,changeYear:true,yearRange:"-65:+0",});
+			}
 			/** CAREER PAGE *** [end] ***/
 
 		}

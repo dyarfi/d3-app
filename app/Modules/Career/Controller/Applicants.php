@@ -24,17 +24,17 @@ class Applicants extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin',['except'=>'profile']);
 
 		// Load applicants and get repository data from Auth
 		$this->applicants = new Applicant;
 
-		
+
 	}
 
 	/**
@@ -44,13 +44,13 @@ class Applicants extends BaseAdmin {
 	 */
 	public function index()
 	{
-		
-		// Set return data 
-	   	$applicants = Input::get('path') === 'trashed' ? $this->applicants->onlyTrashed()->get() : $this->applicants->orderBy('created_at','desc')->get();
 
-	   	// Get deleted count
-		$deleted = $this->applicants->onlyTrashed()->get()->count();
-	   	
+		// Set return data
+	   	$applicants = Input::get('path') === 'trashed' ? $this->applicants->with('career')->onlyTrashed()->get() : $this->applicants->with('career')->orderBy('created_at','desc')->get();
+
+		// Get deleted count
+		$deleted = $this->applicants->with('career')->onlyTrashed()->get()->count();
+
 	   	// Set data to return
 	   	$data = ['rows'=>$applicants,'deleted'=>$deleted,'junked'=>Input::get('path')];
 
@@ -63,8 +63,8 @@ class Applicants extends BaseAdmin {
 	   				];
 
 	   	return $this->view('Career::applicant_index')->data($data)->scripts($scripts)->title('Applicants List');
-	}	
-	
+	}
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -75,15 +75,15 @@ class Applicants extends BaseAdmin {
 	{
 		// Get data from database
         $applicant = $this->applicants->findOrFail($id);
-        
+
         // Read ACL settings config for any permission access
         $acl = config('setting.acl');
-        	               	       
+
 		// Set data to return
 	   	$data = ['row'=>$applicant,'acl'=>$acl];
 
 	   	// Return data and view
-	   	return $this->view('Career::applicant_show')->data($data)->title('View Applicant'); 
+	   	return $this->view('Career::applicant_show')->data($data)->title('View Applicant');
 
 	}
 
@@ -114,7 +114,7 @@ class Applicants extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -139,10 +139,10 @@ class Applicants extends BaseAdmin {
 	{
 		if ($applicant = $this->applicants->find($id))
 		{
-			
+
 			// Add deleted_at and not completely delete
 			$applicant->delete();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.applicants.index'))->with('success', 'Applicant Trashed!');
 		}
@@ -184,7 +184,7 @@ class Applicants extends BaseAdmin {
 		{
 
 			// Delete from pivot table many to many
-			$this->applicants->onlyTrashed()->find($id)->roles()->detach();
+			$this->applicants->onlyTrashed()->find($id);
 
 			// Permanently delete
 			$applicant->forceDelete();
@@ -203,10 +203,10 @@ class Applicants extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
-		{		
+		{
 			if ( ! $row = $this->applicants->find($id))
 			{
 				return Redirect::to(route('admin.applicants.index'));
@@ -230,18 +230,18 @@ class Applicants extends BaseAdmin {
 	protected function processForm($mode, $id = null)
 	{
 		$input = array_filter(Input::all());
-		
+
 		$rules = [
 			'first_name' => 'required',
-			'last_name'  => 'required',		
+			'last_name'  => 'required',
 			'email'      => 'required|unique:applicants'
 		];
 
 		if ($id)
 		{
-			
+
 			if (isset($input['_private'])) {
-				
+
 				list($csrf, $email, $role_id) = explode('::', base64_decode($input['_private']));
 
 				if ($csrf == $input['_token']) {
@@ -261,24 +261,24 @@ class Applicants extends BaseAdmin {
 			if ($messages->isEmpty())
 			{
 
-				
+
 				// Get applicant model to update other profile data
 				$applicant->update($input);
 
 				return Redirect::back()->withInput()->with('success', 'Applicant Updated!');
-				
+
 			}
 		}
 		else
 		{
-			
+
 			$messages = $this->validateApplicant($input, $rules);
 
 			if ($messages->isEmpty())
 			{
 				// Create applicant into the database
 				$applicant = Applicant::create($input);
-				
+
 				// Syncing relationship Many To Many // Create New
 				$applicant->roles()->sync(['role_id'=>$input['role_id']]);
 
@@ -303,7 +303,7 @@ class Applicants extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
-		
+
 		if (Input::get('check') !='') {
 
 		    $rows	= Input::get('check');
@@ -316,7 +316,7 @@ class Applicants extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.applicants.index'))->with('success', 'Applicant Status Changed!');
 
-		} else {	
+		} else {
 
 		    // Set message
 		    return Redirect::to(route('admin.applicants.index'))->with('error','Data not Available!');

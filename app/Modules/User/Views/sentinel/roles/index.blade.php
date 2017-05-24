@@ -25,11 +25,11 @@
 		<tr class="{{ $row->deleted_at ? ' bg-warning' :'' }}">
 			<td>{{ $row->name }}</td>
 			<td>{{ $row->slug }}
-			</td>			
+			</td>
 			<td>
-				{!! (!empty($row->permissions['admin']) && $row->permissions['admin'] === true) ? '<span class="label label-success arrowed-in arrowed-in-right"><span class="fa fa-user fa-sm"></span> Superadmin</span>' 
+				{!! (!empty($row->permissions['admin']) && $row->permissions['admin'] === true) ? '<span class="label label-success arrowed-in arrowed-in-right"><span class="fa fa-user fa-sm"></span> Superadmin</span>'
 				: '<span class="label label-danger arrowed-in arrowed-in-right"><span class="fa fa-ban fa-sm"></span> General</span>' !!}</td>
-			<td>			
+			<td>
 				<span class="label label-info">
 					@if(!empty($row->permissions['admin']) && $row->permissions['admin'] == true)
 						[{{ ucwords(implode(', ', array_keys($row->permissions))) }}]
@@ -45,7 +45,7 @@
 						@endif
 					@endif
 				</span>
-			</td>	
+			</td>
 			<td>
 				<div class="btn-group">
 					@if (!$row->deleted_at)
@@ -55,7 +55,7 @@
 					<a data-rel="tooltip" data-original-title="Edit"  href="{{ route('admin.roles.edit', $row->id) }}" class="btn btn-xs btn-info tooltip-default">
 						<i class="ace-icon fa fa-pencil bigger-120"></i>
 					</a>
-					@if(Sentinel::getUser()->roles->first()->id != $row->id)							
+					@if(Sentinel::getUser()->roles->first()->id != $row->id)
 					<a data-rel="tooltip" data-original-title="Trashed"  href="{{ route('admin.roles.trash', $row->id) }}" class="btn btn-xs btn-danger tooltip-default">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</a>
@@ -63,16 +63,16 @@
 					<!--a data-rel="tooltip" data-original-title="Permanent Delete" href="" class="btn btn-xs btn-warning tooltip-default">
 						<i class="ace-icon fa fa-flag bigger-120"></i>
 					</a-->
-					@else 
+					@else
 						<a data-rel="tooltip" data-original-title="Restore!" href="{{route('admin.roles.restored', $row->id)}}" class="btn btn-xs btn-primary tooltip-default">
 							<i class="ace-icon fa fa-save bigger-120"></i>
 						</a>
-						<a data-rel="tooltip" data-original-title="Permanent Delete!" href="{{route('admin.roles.delete', $row->id)}}" class="btn btn-xs btn-danger tooltip-default">
+						<a title="Permanent Delete!" href="{{route('admin.roles.delete', $row->id)}}" class="btn btn-xs btn-danger">
 							<i class="ace-icon fa fa-trash bigger-120"></i>
 						</a>
 					@endif
 				</div>
-					
+
 			</td>
 		</tr>
 		@endforeach

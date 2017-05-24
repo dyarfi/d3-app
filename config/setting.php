@@ -150,6 +150,18 @@ return [
 
 					]
 				],
+				// Contact modules will be in the App Modules directory
+				['Contact' => [
+						//------ Contact controller
+						['Contacts' => [
+								// Action for first index
+								'action' => ['contacts.index'],
+								// Controller method list
+								'method' => ['contacts.index','contacts.edit','contacts.update','contacts.change','contacts.create','contacts.store','contacts.trash','contacts.delete','contacts.restored','contacts.show']
+							]
+						]
+					]
+				],
 				// Participant modules will be in the App Modules directory
 				['Participant' => [
 						//------ Participants controller

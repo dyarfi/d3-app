@@ -13,10 +13,10 @@
 	    	   <span class="caret"></span>
 		  	</button>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				<li><a href="{{route('admin.users.export','rel=xls')}}" class=""><span class="fa fa-file-excel-o"></span> XLS</a></li>		
-				<li><a href="{{route('admin.users.export','rel=csv')}}" class=""><span class="fa fa-file-text-o"></span> CSV</a></li>				
+				<li><a href="{{route('admin.users.export','rel=xls')}}" class=""><span class="fa fa-file-excel-o"></span> XLS</a></li>
+				<li><a href="{{route('admin.users.export','rel=csv')}}" class=""><span class="fa fa-file-text-o"></span> CSV</a></li>
 			</ul>
-		</div>		
+		</div>
 	</div>
 </div>
 
@@ -28,7 +28,7 @@
 @if ($rows->count())
 <div class="row">
 	<div class="col-xs-12">
-		<div class="clearfix">	
+		<div class="clearfix">
 			<div class="pull-right tableTools-container"></div>
 		</div>
 		{!! Form::open(['route'=>'admin.users.index']) !!}
@@ -39,7 +39,7 @@
 					<th class="col-lg-2">Name</th>
 					<th class="col-lg-3">Email</th>
 					<th class="col-lg-3">Role</th>
-					<th class="col-lg-2">Created At</th>	
+					<th class="col-lg-2">Created At</th>
 					<th class="col-lg-6 col-xs-3">Actions</th>
 				</tr>
 			</thead>
@@ -47,17 +47,17 @@
 				@foreach ($rows as $row)
 				<tr class="{{ $row->deleted_at ? ' bg-warning' :'' }}">
 					<td class="center">
-						@if(Sentinel::getUser()->id != $row->id)								
+						@if(Sentinel::getUser()->id != $row->id)
 							<label class="pos-rel">
 								<input type="checkbox" class="ace" />
 								<span class="lbl"></span>
 							</label>
-						@endif	
-					</td>					
+						@endif
+					</td>
 					<td>
 						@if ($row->first_name || $row->last_name)
 						{{ $row->first_name }} {{ $row->last_name }}
-						@else 
+						@else
 						{{ $row->username }}
 						@endif
 					</td>
@@ -67,25 +67,25 @@
 							{{ $row->email }}
 						</span>
 						@else
-							{{ $row->email }}						
+							{{ $row->email }}
 						@endif
 					</td>
 					<td>
 					@if ($row->roles->count() > 0)
-						@foreach($row->roles as $roles) 
+						@foreach($row->roles as $roles)
 							@if ($roles->id === 1)
-								<span class="label label-success arrowed-in arrowed-in-right">							
+								<span class="label label-success arrowed-in arrowed-in-right">
 									<span class="fa fa-user fa-sm"></span> {{ $roles->name }}
 				                </span>
-			              	@else				             
-								<span class="label label-warning arrowed-in arrowed-in-right">														
+			              	@else
+								<span class="label label-warning arrowed-in arrowed-in-right">
 									<span class="fa fa-users fa-sm"></span> {{ $roles->name }}
-								</span>   
+								</span>
 							@endif
-						@endforeach 
+						@endforeach
 		            @else
 		                <div class="label label-danger arrowed-in arrowed-in-right"><span class="fa fa-ban fa-sm"></span> No Role</div>
-		            @endif  
+		            @endif
 		        	</td>
 		        	<td>
 		        		{{ $row->created_at}}
@@ -107,18 +107,18 @@
 							<!--a data-rel="tooltip" data-original-title="Permanent Delete" href="" class="btn btn-xs btn-warning tooltip-default">
 								<i class="ace-icon fa fa-flag bigger-120"></i>
 							</a-->
-							@else 
+							@else
 							<a data-rel="tooltip" data-original-title="Restore!" href="{{route('admin.users.restored', $row->id)}}" class="btn btn-xs btn-primary tooltip-default">
 								<i class="ace-icon fa fa-save bigger-120"></i>
 							</a>
-							<a data-rel="tooltip" data-original-title="Permanent Delete!" href="{{route('admin.users.delete', $row->id)}}" class="btn btn-xs btn-danger tooltip-default">
+							<a title="Permanent Delete!" href="{{route('admin.users.delete', $row->id)}}" class="btn btn-xs btn-danger">
 								<i class="ace-icon fa fa-trash bigger-120"></i>
 							</a>
 							@endif
 						</div>
 					</td>
 				</tr>
-				@endforeach				
+				@endforeach
 			</tbody>
 			<tr>
 			    <td id="corner"><span class="glyphicon glyphicon-minus"></span></td>
@@ -135,7 +135,7 @@
 						</select>
 						</div>
 				      </div>
-				 </div>   
+				 </div>
 			    </td>
 			</tr>
 		</table>

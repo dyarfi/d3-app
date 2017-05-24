@@ -136,7 +136,13 @@ return [
 		'jobform_position' 		=> 'Posisi',
 		'jobform_start' 		=> 'Tanggal Mulai',
 		'jobform_application'   => 'Aplikasi',
-		'jobform_cv'   			=> 'CV'
+		'jobform_cv'   			=> 'CV',
+		// Contact form
+		'contactform_name'		=> 'Nama',
+		'contactform_email'		=> 'Email',
+		'contactform_phone'		=> 'Telepon',
+		'contactform_subject'	=> 'Subjek',
+		'contactform_message'	=> 'Pesan'
 		],
 	'captcha'	=> 'Captcha harus di isi',
 ];

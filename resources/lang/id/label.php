@@ -44,6 +44,7 @@ return [
 	'enter_phone' => 'Telpon Anda.',
 	'enter_subject' => 'Subjek Anda.',
 	'enter_description' => 'Deskripsi Anda.',
+	'enter_message' => 'Pesan Anda.',
 	// Register form
 	"register"=> "Daftar",
 	"name"=>"Nama",
@@ -53,7 +54,11 @@ return [
 	"password"=>"Password",
 	"confirm_password"=>"Konfirmasi Password",
 	// Other Input Labels
-	"subject"=>"Subjek",
+	'subject'=>'Subjek',
+	'email'=>'Email',
+	'phone'=>'Telepon',
+	'message'=>'Pesan',
+	'send_message'=>'Kirim Pesan',
 	// Alert text
 	"problems" => "Ada beberapa kesalahan dalam input",
 	'check_form' => 'Periksa kembali form input untuk kesalahan'
