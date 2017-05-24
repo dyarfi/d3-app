@@ -3444,6 +3444,7 @@ var SEMICOLON = SEMICOLON || {};
 							defButton.html('<i class="icon-line-loader icon-spin nomargin"></i>');
 						} else {
 							$(form).find('.form-process').fadeIn();
+							return true;
 						}
 
 						$(form).ajaxSubmit({

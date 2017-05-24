@@ -38,6 +38,7 @@ return [
 	'continue' => 'Continue',
 	'apply' => 'Apply',
 	'apply_social' => 'Apply using social sign in',
+	'send_us_email' => 'Send us an Email',
 	// Placeholders Labels
 	'enter_name' => 'Enter your Name.',
 	'enter_email' => 'Enter your Email.',

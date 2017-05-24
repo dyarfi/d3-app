@@ -294,6 +294,19 @@ class Menus extends BaseAdmin {
 		      return Redirect::to(route('admin.menus.create'));
 		    }
 			*/
+			// checking file is valid.
+			$fileName = '';
+			if (!empty($input['jobform_cv']) && !$input['jobform_cv']->getError()) {
+				$destinationPath = public_path().'/uploads'; // upload path
+				$extension = $input['jobform_cv']->getClientOriginalExtension(); // getting image extension
+				$fileName = rand(11111,99999).'.'.$extension; // renaming image
+				$input['jobform_cv']->move($destinationPath, $fileName); // uploading file to given path
+				$uploaded = 1;
+				// sending back with message
+				// Session::flash('success', 'Upload successfully');
+				// return Redirect::to('careers/create');
+			}
+
 			if ($messages->isEmpty())
 			{
 				// Get all request

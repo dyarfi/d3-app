@@ -19,8 +19,8 @@
 			<div class="content-wrap">
 				<div class="container clearfix">
 					<div class="postcontent nobottommargin">
-						<h3>Send us an Email</h3>
-						<div class="contact-widget">
+						<h3>{{ trans('label.send_us_email') }}</h3>
+						<div class="quick-contact-widget">
 							<div class="contact-form-result"></div>
 								{!! Form::model($contact,
 									[
@@ -71,13 +71,14 @@
 									<span class="help-block">{{{ $errors->first('contactform_subject', ':message') }}}</span>
 								</div>
 								<div class="col_one_third col_last">
-									<label for="contactform-service">Services</label>
-									<select id="contactform-service" name="contactform-service" class="sm-form-control">
+									<label for="contactform_service">Services</label>
+									<select id="contactform_service" name="contactform_service" class="sm-form-control required">
 										<option value="">-- Select One --</option>
-										<option value="Wordpress">Business</option>
-										<option value="PHP / MySQL">Strategic</option>
-										<option value="HTML5 / CSS3">Web Development</option>
-										<option value="Graphic Design">Graphic Design</option>
+										<option value="Business">Business</option>
+										<option value="Strategic">Strategic</option>
+										<option value="Web Development">Web Development</option>
+										<option value="Social Media">Social Media</option>
+										<option value="Media">Media</option>
 									</select>
 								</div>
 								<div class="clear"></div>

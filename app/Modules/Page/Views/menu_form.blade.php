@@ -31,6 +31,28 @@
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 
+	<div class="form-group{{ $errors->first('image', ' has-error') }}">
+		{!! Form::label('image', 'Menu Image:'); !!}
+		@if ($row->image)
+			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Menu Image:', ['class' => 'control-label center-block ace-file-input']) !!}
+			<img src="{{ asset('uploads/'.$row->image) }}" alt="{{ $row->image }}" class="image-alt" style="max-width:300px"/>
+			<div class="clearfix space-6"></div>
+		@endif
+		<div class="row">
+			<div class="col-xs-6">
+				<label class="ace-file-input">
+					{!! Form::file('image','',['class'=>'form-controls','id'=>'id-input-file-2']) !!}
+					<span class="ace-file-container" data-title="Choose">
+						<span class="ace-file-name" data-title="No File ...">
+							<i class=" ace-icon fa fa-upload"></i>
+						</span>
+					</span>
+				</label>
+			</div>
+		</div>
+		<span class="help-block red">{{{ $errors->first('image', ':message') }}}</span>
+	</div>
+
 	<div class="form-group{{ $errors->first('index', ' has-error') }}">
 		{!! Form::label('index', 'Index'); !!}
 		{!! Form::text('index',Input::old('index', $row->index),[

@@ -38,6 +38,7 @@ return [
 	'continue' => 'Lanjutkan',
 	'apply' => 'Lamar',
 	'apply_social' => 'Lamar menggunakan login media sosial',
+	'send_us_email' => 'Kirim sebuah pesan email kepada kami',	
 	// Placeholders Labels
 	'enter_name' => 'Nama Anda.',
 	'enter_email' => 'Email Anda.',

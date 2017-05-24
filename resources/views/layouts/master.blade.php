@@ -80,11 +80,11 @@
             </div>
         </div>
     </header>
-    <!--div class="container"-->
+    <div class="container">
         @include('partials.alerts.success')
         @include('partials.alerts.errors')
-        @yield('content')
-    <!--/div-->
+    </div>
+    @yield('content')
     <footer>
         <div id="copyrights">
             <div class="container clearfix">

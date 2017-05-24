@@ -4,6 +4,7 @@
 
 <h1>{{ $row->name }}</h1>
 <h3>{{ $row->subject }}</h3>
+<h3>{{ $row->about }}</h3>
 <p class="lead">
 @if ($row->image != '')
     <a href="{{ asset('uploads/'.$row->image) }}" target="_blank" title="{{ $row->image }}"/>
