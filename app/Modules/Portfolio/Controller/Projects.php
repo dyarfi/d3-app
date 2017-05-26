@@ -1,20 +1,20 @@
-<?php namespace App\Modules\Page\Controller;
+<?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
 use Route, Request, Sentinel, Session, Redirect, Input, Validator, View;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\Page\Model\Menu, App\Modules\Page\Model\Page;
+use App\Modules\Portfolio\Model\Portfolio, App\Modules\Portfolio\Model\Project, App\Modules\Portfolio\Model\Client;
 
-class Pages extends BaseAdmin {
+class Projects extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Pages repository.
+	 * Holds the Sentinel Projects repository.
 	 *
-	 * @var \Cartalyst\Sentinel\Pages\EloquentPage
+	 * @var \Cartalyst\Sentinel\Projects\EloquentProject
 	 */
-	public $pages;
+	public $projects;
 
 	/**
 	 * Create a new controller instance.
@@ -30,28 +30,31 @@ class Pages extends BaseAdmin {
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
-		// Load pages and get repository data from Sentinel
-		$this->pages = new Page;
-		$this->menus = new Menu;
+		// Load projects and get repository data from Sentinel
+		$this->projects = new Project;
+		$this->portfolios = new Portfolio;
+		$this->clients = new Client;
 
 	}
 
 	/**
-	 * Display a listing of pages.
+	 * Display a listing of projects.
 	 *
 	 * @return \Illuminate\View\View
 	 */
 	public function index()
 	{
 
+	   	//dd ($this->projects->find(1)->roles);
+
 		// Set return data
-	   	$pages = Input::get('path') === 'trashed' ? $this->pages->onlyTrashed()->get() : $this->pages->get();
+	   	$projects = Input::get('path') === 'trashed' ? $this->projects->with('client')->onlyTrashed() : $this->projects->get();
 
 	   	// Get deleted count
-		$deleted = $this->pages->onlyTrashed()->get()->count();
+		$deleted = $this->projects->with('client')->onlyTrashed()->get()->count();
 
 	   	// Set data to return
-	   	$data = ['rows'=>$pages,'deleted'=>$deleted,'junked'=>Input::get('path')];
+	   	$data = ['rows'=>$projects,'deleted'=>$deleted,'junked'=>Input::get('path')];
 
   		// Load needed scripts
 	   	$scripts = [
@@ -61,7 +64,7 @@ class Pages extends BaseAdmin {
 	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
 	   				];
 
-	   	return $this->view('Page::page_index')->data($data)->scripts($scripts)->title('Pages List');
+	   	return $this->view('Portfolio::project_index')->data($data)->scripts($scripts)->title('Projects List');
 	}
 
 	/**
@@ -73,18 +76,18 @@ class Pages extends BaseAdmin {
 	public function show($id)
 	{
 		// Get data from database
-        $page = $this->pages->findOrFail($id);
+        $project = $this->projects->findOrFail($id);
 
 		// Set data to return
-	   	$data = ['row'=>$page];
+	   	$data = ['row'=>$project];
 
 	   	// Return data and view
-	   	return $this->view('Page::page_show')->data($data)->title('View Page');
+	   	return $this->view('Portfolio::project_show')->data($data)->title('View Project');
 
 	}
 
 	/**
-	 * Show the form for creating new page.
+	 * Show the form for creating new project.
 	 *
 	 * @return \Illuminate\View\View
 	 */
@@ -94,7 +97,7 @@ class Pages extends BaseAdmin {
 	}
 
 	/**
-	 * Handle posting of the form for creating new page.
+	 * Handle posting of the form for creating new project.
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
@@ -104,7 +107,7 @@ class Pages extends BaseAdmin {
 	}
 
 	/**
-	 * Show the form for updating page.
+	 * Show the form for updating project.
 	 *
 	 * @param  int  $id
 	 * @return mixed
@@ -115,7 +118,7 @@ class Pages extends BaseAdmin {
 	}
 
 	/**
-	 * Handle posting of the form for updating page.
+	 * Handle posting of the form for updating project.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
@@ -126,48 +129,48 @@ class Pages extends BaseAdmin {
 	}
 
 	/**
-	 * Remove the specified page.
+	 * Remove the specified project.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function trash($id)
 	{
-		if ($page = $this->pages->find($id))
+		if ($project = $this->projects->find($id))
 		{
 
 			// Add deleted_at and not completely delete
-			$page->delete();
+			$project->delete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Trashed!');
+			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Trashed!');
 		}
 
-		return Redirect::to(route('admin.pages.index'))->with('error', 'Page Not Found!');
+		return Redirect::to(route('admin.projects.index'))->with('error', 'Project Not Found!');
 	}
 
 	/**
-	 * Restored the specified page.
+	 * Restored the specified project.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function restored($id)
 	{
-		if ($page = $this->pages->onlyTrashed()->find($id))
+		if ($project = $this->projects->onlyTrashed()->find($id))
 		{
 
 			// Restored back from deleted_at database
-			$page->restore();
+			$project->restore();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Restored!');
+			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Restored!');
 		}
 
-		return Redirect::to(route('admin.pages.index'))->with('error', 'Page Not Found!');
+		return Redirect::to(route('admin.projects.index'))->with('error', 'Project Not Found!');
 	}
 	/**
-	 * Remove the specified page.
+	 * Remove the specified project.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
@@ -175,20 +178,20 @@ class Pages extends BaseAdmin {
 	public function delete($id)
 	{
 
-		// Get page from id fetch
-		if ($page = $this->pages->onlyTrashed()->find($id))
+		// Get project from id fetch
+		if ($project = $this->projects->onlyTrashed()->find($id))
 		{
 
 			// Delete from pivot table many to many
-			$this->pages->onlyTrashed()->find($id)->roles()->detach();
+			$this->projects->onlyTrashed()->find($id)->roles()->detach();
 
 			// Permanently delete
-			$page->forceDelete();
+			$project->forceDelete();
 
-			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Permanently Deleted!');
+			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.pages.index'))->with('error', 'Page Not Found!');
+		return Redirect::to(route('admin.projects.index'))->with('error', 'Project Not Found!');
 	}
 
 	/**
@@ -203,19 +206,19 @@ class Pages extends BaseAdmin {
 
 		if ($id)
 		{
-			if ( ! $row = $this->pages->find($id))
+			if ( ! $row = $this->projects->find($id))
 			{
-				return Redirect::to(route('admin.pages.index'));
+				return Redirect::to(route('admin.projects.index'));
 			}
 		}
 		else
 		{
-			$row = $this->pages;
+			$row = $this->projects;
 		}
 
-		$menus = $this->menus->lists('name', 'id')->all();
+		$clients = $this->clients->lists('name', 'id')->all();
 
-		return $this->view('Page::page_form')->data(compact('mode', 'row', 'menus'))->title('Page '.$mode);
+		return $this->view('Portfolio::project_form')->data(compact('mode', 'row', 'clients'))->title('Project '.$mode);
 	}
 
 	/**
@@ -230,7 +233,7 @@ class Pages extends BaseAdmin {
 		$input = array_filter(Input::all());
 
 		$rules = [
-			'menu_id' => 'required',
+			'client_id' => 'required',
 			'name'  => 'required',
 			'description' => 'required',
 			'status' => 'required'
@@ -239,33 +242,33 @@ class Pages extends BaseAdmin {
 		if ($id)
 		{
 
-			$page = $this->pages->find($id);
-			$messages = $this->validatePage($input, $rules);
+			$project = $this->projects->find($id);
+			$messages = $this->validateProject($input, $rules);
 
 			if ($messages->isEmpty())
 			{
 
-				// Update page model data
-				$page->update($input);
+				// Update project model data
+				$project->update($input);
 
 			}
 		}
 		else
 		{
 
-			$messages = $this->validatePage($input, $rules);
+			$messages = $this->validateProject($input, $rules);
 
 			if ($messages->isEmpty())
 			{
-				// Create page into the database
-				$page = $this->pages->create($input);
+				// Create project into the database
+				$project = $this->projects->create($input);
 
 			}
 		}
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Updated!');;
+			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
@@ -285,27 +288,27 @@ class Pages extends BaseAdmin {
 
 		    foreach ($rows as $row) {
 				// Set id for load and change status
-				$this->pages->find($row)->update(['status' => Input::get('select_action')]);
+				$this->projects->find($row)->update(['status' => Input::get('select_action')]);
 		    }
 
 		    // Set message
-		    return Redirect::to(route('admin.pages.index'))->with('success', 'Page Status Changed!');
+		    return Redirect::to(route('admin.projects.index'))->with('success', 'Project Status Changed!');
 
 		} else {
 
 		    // Set message
-		    return Redirect::to(route('admin.pages.index'))->with('error','Data not Available!');
+		    return Redirect::to(route('admin.projects.index'))->with('error','Data not Available!');
 		}
 	}
 
 	/**
-	 * Validates a page.
+	 * Validates a project.
 	 *
 	 * @param  array  $data
 	 * @param  mixed  $id
 	 * @return \Illuminate\Support\MessageBag
 	 */
-	protected function validatePage($data, $rules)
+	protected function validateProject($data, $rules)
 	{
 		$validator = Validator::make($data, $rules);
 

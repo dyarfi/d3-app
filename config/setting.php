@@ -181,7 +181,36 @@ return [
 							]
 						]
 					]
+				],
+				// Portfolio modules will be in the App Modules directory
+				['Portfolio' => [
+						//------ Clients controller
+						['Clients' => [
+								// Action for first index
+								'action' => ['clients.index'],
+								// Controller method list
+								'method' => ['clients.index','clients.edit','clients.update','clients.change','clients.create','clients.store','clients.trash','clients.delete','clients.restored','clients.show']
+							]
+						],
+						//------ Projects controller
+						['Projects' => [
+								// Action for first index
+								'action' => ['projects.index'],
+								// Controller method list
+								'method' => ['projects.index','projects.edit','projects.update','projects.change','projects.create','projects.store','projects.trash','projects.delete','projects.restored','projects.show']
+							]
+						],
+						//------ Portfolios controller
+						['Portfolios' => [
+								// Action for first index
+								'action' => ['portfolios.index'],
+								// Controller method list
+								'method' => ['portfolios.index','portfolios.edit','portfolios.update','portfolios.change','portfolios.create','portfolios.store','portfolios.trash','portfolios.delete','portfolios.restored','portfolios.show']
+							]
+						]
+					]
 				]
+
 			 ],
 
 

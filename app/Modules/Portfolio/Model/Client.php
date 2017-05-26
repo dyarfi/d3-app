@@ -1,9 +1,9 @@
-<?php namespace App\Modules\Page\Model;
+<?php namespace App\Modules\Portfolio\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Menu extends Model {
+class Client extends Model {
 
 	// Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;
@@ -13,7 +13,7 @@ class Menu extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'menus';
+	protected $table = 'clients';
 
 		/**
      * Fillable fields
@@ -41,7 +41,8 @@ class Menu extends Model {
 	 */
 	protected $casts = [
 	    'attributes'  => 'object',
-	    'permissions' => 'array'
+        // 'status'      => 'boolean',
+	    // 'permissions' => 'array'
 	    // 'is_admin' => 'boolean',
 	];
 
@@ -51,11 +52,11 @@ class Menu extends Model {
 	 */
 	public function pages()
 	{
-		return $this->hasMany('App\Modules\Page\Model\Page','menu_id');
+		return $this->hasMany('App\Modules\Client\Model\Client','client_id');
 	}
 
 	/**
-	 * A menu belongs to a user.
+	 * A client belongs to a user.
 	 *
 	 */
 	public function user()

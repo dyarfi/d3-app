@@ -4,28 +4,40 @@
 @section('body')
 
 <div class="page-header">
-	<h1>{{ $mode == 'create' ? 'Create Menu' : 'Update Menu' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
+	<h1>{{ $mode == 'create' ? 'Create Portfolio' : 'Update Portfolio' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
 </div>
 <!--form method="post" action="" autocomplete="off"-->
 {!! Form::open([
-    'route' => ($mode == 'create') ? 'admin.menus.create' : ['admin.menus.update', $row->id],
+    'route' => ($mode == 'create') ? 'admin.portfolios.create' : ['admin.portfolios.update', $row->id],
 	'files' => true
 ]) !!}
 
 	<div class="form-group{{ $errors->first('name', ' has-error') }}">
 		{!! Form::label('name', 'Name'); !!}
 		{!! Form::text('name',Input::old('name', $row->name),[
-			'placeholder'=>'Enter the Menu Name.',
+			'placeholder'=>'Enter the Portfolio Name.',
 			'name'=>'name',
 			'id'=>'name',
 			'class'=>'form-control']); !!}
 		<span class="help-block">{{{ $errors->first('name', ':message') }}}</span>
 	</div>
 
+	<div class="form-group{{ $errors->first('client_id', ' has-error') }}">
+		<label for="client_id">Clients</label>
+		{!! Form::select('client_id', $clients, Input::get('client_id') ? Input::get('client_id') : Input::old('client_id', @$row->client_id),['class'=>'form-control']); !!}
+		<span class="help-block">{{{ $errors->first('client_id', ':message') }}}</span>
+	</div>
+
+	<div class="form-group{{ $errors->first('project_id', ' has-error') }}">
+		<label for="project_id">Projects</label>
+		{!! Form::select('project_id', $projects, Input::get('project_id') ? Input::get('project_id') : Input::old('project_id', @$row->project_id),['class'=>'form-control']); !!}
+		<span class="help-block">{{{ $errors->first('project_id', ':message') }}}</span>
+	</div>
+
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		{!! Form::label('description', 'Description'); !!}
 		{!! Form::textarea('description',Input::old('description', $row->description),[
-			'placeholder'=>'Enter the Menu Description.',
+			'placeholder'=>'Enter the Portfolio Description.',
 			'name'=>'description',
 			'id'=>'description',
 			'class'=>'form-control']); !!}
@@ -33,9 +45,9 @@
 	</div>
 
 	<div class="form-group{{ $errors->first('image', ' has-error') }}">
-		{!! Form::label('image', 'Menu Image:'); !!}
+		{!! Form::label('image', 'Portfolio Image:'); !!}
 		@if ($row->image)
-			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Menu Image:', ['class' => 'control-label center-block ace-file-input']) !!}
+			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Portfolio Image:', ['class' => 'control-label center-block ace-file-input']) !!}
 			<img src="{{ asset('uploads/'.$row->image) }}" alt="{{ $row->image }}" class="image-alt" style="max-width:300px"/>
 			<div class="clearfix space-6"></div>
 		@endif
@@ -56,8 +68,8 @@
 
 	<div class="form-group{{ $errors->first('index', ' has-error') }}">
 		{!! Form::label('index', 'Index'); !!}
-		{!! Form::text('index',Input::old('index', $row->index),[
-			'placeholder'=>'Enter the Menu Index.',
+		{!! Form::text('index',($row->index ? Input::old('index', $row->index) : $model->max('index') + 1),[
+			'placeholder'=>'Enter the Portfolio Index.',
 			'name'=>'index',
 			'id'=>'index',
 			'class'=>'form-control']); !!}
@@ -69,7 +81,7 @@
 		<select id="status" name="status" class="form-control input-sm">
 			<option value="">&nbsp;</option>
 			@foreach (config('setting.status') as $config => $val)
-				<option value="{{ Input::old('status', $val) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
+				<option value="{{ $val ? $val : Input::old('status', $row->status) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
 			@endforeach
 		</select>
 	</div>

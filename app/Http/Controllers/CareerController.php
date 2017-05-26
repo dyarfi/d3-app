@@ -62,7 +62,7 @@ class CareerController extends BasePublic {
 	   	$data = ['careers'=>$careers,'career_list'=>$career_list,'menu'=>$this->menu->where('slug', $path)->first(),'applicant'=>$this->applicant];
 
 	   	// Return data and view
-	   	return $this->view('careers.index')->data($data)->scripts($scripts)->styles($styles)->title('Career - Laravel Careers');
+	   	return $this->view('menus.career')->data($data)->scripts($scripts)->styles($styles)->title('Career - Laravel Careers');
 	}
 
 	/**
@@ -286,7 +286,7 @@ class CareerController extends BasePublic {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  string $slug
 	 * @return Response
 	 */
 	public function show($slug)
@@ -297,7 +297,7 @@ class CareerController extends BasePublic {
 	   	$data = ['career'=>$career];
 
 	   	// Return data and view
-	   	return $this->view('careers.show')->data($data)->title('View Careers - Laravel Careers');
+	   	return $this->view('careers.show')->data($data)->title('View Careers - Careers');
 
 	}
 

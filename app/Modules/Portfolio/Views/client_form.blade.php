@@ -4,18 +4,18 @@
 @section('body')
 
 <div class="page-header">
-	<h1>{{ $mode == 'create' ? 'Create Menu' : 'Update Menu' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
+	<h1>{{ $mode == 'create' ? 'Create Client' : 'Update Client' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
 </div>
 <!--form method="post" action="" autocomplete="off"-->
 {!! Form::open([
-    'route' => ($mode == 'create') ? 'admin.menus.create' : ['admin.menus.update', $row->id],
+    'route' => ($mode == 'create') ? 'admin.clients.create' : ['admin.clients.update', $row->id],
 	'files' => true
 ]) !!}
 
 	<div class="form-group{{ $errors->first('name', ' has-error') }}">
 		{!! Form::label('name', 'Name'); !!}
 		{!! Form::text('name',Input::old('name', $row->name),[
-			'placeholder'=>'Enter the Menu Name.',
+			'placeholder'=>'Enter the Client Name.',
 			'name'=>'name',
 			'id'=>'name',
 			'class'=>'form-control']); !!}
@@ -25,7 +25,7 @@
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		{!! Form::label('description', 'Description'); !!}
 		{!! Form::textarea('description',Input::old('description', $row->description),[
-			'placeholder'=>'Enter the Menu Description.',
+			'placeholder'=>'Enter the Client Description.',
 			'name'=>'description',
 			'id'=>'description',
 			'class'=>'form-control']); !!}
@@ -33,9 +33,9 @@
 	</div>
 
 	<div class="form-group{{ $errors->first('image', ' has-error') }}">
-		{!! Form::label('image', 'Menu Image:'); !!}
+		{!! Form::label('image', 'Client Image:'); !!}
 		@if ($row->image)
-			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Menu Image:', ['class' => 'control-label center-block ace-file-input']) !!}
+			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Client Image:', ['class' => 'control-label center-block ace-file-input']) !!}
 			<img src="{{ asset('uploads/'.$row->image) }}" alt="{{ $row->image }}" class="image-alt" style="max-width:300px"/>
 			<div class="clearfix space-6"></div>
 		@endif
@@ -56,8 +56,8 @@
 
 	<div class="form-group{{ $errors->first('index', ' has-error') }}">
 		{!! Form::label('index', 'Index'); !!}
-		{!! Form::text('index',Input::old('index', $row->index),[
-			'placeholder'=>'Enter the Menu Index.',
+		{!! Form::text('index',($row->index ? Input::old('index', $row->index) : $model->max('index') + 1),[
+			'placeholder'=>'Enter the Client Index.',
 			'name'=>'index',
 			'id'=>'index',
 			'class'=>'form-control']); !!}
@@ -69,7 +69,7 @@
 		<select id="status" name="status" class="form-control input-sm">
 			<option value="">&nbsp;</option>
 			@foreach (config('setting.status') as $config => $val)
-				<option value="{{ Input::old('status', $val) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
+				<option value="{{ $val ? $val : Input::old('status', $row->status) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
 			@endforeach
 		</select>
 	</div>

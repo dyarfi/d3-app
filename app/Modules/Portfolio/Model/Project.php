@@ -1,9 +1,9 @@
-<?php namespace App\Modules\Page\Model;
+<?php namespace App\Modules\Portfolio\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Menu extends Model {
+class Project extends Model {
 
 	// Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;
@@ -13,53 +13,53 @@ class Menu extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'menus';
+	protected $table = 'projects';
 
-		/**
+	/**
      * Fillable fields
      *
      * @var array
      */
     protected $fillable = [
+        'client_id',
         'slug',
         'name',
-        'image',
         'description',
         'attributes',
         'options',
-        'status',
-		'index'
+        'status'
     ];
 
     // Instead, a deleted_at timestamp is set on the record.
     protected $dates = ['deleted_at'];
 
     /**
-	 * The attributes that should be casted to native types.
-	 *
-	 * @var array
-	 */
-	protected $casts = [
-	    'attributes'  => 'object',
-	    'permissions' => 'array'
-	    // 'is_admin' => 'boolean',
-	];
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'attributes'  => 'object',
+        // 'status'      => 'boolean',
+        // 'permissions' => 'array'
+        // 'is_admin' => 'boolean',
+    ];
 
-	/**
-	 * A user can have many tasks.
-	 *
-	 */
-	public function pages()
-	{
-		return $this->hasMany('App\Modules\Page\Model\Page','menu_id');
-	}
+    /**
+     * A project belongs to a menu.
+     *
+     */
+    public function client() {
 
-	/**
-	 * A menu belongs to a user.
-	 *
-	 */
-	public function user()
-    {
+        return $this->belongsTo('App\Modules\Portfolio\Model\Client','client_id','id');
+
+    }
+
+    /**
+     * A project belongs to a user.
+     *
+     */
+    public function user() {
 
         return $this->belongsTo('App\Modules\User\Model\User','user_id','id');
 
@@ -72,7 +72,7 @@ class Menu extends Model {
 
     }
 
-	// Scope query for slug field
+    // Scope query for slug field
     public function scopeSlug($query, $string) {
 
         return $query->where('slug', $string)->firstOrFail();

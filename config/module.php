@@ -20,35 +20,11 @@
 		       		// Model
 		       		'Model' => ''
 		       	],
-		       	'User' => [
-		       		// Controller
-		       		'Controller' => ['Users','Roles','Settings'],
-		       		// Model
-		       		'Model' => ['User','Role','RoleUser','Setting']
-		       	],
-		       	'Page' => [
-		       		// Controller
-		       		'Controller' => ['Menus','Pages'],
-		       		// Model
-		       		'Model' => ['Menu','Page']
-		       	],
 		       	'Banner' => [
 		       		// Controller
 		       		'Controller' => ['Banners'],
 		       		// Model
 		       		'Model' => ['Banner']
-		       	],
-		       	'Task' => [
-		       		// Controller
-		       		'Controller' => ['Task'],
-		       		// Model
-		       		'Model' => ''
-		       	],
-		       	'Employee' => [
-		       		// Controller
-		       		'Controller' => ['Employees'],
-		       		// Model
-		       		'Model' => ''
 		       	],
 		       	'Career' => [
 		       		// Controller
@@ -62,11 +38,41 @@
 		       		// Model
 		       		'Model' => ['Contact']
 		       	],
+		       	'Employee' => [
+		       		// Controller
+		       		'Controller' => ['Employees'],
+		       		// Model
+		       		'Model' => ''
+		       	],
+		       	'Page' => [
+		       		// Controller
+		       		'Controller' => ['Menus','Pages'],
+		       		// Model
+		       		'Model' => ['Menu','Page']
+		       	],
 		       	'Participant' => [
 		       		// Controller
 		       		'Controller' => ['Participants','Images'],
 		       		// Model
 		       		'Model' => ['Participant']
-		       ]
+		       	],
+		       	'Portfolio' => [
+		       		// Controller
+		       		'Controller' => ['Portfolios','Projects','Clients'],
+		       		// Model
+		       		'Model' => ['Portfolio','Project','Client']
+		       	],
+		       	'Task' => [
+		       		// Controller
+		       		'Controller' => ['Task'],
+		       		// Model
+		       		'Model' => ''
+		       	],
+		       	'User' => [
+		       		// Controller
+		       		'Controller' => ['Users','Roles','Settings'],
+		       		// Model
+		       		'Model' => ['User','Role','RoleUser','Setting']
+		       	]
 	    ]
 	];

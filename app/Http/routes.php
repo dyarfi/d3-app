@@ -74,6 +74,7 @@ View::share('company_name', $setting['company_name']);
 Route::get('about_us', ['as'=>'about_us','uses'=>'AboutUsController@index']);
 Route::get('services', ['as'=>'services','uses'=>'ServicesController@index']);
 Route::get('portfolio', ['as'=>'portfolio','uses'=>'PortfolioController@index']);
+Route::get('portfolio/{slug}', ['as'=>'portfolio.show','uses'=>'PortfolioController@show']);
 Route::get('blog', ['as'=>'blog','uses'=>'BlogController@index']);
 
 Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);

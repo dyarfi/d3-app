@@ -230,6 +230,7 @@ class Menus extends BaseAdmin {
 			//'slug' 		   => 'required',
 			'description'  => 'required',
 			'status'	   => 'boolean',
+			'image' 	   => 'required|mimes:jpg,jpeg,png|max:800',
 			'index'	   	   => 'numeric|digits_between:1,999',
 		];
 
@@ -258,6 +259,19 @@ class Menus extends BaseAdmin {
 		    	  $fileName = old('image') ? old('image') : $menu->image;
 		    }
 			*/
+			//dd($input);
+			$fileName = '';
+			if (!empty($input['image']) && !$input['image']->getError()) {
+				$destinationPath = public_path().'/uploads'; // upload path
+				$extension = $input['image']->getClientOriginalExtension(); // getting image extension
+				$fileName = rand(11111,99999).'_menu.'.$extension; // renaming image
+				$input['image']->move($destinationPath, $fileName); // uploading file to given path
+				$uploaded = 1;
+				// sending back with message
+				// Session::flash('success', 'Upload successfully');
+				// return Redirect::to('careers/create');
+			}
+
 			if ($messages->isEmpty())
 			{
 				// Get all request
@@ -296,11 +310,11 @@ class Menus extends BaseAdmin {
 			*/
 			// checking file is valid.
 			$fileName = '';
-			if (!empty($input['jobform_cv']) && !$input['jobform_cv']->getError()) {
+			if (!empty($input['image']) && !$input['image']->getError()) {
 				$destinationPath = public_path().'/uploads'; // upload path
-				$extension = $input['jobform_cv']->getClientOriginalExtension(); // getting image extension
+				$extension = $input['image']->getClientOriginalExtension(); // getting image extension
 				$fileName = rand(11111,99999).'.'.$extension; // renaming image
-				$input['jobform_cv']->move($destinationPath, $fileName); // uploading file to given path
+				$input['image']->move($destinationPath, $fileName); // uploading file to given path
 				$uploaded = 1;
 				// sending back with message
 				// Session::flash('success', 'Upload successfully');

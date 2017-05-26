@@ -4,7 +4,7 @@
 use Request;
 
 // Load main models
-use App\Modules\Page\Model\Menu, App\Modules\Page\Model\Page;
+use App\Modules\Page\Model\Menu, App\Modules\Page\Model\Page, App\Modules\Portfolio\Model\Portfolio;
 
 class PortfolioController extends BasePublic {
 
@@ -21,17 +21,8 @@ class PortfolioController extends BasePublic {
 		// Parent constructor
 		parent::__construct();
 
-		//$this->middleware('auth');
-
-		//$this->middleware('language');
-
-		//dd(Auth::inRole('admin'));
 	}
 
-	public function home()
-	{
-		return $this->view('pages.home')->title('Home - Laravel Tasks');
-	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -43,7 +34,7 @@ class PortfolioController extends BasePublic {
 		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
 
 		// Set data to return
-		$data = ['menu'=>$this->menu->where('slug', $path)->first()];
+		$data = ['menu'=>$this->menu->where('slug', $path)->first(),'portfolios'=>Portfolio::active()->with('client')->with('project')->orderBy('index','ASC')->get()];
 
 		return $this->view('menus.portfolio')->data($data)->title('Page | Portfolio');
 		//
@@ -72,14 +63,20 @@ class PortfolioController extends BasePublic {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  string $slug
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($slug)
 	{
-		//
-	}
 
+		// Get data from database
+        $portfolio = Portfolio::where('slug',$slug)->with('client')->first();
+	   	$data = ['portfolio'=>$portfolio];
+
+	   	// Return data and view
+	   	return $this->view('portfolio.show')->data($data)->title('View Portfolio - Portfolios');
+
+	}
 	/**
 	 * Show the form for editing the specified resource.
 	 *

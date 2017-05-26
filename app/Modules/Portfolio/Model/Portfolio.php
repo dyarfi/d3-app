@@ -1,9 +1,9 @@
-<?php namespace App\Modules\Page\Model;
+<?php namespace App\Modules\Portfolio\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Menu extends Model {
+class Portfolio extends Model {
 
 	// Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;
@@ -13,7 +13,7 @@ class Menu extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'menus';
+	protected $table = 'portfolios';
 
 		/**
      * Fillable fields
@@ -21,6 +21,8 @@ class Menu extends Model {
      * @var array
      */
     protected $fillable = [
+        'project_id',
+        'client_id',
         'slug',
         'name',
         'image',
@@ -41,21 +43,44 @@ class Menu extends Model {
 	 */
 	protected $casts = [
 	    'attributes'  => 'object',
-	    'permissions' => 'array'
+        // 'status'      => 'boolean'
+	    // 'permissions' => 'array',
 	    // 'is_admin' => 'boolean',
 	];
 
 	/**
-	 * A user can have many tasks.
+	 * A portfolio can have many clients.
 	 *
 	 */
-	public function pages()
-	{
-		return $this->hasMany('App\Modules\Page\Model\Page','menu_id');
-	}
+	//public function clients()
+	//{
+		//return $this->hasMany('App\Modules\Portfolio\Model\Portfolio','portfolio_id');
+	//}
+
+    /**
+     * A portfolio belongs to a client.
+     *
+     */
+    public function client()
+    {
+
+        return $this->belongsTo('App\Modules\Portfolio\Model\Client','client_id','id');
+
+    }
+
+    /**
+     * A portfolio belongs to a project.
+     *
+     */
+    public function project()
+    {
+
+        return $this->belongsTo('App\Modules\Portfolio\Model\Project','project_id','id');
+
+    }
 
 	/**
-	 * A menu belongs to a user.
+	 * A portfolio belongs to a user.
 	 *
 	 */
 	public function user()
