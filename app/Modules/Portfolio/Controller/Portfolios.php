@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View;
+use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, Image;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -33,6 +33,9 @@ class Portfolios extends BaseAdmin {
 		$this->portfolios 	= new Portfolio;
 		$this->clients 		= new Client;
 		$this->projects 	= new Project;
+
+		// Crop to fit image size
+		$this->imgFit 		= [1200,1200];
 
 	}
 
@@ -256,7 +259,7 @@ class Portfolios extends BaseAdmin {
 			if (isset($input['image']) && Input::hasFile('image')) {
 
 				// Set filename
-				$filename = $this->imageUploadToDb($input['image'], '/uploads', 'portfolio_');
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'portfolio_');
 
 			}
 
@@ -270,7 +273,7 @@ class Portfolios extends BaseAdmin {
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				// Slip image file
-				$input = array_set($input, 'image', @$filename);
+				$result = array_set($input, 'image', @$filename);
 
 				// Set input to database
 				$portfolio->update($result);
@@ -287,7 +290,7 @@ class Portfolios extends BaseAdmin {
 			if (isset($input['image']) && Input::hasFile('image')) {
 
 				// Set filename
-				$filename = $this->imageUploadToDb($input['image'], '/uploads', 'portfolio_');
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'portfolio_');
 
 			}
 
@@ -358,10 +361,20 @@ class Portfolios extends BaseAdmin {
 
 		// Check if input and upload already assigned
 		if (!empty($file) && !$file->getError()) {
-			$destinationpath = public_path() . $path; // Upload path start with slashes
-			$extension = $file->getClientOriginalExtension(); // Getting image extension
-			$filename = $type . rand(11111,99999) . '.' . $extension; // Renaming image
-			$file->move($destinationpath, $filename); // Uploading file and move to given path
+
+			// Upload path
+			$destinationpath = public_path($path);
+			// Getting image extension
+			$extension = $file->getClientOriginalExtension();
+			// Renaming image
+			$filename = $type . rand(11111,99999) . '.' . $extension;
+			// Uploading file and move to given path
+			$file->move($destinationpath, $filename);
+			// Set intervention image for image manipulation
+			$image_fit = implode('x',$this->imgFit);
+			$image = Image::make($path .'/'. $filename);
+			$image->fit($this->imgFit[0],$this->imgFit[1])->save($path .'/'. $image_fit.'px_'. $filename);
+
 		}
 
 		return $filename;

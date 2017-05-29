@@ -1,9 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
-<!-- Page Title
-		============================================= -->
 		<section id="page-title">
 			<div class="container clearfix">
 				<h1>Portfolio - {{ $portfolio->name }}</h1>
@@ -13,41 +10,27 @@
 					<a href="#"><i class="icon-angle-right"></i></a>
 				</div>
 			</div>
-		</section><!-- #page-title end -->
-		<!-- Content
-		============================================= -->
+		</section>
 		<section id="content">
 			<div class="content-wrap">
 				<div class="container clearfix">
-					<!-- Portfolio Single Image
-					============================================= -->
 					<div class="col_two_third portfolio-single-image nobottommargin">
-						<a href="#"><img src="{{ asset('uploads/'.$portfolio->image) }}" alt=""></a>
-					</div><!-- .portfolio-single-image end -->
-					<!-- Portfolio Single Content
-					============================================= -->
+						<a href="#"><img src="{{ asset('uploads/1200x1200px_'.$portfolio->image) }}" alt=""></a>
+					</div>
 					<div class="col_one_third portfolio-single-content col_last nobottommargin">
-						<!-- Portfolio Single - Description
-						============================================= -->
 						<div class="fancy-title title-bottom-border">
 							<h2>Project Info:</h2>
 						</div>
                         {{ $portfolio->description }}
 						<!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, dolores, facere, corrupti delectus ex quidem adipisci tempore.</p>
 						<p>Illum molestias cupiditate eveniet dolore obcaecati voluptatibus est quos eos id recusandae officia. Cupiditate, voluptates quibusdam ipsum vel corporis laboriosam id est doloremque?</p-->
-						<!-- Portfolio Single - Description End -->
 						<div class="line"></div>
-						<!-- Portfolio Single - Meta
-						============================================= -->
 						<ul class="portfolio-meta bottommargin">
 							<li><span><i class="icon-user"></i>Created by:</span> Nick North</li>
 							<li><span><i class="icon-calendar3"></i>Completed on:</span> 17th March 2017</li>
 							<li><span><i class="icon-lightbulb"></i>Skills:</span> HTML5 / PHP / CSS3</li>
 							<li><span><i class="icon-link"></i>Client:</span> <a href="#">{{ $portfolio->client->name }}</a></li>
 						</ul>
-						<!-- Portfolio Single - Meta End -->
-						<!-- Portfolio Single - Share
-						============================================= -->
 						<div class="si-share clearfix">
 							<span>Share:</span>
 							<div>
@@ -77,12 +60,9 @@
 								</a>
 							</div>
 						</div>
-						<!-- Portfolio Single - Share End -->
-					</div><!-- .portfolio-single-content end -->
+					</div>
 					<div class="clear"></div>
 					<div class="divider divider-center"><i class="icon-circle"></i></div>
-					<!-- Related Portfolio Items
-					============================================= -->
 					<h4>Related Projects:</h4>
 					<div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xxs="1" data-items-xs="2" data-items-sm="3" data-items-lg="4">
 						<div class="oc-item">
@@ -261,9 +241,9 @@
 								</div>
 							</div>
 						</div>
-					</div><!-- .portfolio-carousel end -->
+					</div>
 				</div>
 			</div>
-		</section><!-- #content end -->
+		</section>
 
 @stop

@@ -251,7 +251,7 @@ class Clients extends BaseAdmin {
 			if (isset($input['image']) && Input::hasFile('image')) {
 
 				// Set filename
-				$filename = $this->imageUploadToDb($input['image'], '/uploads', 'client_');
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'client_');
 
 			}
 
@@ -281,7 +281,7 @@ class Clients extends BaseAdmin {
 			if (isset($input['image']) && Input::hasFile('image')) {
 
 				// Set filename
-				$filename = $this->imageUploadToDb($input['image'], '/uploads', 'client_');
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'client_');
 
 			}
 
@@ -352,7 +352,7 @@ class Clients extends BaseAdmin {
 
 		// Check if input and upload already assigned
 		if (!empty($file) && !$file->getError()) {
-			$destinationpath = public_path() . $path; // Upload path start with slashes
+			$destinationpath = public_path($path); // Upload path start with slashes
 			$extension = $file->getClientOriginalExtension(); // Getting image extension
 			$filename = $type . rand(11111,99999) . '.' . $extension; // Renaming image
 			$file->move($destinationpath, $filename); // Uploading file and move to given path
