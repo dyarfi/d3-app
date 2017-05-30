@@ -16,31 +16,31 @@ abstract class ThemeAdmin extends BaseController {
 	* @var string
 	*/
 		protected $layout = 'Auth::layouts.template';
-	 
+
 	 /**
 	* View to render
 	* @var string
 	*/
 		protected $view;
-	 
+
 	 /**
 	* Array of data passed to view
 	* @var array
 	*/
 		protected $data = array();
-	 
+
 	 /**
 	* Subview to render
 	* @var string
 	*/
 		protected $subview;
-	 
+
 	 /**
 	* Array of data to be passed to subview
 	* @var array
 	*/
 		protected $subdata = array();
-	 
+
 	 /**
 	* Page title
 	* @var string
@@ -52,22 +52,22 @@ abstract class ThemeAdmin extends BaseController {
 	* @var string
 	*/
 		protected $scripts = array();
-	 
+
 	 /**
 	* Page styles
 	* @var string
 	*/
 		protected $styles = array();
-	 
+
 	 /**
 	* Set default subview layout
 	* @param string $sublayout
 	*/
 	 public function __construct($sublayout = null)
-	 {	 	
-		$this->view = $sublayout;		
+	 {
+		$this->view = $sublayout;
 	 }
-	 
+
 	 /**
 	* Set view to render
 	* @param string $view
@@ -78,7 +78,7 @@ abstract class ThemeAdmin extends BaseController {
 		$this->view = $view;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set data to pass to view
 	* @param array $data
@@ -89,7 +89,7 @@ abstract class ThemeAdmin extends BaseController {
 		$this->data = $data;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set subview to render
 	* @param string $subview
@@ -100,7 +100,7 @@ abstract class ThemeAdmin extends BaseController {
 		$this->subview = $subview;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set data to pass to subview
 	* @param array $subdata
@@ -111,7 +111,7 @@ abstract class ThemeAdmin extends BaseController {
 		$this->subdata = $subdata;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set page title
 	* @param string $title
@@ -133,8 +133,8 @@ abstract class ThemeAdmin extends BaseController {
 	*/
 	 protected function scripts(array $scripts)
 	 {
-		 	 	
-		 // Define scripts variables 	 	
+
+		 // Define scripts variables
 		 $this->scripts = $scripts;
 		 // append subview data to view data
 		 $this->data['scripts'] = $this->scripts;
@@ -149,15 +149,15 @@ abstract class ThemeAdmin extends BaseController {
 	*/
 	 protected function styles(array $styles)
 	 {
-		 	 	
-		 // Define styles variables 	 	
+
+		 // Define styles variables
 		 $this->styles = $styles;
 		 // append subview data to view data
 		 $this->data['styles'] = $this->styles;
 
 		 return $this;
 	 }
-	 
+
 	 /**
 	* Render the subview
 	* @return Response
@@ -165,11 +165,11 @@ abstract class ThemeAdmin extends BaseController {
 	 private function rendersubview()
 	 {
 		 $this->subview = array('subview' => View::make($this->subview)->with($this->subdata));
-	 
+
 		 // append subview data to view data
 		 return $this->data = $this->data + $this->subview;
 	 }
-	 
+
 	 /**
 	* Render the view
 	* @return Response
@@ -178,7 +178,7 @@ abstract class ThemeAdmin extends BaseController {
 	 {
 		// render subview if subview is passed
 		(is_null($this->subview)) ? : $this->rendersubview();
-		
+
 		// render the view
 		return View::make($this->layout)
 		->nest('content', $this->view, $this->data)

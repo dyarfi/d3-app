@@ -2,8 +2,13 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Cartalyst\Tags\TaggableTrait;
+use Cartalyst\Tags\TaggableInterface;
 
-class Portfolio extends Model {
+class Portfolio extends Model implements TaggableInterface {
+
+    // TaggableTrait from Cartalyst
+    use TaggableTrait;
 
 	// Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;

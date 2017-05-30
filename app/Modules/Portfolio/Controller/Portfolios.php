@@ -37,6 +37,17 @@ class Portfolios extends BaseAdmin {
 		// Crop to fit image size
 		$this->imgFit 		= [1200,1200];
 
+
+		// Get the entity object
+		$product = $this->portfolios->find(1);
+
+		// Through a string
+		//$product->tag('foo, bar, baz');
+
+		// Through an array
+		//$product->tag([ 'foo', 'bar', 'baz' ]);
+		//dd($product->tags()->get());
+
 	}
 
 	/**
@@ -57,10 +68,10 @@ class Portfolios extends BaseAdmin {
 
 	   	// Load needed scripts
 	   	$scripts = [
-	   				'dataTables'=> 'themes/ace-admin/js/jquery.dataTables.min.js',
-	   				'dataTableBootstrap'=> 'themes/ace-admin/js/jquery.dataTables.bootstrap.min.js',
-	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
-	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
+	   				'dataTables'=> asset('themes/ace-admin/js/jquery.dataTables.min.js'),
+	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
+	   				'dataTableTools'=> asset('themes/ace-admin/js/dataTables.tableTools.min.js'),
+	   				'dataTablesColVis'=> asset('themes/ace-admin/js/dataTables.colVis.min.js')
 	   				];
 
 		// Return data and view
@@ -206,19 +217,28 @@ class Portfolios extends BaseAdmin {
 			{
 				return Redirect::to(route('admin.portfolios.index'))->withErrors('Not found data!');;
 			}
+			$tags 		= $row->tags;
 		}
 		else
 		{
-			$row = $this->portfolios;
+			$row 		= $this->portfolios;
+			$tags 		= $this->portfolios->allTags();
 		}
 
-		$model	 = $this->portfolios;
+		$model	 	= $this->portfolios;
 
-		$clients = $this->clients->lists('name', 'id')->all();
+		$clients 	= $this->clients->lists('name', 'id')->all();
 
-		$projects = $this->projects->lists('name', 'id')->all();
+		$projects 	= $this->projects->lists('name', 'id')->all();
 
-		return $this->view('Portfolio::portfolio_form')->data(compact('mode','row','clients','projects','portfolios','model'))->title('Portfolio '.$mode);
+		$tags		= $tags;
+
+		$scripts = [
+			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
+			'library'=>asset("themes/ace-admin/js/library.js")
+		];
+
+		return $this->view('Portfolio::portfolio_form')->data(compact('mode','row','clients','projects','portfolios','tags','model'))->scripts($scripts)->title('Portfolio '.$mode);
 	}
 
 	/**
@@ -273,10 +293,14 @@ class Portfolios extends BaseAdmin {
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				// Slip image file
-				$result = array_set($input, 'image', @$filename);
+				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
 
 				// Set input to database
 				$portfolio->update($result);
+
+				// Using the `slug` column
+				$portfolio->setTags($result['tags']);
+
 			}
 
 		}
@@ -307,6 +331,9 @@ class Portfolios extends BaseAdmin {
 
 				// Set input to database
 				$portfolio = $this->portfolios->create($result);
+
+				// Using the `slug` column
+				$portfolio->setTags($result['tags']);
 
 			}
 		}
@@ -343,6 +370,25 @@ class Portfolios extends BaseAdmin {
 
 		    // Set message
 		    return Redirect::to(route('admin.portfolios.index'))->with('error','Data not Available!');
+		}
+	}
+
+	/**
+	 * List Taggable data at the specified portfolio.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function tags($id='')
+	{
+		if ($id) {
+			if ($portfolio = $this->portfolios->find($id)) {
+				// Return Json Response
+				return response()->json($portfolio->tags->lists('name'), 200);
+			}
+		} else {
+			// Return Json Response
+			return response()->json($this->portfolios->allTags()->lists('name'), 200);
 		}
 	}
 

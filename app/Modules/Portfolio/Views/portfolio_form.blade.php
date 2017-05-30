@@ -6,7 +6,7 @@
 <div class="page-header">
 	<h1>{{ $mode == 'create' ? 'Create Portfolio' : 'Update Portfolio' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
 </div>
-<!--form method="post" action="" autocomplete="off"-->
+
 {!! Form::open([
     'route' => ($mode == 'create') ? 'admin.portfolios.create' : ['admin.portfolios.update', $row->id],
 	'files' => true
@@ -64,6 +64,19 @@
 			</div>
 		</div>
 		<span class="help-block red">{{{ $errors->first('image', ':message') }}}</span>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label" for="form-field-tags">Tag</label>
+		<div class="inline">
+			<?php
+			$tagged = '';
+			foreach ($tags as $tag) {
+				$tagged[] = $tag->name;
+			}
+			?>
+			<input type="text" name="tags" data-rel="{{ route('admin.portfolios.tags') }}" id="form-field-tags" value="{{ ($tagged) ? implode(', ', $tagged) : '' }}" placeholder="Enter tags ..." />
+		</div>
 	</div>
 
 	<div class="form-group{{ $errors->first('index', ' has-error') }}">

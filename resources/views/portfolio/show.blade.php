@@ -28,7 +28,11 @@
 						<ul class="portfolio-meta bottommargin">
 							<li><span><i class="icon-user"></i>Created by:</span> Nick North</li>
 							<li><span><i class="icon-calendar3"></i>Completed on:</span> 17th March 2017</li>
-							<li><span><i class="icon-lightbulb"></i>Skills:</span> HTML5 / PHP / CSS3</li>
+							<li><span><i class="icon-lightbulb"></i>Skills:</span> HTML5 / PHP / CSS3
+								@foreach ($portfolio->tags as $tags)
+									{{ $tags->name }}
+								@endforeach
+							</li>
 							<li><span><i class="icon-link"></i>Client:</span> <a href="#">{{ $portfolio->client->name }}</a></li>
 						</ul>
 						<div class="si-share clearfix">

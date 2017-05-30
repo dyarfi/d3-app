@@ -9,14 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('themes/ace-admin/font-awesome/4.2.0/css/font-awesome.min.css') }}" /> 
+    <link rel="stylesheet" href="{{ asset('themes/ace-admin/font-awesome/4.2.0/css/font-awesome.min.css') }}" />
     <!-- page specific plugin styles -->
     <!--link rel="stylesheet" href="{{ asset('themes/ace-admin/css/jquery-ui.custom.min.css') }}" /-->
     <!-- text fonts -->
-    <link rel="stylesheet" href="{{ asset('themes/ace-admin/fonts/fonts.googleapis.com.css') }}" />    
+    <link rel="stylesheet" href="{{ asset('themes/ace-admin/fonts/fonts.googleapis.com.css') }}" />
     <!-- ace styles -->
     <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/default.css') }}"/>    
+    <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/default.css') }}"/>
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/css/ace-part2.min.css') }}" class="ace-main-stylesheet" />
     <![endif]-->
@@ -24,7 +24,7 @@
       <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/ace-ie.min.css') }}" />
     <![endif]-->
 @if(isset($styles))
-  @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach 
+  @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach
 @endif
     <!-- inline styles related to this page -->
     <script>var base_url = '{{ url() }}'; var base_ADM = '{{ url(config("setting.admin_url")) }}';</script>
@@ -42,7 +42,7 @@
         try{ace.settings.check('navbar' , 'fixed')}catch(e){}
       </script>
       <!-- <div class="navbar-container" id="navbar-container"> -->
-      <div class="navbar" id="navbar-container">  
+      <div class="navbar" id="navbar-container">
         <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
           <span class="sr-only">Toggle sidebar</span>
           <span class="icon-bar"></span>
@@ -75,7 +75,7 @@
             <script type="text/javascript">
               try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
             </script>
-            
+
             @if (isset($controller) && isset($action) && $controller != 'BaseAdmin')
             <ul class="breadcrumb">
               <li>
@@ -91,7 +91,7 @@
                 </li>
                 @endif
             </ul><!-- /.breadcrumb -->
-            @endif         
+            @endif
 
             <!--div class="nav-search" id="nav-search">
               <form class="form-search">
@@ -111,10 +111,10 @@
 
               <div class="ace-settings-box clearfix" id="ace-settings-box">
                 <div class="pull-left width-50">
-                  <div class="ace-settings-item">                    
-                    <div class="pull-left">                      
+                  <div class="ace-settings-item">
+                    <div class="pull-left">
                       <select id="skin-colorpicker" class="hide">
-                      <?php  
+                      <?php
                       if (config('setting.attributes')) {
                         foreach (config('setting.attributes') as $setting => $attribute) {
                           if ($setting == 'skins') {
@@ -125,9 +125,9 @@
                               <?php } else { ?>
                                   <option data-skin="skin-{{$d}}" value="{{$attr}}">{{$attr}}</option>
                               <?php }
-                              $d++;                              
+                              $d++;
                             }
-                          }                      
+                          }
                         }
                       }
                       ?>
@@ -199,7 +199,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
-                
+
                 <!--div class="alert alert-block alert-success">
                   <button type="button" class="close" data-dismiss="alert">
                     <i class="ace-icon fa fa-times"></i>
@@ -304,17 +304,17 @@
     <script type="text/javascript">
       jQuery(function($) {
 
-        // ---------------------- ADMINISTRATOR Javascript Custom Function -- start [ --------------------------        
+        // ---------------------- ADMINISTRATOR Javascript Custom Function -- start [ --------------------------
 
         // File name in input form
         if($('.ace-file-input input[type="file"]').size() > 0) {
-            
+
             $('.ace-file-input input[type="file"]').change(function() {
                 $('.ace-file-name').attr('data-title',$(this).val());
             });
 
             if ($('.image-alt').size() > 0) {
-               $('.ace-file-name').attr('data-title',$('.image-alt').attr('alt')); 
+               $('.ace-file-name').attr('data-title',$('.image-alt').attr('alt'));
             }
         }
 
@@ -325,7 +325,7 @@
 
         // Add active class to current page menu
         $('.submenu').find('.active').parents('li').addClass('active').find('b').removeClass('arrow fa fa-angle-down');
-        
+
         $('#permissions_update input[class="checked"]').change(function(){
           if( $(this).is(':checked')) {
             $(this).attr('value',true);
@@ -335,7 +335,7 @@
         });
 
         // Set method to check all or uncheck all on permission checkbox
-        $('#permissions_update input[name^="check_all"]').change(function(){          
+        $('#permissions_update input[name^="check_all"]').change(function(){
           var $form  = $(this).parents('div.checkbox-handler');
           var $label = $(this).next('label');
           if( $(this).is(':checked')) {
@@ -348,7 +348,7 @@
               $label.text('Check All');
           }
         });
-        
+
         // Set to check if checkbox parent is all checked up or false on permission checkbox
         $('#permissions_update input[name^="check_all"]').each(function( index ) {
           //console.log( index + ": " + $( this ).text() );
@@ -359,25 +359,25 @@
           if ($input === $checked) {
             $(this).prop('checked',true);
             $label.text('Unchecked All');
-          } else {            
+          } else {
             $(this).prop('checked',false);
           }
         });
 
         // Send ajax post on permissions controller
         $('#permissions_update').submit(function(){
-          var $form = $(this);          
+          var $form = $(this);
           $.ajax({
               method:'POST',
               url: $form.attr('action'),
-              data:$form.serialize(),   
+              data:$form.serialize(),
               error: function(XMLHttpRequest, textStatus, errorThrown) {
                   bootbox.alert(errorThrown, function(result) {
-                    //if (result === null) {                      
-                    //} else {                      
+                    //if (result === null) {
+                    //} else {
                     //}
                   });
-              }  
+              }
           }).done(function(message) {
               if (message.status == 200) {
                 bootbox.alert(message.message, function(result) {});
@@ -386,7 +386,7 @@
           });
           return false;
         });
-        
+
         // Set and find form Slug input from Name input
         if ($('input[id="name"], input[id="title"]').size() > 0 && $('input[id="slug"]').size() > 0) {
           // Detects if user type on the input
@@ -397,7 +397,7 @@
               value = value.replace(re2, '').toLowerCase();
               value = value.replace(re, '-');
               // Set Slug form
-              $('input[id="slug"]').val(value);            
+              $('input[id="slug"]').val(value);
           });
 
         }
@@ -409,10 +409,10 @@
             else {
                 //console.log("error uploading file", reason, detail);
             }
-            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+
              '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
         }
-        
+
         //but we want to change a few buttons colors for the third style
         $('#editor1').ace_wysiwyg({
             toolbar:
@@ -450,13 +450,13 @@
                 fileUploadError: showErrorAlert
             }
         }).prev().addClass('wysiwyg-style2');
-        
-        // TABLE ----------------------------------------- 
-        
+
+        // TABLE -----------------------------------------
+
 
         if ($('#dynamic-table').size() > 0 && $.fn.dataTable) {
           //initiate dataTables plugin
-          var oTable1 = 
+          var oTable1 =
           $('#dynamic-table')
           //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
           .dataTable( {
@@ -464,27 +464,27 @@
             "aoColumns": [
               { "bSortable": false },
               // It seems depends on column count or will be alerting some error
-              null, null, null, null, 
+              null, null, null, null,
               { "bSortable": false }
             ],
             // set the initial value
             "iDisplayLength": 10,
-            "aaSorting": [],        
+            "aaSorting": [],
             //,
             //"sScrollY": "200px",
             //"bPaginate": false,
-        
+
             //"sScrollX": "100%",
             //"sScrollXInner": "120%",
             //"bScrollCollapse": true,
             //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
             //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-        
+
             //"iDisplayLength": 50
             } );
           //oTable1.fnAdjustColumnSizing();
-        
-        
+
+
           //TableTools settings
           TableTools.classes.container = "btn-group btn-overlap";
           TableTools.classes.print = {
@@ -492,10 +492,10 @@
             "info": "tableTools-alert gritter-item-wrapper gritter-info gritter-center white",
             "message": "tableTools-print-navbar"
           }
-        
+
           //initiate TableTools extension
           var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
-            //"sSwfPath": base_url +"/assets/swf/copy_csv_xls_pdf.swf",            
+            //"sSwfPath": base_url +"/assets/swf/copy_csv_xls_pdf.swf",
             "sRowSelector": "td:not(:last-child)",
             "sRowSelect": "multi",
             "fnRowSelected": function(row) {
@@ -507,17 +507,17 @@
               //uncheck checkbox
               try { $(row).find('input[type=checkbox]').get(0).checked = false }
               catch(e) {}
-            },      
+            },
             "sSelectedClass": "success",
-                "aButtons": [              
+                "aButtons": [
                     {
                       "sExtends": "print",
                       "sToolTip": "Print view",
                       "sButtonClass": "btn btn-white btn-primary  btn-bold",
                       "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
-                      
+
                       "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
-                      
+
                       "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
                             <p>Please use your browser's print function to\
                             print this table.\
@@ -527,7 +527,7 @@
             });
           //we put a container before our table and append TableTools element to it
             $(tableTools_obj.fnContainer()).appendTo($('.tableTools-container'));
-          
+
           //also add tooltips to table tools buttons
           //addding tooltips directly to "A" buttons results in buttons disappearing (weired! don't know why!)
           //so we add tooltips to the "DIV" child after it becomes inserted
@@ -539,9 +539,9 @@
               else $(this).tooltip({container: 'body'});
             });
           }, 200);
-          
-          
-          
+
+
+
           //ColVis extension
           var colvis = new $.fn.dataTable.ColVis( oTable1, {
             "buttonText": "<i class='fa fa-search'></i>",
@@ -552,83 +552,83 @@
             "fnLabel": function(i, title, th) {
               return $(th).text();//remove icons, etc
             }
-            
-          }); 
-          
+
+          });
+
           //style it
           $(colvis.button()).addClass('btn-group').find('button').addClass('btn btn-white btn-info btn-bold')
-          
+
           //and append it to our table tools btn-group, also add tooltip
           $(colvis.button())
           .prependTo('.tableTools-container .btn-group')
           .attr('title', 'Show/hide columns').tooltip({container: 'body'});
-          
+
           //and make the list, buttons and checkboxed Ace-like
           $(colvis.dom.collection)
           .addClass('dropdown-menu dropdown-light dropdown-caret dropdown-caret-right')
           .find('li').wrapInner('<a href="javascript:void(0)" />') //'A' tag is required for better styling
           .find('input[type=checkbox]').addClass('ace').next().addClass('lbl padding-8');
-        
-        
-          
+
+
+
           /////////////////////////////////
           //table checkboxes
           $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
-          
+
           //select/deselect all rows according to table header checkbox
           $('#dynamic-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
             var th_checked = this.checked;//checkbox inside "TH" table header
-            
+
             $(this).closest('table').find('tbody > tr').each(function(){
               var row = this;
               if(th_checked) tableTools_obj.fnSelect(row);
               else tableTools_obj.fnDeselect(row);
             });
           });
-          
+
           //select/deselect a row when the checkbox is checked/unchecked
           $('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
             var row = $(this).closest('tr').get(0);
             if(!this.checked) tableTools_obj.fnSelect(row);
             else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
           });
-          
-        
-          
-          
+
+
+
+
             $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
           });
-          
-          
+
+
           //And for the first simple table, which doesn't have TableTools or dataTables
           //select/deselect all rows according to table header checkbox
           var active_class = 'active';
           $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
             var th_checked = this.checked;//checkbox inside "TH" table header
-            
+
             $(this).closest('table').find('tbody > tr').each(function(){
               var row = this;
               if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
               else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
             });
           });
-          
+
           //select/deselect a row when the checkbox is checked/unchecked
           $('#simple-table').on('click', 'td input[type=checkbox]' , function(){
             var $row = $(this).closest('tr');
             if(this.checked) $row.addClass(active_class);
             else $row.removeClass(active_class);
           });
-        
-          
-        
+
+
+
           /********************************/
           //add tooltip for small view action buttons in dropdown menu
           $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-          
+
           //tooltip placement on right or left
           function tooltip_placement(context, source) {
             var $source = $(source);
@@ -636,7 +636,7 @@
             if ($parent.size > 0) {
               var off1 = $parent.offset();
               var w1 = $parent.width();
-          
+
               var off2 = $source.offset();
               //var w2 = $source.width();
 
@@ -644,22 +644,22 @@
             }
             return 'left';
           }
-        }                  
+        }
 
 
 
-        // TABLE DATA ---------------------------------------       
+        // TABLE DATA ---------------------------------------
 
         var FormStatus = function () {
-          
-          var handleStatusForm = function () {    
+
+          var handleStatusForm = function () {
               $('#select_action').change(
                 function () {
                   $(this).parents('form').submit();
                 }
-              );  
+              );
           }
-          
+
             return {
                 //main function to initiate the module
                 init: function () {
@@ -669,10 +669,10 @@
             };
 
         }();
-        
+
         FormStatus.init();
 
-        // ---------------------- ADMINISTRATOR Javascript Custom Function -- end ] --------------------------        
+        // ---------------------- ADMINISTRATOR Javascript Custom Function -- end ] --------------------------
 
         $('[data-rel=tooltip]').tooltip();
 
@@ -694,7 +694,7 @@
               });
             })
 
-          
+
             $('.sparkline').each(function(){
               var $box = $(this).closest('.infobox');
               var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
@@ -706,12 +706,12 @@
                         chartRangeMin:$(this).data('min') || 0
                        });
             });
-          
-          
+
+
             //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
             //but sometimes it brings up errors with normal resize event handlers
             //$.resize.throttleWindow = false;
-          
+
             var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
             var data = [
             { label: "social networks",  data: 38.7, color: "#68BC31"},
@@ -738,7 +738,7 @@
               },
               legend: {
                 show: true,
-                position: position || "ne", 
+                position: position || "ne",
                 labelBoxBorderColor: null,
                 margin:[-30,15]
               }
@@ -750,19 +750,19 @@
              })
            }
            drawPieChart(placeholder, data);
-          
+
            /**
            we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
            so that's not needed actually.
            */
            placeholder.data('chart', data);
            placeholder.data('draw', drawPieChart);
-          
-          
+
+
             //pie chart tooltip example
             var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
             var previousPoint = null;
-          
+
             placeholder.on('plothover', function (event, pos, item) {
             if(item) {
               if (previousPoint != item.seriesIndex) {
@@ -775,33 +775,33 @@
               $tooltip.hide();
               previousPoint = null;
             }
-            
+
            });
-          
+
             /////////////////////////////////////
             $(document).one('ajaxloadstart.page', function(e) {
               $tooltip.remove();
             });
-          
-          
-          
-          
+
+
+
+
             var d1 = [];
             for (var i = 0; i < Math.PI * 2; i += 0.5) {
               d1.push([i, Math.sin(i)]);
             }
-          
+
             var d2 = [];
             for (var i = 0; i < Math.PI * 2; i += 0.5) {
               d2.push([i, Math.cos(i)]);
             }
-          
+
             var d3 = [];
             for (var i = 0; i < Math.PI * 2; i += 0.2) {
               d3.push([i, Math.tan(i)]);
             }
-            
-          
+
+
             var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
             $.plot("#sales-charts", [
               { label: "Domains", data: d1 },
@@ -829,7 +829,7 @@
                 borderColor:'#555'
               }
             });
-      
+
         }
 
 
@@ -839,7 +839,7 @@
           var $parent = $source.closest('.tab-content')
           var off1 = $parent.offset();
           var w1 = $parent.width();
-      
+
           var off2 = $source.offset();
           //var w2 = $source.width();
           if ($parent.size() > 0) {
@@ -848,13 +848,13 @@
           //return 'left';
           return 'right';
         }
-      
-      
+
+
         $('.dialogs,.comments').ace_scroll({
           size: 300
           });
-        
-        
+
+
         //Android's default browser somehow is confused when tapping on label which will lead to dragging the task
         //so disable dragging when clicking on label
         var agent = navigator.userAgent.toLowerCase();
@@ -865,7 +865,7 @@
           var label = li.find('label.inline').get(0);
           if(label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation() ;
         });
-      
+
         $('#tasks').sortable({
           opacity:0.8,
           revert:true,
@@ -884,32 +884,32 @@
           if(this.checked) $(this).closest('li').addClass('selected');
           else $(this).closest('li').removeClass('selected');
         });
-      
-      
+
+
         //show the dropdowns on top or bottom depending on window height and menu position
         $('#task-tab .dropdown-hover').on('mouseenter', function(e) {
           var offset = $(this).offset();
-      
+
           var $w = $(window)
-          if (offset.top > $w.scrollTop() + $w.innerHeight() - 100) 
+          if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
             $(this).addClass('dropup');
           else $(this).removeClass('dropup');
         });
 
 ///////////////////
-          
+
         //typeahead.js
         //example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
         var substringMatcher = function(strs) {
           return function findMatches(q, cb) {
             var matches, substringRegex;
-           
+
             // an array that will be populated with substring matches
             matches = [];
-           
+
             // regex used to determine if a string contains the substring `q`
             substrRegex = new RegExp(q, 'i');
-           
+
             // iterate through the pool of strings and for any string that
             // contains the substring `q`, add it to the `matches` array
             $.each(strs, function(i, str) {
@@ -919,7 +919,7 @@
                 matches.push({ value: str });
               }
             });
-      
+
             cb(matches);
           }
          }
@@ -931,14 +931,14 @@
          }, {
           name: 'types',
           displayKey: 'value',
-          debug:true,          
+          debug:true,
           //source: substringMatcher(ace.vars['US_STATES'])
-          source:substringMatcher(["text","textarea","option","radio"]),          
-         }).on('change', function () { 
+          source:substringMatcher(["text","textarea","option","radio"]),
+         }).on('change', function () {
             //if($(this).val() == 'textarea') {
-            //$('input#value').val(); 
+            //$('input#value').val();
             //}
-        });          
+        });
         */
         ///////////////
 
@@ -968,7 +968,7 @@
             $('.rows').html(rowNumber);
             $('.headers').html(headerText);
         });
-      
+
         var $overflow = '';
         var colorbox_params = {
             rel: 'colorbox',
@@ -992,12 +992,12 @@
                 $.colorbox.resize();
             }
         };
-        
-    if ($('[data-rel="colorbox"]').size() > 0) {    
+
+    if ($('[data-rel="colorbox"]').size() > 0) {
         $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
         $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
     }
-    
+
     $('.setting a[data-toggle="tab"]').on('show.bs.tab', function (e) {
       //e.target // newly activated tab
       //e.relatedTarget // previous active tab
@@ -1005,7 +1005,7 @@
       location.href = url;
       //e.target.rel
     })
-    
+
     $(document).one('ajaxloadstart.page', function(e) {
         $('#colorbox, #cboxOverlay').remove();
     });
@@ -1013,9 +1013,10 @@
       })
     </script>
     <script>
-    jQuery(document).ready(function() {
-    // initiate layout and plugins
-      FormImageCrop.init();
+    jQuery(document).ready(function() {        
+        if (typeof FormImageCrop === 'function') {
+            FormImageCrop.init();
+        }
     });
 </script>
   </body>

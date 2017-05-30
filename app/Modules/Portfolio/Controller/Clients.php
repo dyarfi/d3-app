@@ -264,7 +264,7 @@ class Clients extends BaseAdmin {
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				// Slip image file
-				$result = array_set($result, 'image', @$filename);
+				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
 
 				// Set input to database
 				$client->update($result);

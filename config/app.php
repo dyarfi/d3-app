@@ -169,6 +169,11 @@ return [
 		Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 
 		/*
+		 * Cartalyst https://cartalyst.com/manual/tags/2.0#laravel - A Tagging package that easily allows you to add tags to your Eloquent models.
+		 */
+		Cartalyst\Tags\TagsServiceProvider::class,
+
+		/*
 		 * http://www.maatwebsite.nl/laravel-excel/docs/getting-started#installation
 		 */
 		Maatwebsite\Excel\ExcelServiceProvider::class,

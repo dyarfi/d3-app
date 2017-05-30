@@ -44,6 +44,10 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('portfolio/{id}/trash', ['as'=>'admin.portfolios.trash','uses'=>'App\Modules\Portfolio\Controller\Portfolios@trash']);
     Route::get('portfolio/{id}/restored', ['as'=>'admin.portfolios.restored','uses'=>'App\Modules\Portfolio\Controller\Portfolios@restored']);
     Route::get('portfolio/{id}/delete', ['as'=>'admin.portfolios.delete','uses'=>'App\Modules\Portfolio\Controller\Portfolios@delete']);
+    // Put other methods
+    Route::get('portfolio/tags/all', ['as'=>'admin.portfolios.tags','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tags']);
+    Route::get('portfolio/tags/{id}/show', ['as'=>'admin.portfolios.tags.show','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tagsShow']);
+
 
     // Projects Controller routes
     Route::get('project', ['as'=>'admin.projects.index','uses'=>'App\Modules\Portfolio\Controller\Projects@index']);
