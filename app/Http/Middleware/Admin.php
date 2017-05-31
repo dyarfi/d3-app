@@ -41,9 +41,9 @@ class Admin {
 	public function handle($request, Closure $next)
 	{
 
-		// Get controller and action from request		
+		// Get controller and action from request
 		$action 		= $this->router->getRoutes()->match($request)->getActionName();
-	
+
 		// Get class name and action
 		$controller 	= class_basename(strtolower($action));
 
@@ -59,14 +59,14 @@ class Admin {
 
 			$access = explode("@", $controller);
 
-    	}	 
+    	}
 
 		// Glues controller and action for checking
-		$accessRoutes 	= join('.', $access);	
+		$accessRoutes 	= join('.', $access);
 
 		// Sentinel auth check
 		if (! Sentinel::check()) {
-			
+
 			return Redirect::to('apanel/noaccess')->withErrors(['Only admins can access this page.']);
 
 		} else if (Sentinel::hasAccess($accessRoutes)) {

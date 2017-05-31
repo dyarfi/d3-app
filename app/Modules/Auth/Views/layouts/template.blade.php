@@ -1013,7 +1013,7 @@
       })
     </script>
     <script>
-    jQuery(document).ready(function() {        
+    jQuery(document).ready(function() {
         if (typeof FormImageCrop === 'function') {
             FormImageCrop.init();
         }

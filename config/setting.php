@@ -109,6 +109,26 @@ return [
 						]
 					]
 				],
+				// Blog modules will be in the App Modules directory
+				['Blog' => [
+						//------ Blog controller
+						['Blogs' => [
+								// Action for first index
+								'action' => ['blogs.index'],
+								// Controller method list
+								'method' => ['blogs.index','blogs.edit','blogs.update','blogs.change','blogs.create','blogs.store','blogs.trash','blogs.delete','blogs.restored','blogs.show','blogs.tags','blogs.tags.show']
+							]
+						],
+						//------ Blog Category controller
+						['Category' => [
+								// Action for first index
+								'action' => ['blogcategories.index'],
+								// Controller method list
+								'method' => ['blogcategories.index','blogcategories.edit','blogcategories.update','blogcategories.change','blogcategories.create','blogcategories.store','blogcategories.trash','blogcategories.delete','blogcategories.restored','blogcategories.show']
+							]
+						]
+					]
+				],
 				// Tasks modules will be in the App Modules directory
 				['Task' => [
 						//------ Tasks controller

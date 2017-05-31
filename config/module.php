@@ -26,6 +26,12 @@
 		       		// Model
 		       		'Model' => ['Banner']
 		       	],
+		       	'Blog' => [
+		       		// Controller
+		       		'Controller' => ['Blogs','BlogCategories'],
+		       		// Model
+		       		'Model' => ['Blog','BlogCategory']
+		       	],
 		       	'Career' => [
 		       		// Controller
 		       		'Controller' => ['Applicants','Careers','Divisions'],

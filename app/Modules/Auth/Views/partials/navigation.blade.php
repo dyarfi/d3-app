@@ -31,8 +31,8 @@
             <span class="menu-text"> Dashboard </span>
           </a>
           <b class="arrow"></b>
-        </li-->    
-        <li class="{{ stristr(route('admin.dashboard'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.dashboard')) ? 'active' : '' }}">    
+        </li-->
+        <li class="{{ stristr(route('admin.dashboard'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.dashboard')) ? 'active' : '' }}">
             <a href="{{ route('admin.dashboard') }}">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> Dashboard </span>
@@ -40,7 +40,7 @@
         </li>
         @foreach (config('setting.acl') as $key => $values)
             @if (!empty( Sentinel::getUser()->roles()->first()->permissions[strtolower(head(array_keys($values)))] ))
-            <li class="">         
+            <li class="">
                 <a href="#" class="dropdown-toggle">
                   <!--i class="menu-icon fa fa-users"></i-->&nbsp;&nbsp;
                   <span class="menu-text">{{ head(array_keys($values)) }}</span>
@@ -50,17 +50,17 @@
                 <ul class="submenu">
                   @foreach ($values as $b => $key_access)
                       @foreach ($key_access as $tmp_access => $tmp)
-                        @foreach (current($tmp)['action'] as $access)                                   
-                           <li class="{{ stristr($access, Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), $access) ? 'active' : '' }}">
+                        @foreach (current($tmp)['action'] as $access)
+                           <li class="{{ str_is(substr($access, - strlen($access), strpos($access,'.')), Request::segment(2)) || str_is(str_replace('admin.','',Route::getCurrentRoute()->getName()), $access) ? 'active' : '' }}">
                             <a href="{{ route("admin.{$access}") }}">
-                              <i class="menu-icon fa fa-caret-right"></i>{{ key($tmp) }}<!--b class="arrow fa fa-user"></b-->
+                                <i class="menu-icon fa fa-caret-right"></i>{{ key($tmp) }}<!--b class="arrow fa fa-user"></b-->
                             </a>
                             <b class="arrow"></b>
-                          </li> 
+                          </li>
                         @endforeach
-                      @endforeach    
+                      @endforeach
                   @endforeach
-                </ul>                  
+                </ul>
             </li>
             @endif
         @endforeach
