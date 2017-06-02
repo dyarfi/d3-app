@@ -212,7 +212,7 @@ class Banners extends BaseAdmin {
 		}
 
 		// Set division model to name and id only for lookup input
-		$divisions = $this->divisions->lists('name', 'id')->all();
+		//$divisions = $this->divisions->lists('name', 'id')->all();
 
 	   	// Load needed javascripts
 	   	$scripts = ['bootstrap-datepicker'=> 'themes/ace-admin/js/bootstrap-datepicker.min.js'];
@@ -220,7 +220,7 @@ class Banners extends BaseAdmin {
 		// Load needed stylesheets
 	   	$styles = ['stylesheet'=> 'themes/ace-admin/css/datepicker.min.css'];
 
-		return $this->view('Banner::banner_form')->data(compact('mode', 'row', 'divisions'))->scripts($scripts)->styles($styles)->title('Banner '.$mode);
+		return $this->view('Banner::banner_form')->data(compact('mode', 'row'/*,'divisions'*/))->scripts($scripts)->styles($styles)->title('Banner '.$mode);
 	}
 
 	/**

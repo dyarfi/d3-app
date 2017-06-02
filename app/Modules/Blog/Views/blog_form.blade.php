@@ -4,18 +4,18 @@
 @section('body')
 
 <div class="page-header">
-	<h1>{{ $mode == 'create' ? 'Create Portfolio' : 'Update Portfolio' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
+	<h1>{{ $mode == 'create' ? 'Create Blog' : 'Update Blog' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
 </div>
 
 {!! Form::open([
-    'route' => ($mode == 'create') ? 'admin.portfolios.create' : ['admin.portfolios.update', $row->id],
+    'route' => ($mode == 'create') ? 'admin.blogs.create' : ['admin.blogs.update', $row->id],
 	'files' => true
 ]) !!}
 
 	<div class="form-group{{ $errors->first('name', ' has-error') }}">
 		{!! Form::label('name', 'Name'); !!}
 		{!! Form::text('name',Input::old('name', $row->name),[
-			'placeholder'=>'Enter the Portfolio Name.',
+			'placeholder'=>'Enter the Blog Name.',
 			'name'=>'name',
 			'id'=>'name',
 			'class'=>'form-control']); !!}
@@ -31,7 +31,7 @@
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		{!! Form::label('description', 'Description'); !!}
 		{!! Form::textarea('description',Input::old('description', $row->description),[
-			'placeholder'=>'Enter the Portfolio Description.',
+			'placeholder'=>'Enter the Blog Description.',
 			'name'=>'description',
 			'id'=>'description',
 			'class'=>'form-control']); !!}
@@ -39,9 +39,9 @@
 	</div>
 
 	<div class="form-group{{ $errors->first('image', ' has-error') }}">
-		{!! Form::label('image', 'Portfolio Image:'); !!}
+		{!! Form::label('image', 'Blog Image:'); !!}
 		@if ($row->image)
-			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Portfolio Image:', ['class' => 'control-label center-block ace-file-input']) !!}
+			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Blog Image:', ['class' => 'control-label center-block ace-file-input']) !!}
 			<img src="{{ asset('uploads/'.$row->image) }}" alt="{{ $row->image }}" class="image-alt" style="max-width:300px"/>
 			<div class="clearfix space-6"></div>
 		@endif
@@ -69,14 +69,14 @@
 				$tagged[] = $tag->name;
 			}
 			?>
-			<input type="text" name="tags" data-rel="{{ route('admin.portfolios.tags') }}" id="form-field-tags" value="{{ ($tagged) ? implode(', ', $tagged) : '' }}" placeholder="Enter tags ..." />
+			<input type="text" name="tags" data-rel="{{ route('admin.blogs.tags') }}" id="form-field-tags" value="{{ ($tagged) ? implode(', ', $tagged) : '' }}" placeholder="Enter tags ..." />
 		</div>
 	</div>
 
 	<div class="form-group{{ $errors->first('index', ' has-error') }}">
 		{!! Form::label('index', 'Index'); !!}
 		{!! Form::text('index',($row->index ? Input::old('index', $row->index) : $model->max('index') + 1),[
-			'placeholder'=>'Enter the Portfolio Index.',
+			'placeholder'=>'Enter the Blog Index.',
 			'name'=>'index',
 			'id'=>'index',
 			'class'=>'form-control']); !!}

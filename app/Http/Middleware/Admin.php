@@ -40,7 +40,7 @@ class Admin {
 	 */
 	public function handle($request, Closure $next)
 	{
-
+		
 		// Get controller and action from request
 		$action 		= $this->router->getRoutes()->match($request)->getActionName();
 
