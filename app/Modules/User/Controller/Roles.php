@@ -25,10 +25,10 @@ class Roles extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
@@ -45,7 +45,7 @@ class Roles extends BaseAdmin {
 	public function index()
 	{
 
-		// Set return data 
+		// Set return data
 	   	$rows = Input::get('path') === 'trashed' ? Role::onlyTrashed()->paginate(10) : Role::paginate(10);
 
 	   	// Get deleted count
@@ -67,15 +67,15 @@ class Roles extends BaseAdmin {
 	{
 		// Get data from database
         $role = $this->roles->findOrFail($id);
-        
+
         // Read ACL settings config for any permission access
         $acl = config('setting.acl');
-	               	      
+
 		// Set data to return
 	   	$data = ['row'=>$role,'acl'=>$acl];
 
 	   	// Return data and view
-	   	return $this->view('User::sentinel.roles.show')->data($data)->title('View Role'); 
+	   	return $this->view('User::sentinel.roles.show')->data($data)->title('View Role');
 
 	}
 
@@ -106,7 +106,7 @@ class Roles extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{					
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -120,7 +120,7 @@ class Roles extends BaseAdmin {
 	{
 		return $this->processForm('update', $id);
 	}
-	
+
 	/**
 	 * Remove the specified role.
 	 *
@@ -209,9 +209,9 @@ class Roles extends BaseAdmin {
 			//$role = $this->roles;
 			$row = $this->roles;
 		}
-		
+
 		$acl = config('setting.acl');
-		
+
 		return $this->view('User::sentinel.roles.form')->data(compact('mode', 'row', 'acl'))->title('Roles '.$mode);
 	}
 
@@ -224,7 +224,7 @@ class Roles extends BaseAdmin {
 	 */
 	protected function processForm($mode, $id = null)
 	{
-		$input = Input::all();	 
+		$input = Input::all();
 
 		//dd ($input);
 
@@ -242,7 +242,7 @@ class Roles extends BaseAdmin {
 			'name' => 'required',
 			'slug' => 'required|unique:roles'
 		];
-		
+
 		if ($id)
 		{
 
@@ -265,16 +265,16 @@ class Roles extends BaseAdmin {
 			$messages = $this->validateRole($input, $rules);
 
 			if ($messages->isEmpty())
-			{	
+			{
 
-				$role = $this->roles->create($input);				
+				$role = $this->roles->create($input);
 
 			}
 		}
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Updated!');;
+			return Redirect::to(route('admin.roles.show', $role->id))->with('success', 'Role Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

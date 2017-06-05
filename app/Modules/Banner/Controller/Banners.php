@@ -333,7 +333,7 @@ class Banners extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.banners.index'))->with('success', 'Banner Updated!');
+			return Redirect::to(route('admin.banners.show', $banner->id))->with('success', 'Banner Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

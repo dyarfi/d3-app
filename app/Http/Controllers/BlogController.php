@@ -3,8 +3,14 @@
 // Load Laravel classes
 use Request;
 
+// Load datetime helper
+use Carbon\Carbon;
+
 // Load main models
 use App\Modules\Page\Model\Menu, App\Modules\Page\Model\Page;
+
+// Load models
+use App\Modules\Blog\Model\Blog;
 
 class BlogController extends BasePublic {
 
@@ -26,6 +32,7 @@ class BlogController extends BasePublic {
 		//$this->middleware('language');
 
 		//dd(Auth::inRole('admin'));
+
 	}
 
 	public function home()
@@ -43,8 +50,11 @@ class BlogController extends BasePublic {
 		// Get the page path that requested
 		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
 
+		// Get active blogs with paginated
+		$blogs = Blog::active()->with('category')->with('tags')->orderBy('index','ASC')->paginate(10);
+
 		// Set data to return
-	   	$data = ['menu'=>$this->menu->where('slug', $path)->first()];
+	   	$data = ['menu'=>$this->menu->where('slug', $path)->first(),'blogs'=>$blogs];
 
 		// Return view
 		return $this->view('menus.blog')->data($data)->title('Page | Blog');
@@ -74,13 +84,26 @@ class BlogController extends BasePublic {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  string $slug
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($slug)
 	{
-		//
+
+		// Get data from database
+        $blog = Blog::where('slug',$slug)->with('category')->with('tags')->first();
+
+		// Get data list from database
+		$blogs = Blog::active()->with('category')->with('tags')->orderBy('publish_date','ASC')->get();
+
+		// Set data to view
+		$data = ['blog'=>$blog,'blogs'=>$blogs];
+
+	   	// Return data and view
+	   	return $this->view('blogs.show')->data($data)->title('View Blog - Blogs');
+
 	}
+
 
 	/**
 	 * Show the form for editing the specified resource.

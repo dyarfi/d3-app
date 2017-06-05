@@ -5,9 +5,9 @@
 			<div class="container clearfix">
 				<h1>Portfolio - {{ $portfolio->name }}</h1>
 				<div id="portfolio-navigation">
-					<a href="#"><i class="icon-angle-left"></i></a>
-					<a href="#"><i class="icon-line-grid"></i></a>
-					<a href="#"><i class="icon-angle-right"></i></a>
+					<!--a href="#"><i class="icon-angle-left"></i></a-->
+					<a href="{{ route('portfolio') }}"><i class="icon-line-grid"></i></a>
+					<!--a href="#"><i class="icon-angle-right"></i></a-->
 				</div>
 			</div>
 		</section>
@@ -26,12 +26,17 @@
 						<p>Illum molestias cupiditate eveniet dolore obcaecati voluptatibus est quos eos id recusandae officia. Cupiditate, voluptates quibusdam ipsum vel corporis laboriosam id est doloremque?</p-->
 						<div class="line"></div>
 						<ul class="portfolio-meta bottommargin">
-							<li><span><i class="icon-user"></i>Created by:</span> Nick North</li>
-							<li><span><i class="icon-calendar3"></i>Completed on:</span> 17th March 2017</li>
-							<li><span><i class="icon-lightbulb"></i>Skills:</span> HTML5 / PHP / CSS3
-								@foreach ($portfolio->tags as $tags)
-									{{ $tags->name }}
-								@endforeach
+							<!--li><span><i class="icon-user"></i>Created by:</span> Nick North</li>
+							<li><span><i class="icon-calendar3"></i>Completed on:</span> 17th March 2017</li!-->
+							<li><span><i class="icon-tags"></i>Tags:</span> <!-- HTML5 / PHP / CSS3 -->
+								<?php
+								$i=1;
+								$t=count($portfolio->tags);
+								foreach ($portfolio->tags as $tags) { ?>
+									<a href="javascript:;" title="{{ $tags->name }}">{{ $tags->name }}@if ($i != $t),@endif</a>
+									<?php $i++;
+								}
+								?>
 							</li>
 							<li><span><i class="icon-link"></i>Client:</span> <a href="#">{{ $portfolio->client->name }}</a></li>
 						</ul>
@@ -69,7 +74,35 @@
 					<div class="divider divider-center"><i class="icon-circle"></i></div>
 					<h4>Related Projects:</h4>
 					<div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xxs="1" data-items-xs="2" data-items-sm="3" data-items-lg="4">
+						@foreach ($portfolios as $item)
 						<div class="oc-item">
+							<div class="iportfolio">
+								<div class="portfolio-image">
+									<a href="{{ route('portfolio',$item->slug) }}">
+										<img src="{{ asset('uploads/1200x1200px_'.$item->image) }}" alt="{{ $item->name }}">
+									</a>
+									<div class="portfolio-overlay">
+										<a href="{{ asset('uploads/'.$item->image) }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+										<a href="{{ route('portfolio.show',$item->slug) }}" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="{{ route('portfolio.show',$item->slug) }}">{{ $item->name }}</a></h3>
+									<span>
+									<?php
+									$i=1;
+									$t=count($item->tags);
+									foreach ($item->tags as $tags) { ?>
+										<a href="javascript:;" title="{{ $tags->name }}">{{ $tags->name }}</a>@if ($i != $t),@endif
+										<?php $i++;
+									}
+									?>
+									</span>
+								</div>
+							</div>
+						</div>
+						@endforeach
+						<!--div class="oc-item">
 							<div class="iportfolio">
 								<div class="portfolio-image">
 									<a href="portfolio-single.html">
@@ -244,7 +277,7 @@
 									<span><a href="#">Graphics</a>, <a href="#">Media</a></span>
 								</div>
 							</div>
-						</div>
+						</div-->
 					</div>
 				</div>
 			</div>

@@ -57,7 +57,7 @@ class Blogs extends BaseAdmin {
 	public function index() {
 
 		// Set return data
-	   	$blogs = Input::get('path') === 'trashed' ? $this->blogs->with('project')->onlyTrashed()->get() : $this->blogs->with('project')->orderBy('index', 'asc')->get();
+	   	$blogs = Input::get('path') === 'trashed' ? $this->blogs->with('category')->onlyTrashed()->get() : $this->blogs->with('category')->orderBy('index', 'asc')->get();
 
 	   	// Get deleted count
 		$deleted = $this->blogs->onlyTrashed()->get()->count();
@@ -212,7 +212,7 @@ class Blogs extends BaseAdmin {
 
 		if ($id)
 		{
-			if ( ! $row = $this->blogs->find($id))
+			if ( ! $row = $this->blogs->with('category')->find($id))
 			{
 				return Redirect::to(route('admin.blogs.index'))->withErrors('Not found data!');;
 			}
@@ -232,12 +232,17 @@ class Blogs extends BaseAdmin {
 
 		$tags		= $tags;
 
+		// Load needed javascripts
 		$scripts = [
 			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
+			'bootstrap-datepicker'=>asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
 			'library'=>asset("themes/ace-admin/js/library.js")
 		];
 
-		return $this->view('Blog::blog_form')->data(compact('mode','row','categories','blogs','tags','model'))->scripts($scripts)->title('Blog '.$mode);
+		// Load needed stylesheets
+		$styles = ['stylesheet'=> 'themes/ace-admin/css/datepicker.min.css'];
+
+		return $this->view('Blog::blog_form')->data(compact('mode','row','categories','blogs','tags','model'))->scripts($scripts)->styles($styles)->title('Blog '.$mode);
 	}
 
 	/**
@@ -254,14 +259,14 @@ class Blogs extends BaseAdmin {
 		$input = array_filter(Input::all());
 
 		// Set blog slug
-		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'_') : '';
+		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'-') : '';
 
 		$rules = [
-			'client_id'   => 'required',
-			'project_id'  => 'required',
-			'name' 	   	  => 'required',
-			//'slug' 		   => 'required',
+			'category_id'  => 'required',
+			'name' 	   	   => 'required',
+			//'slug' 	   => 'required',
 			'description'  => 'required',
+			'publish_date' => 'date_format:Y-m-d|required',
 			'status'	   => 'boolean',
 			'image' 	   => ($mode == 'create' ? 'required|' : '').'mimes:jpg,jpeg,png|max:999',
 			'index'	   	   => 'numeric|digits_between:1,999',
@@ -339,7 +344,7 @@ class Blogs extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.blogs.index'))->with('success', 'Blog Updated!');
+			return Redirect::to(route('admin.blogs.show', $blog->id))->with('success', 'Blog Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
@@ -410,7 +415,7 @@ class Blogs extends BaseAdmin {
 			// Upload path
 			$destinationpath = public_path($path);
 			// Getting image extension
-			$extension = $file->getBlogCategoryOriginalExtension();
+			$extension = $file->getClientOriginalExtension();
 			// Renaming image
 			$filename = $type . rand(11111,99999) . '.' . $extension;
 			// Uploading file and move to given path

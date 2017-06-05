@@ -43,8 +43,8 @@
 						{{ $row->index }}.
 					@endif
 					{{ $row->name }}
-					@if ($row->project)
-						(<a href="{{ route('admin.projects.show', $row->project->id) }}">{{ $row->project->name }}</a>)
+					@if ($row->category)
+						(<a href="{{ route('admin.blogcategories.show', $row->category->id) }}">{{ $row->category->name }}</a>)
 					@endif
 					</td>
 					<td>{{ str_limit($row->description, 30, '...') }}</td>

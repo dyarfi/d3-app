@@ -33,15 +33,15 @@
     <hr/>
     <div class="row">
         <div class="col-md-5 col-xs-6">
-            <a href="{{ route('admin.blog.category.index') }}" class="btn btn-info btn-xs">Back to all clients</a>
-            <a href="{{ route('admin.blog.category.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit client</a>
+            <a href="{{ route('admin.blogcategories.index') }}" class="btn btn-info btn-xs">Back to all categories</a>
+            <a href="{{ route('admin.blogcategories.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit category</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([
                 'method' => 'DELETE',
-                'route' => ['admin.blog.category.trash', $row->id]
+                'route' => ['admin.blogcategories.trash', $row->id]
             ]) !!}
-                {!! Form::submit('Delete this client?', ['class' => 'btn btn-danger btn-xs']) !!}
+                {!! Form::submit('Delete this Category?', ['class' => 'btn btn-danger btn-xs']) !!}
             {!! Form::close() !!}
         </div>
     </div>

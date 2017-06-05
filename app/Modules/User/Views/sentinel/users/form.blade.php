@@ -29,6 +29,18 @@
 		<span class="help-block">{{{ $errors->first('email', ':message') }}}</span>
 	</div>
 
+	<div class="form-group{{ $errors->first('about', ' has-error') }}">
+		{!! Form::label('about', 'About'); !!}
+		{!! Form::textarea('about',Input::old('about', $row->about),[
+			'placeholder'=>'Enter the about User.',
+			'name'=>'about',
+			'id'=>'ckeditor',
+			'class' => 'form-control',
+			'rows' => '4'
+		]); !!}
+		<span class="help-block">{{{ $errors->first('about', ':message') }}}</span>
+	</div>
+
 	<div class="form-group{{ $errors->first('password', ' has-error') }}">
 		<label for="password">Password</label>
 		<input type="password" class="form-control" name="password" id="password" value="" placeholder="Enter the user password (only if you want to modify it).">
@@ -36,12 +48,12 @@
 	</div>
 
 	<div class="form-group{{ $errors->first('role_id', ' has-error') }}">
-		<label for="role_id">Roles</label>		
+		<label for="role_id">Roles</label>
 		{!! Form::select('role_id', $roles, Input::get('role_id') ? Input::get('role_id') : Input::old('role_id', @$row->roles()->first()->id),['class'=>'form-control']); !!}
 		<span class="help-block">{{{ $errors->first('role_id', ':message') }}}</span>
 	</div>
 
-	<div class="form-group{{ $errors->first('image', ' has-error') }}">	
+	<div class="form-group{{ $errors->first('image', ' has-error') }}">
 		{!! Form::label('image', 'Profile Image:'); !!}
 		@if ($row->image)
 			{!! Form::label('image', ($row->image) ? 'Replace Image ?' : 'Profile Image:', ['class' => 'control-label center-block ace-file-input']) !!}
@@ -59,10 +71,10 @@
 					</span>
 				</label>
 			</div>
-		</div>	
+		</div>
 		<span class="help-block red">{{{ $errors->first('image', ':message') }}}</span>
 	</div>
-	
+
 	<button type="submit" class="btn btn-default">Submit</button>
 {!! Form::close() !!}
 

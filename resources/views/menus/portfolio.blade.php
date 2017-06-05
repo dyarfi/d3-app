@@ -16,17 +16,33 @@
 		<section id="content">
 			<div class="content-wrap nopadding">
 				<div id="portfolio" class="portfolio portfolio-parallax clearfix">
-					@foreach($portfolios as $portfolio)
-					<article class="portfolio-item pf-media pf-icons">
-						<div class="portfolio-image" style="background-image: url('{{ asset('uploads/'.$portfolio->image) }}');" data-stellar-background-ratio="0.5"><div class="portfolio-overlay"></div></div>
-						<div class="portfolio-desc">
-							<h3><a href="{{ route('portfolio.show',$portfolio->slug) }}">{{ $portfolio->name }}</a></h3>
-							<!--span><a href="#">Media</a>, <a href="#">Icons</a></span-->
-							<span><a href="#" title="{{ $portfolio->project->name }}">{{ $portfolio->project->name }}</a></span>
-							<div class="portfolio-divider"><div></div></div>
+					<div id="entry-listing">
+						<div class="entry">
+						@foreach($portfolios as $portfolio)
+						<article class="portfolio-item pf-media pf-icons">
+							<div class="portfolio-image" style="background-image: url('{{ asset('uploads/'.$portfolio->image) }}');" data-stellar-background-ratio="0.5"><div class="portfolio-overlay"></div></div>
+							<div class="portfolio-desc">
+								<h3><a href="{{ route('portfolio.show',$portfolio->slug) }}">{{ $portfolio->name }}</a></h3>
+								<!--span><a href="#">Media</a>, <a href="#">Icons</a></span-->
+								<span>
+								<?php
+								$i=1;
+								$t=count($portfolio->tags);
+								foreach ($portfolio->tags as $tags) { ?>
+									<a href="javascript:;" title="{{ $tags->name }}">{{ $tags->name }}@if ($i != $t),@endif</a>
+									<?php $i++;
+								}
+								?>
+								</span>
+								<span><a href="#" title="{{ $portfolio->project->name }}">{{ $portfolio->project->name }}</a></span>
+								<div class="portfolio-divider"><div></div></div>
+								<span>Client : <a href="#" title="{{ $portfolio->client->name }}">{{ $portfolio->client->name }}</a></span>
+							</div>
+						</article>
+						@endforeach
 						</div>
-					</article>
-					@endforeach
+					</div>
+					{!! $portfolios->render() !!}
 					<!--article class="portfolio-item pf-media pf-icons">
 						<div class="portfolio-image" style="background-image: url('images/portfolio/parallax/1.jpg');" data-stellar-background-ratio="0.5"><div class="portfolio-overlay"></div></div>
 						<div class="portfolio-desc">

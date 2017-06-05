@@ -229,14 +229,14 @@ class BlogCategories extends BaseAdmin {
 		$input = array_filter(Input::all());
 
 		// Set category slug
-		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'_') : '';
+		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'-') : '';
 
 		$rules = [
 			'name' 	   	   => 'required',
 			//'slug' 		   => 'required',
 			'description'  => 'required',
 			'status'	   => 'boolean',
-			'image' 	   => ($mode == 'create' ? 'required|' : '').'mimes:jpg,jpeg,png|max:999',
+			//'image' 	   => ($mode == 'create' ? 'required|' : '').'mimes:jpg,jpeg,png|max:999',
 			'index'	   	   => 'numeric|digits_between:1,999',
 		];
 
@@ -305,7 +305,7 @@ class BlogCategories extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.categories.index'))->with('success', 'Blog Category Updated!');
+			return Redirect::to(route('admin.blogcategories.show',$category->id))->with('success', 'Blog Category Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

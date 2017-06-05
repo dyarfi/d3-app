@@ -12,6 +12,12 @@
         {{ $row->slug }}
     </div>
     @endif
+    @if($row->category)
+    <h4 class="red">Category</h4>
+    <div class="row-fluid">
+        {{ $row->category->name }}
+    </div>
+    @endif
     @if($row->image)
     <h4 class="red">Image</h4>
     <div class="row-fluid">
@@ -22,6 +28,12 @@
     <h4 class="red">Description</h4>
     <div class="row-fluid">
         {{ $row->description }}
+    </div>
+    @endif
+    @if($row->publish_date)
+    <h4 class="red">Publish Date</h4>
+    <div class="row-fluid">
+        {{ $row->publish_date }}
     </div>
     @endif
     @if($row->created_at)

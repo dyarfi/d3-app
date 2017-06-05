@@ -79,10 +79,10 @@ class Blog extends Model implements TaggableInterface {
      * A blog belongs to a project.
      *
      */
-    public function project()
+    public function category()
     {
 
-        return $this->belongsTo('App\Modules\Blog\Model\Project','project_id','id');
+        return $this->belongsTo('App\Modules\Blog\Model\BlogCategory','category_id','id');
 
     }
 

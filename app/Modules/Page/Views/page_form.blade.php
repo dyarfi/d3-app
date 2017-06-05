@@ -16,7 +16,7 @@
 		<input type="text" class="form-control" name="name" id="name" value="{{ Input::old('name', $row->name) }}" placeholder="Enter the page name.">
 		<span class="help-block">{{{ $errors->first('name', ':message') }}}</span>
 	</div>
-	
+
 	<div class="form-group{{ $errors->first('slug', ' has-error') }}">
 	{!! Form::label('slug', 'Slug'); !!}
 		{!! Form::text('slug',Input::old('slug', $row->slug),[
@@ -29,7 +29,7 @@
 	</div>
 
 	<div class="form-group{{ $errors->first('menu_id', ' has-error') }}">
-		<label for="menu_id">Menus</label>		
+		<label for="menu_id">Menus</label>
 		{!! Form::select('menu_id', $menus, Input::get('menu_id') ? Input::get('menu_id') : Input::old('menu_id', @$row->menu_id),['class'=>'form-control']); !!}
 		<span class="help-block">{{{ $errors->first('menu_id', ':message') }}}</span>
 	</div>
@@ -42,13 +42,13 @@
 
 	<div class="form-group{{ $errors->first('status', ' has-error') }}">
 		<label for="status">Status</label>
-		<select id="status" class="form-control input-sm" name="status">
-			<option value=""></option>
+		<select id="status" name="status" class="form-control input-sm">
+			<option value="">&nbsp;</option>
 			@foreach (config('setting.status') as $config => $val)
-				<option value="{{ Input::old('status', $row->status) }}" {{ $val == $row->status ? 'selected="selected"' : '' }}>{{$config}}</option>
+				<option value="{{ $val ? $val : Input::old('status', $row->status) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
 			@endforeach
 		</select>
-	</div>	
+	</div>
 
 	<button type="submit" class="btn btn-default">Submit</button>
 {!! Form::close() !!}

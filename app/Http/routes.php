@@ -76,6 +76,7 @@ Route::get('services', ['as'=>'services','uses'=>'ServicesController@index']);
 Route::get('portfolio', ['as'=>'portfolio','uses'=>'PortfolioController@index']);
 Route::get('portfolio/{slug}', ['as'=>'portfolio.show','uses'=>'PortfolioController@show']);
 Route::get('blog', ['as'=>'blog','uses'=>'BlogController@index']);
+Route::get('blog/{slug}', ['as'=>'blog.show','uses'=>'BlogController@show']);
 
 Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
 Route::post('career/post', ['as'=>'career.post','uses'=>'CareerController@post']);

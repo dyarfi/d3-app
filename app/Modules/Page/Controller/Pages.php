@@ -265,7 +265,7 @@ class Pages extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Updated!');;
+			return Redirect::to(route('admin.pages.show',$page->id))->with('success', 'Page Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

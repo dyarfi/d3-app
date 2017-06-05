@@ -6,7 +6,7 @@
 				<h1>{{ $menu->name }}</h1>
 				<span>{{ $menu->description }}</span>
 				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
+					<li><a href="{{ route('home') }}">Home</a></li>
 					<li class="active">Blog</li>
 				</ol>
 			</div>
@@ -16,6 +16,29 @@
 			<div class="content-wrap">
 				<div class="container clearfix">
 					<div id="posts" class="post-grid grid-container clearfix" data-layout="fitRows">
+						@foreach ($blogs as $blog)
+						<div class="entry clearfix">
+							@if($blog->image)
+							<div class="entry-image">
+								<a href="{{ asset('uploads/'.$blog->image) }}" data-lightbox="image"><img class="image_fade" src="{{asset('uploads/'.$blog->image)}}" alt="{{ $blog->name }}"></a>
+							</div>
+							@endif
+							<div class="entry-title">
+								<h2><a href="{{ route('blog.show', $blog->slug) }}">{{ $blog->name }}</a></h2>
+							</div>
+							<ul class="entry-meta clearfix">
+								<li><i class="icon-calendar3"></i>
+									{{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}
+								</li>
+								<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
+								<li><a href="#"><i class="icon-camera-retro"></i></a></li>
+							</ul>
+							<div class="entry-content">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
+								<a href="blog-single-full.html" class="more-link">Read More</a>
+							</div>
+						</div>
+						@endforeach
 						<div class="entry clearfix">
 							<div class="entry-image">
 								<a href="images/blog/full/17.jpg" data-lightbox="image"><img class="image_fade" src="images/blog/grid/17.jpg" alt="Standard Post with Image"></a>

@@ -242,6 +242,7 @@ class Careers extends BaseAdmin {
 			'slug' 		   => 'required',
 			'description'  => 'required',
 			'division_id'  => 'required',
+		    'end_date' 	   => 'date_format:Y-m-d|required',
 			'status'	   => 'boolean'
 		];
 

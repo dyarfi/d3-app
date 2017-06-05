@@ -34,7 +34,7 @@ class PortfolioController extends BasePublic {
 		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
 
 		// Set data to return
-		$data = ['menu'=>$this->menu->where('slug', $path)->first(),'portfolios'=>Portfolio::active()->with('client')->with('project')->orderBy('index','ASC')->get()];
+		$data = ['menu'=>$this->menu->where('slug', $path)->first(),'portfolios'=>Portfolio::active()->with('client')->with('project')->with('tags')->orderBy('index','ASC')->paginate(1)];
 
 		return $this->view('menus.portfolio')->data($data)->title('Page | Portfolio');
 		//
@@ -71,12 +71,13 @@ class PortfolioController extends BasePublic {
 
 		// Get data from database
         $portfolio = Portfolio::where('slug',$slug)->with('client')->first();
-	   	$data = ['portfolio'=>$portfolio];
+	   	$data = ['portfolio'=>$portfolio,'portfolios'=>Portfolio::where('id','!=',$portfolio->id)->with('client')->with('tags')->get()];
 
 	   	// Return data and view
 	   	return $this->view('portfolio.show')->data($data)->title('View Portfolio - Portfolios');
 
 	}
+	
 	/**
 	 * Show the form for editing the specified resource.
 	 *

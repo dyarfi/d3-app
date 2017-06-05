@@ -24,19 +24,19 @@ class Users extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		//$this->middleware('auth.admin');
 		$this->middleware('auth.admin',['except'=>['profile','crop']]);
-		
+
 		// Load users and get repository data from Sentinel
 		$this->users = new User;
 
 		$this->roles = new Role;
-		
+
 	}
 
 	/**
@@ -49,12 +49,12 @@ class Users extends BaseAdmin {
 
 	   	//dd ($this->users->find(1)->roles);
 
-		// Set return data 
+		// Set return data
 	   	$users = Input::get('path') === 'trashed' ? $this->users->onlyTrashed()->get() : $this->users->get();
 
 	   	// Get deleted count
 		$deleted = $this->users->onlyTrashed()->get()->count();
-	   	
+
 	   	// Set data to return
 	   	$data = ['rows'=>$users,'deleted'=>$deleted,'junked'=>Input::get('path')];
 
@@ -67,8 +67,8 @@ class Users extends BaseAdmin {
 	   				];
 
 	   	return $this->view('User::sentinel.users.index')->data($data)->scripts($scripts)->title('User List');
-	}	
-	
+	}
+
 	/**
 	 * Display user profile of the resource.
 	 *
@@ -83,9 +83,9 @@ class Users extends BaseAdmin {
 
 		}
 
-		// Set return data 
+		// Set return data
 	   	$user = Sentinel::getUser() ? User::find(Sentinel::getUser()->id) : '';
-	   	
+
 	   	// Set data to return
 	   	$data = ['row'=>$user];
 
@@ -93,7 +93,7 @@ class Users extends BaseAdmin {
 	   	$scripts = [
 	   				'jcolor'=> 'themes/ace-admin/plugins/jcrop/js/jquery.color.js',
 	   				'jcrop'=> 'themes/ace-admin/plugins/jcrop/js/jquery.Jcrop.min.js',
-	   				'jcrop-form-image'=> 'themes/ace-admin/plugins/jcrop/js/form-image-crop.js',	   				
+	   				'jcrop-form-image'=> 'themes/ace-admin/plugins/jcrop/js/form-image-crop.js',
 	   				];
 
 		// Load needed styles
@@ -101,9 +101,9 @@ class Users extends BaseAdmin {
 	   				'jcrop'=> 'themes/ace-admin/plugins/jcrop/css/jquery.Jcrop.min.css',
 	   				'imageCrop'=> 'themes/ace-admin/plugins/jcrop/css/image-crop.css'
 	   				];
-		
+
 	   	// Return data and view
-	   	return $this->view('User::sentinel.users.profile')->data($data)->styles($styles)->scripts($scripts)->title('User Profile'); 
+	   	return $this->view('User::sentinel.users.profile')->data($data)->styles($styles)->scripts($scripts)->title('User Profile');
 	}
 
 	/**
@@ -116,15 +116,15 @@ class Users extends BaseAdmin {
 	{
 		// Get data from database
         $user = $this->users->findOrFail($id);
-        
+
         // Read ACL settings config for any permission access
         $acl = config('setting.acl');
-        	               	       
+
 		// Set data to return
 	   	$data = ['row'=>$user,'acl'=>$acl];
 
 	   	// Return data and view
-	   	return $this->view('User::sentinel.users.show')->data($data)->title('View User'); 
+	   	return $this->view('User::sentinel.users.show')->data($data)->title('View User');
 
 	}
 
@@ -155,7 +155,7 @@ class Users extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -180,10 +180,10 @@ class Users extends BaseAdmin {
 	{
 		if ($user = $this->users->find($id))
 		{
-			
+
 			// Add deleted_at and not completely delete
 			$user->delete();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.users.index'))->with('success', 'User Trashed!');
 		}
@@ -244,10 +244,10 @@ class Users extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
-		{		
+		{
 			if ( ! $row = $this->users->find($id))
 			{
 				return Redirect::to(route('admin.users'));
@@ -281,9 +281,9 @@ class Users extends BaseAdmin {
 			'email'      => ($id) ? 'email|required' : 'email|required|unique:users'
 		];
 
-		// This is where the user update their account profile in the account admin.account route 
+		// This is where the user update their account profile in the account admin.account route
 		if (isset($input['_private'])) {
-			
+
 			list($csrf, $email, $role_id) = explode('::', base64_decode($input['_private']));
 
 			if ($csrf == $input['_token']) {
@@ -298,10 +298,10 @@ class Users extends BaseAdmin {
 		}
 
 		if ($id)
-		{			
+		{
 
 			$user = Sentinel::getUserRepository()->createModel()->find($id);
-			
+
 			$messages = $this->validateUser($input, $rules);
 
 			if ($messages->isEmpty())
@@ -311,22 +311,22 @@ class Users extends BaseAdmin {
 				      $destinationPath = public_path().'/uploads'; // upload path
 				      $extension = $input['image']->getClientOriginalExtension(); // getting image extension
 				      $fileName = 'usr-'.rand(11111,99999).'.'.$extension; // renameing image
-				      $input['image']->move($destinationPath, $fileName); // uploading file to given path					      
-				      
+				      $input['image']->move($destinationPath, $fileName); // uploading file to given path
+
 				      // Slip image file
 					  $input = array_set($input, 'image', $fileName);
 
-			    }	    
+			    }
 
 				if ( ! $user->roles()->first() ) {
-					
+
 					// Syncing relationship Many To Many // Create New
 					$user->roles()->sync(['role_id'=>$input['role_id']]);
-					
+
 				} else {
 
 					// Syncing relationship Many To Many // Update Existing
-					$user->roles()->sync(['role_id'=>$input['role_id']]);					
+					$user->roles()->sync(['role_id'=>$input['role_id']]);
 
 					if (isset($input['_private'])) {
 
@@ -346,12 +346,12 @@ class Users extends BaseAdmin {
 					}
 
 				}
-				
+
 			}
 		}
 		else
 		{
-			
+
 			$messages = $this->validateUser($input, $rules);
 
 			if ($messages->isEmpty())
@@ -360,8 +360,8 @@ class Users extends BaseAdmin {
 				      $destinationPath = public_path().'/uploads'; // upload path
 				      $extension = $input['image']->getClientOriginalExtension(); // getting image extension
 				      $fileName = 'usr-'.rand(11111,99999).'.'.$extension; // renameing image
-				      $input['image']->move($destinationPath, $fileName); // uploading file to given path					      
-				      
+				      $input['image']->move($destinationPath, $fileName); // uploading file to given path
+
 				      // Slip image file
 					  $input = array_set($input, 'image', $fileName);
 
@@ -369,7 +369,7 @@ class Users extends BaseAdmin {
 
 				// Create user into the database
 				$user = Sentinel::getUserRepository()->create($input);
-				
+
 				// Syncing relationship Many To Many // Create New
 				$user->roles()->sync(['role_id'=>$input['role_id']]);
 
@@ -381,7 +381,7 @@ class Users extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.users.index'))->with('success', 'User Updated!');
+			return Redirect::to(route('admin.users.show', $user->id))->with('success', 'User Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
@@ -406,18 +406,18 @@ class Users extends BaseAdmin {
 	/**
 	 * Show the dashboard for current users
 	 *
-	 * @param  null  
+	 * @param  null
 	 * @return Response
 	 */
 	public function dashboard() {
 
 		//dd ($this->user);
 
-		// Set return data 
+		// Set return data
 	   	$user = $this->user;
 
 	   	//dd($user);
-	   	
+
 	   	// Set data to return
 	   	$data = ['user'=>$user];
 
@@ -429,7 +429,7 @@ class Users extends BaseAdmin {
 
 
 	   	// Return data and view
-	   	return $this->view('User::sentinel.users.dashboard')->data($data)->scripts($scripts)->title('User Dashboard'); 
+	   	return $this->view('User::sentinel.users.dashboard')->data($data)->scripts($scripts)->title('User Dashboard');
 	}
 
 	public function export() {
@@ -455,7 +455,7 @@ class Users extends BaseAdmin {
 		 * More info: http://deepliquid.com/content/Jcrop_Implementation_Theory.html
 		 */
 		$input = array_filter(Input::all());
-		
+
 		if (Request::ajax() && Request::isMethod('get'))
 		{
 
@@ -477,11 +477,11 @@ class Users extends BaseAdmin {
 
 			// Set source file image
 			$src  = $input['path'].'/'.$input['image'];
-			
+
 			// Set cropped file image
 			$crop = pathinfo($input['path'].'/'.$input['image']);
 			$file = $crop['dirname'].'/'.$crop['filename'].'-100x100px.'.$crop['extension'];
-			
+
 			$img_r = imagecreatefromjpeg($src);
 			$dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
 

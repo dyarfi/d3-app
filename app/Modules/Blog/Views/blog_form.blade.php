@@ -38,6 +38,27 @@
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 
+	<div class="form-group{{ $errors->first('publish_date', ' has-error') }}">
+		<div class="row">
+			<div class="col-xs-6">
+				{!! Form::label('publish_date', 'Publish Date'); !!}
+				<div class="input-group input-group-sm">
+					{!! Form::text('slug',Input::old('publish_date', $row->publish_date),[
+						'placeholder'=>'Enter the Blog Publish Date.',
+						'name'=>'publish_date',
+						'id'=>'datepicker',
+						'data-date-format'=>'yyyy-mm-dd',
+						'placeholder'=>'yyyy-mm-dd',
+						'class'=>'form-control date-picker']); !!}
+					<span class="input-group-addon">
+						<i class="ace-icon fa fa-calendar"></i>
+					</span>
+				</div>
+			</div>
+		</div>
+		<span class="help-block">{{{ $errors->first('publish_date', ':message') }}}</span>
+	</div>
+
 	<div class="form-group{{ $errors->first('image', ' has-error') }}">
 		{!! Form::label('image', 'Blog Image:'); !!}
 		@if ($row->image)

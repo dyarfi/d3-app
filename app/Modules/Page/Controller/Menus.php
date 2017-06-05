@@ -340,7 +340,7 @@ class Menus extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.menus.index'))->with('success', 'Menu Updated!');
+			return Redirect::to(route('admin.menus.show', $menu->id))->with('success', 'Menu Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
