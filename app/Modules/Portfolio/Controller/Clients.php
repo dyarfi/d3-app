@@ -304,7 +304,7 @@ class Clients extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.clients.index'))->with('success', 'Client Updated!');
+			return Redirect::to(route('admin.clients.show',$client->id))->with('success', 'Client Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

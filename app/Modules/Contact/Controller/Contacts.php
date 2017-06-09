@@ -315,7 +315,7 @@ class Contacts extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.contacts.index'))->with('success', 'Contact Updated!');
+			return Redirect::to(route('admin.contacts.show', $contact->id))->with('success', 'Contact Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

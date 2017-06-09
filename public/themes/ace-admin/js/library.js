@@ -32,5 +32,5 @@ $(document).ready(function(){
 
     tag_input.on('added', function (e, value) { })
     tag_input.on('removed', function (e, value) { })
-    
+
 });

@@ -337,7 +337,7 @@ class Careers extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.careers.index'))->with('success', 'Career Updated!');
+			return Redirect::to(route('admin.careers.show', $career->id))->with('success', 'Career Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

@@ -183,6 +183,11 @@ return [
 		 */
 		Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 
+		/*
+		 * https://datatables.yajrabox.com/starter
+		 */
+		Yajra\Datatables\DatatablesServiceProvider::class
+
 	],
 
 	/*
@@ -257,6 +262,10 @@ return [
 		'Excel' 		=> Maatwebsite\Excel\Facades\Excel::class,
 		// Modular service provider
 		'Modules'		=> Modules\ModulesServiceProvider::class,
+
+		// Datatables jquery
+		'Datatables' => Yajra\Datatables\Facades\Datatables::class
+
 	],
 
 ];

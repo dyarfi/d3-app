@@ -25,3 +25,19 @@
 .well.well-sm.height200 {
 	padding: 20px;
 }
+.dataTables_processing {
+    background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+    background-image: url('../img/preloader.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    bottom: 0;
+    left: 0;
+    margin: 10px auto 0px auto;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}

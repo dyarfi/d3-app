@@ -25,16 +25,16 @@ class Divisions extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
 		// Load division and get repository data from Auth
 		$this->division = new Division;
-				
+
 	}
 
 	/**
@@ -47,12 +47,12 @@ class Divisions extends BaseAdmin {
 
 	   	//dd ($this->division->find(1)->roles);
 
-		// Set return data 
+		// Set return data
 	   	$divisions = Input::get('path') === 'trashed' ? $this->division->onlyTrashed()->get() : $this->division->orderBy('created_at','desc')->get();
 
 	   	// Get deleted count
 		$deleted = $this->division->onlyTrashed()->get()->count();
-	   	
+
 	   	// Set data to return
 	   	$data = ['rows'=>$divisions,'deleted'=>$deleted,'junked'=>Input::get('path')];
 
@@ -65,8 +65,8 @@ class Divisions extends BaseAdmin {
 	   				];
 
 	   	return $this->view('Career::division_index')->data($data)->scripts($scripts)->title('Division List');
-	}	
-	
+	}
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -77,15 +77,15 @@ class Divisions extends BaseAdmin {
 	{
 		// Get data from database
         $division = $this->division->findOrFail($id);
-        
+
         // Read ACL settings config for any permission access
         $acl = config('setting.acl');
-        	               	       
+
 		// Set data to return
 	   	$data = ['row'=>$division,'acl'=>$acl];
 
 	   	// Return data and view
-	   	return $this->view('Career::division_show')->data($data)->title('View Division'); 
+	   	return $this->view('Career::division_show')->data($data)->title('View Division');
 
 	}
 
@@ -116,7 +116,7 @@ class Divisions extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -141,10 +141,10 @@ class Divisions extends BaseAdmin {
 	{
 		if ($division = $this->division->find($id))
 		{
-			
+
 			// Add deleted_at and not completely delete
 			$division->delete();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.divisions.index'))->with('success', 'Division Trashed!');
 		}
@@ -205,10 +205,10 @@ class Divisions extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
-		{		
+		{
 			if ( ! $row = $this->division->find($id))
 			{
 				return Redirect::to(route('admin.divisions.index'));
@@ -232,7 +232,7 @@ class Divisions extends BaseAdmin {
 	protected function processForm($mode, $id = null)
 	{
 		$input = array_filter(Input::all());
-		
+
 		$rules = [
 			'name' => 'required',
 			'slug'  => 'required',
@@ -244,11 +244,11 @@ class Divisions extends BaseAdmin {
 			$division = $this->division->find($id);
 
 			$messages = $this->validateDivision($input, $rules);
-			
+
 			if ($messages->isEmpty())
 			{
 				// Get all request
-				$result = $input;	
+				$result = $input;
 
 				// Slip user id
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
@@ -265,20 +265,20 @@ class Divisions extends BaseAdmin {
 			if ($messages->isEmpty())
 			{
 				// Get all request
-				$result = $input;	
+				$result = $input;
 
-				// Slip user id 
+				// Slip user id
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				//$menu = $this->menus->create($input);
 				$division = $this->division->create($result);
-				
+
 			}
 		}
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.divisions.index'))->with('success', 'Division Updated!');
+			return Redirect::to(route('admin.divisions.show', $division->id))->with('success', 'Division Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
@@ -291,7 +291,7 @@ class Divisions extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
-		
+
 		if (Input::get('check') !='') {
 
 		    $rows	= Input::get('check');
@@ -304,7 +304,7 @@ class Divisions extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.divisions.index'))->with('success', 'Division Status Changed!');
 
-		} else {	
+		} else {
 
 		    // Set message
 		    return Redirect::to(route('admin.divisions.index'))->with('error','Data not Available!');
@@ -325,7 +325,7 @@ class Divisions extends BaseAdmin {
 		$validator->passes();
 
 		return $validator->errors();
-	}	
+	}
 
 	public function export() {
 

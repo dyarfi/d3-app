@@ -268,7 +268,7 @@ class Projects extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Updated!');;
+			return Redirect::to(route('admin.projects.show', $project->id))->with('success', 'Project Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

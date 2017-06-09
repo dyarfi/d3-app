@@ -238,7 +238,7 @@ class Banners extends BaseAdmin {
 			'name' 	   	   => 'required',
 			'slug' 		   => 'required',
 			'description'  => 'required',
-			'division_id'  => 'required',
+			'image'  	   => 'required',
 			'status'	   => 'boolean'
 		];
 
@@ -248,48 +248,24 @@ class Banners extends BaseAdmin {
 
 			$messages = $this->validateBanner($input, $rules);
 
-			// checking file is valid.
-		    //if ($request->file('image') && $request->file('image')->isValid()) {
-			if (!empty($input['image']) && !$input['image']->getError()) {
-		      	$destinationPath = public_path().'/uploads'; // upload path
-	      		$extension = $input['image']->getClientOriginalExtension(); // getting image extension
-		      	$fileName = rand(11111,99999).'.'.$extension; // renaming image
-		      	$input['image']->move($destinationPath, $fileName); // uploading file to given path
+			// If user upload a file
+			if (isset($input['image']) && Input::hasFile('image')) {
 
-				/*
-				$imagePath = $request->file('image')->store('public');
-			    $image = Image::make(Storage::get($imagePath))->resize(320,240)->encode();
-			    Storage::put($imagePath,$image);
+				// Set filename
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'client_');
 
-			    $imagePath = explode('/',$imagePath);
-
-			    $imagePath = $imagePath[1];
-
-			    $myTheory->image = $imagePath;
-				*/
-		      	//Storage::disk('local')->put('public/'.$fileName, File::get($input['image']));
-		      	//Storage::disk('local')->put($fileName,  File::get( $input['image'] ));
-		      	// sending back with message
-		      	//Session::flash('success', 'Upload successfully');
-		      	//return Redirect::to(route('admin.apanel.banners.create'));
-		    }
-		    else {
-			      // sending back with error message.
-			      // Session::flash('error', 'uploaded file is not valid');
-			      // return Redirect::to('banners/'.$id.'/edit');
-		    	  $fileName = old('image') ? old('image') : $banner->image;
-		    }
+			}
 
 			if ($messages->isEmpty())
 			{
 				// Get all request
 				$result = $input;
 
-				// Set user id
-				$result['user_id'] = Sentinel::getUser()->id;
+				// Slip user id
+				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				// Slip image file
-				$result = array_set($result, 'image', $fileName);
+				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
 
 				$banner->update($result);
 			}
@@ -298,32 +274,25 @@ class Banners extends BaseAdmin {
 		else
 		{
 			$messages = $this->validateBanner($input, $rules);
-			// checking file is valid.
-		    if (!empty($input['image']) && !$input['image']->getError()) {
-		      $destinationPath = public_path().'/uploads'; // upload path
-		      $extension = $input['image']->getClientOriginalExtension(); // getting image extension
-		      $fileName = rand(11111,99999).'.'.$extension; // renameing image
-		      $input['image']->move($destinationPath, $fileName); // uploading file to given path
-		      // sending back with message
-		      //Session::flash('success', 'Upload successfully');
-		      //return Redirect::to(route('admin.apanel.banners.create'));
-		    }
-		    //else {
-		      // sending back with error message.
-		      //Session::flash('error', 'uploaded file is not valid');
-		      //return Redirect::to(route('admin.banners.create'));
-		    //}
+
+			// If user upload a file
+			if (isset($input['image']) && Input::hasFile('image')) {
+
+				// Set filename
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'client_');
+
+			}
 
 			if ($messages->isEmpty())
 			{
 				// Get all request
 				$result = $input;
 
-				// Set user id
-				$result['user_id'] = Sentinel::getUser()->id;
+				// Slip user id
+				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
 				// Slip image file
-				$result = is_array(@$result['image']) ? array_set($result, 'image', '') : array_set($result, 'image', @$fileName);
+				$result = isset($input['image']) ? array_set($result, 'image', @$filename) : array_set($result, 'image', '');
 
 				//$banner = $this->banners->create($input);
 				$banner = $this->banners->create($result);
@@ -364,6 +333,30 @@ class Banners extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.banners.index'))->with('error','Data not Available!');
 		}
+	}
+
+	/**
+	 * Process a file upload save the filename to DB.
+	 *
+	 * @param  array  $file
+	 * @param  string $path
+	 * @param  string $type
+	 * @return $filename
+	 */
+	protected function imageUploadToDb($file='', $path='', $type='')
+	{
+		// Set filename upload
+		$filename = '';
+
+		// Check if input and upload already assigned
+		if (!empty($file) && !$file->getError()) {
+			$destinationpath = public_path($path); // Upload path start with slashes
+			$extension = $file->getClientOriginalExtension(); // Getting image extension
+			$filename = $type . rand(11111,99999) . '.' . $extension; // Renaming image
+			$file->move($destinationpath, $filename); // Uploading file and move to given path
+		}
+
+		return $filename;
 	}
 
 	/**

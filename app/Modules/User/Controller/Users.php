@@ -440,6 +440,11 @@ class Users extends BaseAdmin {
 		$users = $this->users->select('id', 'username', 'email', 'created_at')->get();
 		// Export file to type
 		Excel::create('users', function($excel) use($users) {
+			// Set the spreadsheet title, creator, and description
+	        $excel->setTitle('Export List');
+	        $excel->setCreator('Laravel')->setCompany('laravel.com');
+	        $excel->setDescription('export file');
+			
 		    $excel->sheet('Sheet 1', function($sheet) use($users) {
 		        $sheet->fromArray($users);
 		    });

@@ -24,13 +24,13 @@ class Settings extends BaseAdmin {
 	{
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
 		// Load settings and get repository data from database
 		$this->settings = new Setting;
-		
+
 		//$subject = 'The Truth newsletter - Laravel Newsletter';
 		//$contents = '<h1>Big news</h1>The world is carried by four elephants on a turtle!';
 
@@ -39,7 +39,7 @@ class Settings extends BaseAdmin {
 
 		//Newsletter::subscribe('defrian.yarfi@gmail.com', ['firstName'=>'Havelock', 'lastName'=>'Vetinari'], 'Laravel Newsletter Page');
 		//Newsletter::subscribe('dyarfi20@gmail.com', ['firstName'=>'Havelock2', 'lastName'=>'Vetinari2'], 'Laravel Newsletter Page');
-		
+
 		//Newsletter::unsubscribe('sam.vimes@discworld.com', ['firstName'=>'Sam', 'lastName'=>'Vines'], 'mySecondList');
 
 		//dd(Newsletter::createCampaign($subject, $contents, 'Laravel Newsletter Page'));
@@ -50,13 +50,13 @@ class Settings extends BaseAdmin {
 
 		//dd($api->call('campaigns/list',1));
 
-		//$lists = Newsletter::getApi();		
+		//$lists = Newsletter::getApi();
 		//$campaigns = element('data',$lists);
 
 		//dd($lists->call('campaigns/list',true));
 
 	}
-	
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -65,7 +65,7 @@ class Settings extends BaseAdmin {
 	public function index() {
 
 		// print_r(Setting::slug('site-theme')->firstOrFail()->value);
-		
+
 		//print_r($this->settings->setToConfig());
 		//exit;
 		//Config::set('setting.configure', $this->settings->setToConfig());
@@ -80,12 +80,12 @@ class Settings extends BaseAdmin {
 			//print_r($val['group']);
 		//}
 
-		// Set return data 
+		// Set return data
 	   	$settings = Input::get('path') === 'trashed' ? $this->settings->onlyTrashed()->orderBy('name')->get() : $this->settings->orderBy('name')->get();
 
 	   	// Get deleted count
-		$deleted = $this->settings->onlyTrashed()->get()->count();		   
-		
+		$deleted = $this->settings->onlyTrashed()->get()->count();
+
 	   	// Set data to return
 	   	$data = ['settings' => $settings,'deleted' => $deleted,'junked' => Input::get('path'), 'config_settings' => $this->settings->setToConfig()];
 
@@ -97,9 +97,9 @@ class Settings extends BaseAdmin {
 	   				//'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js',
 	   				//'typehead.jquery'=> 'assets.assets/js/typeahead.jquery.min.js'
 	   				];
-	   	
+
 		// Return data and view
-	   	return $this->view('User::settings.index')->data($data)->scripts($scripts)->title('Setting List'); 
+	   	return $this->view('User::settings.index')->data($data)->scripts($scripts)->title('Setting List');
 	}
 
 	/**
@@ -112,12 +112,12 @@ class Settings extends BaseAdmin {
 	{
 		// Get data from database
         $setting = $this->settings->find($id);
-        	       
+
 		// Set data to return
 	   	$data = ['setting'=>$setting];
 
 	   	// Return data and view
-	   	return $this->view('User::settings.show')->data($data)->title('View Setting'); 
+	   	return $this->view('User::settings.show')->data($data)->title('View Setting');
 
 	}
 
@@ -148,7 +148,7 @@ class Settings extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -162,7 +162,7 @@ class Settings extends BaseAdmin {
 	{
 		return $this->processForm('update', $id);
 	}
-	
+
 	/**
 	 * Remove the specified setting.
 	 *
@@ -193,10 +193,10 @@ class Settings extends BaseAdmin {
 	{
 		if ($setting = $this->settings->onlyTrashed()->find($id))
 		{
-			
+
 			// Restored back from deleted_at database
 			$setting->restore();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.settings.index'))->with('success', 'Setting Restored!');
 		}
@@ -233,7 +233,7 @@ class Settings extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
 		{
@@ -268,16 +268,16 @@ class Settings extends BaseAdmin {
 		$rules = [
 			'name' 		   => 'required',
 			'slug' 		   => 'required',
-			'input_type'   => 'required',			
+			'input_type'   => 'required',
 			'description'  => 'required',
 			'value'  	   => 'required',
-			'editable'	   => 'boolean',			
+			'editable'	   => 'boolean',
 			'status'	   => 'boolean'
 		];
 
 		if ($id)
 		{
-			
+
 			$setting = $this->settings->find($id);
 
 			$messages = $this->validateSetting($input, $rules);
@@ -300,7 +300,7 @@ class Settings extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.settings.index'))->with('success', 'Setting Updated!');
+			return Redirect::to(route('admin.settings.show', $setting->id))->with('success', 'Setting Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
@@ -313,11 +313,11 @@ class Settings extends BaseAdmin {
 	 * @param  mixed  $id
 	 * @return boolean
 	 */
-	public function change($id=null) {		
+	public function change($id=null) {
 
 		// Catch all input post
 		$input = array_filter(Input::all());
-		
+
 		// Validation rules
 		$rules = [
 			'email-contact' 		=> 'required|min:5|email',
@@ -343,7 +343,7 @@ class Settings extends BaseAdmin {
   		];
 
 		// Default variable checking
-		$updated = false;	    
+		$updated = false;
 
 		// Session checking variable
 		$session = base64_decode(Request::input('setting_form')) == Session::getId();
@@ -353,23 +353,23 @@ class Settings extends BaseAdmin {
 
 		    // Check if requested contain 'access_permission'
 			if (Request::has('setting_form') && $session) {
-				
+
 				// Validation messages
 				$messages = $this->validateSetting($input, $rules);
 
-				if ($messages->isEmpty()) {				    
+				if ($messages->isEmpty()) {
 
 					if (!empty($input['image-logo']) && !$input['image-logo']->getError()) {
 					      $destinationPath = public_path().'/uploads'; // upload path
 					      $extension = $input['image-logo']->getClientOriginalExtension(); // getting image extension
 					      $fileName = 'logo-'.rand(11111,99999).'.'.$extension; // renameing image
-					      $input['image-logo']->move($destinationPath, $fileName); // uploading file to given path					      
-					      
+					      $input['image-logo']->move($destinationPath, $fileName); // uploading file to given path
+
 					      // Slip image file
 						  $input = array_set($input, 'image-logo', $fileName);
 
 				    }
-				    					
+
 				    // Save the changes to database
 				    foreach ($input as $key => $value) {
 
@@ -380,15 +380,15 @@ class Settings extends BaseAdmin {
 						}
 
 					}
-				
+
 				}
 			  	else {
 
 			  		// Set error validation messages
 			  		return Redirect::back()->withInput()->withErrors($messages);
 
-			  	}				
-				
+			  	}
+
 				// Saved checking
 				$updated = true;
 
@@ -400,7 +400,7 @@ class Settings extends BaseAdmin {
 			}
 
 		} else {
-			
+
 			// Return response Unauthorized
 			// return response()->json(['status'=>'200','message'=>'Unauthorized!']);
 			return Redirect::to(route('admin.settings.index'))->with('error', 'Unauthorized!');
@@ -411,7 +411,7 @@ class Settings extends BaseAdmin {
 		if ($updated) {
 
 			// Return response successfull
-			// return response()->json(['status'=>'200','message'=>'Update Successfull!']);		
+			// return response()->json(['status'=>'200','message'=>'Update Successfull!']);
 			return Redirect::to(route('admin.settings.index'))->with('success', 'Setting updated!');
 
 		} else {

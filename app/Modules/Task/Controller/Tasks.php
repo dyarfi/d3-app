@@ -22,18 +22,18 @@ class Tasks extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
 		// Load tasks and get repository data from database
 		$this->tasks = new Task;
-		
+
 	}
-	
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -41,12 +41,12 @@ class Tasks extends BaseAdmin {
 	 */
 	public function index() {
 
-		// Set return data 
+		// Set return data
 	   	$tasks = Input::get('path') === 'trashed' ? $this->tasks->onlyTrashed()->get() : $this->tasks->orderBy('created_at','desc')->get();
 
 	   	// Get deleted count
-		$deleted = $this->tasks->onlyTrashed()->get()->count();		   
-		
+		$deleted = $this->tasks->onlyTrashed()->get()->count();
+
 	   	// Set data to return
 	   	$data = ['rows' => $tasks,'deleted' => $deleted,'junked' => Input::get('path')];
 
@@ -57,9 +57,9 @@ class Tasks extends BaseAdmin {
 	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
 	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
 	   				];
-	   	
+
 		// Return data and view
-	   	return $this->view('Task::index')->data($data)->scripts($scripts)->title('Task List'); 
+	   	return $this->view('Task::index')->data($data)->scripts($scripts)->title('Task List');
 	}
 
 	/**
@@ -72,12 +72,12 @@ class Tasks extends BaseAdmin {
 	{
 		// Get data from database
         $task = $this->tasks->find($id);
-        	       
+
 		// Set data to return
 	   	$data = ['row'=>$task];
 
 	   	// Return data and view
-	   	return $this->view('Task::show')->data($data)->title('View Task'); 
+	   	return $this->view('Task::show')->data($data)->title('View Task');
 
 	}
 
@@ -108,7 +108,7 @@ class Tasks extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -122,7 +122,7 @@ class Tasks extends BaseAdmin {
 	{
 		return $this->processForm('update', $id);
 	}
-	
+
 	/**
 	 * Remove the specified task.
 	 *
@@ -153,10 +153,10 @@ class Tasks extends BaseAdmin {
 	{
 		if ($task = $this->tasks->onlyTrashed()->find($id))
 		{
-			
+
 			// Restored back from deleted_at database
 			$task->restore();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.tasks.index'))->with('success', 'Task Restored!');
 		}
@@ -193,7 +193,7 @@ class Tasks extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
 		{
@@ -218,7 +218,7 @@ class Tasks extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function processForm($mode, $id = null)
-	{	
+	{
 		//$request = new Request;
 
 		$input = array_filter(Input::all());
@@ -227,8 +227,8 @@ class Tasks extends BaseAdmin {
 		//exit;
 		//$input['slug'] = isset($input['title']) ? snake_case($input['title']) : '';
 
-		//$request = $input;		
-		
+		//$request = $input;
+
 		$rules = [
 			'title' 	   => 'required',
 			'slug' 		   => 'required',
@@ -251,7 +251,7 @@ class Tasks extends BaseAdmin {
 		      $fileName = rand(11111,99999).'.'.$extension; // renameing image
 		      $input['image']->move($destinationPath, $fileName); // uploading file to given path
 		      // sending back with message
-		      //Session::flash('success', 'Upload successfully'); 
+		      //Session::flash('success', 'Upload successfully');
 		      //return Redirect::to(route('admin.tasks.create'));
 		    }
 		    //else {
@@ -264,8 +264,8 @@ class Tasks extends BaseAdmin {
 			if ($messages->isEmpty())
 			{
 				// Get all request
-				$result = $input;	
-				
+				$result = $input;
+
 				// Set user id
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
 
@@ -287,7 +287,7 @@ class Tasks extends BaseAdmin {
 		      $fileName = rand(11111,99999).'.'.$extension; // renameing image
 		      $input['image']->move($destinationPath, $fileName); // uploading file to given path
 		      // sending back with message
-		      //Session::flash('success', 'Upload successfully'); 
+		      //Session::flash('success', 'Upload successfully');
 		      //return Redirect::to(route('admin.tasks.create'));
 		    }
 		    //else {
@@ -299,7 +299,7 @@ class Tasks extends BaseAdmin {
 			if ($messages->isEmpty())
 			{
 				// Get all request
-				$result = $input;	
+				$result = $input;
 
 				// Set user id
 				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
@@ -309,13 +309,13 @@ class Tasks extends BaseAdmin {
 
 				//$task = $this->tasks->create($input);
 				$task = $this->tasks->create($result);
-				
+
 			}
 		}
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.tasks.index'))->with('success', 'Task Updated!');
+			return Redirect::to(route('admin.tasks.show', $task->id))->with('success', 'Task Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
@@ -328,7 +328,7 @@ class Tasks extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
-		
+
 		if (Input::get('check') !='') {
 
 		    $rows	= Input::get('check');
@@ -341,7 +341,7 @@ class Tasks extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.tasks.index'))->with('success', 'Task Status Changed!');
 
-		} else {	
+		} else {
 
 		    // Set message
 		    return Redirect::to(route('admin.tasks.index'))->with('error','Data not Available!');

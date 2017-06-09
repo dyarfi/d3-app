@@ -1,17 +1,20 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, Image;
+use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, Image, Excel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
+use App\Modules\User\Model\User;
 use App\Modules\Portfolio\Model\Portfolio,App\Modules\Portfolio\Model\Project,App\Modules\Portfolio\Model\Client;
+// Datatable
+use Datatables;
 
 class Portfolios extends BaseAdmin {
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Holds the Portfolio Module repository.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
+	 * @var App\Modules\Portfolio\Model\Portfolio
 	 */
 	protected $portfolios;
 
@@ -37,16 +40,8 @@ class Portfolios extends BaseAdmin {
 		// Crop to fit image size
 		$this->imgFit 		= [1200,1200];
 
-
 		// Get the entity object
 		$product = $this->portfolios->find(1);
-
-		// Through a string
-		//$product->tag('foo, bar, baz');
-
-		// Through an array
-		//$product->tag([ 'foo', 'bar', 'baz' ]);
-		//dd($product->tags()->get());
 
 	}
 
@@ -57,26 +52,79 @@ class Portfolios extends BaseAdmin {
 	 */
 	public function index() {
 
-		// Set return data
-	   	$portfolios = Input::get('path') === 'trashed' ? $this->portfolios->with('project')->onlyTrashed()->get() : $this->portfolios->with('project')->orderBy('index', 'asc')->get();
-
 	   	// Get deleted count
 		$deleted = $this->portfolios->onlyTrashed()->get()->count();
 
 	   	// Set data to return
-	   	$data = ['rows' => $portfolios,'deleted' => $deleted,'junked' => Input::get('path')];
+	   	$data = ['deleted' => $deleted,'junked' => Input::get('path')];
 
 	   	// Load needed scripts
 	   	$scripts = [
-	   				'dataTables'=> asset('themes/ace-admin/js/jquery.dataTables.min.js'),
-	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
-	   				'dataTableTools'=> asset('themes/ace-admin/js/dataTables.tableTools.min.js'),
-	   				'dataTablesColVis'=> asset('themes/ace-admin/js/dataTables.colVis.min.js')
+	   				'dataTables' => asset('themes/ace-admin/js/jquery.dataTables.min.js'),
+	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js')
 	   				];
 
+
 		// Return data and view
-	   	return $this->view('Portfolio::portfolio_index')->data($data)->scripts($scripts)->title('Portfolio List');
+	   	return $this->view('Portfolio::portfolio_datatable_index')->data($data)->scripts($scripts)->title('Portfolio List');
+
 	}
+
+	/**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function datatable(Request $request)
+    {
+		$rows = Input::get('path') === 'trashed' ? $this->portfolios->with('project')->onlyTrashed()->get() : $this->portfolios->with('project')->orderBy('index', 'asc')->get();
+
+		return Datatables::of($rows)
+			// Set action buttons
+            ->editColumn('action', function ($row) {
+				if (Input::get('path') !== 'trashed') {
+					return '
+						<a data-rel="tooltip" data-original-title="View" title="" href="'.route('admin.portfolios.show', $row->id).'" class="btn btn-xs btn-success tooltip-default">
+							<i class="ace-icon fa fa-check bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Edit"  href="'.route('admin.portfolios.edit', $row->id).'" class="btn btn-xs btn-info tooltip-default">
+							<i class="ace-icon fa fa-pencil bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Trashed"  href="'.route('admin.portfolios.trash', $row->id).'" class="btn btn-xs btn-danger tooltip-default">
+							<i class="ace-icon fa fa-trash-o bigger-120"></i>
+						</a>';
+				} else {
+					return '
+						<a data-rel="tooltip" data-original-title="Restore!" href="'.route('admin.portfolios.restored', $row->id).'" class="btn btn-xs btn-primary tooltip-default">
+							<i class="ace-icon fa fa-save bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Permanent Delete!" href="'.route('admin.portfolios.delete', $row->id).'" class="btn btn-xs btn-danger">
+							<i class="ace-icon fa fa-trash bigger-120"></i>
+						</a>';
+				}
+            })
+			// Edit column id
+			->editColumn('id', function ($row) {
+				return 	'
+				<label class="pos-rel">
+					<input type="checkbox" class="ace" name="check[]" id="check_'.$row->id.'" value="'.$row->id.'" />
+					<span class="lbl"></span>
+				</label>';
+            })
+			// Set description limit
+			->editColumn('description', function ($row) {
+				return 	str_limit(strip_tags($row->description), 60);
+            })
+			// Set status icon and text
+			->editColumn('status', function ($row) {
+				return '
+				<span class="label label-'.($row->status == 1 ? 'success' : 'warning').' arrowed-in arrowed-in-right">
+					<span class="fa fa-'.($row->status == 1 ? 'flag' : 'exclamation-circle').' fa-sm"></span>
+					'.config('setting.status')[$row->status].'
+				</span>';
+            })
+            ->make(true);
+    }
 
 	/**
 	 * Display the specified resource.
@@ -340,7 +388,7 @@ class Portfolios extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Updated!');
+			return Redirect::to(route('admin.portfolios.show', $portfolio->id))->with('success', 'Portfolio Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
@@ -390,6 +438,31 @@ class Portfolios extends BaseAdmin {
 			// Return Json Response
 			return response()->json($this->portfolios->allTags()->lists('name'), 200);
 		}
+	}
+
+	/**
+	 * Process a file to download.
+	 *
+	 * @return $file export
+	 */
+	public function export() {
+
+		// Get type file to export
+		$type = Input::get('rel');
+		// Get data to export
+		$portfolios = $this->portfolios->select('id','name','description','status','updated_at','created_at')->get();
+		// Export file to type
+		Excel::create('portfolios', function($excel) use($portfolios) {
+			// Set the spreadsheet title, creator, and description
+	        $excel->setTitle('Export List');
+	        $excel->setCreator('Laravel')->setCompany('laravel.com');
+	        $excel->setDescription('export file');
+
+		    $excel->sheet('Sheet 1', function($sheet) use($portfolios) {
+				$sheet->fromArray($portfolios);
+		    });
+		})->export($type);
+
 	}
 
 	/**

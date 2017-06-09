@@ -33,7 +33,12 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('client/{id}/delete', ['as'=>'admin.clients.delete','uses'=>'App\Modules\Portfolio\Controller\Clients@delete']);
 
     // Portfolios Controller routes
+
+    // DataTables routes
+    Route::get('portfolio/datatable', ['as'=>'admin.portfolios.datatable','uses'=>'App\Modules\Portfolio\Controller\Portfolios@datatable']);
+
     Route::get('portfolio', ['as'=>'admin.portfolios.index','uses'=>'App\Modules\Portfolio\Controller\Portfolios@index']);
+    Route::get('portfolio/export', ['as'=>'admin.portfolios.export','uses'=>'App\Modules\Portfolio\Controller\Portfolios@export']);
     Route::get('portfolio/create', ['as'=>'admin.portfolios.create','uses'=>'App\Modules\Portfolio\Controller\Portfolios@create']);
     Route::post('portfolio/create', ['as'=>'admin.portfolios.store','uses'=>'App\Modules\Portfolio\Controller\Portfolios@store']);
     Route::post('portfolio/change', ['as'=>'admin.portfolios.change','uses'=>'App\Modules\Portfolio\Controller\Portfolios@change']);
@@ -47,7 +52,6 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     // Put other methods
     Route::get('portfolio/tags/all', ['as'=>'admin.portfolios.tags','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tags']);
     Route::get('portfolio/tags/{id}/show', ['as'=>'admin.portfolios.tags.show','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tagsShow']);
-
 
     // Projects Controller routes
     Route::get('project', ['as'=>'admin.projects.index','uses'=>'App\Modules\Portfolio\Controller\Projects@index']);

@@ -23,10 +23,10 @@ class Participants extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
@@ -43,12 +43,12 @@ class Participants extends BaseAdmin {
 	public function index()
 	{
 
-		// Set return data 
+		// Set return data
 	   	$participants = Input::get('path') === 'trashed' ? $this->participants->onlyTrashed()->paginate(4) : $this->participants->orderBy('created_at','desc')->paginate(4);
 
 	   	// Get deleted count
 		$deleted = $this->participants->onlyTrashed()->get()->count();
-	   	
+
 	   	// Set data to return
 	   	$data = ['rows'=>$participants,'deleted'=>$deleted,'junked'=>Input::get('path')];
 
@@ -61,8 +61,8 @@ class Participants extends BaseAdmin {
 	   				];
 
 	   	return $this->view('Participant::participant_index')->data($data)->scripts($scripts)->title('Participants List');
-	}	
-	
+	}
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -78,7 +78,7 @@ class Participants extends BaseAdmin {
 	   	$data = ['row'=>$participant];
 
 	   	// Return data and view
-	   	return $this->view('Participant::participant_show')->data($data)->title('View Participant'); 
+	   	return $this->view('Participant::participant_show')->data($data)->title('View Participant');
 
 	}
 
@@ -109,7 +109,7 @@ class Participants extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -134,10 +134,10 @@ class Participants extends BaseAdmin {
 	{
 		if ($participant = $this->participants->find($id))
 		{
-			
+
 			// Add deleted_at and not completely delete
 			$participant->delete();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.participants.index'))->with('success', 'Participant Trashed!');
 		}
@@ -198,10 +198,10 @@ class Participants extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
-		{		
+		{
 			if ( ! $row = $this->participants->find($id))
 			{
 				return Redirect::to(route('admin.participants.index'));
@@ -211,7 +211,7 @@ class Participants extends BaseAdmin {
 		{
 			$row = $this->participants;
 		}
-		
+
 		return $this->view('Participant::participant_form')->data(compact('mode', 'row'))->title('Participant '.$mode);
 	}
 
@@ -229,10 +229,10 @@ class Participants extends BaseAdmin {
 		$rules = [
 			'first_name' => 'required',
 			'last_name'  => 'required',
-			'role_id'  	 => 'required',			
+			'role_id'  	 => 'required',
 			'email'      => 'required|unique:participants'
 		];
-		
+
 		if ($id)
 		{
 			$participant = Sentinel::getParticipantRepository()->createModel()->find($id);
@@ -245,32 +245,32 @@ class Participants extends BaseAdmin {
 			{
 
 				if ( ! $participant->roles()->first() ) {
-					
+
 					// Syncing relationship Many To Many // Create New
 					$participant->roles()->sync(['role_id'=>$input['role_id']]);
-					
+
 				} else {
 
 					// Syncing relationship Many To Many // Update Existing
 					$participant->roles()->sync(['role_id'=>$input['role_id']]);
-					
+
 					// Update participant model data
 					Sentinel::getParticipantRepository()->update($participant, $input);
 
 				}
-				
+
 			}
 		}
 		else
 		{
-			
+
 			$messages = $this->validateParticipant($input, $rules);
 
 			if ($messages->isEmpty())
 			{
 				// Create participant into the database
 				$participant = Sentinel::getParticipantRepository()->create($input);
-				
+
 				// Syncing relationship Many To Many // Create New
 				$participant->roles()->sync(['role_id'=>$input['role_id']]);
 
@@ -282,12 +282,12 @@ class Participants extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.participants.index'))->with('success', 'Participant Updated!');;
+			return Redirect::to(route('admin.participants.show', $participant->id))->with('success', 'Participant Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
 	}
-	
+
 	/**
 	 * Change the data status.
 	 *
@@ -295,7 +295,7 @@ class Participants extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
-		
+
 		if (Input::get('check') !='') {
 
 		    $rows	= Input::get('check');
@@ -308,7 +308,7 @@ class Participants extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.participants.index'))->with('success', 'Participant  Status Changed!');
 
-		} else {	
+		} else {
 
 		    // Set message
 		    return Redirect::to(route('admin.participants.index'))->with('error','Data not Available!');

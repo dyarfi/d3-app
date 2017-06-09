@@ -236,11 +236,14 @@ class Blogs extends BaseAdmin {
 		$scripts = [
 			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
 			'bootstrap-datepicker'=>asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
+			'summernote'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
 			'library'=>asset("themes/ace-admin/js/library.js")
 		];
 
 		// Load needed stylesheets
-		$styles = ['stylesheet'=> 'themes/ace-admin/css/datepicker.min.css'];
+		$styles = [
+			'stylesheet-datepicker'=> asset('themes/ace-admin/css/datepicker.min.css')
+		];
 
 		return $this->view('Blog::blog_form')->data(compact('mode','row','categories','blogs','tags','model'))->scripts($scripts)->styles($styles)->title('Blog '.$mode);
 	}

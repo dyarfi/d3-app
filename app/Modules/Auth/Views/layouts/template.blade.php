@@ -509,21 +509,21 @@
               catch(e) {}
             },
             "sSelectedClass": "success",
-                "aButtons": [
-                    {
-                      "sExtends": "print",
-                      "sToolTip": "Print view",
-                      "sButtonClass": "btn btn-white btn-primary  btn-bold",
-                      "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
+            "aButtons": [
+                {
+                  "sExtends": "print",
+                  "sToolTip": "Print view",
+                  "sButtonClass": "btn btn-white btn-primary  btn-bold",
+                  "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
 
-                      "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
+                  "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
 
-                      "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
-                            <p>Please use your browser's print function to\
-                            print this table.\
-                            <br />Press <b>escape</b> when finished.</p>",
-                    }
-                ]
+                  "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
+                        <p>Please use your browser's print function to\
+                        print this table.\
+                        <br />Press <b>escape</b> when finished.</p>",
+                }
+            ]
             });
           //we put a container before our table and append TableTools element to it
             $(tableTools_obj.fnContainer()).appendTo($('.tableTools-container'));
@@ -573,10 +573,11 @@
 
           /////////////////////////////////
           //table checkboxes
-          $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+          //$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
 
           //select/deselect all rows according to table header checkbox
-          $('#dynamic-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+          /*
+          $('#dynamic-table > thead > tr > th input[type=checkbox], #datatable-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
             var th_checked = this.checked;//checkbox inside "TH" table header
 
             $(this).closest('table').find('tbody > tr').each(function(){
@@ -585,26 +586,29 @@
               else tableTools_obj.fnDeselect(row);
             });
           });
+         */
 
           //select/deselect a row when the checkbox is checked/unchecked
-          $('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
+        /*
+          $('#dynamic-table, #datatable-table').on('click', 'td input[type=checkbox]' , function(){
             var row = $(this).closest('tr').get(0);
             if(!this.checked) tableTools_obj.fnSelect(row);
             else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
           });
+        */
 
 
-
-
-            $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+        /*
+        $(document).on('click', '#dynamic-table .dropdown-toggle, #datatable-table .dropdown-toggle', function(e) {
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
-          });
-
+        });
+        */
 
           //And for the first simple table, which doesn't have TableTools or dataTables
           //select/deselect all rows according to table header checkbox
+
           var active_class = 'active';
           $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
             var th_checked = this.checked;//checkbox inside "TH" table header
@@ -1010,7 +1014,71 @@
         $('#colorbox, #cboxOverlay').remove();
     });
 
+
+
+
+
+        $('#datatable-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: base_ADM + '/portfolio/datatable'+ ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
+            columns: [
+                {data: 'id', name:'id', orderable: false, searchable: false},
+                {data: 'name', name: 'name'},
+                {data: 'description', name: 'description'},
+                {data: 'status', name: 'status'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'updated_at', name: 'updated_at'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ],
+            language: {
+                "processing": ''
+            },
+            fnDrawCallback : function (oSettings) {
+                $('#datatable-table > thead > tr > th:first-child')
+                .removeClass('sorting_asc')
+                .find('input[type=checkbox]')
+                .prop('checked',false);
+                $('#datatable-table > tbody > tr > td:first-child').addClass('center');
+                $('[data-rel="tooltip"]').tooltip();
+            }
+        });
+
+        /*
+        $('#datatable-table > thead > tr > th:first-child input[type="checkbox"]').on('click',function(){
+            if( $(this).prop('checked') === true) {
+                alert($('#datatable-table > tbody > tr > td').find('input[type="checkbox"]').html());
+            } else {
+
+            }
+        })
+        */
+
+        $('#datatable-table').on('click', 'thead > tr > th:first-child input[type=checkbox]', function() {
+            var check_boxes = $('#datatable-table > tbody > tr > td:first-child input[type="checkbox"]');
+            if( $(this).prop('checked') === true) {
+                check_boxes.each(function() { $(this).prop('checked',true); });
+            } else {
+                check_boxes.each(function() { $(this).prop('checked',false); });
+            }
+        });
+
       })
+        //public function to get a paremeter by name from URL
+        $.extend({
+            getURLParameter: function (paramName) {
+                var searchString = window.location.search.substring(1),
+                    i, val, params = searchString.split("&");
+
+                for (i = 0; i < params.length; i++) {
+                    val = params[i].split("=");
+                    if (val[0] == paramName) {
+                        return unescape(val[1]);
+                    }
+                }
+                return null;
+            }
+        });
     </script>
     <script>
     jQuery(document).ready(function() {

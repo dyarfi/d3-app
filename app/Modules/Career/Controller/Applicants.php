@@ -280,17 +280,17 @@ class Applicants extends BaseAdmin {
 				$applicant = Applicant::create($input);
 
 				// Syncing relationship Many To Many // Create New
-				$applicant->roles()->sync(['role_id'=>$input['role_id']]);
+				//$applicant->roles()->sync(['role_id'=>$input['role_id']]);
 
-				$code = Activation::create($applicant);
+				//$code = Activation::create($applicant);
 
-				Activation::complete($applicant, $code);
+				//Activation::complete($applicant, $code);
 			}
 		}
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.applicants.index'))->with('success', 'Applicant Updated!');
+			return Redirect::to(route('admin.applicants.show',$applicant->id))->with('success', 'Applicant Updated!');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

@@ -24,10 +24,10 @@ class Images extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		
+
 		// Parent constructor
 		parent::__construct();
-		
+
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
@@ -44,12 +44,12 @@ class Images extends BaseAdmin {
 	public function index()
 	{
 
-	   	// Set return data 
+	   	// Set return data
 	   	$images = Input::get('path') === 'trashed' ? $this->images->onlyTrashed()->paginate(4) : $this->images->orderBy('created_at','desc')->paginate(4);
 
 	   	// Get deleted count
 		$deleted = $this->images->onlyTrashed()->get()->count();
-	   	
+
 	   	// Set data to return
 	   	$data = ['rows'=>$images,'deleted'=>$deleted,'junked'=>Input::get('path')];
 
@@ -61,7 +61,7 @@ class Images extends BaseAdmin {
 			'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
 			'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js',
 			// ColorBox
-	   		'jquery.colorbox' => asset('themes/ace-admin/js/jquery.colorbox.min.js'),			
+	   		'jquery.colorbox' => asset('themes/ace-admin/js/jquery.colorbox.min.js'),
 
 	   	];
 	   	$styles 	= [
@@ -69,8 +69,8 @@ class Images extends BaseAdmin {
 	   	];
 
 	   	return $this->view('Participant::image_index')->data($data)->scripts($scripts)->styles($styles)->title('Images List');
-	}	
-	
+	}
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -86,7 +86,7 @@ class Images extends BaseAdmin {
 	   	$data = ['row'=>$image];
 
 	   	// Return data and view
-	   	return $this->view('Participant::image_show')->data($data)->title('View Image'); 
+	   	return $this->view('Participant::image_show')->data($data)->title('View Image');
 
 	}
 
@@ -117,7 +117,7 @@ class Images extends BaseAdmin {
 	 * @return mixed
 	 */
 	public function edit($id)
-	{	
+	{
 		return $this->showForm('update', $id);
 	}
 
@@ -142,10 +142,10 @@ class Images extends BaseAdmin {
 	{
 		if ($image = $this->images->find($id))
 		{
-			
+
 			// Add deleted_at and not completely delete
 			$image->delete();
-			
+
 			// Redirect with messages
 			return Redirect::to(route('admin.images.index'))->with('success', 'Image Trashed!');
 		}
@@ -206,10 +206,10 @@ class Images extends BaseAdmin {
 	 * @return mixed
 	 */
 	protected function showForm($mode, $id = null)
-	{	
+	{
 
 		if ($id)
-		{		
+		{
 			if ( ! $row = $this->images->find($id))
 			{
 				return Redirect::to(route('admin.images.index'));
@@ -219,7 +219,7 @@ class Images extends BaseAdmin {
 		{
 			$row = $this->images;
 		}
-		
+
 		return $this->view('Participant::image_form')->data(compact('mode', 'row'))->title('Image '.$mode);
 	}
 
@@ -237,10 +237,10 @@ class Images extends BaseAdmin {
 		$rules = [
 			'first_name' => 'required',
 			'last_name'  => 'required',
-			'role_id'  	 => 'required',			
+			'role_id'  	 => 'required',
 			'email'      => 'required|unique:participants'
 		];
-		
+
 		if ($id)
 		{
 			//$participant = Auth::getParticipantRepository()->createModel()->find($id);
@@ -253,32 +253,32 @@ class Images extends BaseAdmin {
 			{
 
 				//if ( ! $participant->roles()->first() ) {
-					
+
 					// Syncing relationship Many To Many // Create New
 					//$participant->roles()->sync(['role_id'=>$input['role_id']]);
-					
+
 				//} else {
 
 					// Syncing relationship Many To Many // Update Existing
 					//$participant->roles()->sync(['role_id'=>$input['role_id']]);
-					
+
 					// Update participant model data
 					//Auth::getParticipantRepository()->update($participant, $input);
 
 				//}
-				
+
 			}
 		}
 		else
 		{
-			
+
 			$messages = $this->validateImage($input, $rules);
 
 			if ($messages->isEmpty())
 			{
 				// Create participant into the database
 				//$participant = Auth::getParticipantRepository()->create($input);
-				
+
 				// Syncing relationship Many To Many // Create New
 				//$participant->roles()->sync(['role_id'=>$input['role_id']]);
 
@@ -290,12 +290,12 @@ class Images extends BaseAdmin {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.images.index'))->with('success', 'Image Updated!');;
+			return Redirect::to(route('admin.images.show'))->with('success', 'Image Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
 	}
-	
+
 	/**
 	 * Change the data status.
 	 *
@@ -303,7 +303,7 @@ class Images extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
-		
+
 		if (Input::get('check') !='') {
 
 		    $rows	= Input::get('check');
@@ -316,7 +316,7 @@ class Images extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.images.index'))->with('success', 'Image  Status Changed!');
 
-		} else {	
+		} else {
 
 		    // Set message
 		    return Redirect::to(route('admin.images.index'))->with('error','Data not Available!');

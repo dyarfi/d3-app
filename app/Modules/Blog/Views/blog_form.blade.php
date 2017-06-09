@@ -34,7 +34,7 @@
 			'placeholder'=>'Enter the Blog Description.',
 			'name'=>'description',
 			'id'=>'description',
-			'class'=>'form-control']); !!}
+			'class'=>'form-control ckeditor']); !!}
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 
@@ -43,7 +43,7 @@
 			<div class="col-xs-6">
 				{!! Form::label('publish_date', 'Publish Date'); !!}
 				<div class="input-group input-group-sm">
-					{!! Form::text('slug',Input::old('publish_date', $row->publish_date),[
+					{!! Form::text('slug', Input::old('publish_date', $row->publish_date),[
 						'placeholder'=>'Enter the Blog Publish Date.',
 						'name'=>'publish_date',
 						'id'=>'datepicker',
@@ -92,6 +92,12 @@
 			?>
 			<input type="text" name="tags" data-rel="{{ route('admin.blogs.tags') }}" id="form-field-tags" value="{{ ($tagged) ? implode(', ', $tagged) : '' }}" placeholder="Enter tags ..." />
 		</div>
+	</div>
+
+	<div class="form-group{{ $errors->first('type', ' has-error') }}">
+		<label for="type">Blog Type</label>
+		{!! Form::select('type', ['blog'=>'Standard Blog','blog_gallery'=>'Blog with Gallery','blog_video'=>'Blog with Video'], Input::get('type') ? Input::get('type') : Input::old('type', @$row->type),['class'=>'form-control']); !!}
+		<span class="help-block">{{{ $errors->first('type', ':message') }}}</span>
 	</div>
 
 	<div class="form-group{{ $errors->first('index', ' has-error') }}">
