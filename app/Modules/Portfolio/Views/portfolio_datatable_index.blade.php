@@ -38,8 +38,9 @@
 				<th class="col-lg-1">Updated At</th>
 				<th class="col-lg-2 col-md-3 col-sm-3 col-xs-3">Actions</th>
 			</tr>
-			<tbody>
-			</tbody>
+		</thead>
+		<tbody>
+		</tbody>
 			<tr>
 				<td id="corner"><span class="glyphicon glyphicon-minus"></span></td>
 				<td colspan="8">
@@ -58,7 +59,6 @@
 				 </div>
 				</td>
 			</tr>
-		</thead>
 	</table>
 {!! Form::close() !!}
 @stop

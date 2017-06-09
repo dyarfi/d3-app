@@ -260,8 +260,9 @@ return [
 		'Carbon'		=> Carbon\Carbon::class,
 		// An eloquent way of importing and exporting Excel and CSV files
 		'Excel' 		=> Maatwebsite\Excel\Facades\Excel::class,
+		
 		// Modular service provider
-		'Modules'		=> Modules\ModulesServiceProvider::class,
+		//'Modules'		=> Modules\ModulesServiceProvider::class,
 
 		// Datatables jquery
 		'Datatables' => Yajra\Datatables\Facades\Datatables::class
