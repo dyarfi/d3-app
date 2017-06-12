@@ -49,7 +49,7 @@
 						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
 							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span>
 							@foreach (config('setting.status') as $config => $val)
-								{{ $val == $row->status ? $config : '' }}
+								{{ $config == $row->status ? $val : '' }}
 							@endforeach
 		                </span>
 					</td>

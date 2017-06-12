@@ -6,14 +6,14 @@ use Route, Request, Session, Redirect, Auth, Activation, Socialite, Input, Valid
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\Participant\Model\Image;
+// Load Datatable
+use Datatables;
 
 class Images extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Images repository.
+	 * Set participant and images data.
 	 *
-	 * @var \Cartalyst\Sentinel\Images\EloquentParticipant
-	 * @var \Cartalyst\Sentinel\Images\EloquentImage
 	 */
 	public $participants, $images;
 

@@ -9,9 +9,8 @@ use App\Modules\Task\Model\Task, App\Modules\User\Model\User;
 
 class Tasks extends BaseAdmin {
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Set tasks data.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
 	 */
 	protected $tasks;
 

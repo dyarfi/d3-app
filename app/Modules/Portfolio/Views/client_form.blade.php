@@ -72,6 +72,7 @@
 				<option value="{{ $config ? $config : Input::old('status', $row->status) }}" {{ $config == $row->status ? 'selected' : '' }}>{{$val}}</option>
 			@endforeach
 		</select>
+		<span class="help-block">{{{ $errors->first('status', ':message') }}}</span>
 	</div>
 
 	<button type="submit" class="btn btn-default">Submit</button>

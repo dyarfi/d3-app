@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View;
+use Route, Request, Session, Redirect, Input, Validator, View, Excel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -14,9 +14,8 @@ use Datatables;
 class Projects extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Projects repository.
+	 * Set projects data.
 	 *
-	 * @var \Cartalyst\Sentinel\Projects\EloquentProject
 	 */
 	public $projects;
 

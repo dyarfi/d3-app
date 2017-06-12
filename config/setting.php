@@ -104,7 +104,7 @@ return [
 								// Action for first index
 								'action' => ['banners.index'],
 								// Controller method list
-								'method' => ['banners.index','banners.edit','banners.update','banners.change','banners.create','banners.store','banners.trash','banners.delete','banners.restored','banners.show']
+								'method' => ['banners.index','banners.edit','banners.update','banners.change','banners.create','banners.store','banners.trash','banners.delete','banners.restored','banners.show','banners.datatable','banners.export']
 							]
 						]
 					]
@@ -116,7 +116,7 @@ return [
 								// Action for first index
 								'action' => ['blogs.index'],
 								// Controller method list
-								'method' => ['blogs.index','blogs.edit','blogs.update','blogs.change','blogs.create','blogs.store','blogs.trash','blogs.delete','blogs.restored','blogs.show','blogs.tags','blogs.tags.show']
+								'method' => ['blogs.index','blogs.edit','blogs.update','blogs.change','blogs.create','blogs.store','blogs.trash','blogs.delete','blogs.restored','blogs.show','blogs.tags','blogs.tags.show','blogs.datatable','blogs.export']
 							]
 						],
 						//------ Blog Category controller
@@ -124,7 +124,7 @@ return [
 								// Action for first index
 								'action' => ['blogcategories.index'],
 								// Controller method list
-								'method' => ['blogcategories.index','blogcategories.edit','blogcategories.update','blogcategories.change','blogcategories.create','blogcategories.store','blogcategories.trash','blogcategories.delete','blogcategories.restored','blogcategories.show']
+								'method' => ['blogcategories.index','blogcategories.edit','blogcategories.update','blogcategories.change','blogcategories.create','blogcategories.store','blogcategories.trash','blogcategories.delete','blogcategories.restored','blogcategories.show','blogcategories.datatable','blogcategories.export']
 							]
 						]
 					]
@@ -189,7 +189,7 @@ return [
 								// Action for first index
 								'action' => ['participants.index'],
 								// Controller method list
-								'method' => ['participants.index','participants.edit','participants.update','participants.change','participants.create','participants.store','participants.trash','participants.delete','participants.restored','participants.show']
+								'method' => ['participants.index','participants.edit','participants.update','participants.change','participants.create','participants.store','participants.trash','participants.delete','participants.restored','participants.show','participants.datatable','participants.export']
 							]
 						],
 						//------ Participant Images controller

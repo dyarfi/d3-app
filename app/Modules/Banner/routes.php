@@ -19,9 +19,11 @@
  */
 Route::group(['prefix' => config('setting.admin_url')], function()
 {
-
-     // banners Controller routes
+    // Portfolios DataTables routes
+    Route::get('banner/datatable', ['as'=>'admin.banners.datatable','uses'=>'App\Modules\Banner\Controller\Banners@datatable']);
+    // banners Controller routes
     Route::get('banner', ['as'=>'admin.banners.index','uses'=>'App\Modules\Banner\Controller\banners@index']);
+    Route::get('banner/export', ['as'=>'admin.banners.export','uses'=>'App\Modules\Banner\Controller\Banners@export']);
     Route::get('banner/create', ['as'=>'admin.banners.create','uses'=>'App\Modules\Banner\Controller\banners@create']);
     Route::post('banner/create', ['as'=>'admin.banners.store','uses'=>'App\Modules\Banner\Controller\banners@store']);
     Route::post('banner/change', ['as'=>'admin.banners.change','uses'=>'App\Modules\Banner\Controller\banners@change']);

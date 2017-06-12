@@ -12,9 +12,8 @@ use Excel;
 class Divisions extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Division repository.
+	 * Set divisions data.
 	 *
-	 * @var \Cartalyst\Sentinel\Division\EloquentDivision
 	 */
 	protected $division;
 

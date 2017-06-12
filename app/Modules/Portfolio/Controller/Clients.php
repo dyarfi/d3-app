@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View;
+use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -12,10 +12,10 @@ use App\Modules\Portfolio\Model\Portfolio,
 use Datatables;
 
 class Clients extends BaseAdmin {
+	
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Set clients data.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
 	 */
 	protected $clients;
 
@@ -137,7 +137,7 @@ class Clients extends BaseAdmin {
 			})
 			// Edit column name
 			->editColumn('name', function ($row) {
-				return ($row->index) ? $row->index . '.' . $row->name : $row->name;
+				return ($row->index) ? $row->index . '. ' . $row->name : $row->name;
 			})
 			// Edit column id
 			->editColumn('id', function ($row) {

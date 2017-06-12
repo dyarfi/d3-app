@@ -8,10 +8,10 @@ use App\Modules\BaseAdmin;
 use App\Modules\User\Model\Setting, App\Modules\User\Model\User;
 
 class Settings extends BaseAdmin {
+
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Set settings data.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
 	 */
 	protected $settings;
 

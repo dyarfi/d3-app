@@ -8,10 +8,10 @@ use App\Modules\BaseAdmin;
 use App\Modules\Page\Model\Menu;
 
 class Menus extends BaseAdmin {
+
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Set menus data.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
 	 */
 	protected $menus;
 

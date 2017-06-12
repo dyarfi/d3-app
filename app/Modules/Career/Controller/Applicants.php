@@ -11,9 +11,8 @@ use App\Modules\Career\Model\Applicant;
 class Applicants extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Applicants repository.
+	 * Set applicants data.
 	 *
-	 * @var \Cartalyst\Sentinel\Applicants\EloquentApplicant
 	 */
 	protected $applicants;
 

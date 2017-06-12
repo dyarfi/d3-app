@@ -12,10 +12,10 @@ use App\Modules\Portfolio\Model\Portfolio,
 use Datatables;
 
 class Portfolios extends BaseAdmin {
+	
 	/**
-	 * Holds the Portfolio Module repository.
+	 * Set portfolios data.
 	 *
-	 * @var App\Modules\Portfolio\Model\Portfolio
 	 */
 	protected $portfolios;
 

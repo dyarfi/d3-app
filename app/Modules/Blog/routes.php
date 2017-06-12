@@ -19,8 +19,11 @@
  */
 Route::group(['prefix' => config('setting.admin_url')], function()
 {
+    // Blogs DataTables routes
+    Route::get('blogcategories/datatable', ['as'=>'admin.blogcategories.datatable','uses'=>'App\Modules\Blog\Controller\BlogCategories@datatable']);
     // Blogs Controller routes
     Route::get('blogcategories', ['as'=>'admin.blogcategories.index','uses'=>'App\Modules\Blog\Controller\BlogCategories@index']);
+    Route::get('blogcategories/export', ['as'=>'admin.blogcategories.export','uses'=>'App\Modules\Blog\Controller\BlogCategories@export']);
     Route::get('blogcategories/create', ['as'=>'admin.blogcategories.create','uses'=>'App\Modules\Blog\Controller\BlogCategories@create']);
     Route::post('blogcategories/create', ['as'=>'admin.blogcategories.store','uses'=>'App\Modules\Blog\Controller\BlogCategories@store']);
     Route::post('blogcategories/change', ['as'=>'admin.blogcategories.change','uses'=>'App\Modules\Blog\Controller\BlogCategories@change']);
@@ -32,8 +35,11 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('blogcategories/{id}/restored', ['as'=>'admin.blogcategories.restored','uses'=>'App\Modules\Blog\Controller\BlogCategories@restored']);
     Route::get('blogcategories/{id}/delete', ['as'=>'admin.blogcategories.delete','uses'=>'App\Modules\Blog\Controller\BlogCategories@delete']);
 
+    // Blogs DataTables routes
+    Route::get('blog/datatable', ['as'=>'admin.blogs.datatable','uses'=>'App\Modules\Blog\Controller\Blogs@datatable']);
     // Blogs Controller routes
     Route::get('blog', ['as'=>'admin.blogs.index','uses'=>'App\Modules\Blog\Controller\Blogs@index']);
+    Route::get('blog/export', ['as'=>'admin.blogs.export','uses'=>'App\Modules\Blog\Controller\Blogs@export']);
     Route::get('blog/create', ['as'=>'admin.blogs.create','uses'=>'App\Modules\Blog\Controller\Blogs@create']);
     Route::post('blog/create', ['as'=>'admin.blogs.store','uses'=>'App\Modules\Blog\Controller\Blogs@store']);
     Route::post('blog/change', ['as'=>'admin.blogs.change','uses'=>'App\Modules\Blog\Controller\Blogs@change']);

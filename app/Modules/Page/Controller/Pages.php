@@ -10,9 +10,8 @@ use App\Modules\Page\Model\Menu, App\Modules\Page\Model\Page;
 class Pages extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Pages repository.
+	 * Set pages data.
 	 *
-	 * @var \Cartalyst\Sentinel\Pages\EloquentPage
 	 */
 	public $pages;
 

@@ -1,17 +1,19 @@
 <?php namespace App\Modules\Blog\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, Image;
+use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\Blog\Model\Blog, App\Modules\Blog\Model\BlogCategory;
+use App\Modules\Blog\Model\Blog,
+	App\Modules\Blog\Model\BlogCategory;
+// Load Datatable
+use Datatables;
 
 class Blogs extends BaseAdmin {
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Set blogs data.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
 	 */
 	protected $blogs;
 
@@ -56,25 +58,123 @@ class Blogs extends BaseAdmin {
 	 */
 	public function index() {
 
-		// Set return data
-	   	$blogs = Input::get('path') === 'trashed' ? $this->blogs->with('category')->onlyTrashed()->get() : $this->blogs->with('category')->orderBy('index', 'asc')->get();
-
-	   	// Get deleted count
+		// Get deleted count
 		$deleted = $this->blogs->onlyTrashed()->get()->count();
 
 	   	// Set data to return
-	   	$data = ['rows' => $blogs,'deleted' => $deleted,'junked' => Input::get('path')];
+	   	$data = ['deleted' => $deleted,'junked' => Input::get('path')];
 
-	   	// Load needed scripts
+		// Load needed scripts
 	   	$scripts = [
-	   				'dataTables'=> asset('themes/ace-admin/js/jquery.dataTables.min.js'),
+	   				'dataTables' => asset('themes/ace-admin/js/jquery.dataTables.min.js'),
 	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
-	   				'dataTableTools'=> asset('themes/ace-admin/js/dataTables.tableTools.min.js'),
-	   				'dataTablesColVis'=> asset('themes/ace-admin/js/dataTables.colVis.min.js')
+					'library' => asset("themes/ace-admin/js/library.js")
 	   				];
 
+		// Set inline script or style
+		$inlines = [
+			// Script execution on a specific controller page
+			'script' => "
+			// --- datatable handler [".route('admin.blogs.index')."]--- //
+				var datatable  = $('#datatable-table');
+				var controller = datatable.attr('rel');
+
+				$('#datatable-table').DataTable({
+					processing: true,
+					serverSide: true,
+					ajax: '".route('admin.blogs.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
+					columns: [
+						{data: 'id', name:'id', orderable: false, searchable: false},
+						{data: 'name', name: 'name'},
+						{data: 'description', name: 'description'},
+						{data: 'status', name: 'status'},
+						{data: 'created_at', name: 'created_at'},
+						{data: 'updated_at', name: 'updated_at'},
+						{data: 'action', name: 'action', orderable: false, searchable: false}
+					],
+					language: {
+						processing: ''
+					},
+					fnDrawCallback : function (oSettings) {
+						$('#datatable-table > thead > tr > th:first-child')
+						.removeClass('sorting_asc')
+						.find('input[type=checkbox]')
+						.prop('checked',false);
+						$('#datatable-table > tbody > tr > td:first-child').addClass('center');
+						$('[data-rel=tooltip]').tooltip();
+					}
+				});
+			",
+		];
+
 		// Return data and view
-	   	return $this->view('Blog::blog_index')->data($data)->scripts($scripts)->title('Blog List');
+	   	return $this->view('Blog::blog_datatable_index')
+		->data($data)
+		->scripts($scripts)
+		->inlines($inlines)
+		->title('Blog List');
+	}
+
+	/**
+	 * Process datatables ajax request.
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function datatable(Request $request)
+	{
+		$rows = Input::get('path') === 'trashed' ? $this->blogs->with('category')->onlyTrashed()->get() : $this->blogs->with('category')->orderBy('index', 'asc')->get();
+
+		return Datatables::of($rows)
+			// Set action buttons
+			->editColumn('action', function ($row) {
+				if (Input::get('path') !== 'trashed') {
+					return '
+						<a data-rel="tooltip" data-original-title="View" title="" href="'.route('admin.blogs.show', $row->id).'" class="btn btn-xs btn-success tooltip-default">
+							<i class="ace-icon fa fa-check bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Edit"  href="'.route('admin.blogs.edit', $row->id).'" class="btn btn-xs btn-info tooltip-default">
+							<i class="ace-icon fa fa-pencil bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Trashed"  href="'.route('admin.blogs.trash', $row->id).'" class="btn btn-xs btn-danger tooltip-default">
+							<i class="ace-icon fa fa-trash-o bigger-120"></i>
+						</a>';
+				} else {
+					return '
+						<a data-rel="tooltip" data-original-title="Restore!" href="'.route('admin.blogs.restored', $row->id).'" class="btn btn-xs btn-primary tooltip-default">
+							<i class="ace-icon fa fa-save bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Permanent Delete!" href="'.route('admin.blogs.delete', $row->id).'" class="btn btn-xs btn-danger">
+							<i class="ace-icon fa fa-trash bigger-120"></i>
+						</a>';
+				}
+			})
+			// Edit column name
+			->editColumn('name', function ($row) {
+				$html = ($row->index) ? $row->index . '. ' . $row->name : $row->name;
+				$html .= ($row->category) ? ' (<a href="'.route('admin.blogcategories.show', $row->category->id).'">'.$row->category->name.'</a>)' : '';
+				return $html;
+			})
+			// Edit column id
+			->editColumn('id', function ($row) {
+				return 	'
+				<label class="pos-rel">
+					<input type="checkbox" class="ace" name="check[]" id="check_'.$row->id.'" value="'.$row->id.'" />
+					<span class="lbl"></span>
+				</label>';
+			})
+			// Set description limit
+			->editColumn('description', function ($row) {
+				return 	str_limit(strip_tags($row->description), 60);
+			})
+			// Set status icon and text
+			->editColumn('status', function ($row) {
+				return '
+				<span class="label label-'.($row->status == 1 ? 'success' : 'warning').' arrowed-in arrowed-in-right">
+					<span class="fa fa-'.($row->status == 1 ? 'flag' : 'exclamation-circle').' fa-sm"></span>
+					'.config('setting.status')[$row->status].'
+				</span>';
+			})
+			->make(true);
 	}
 
 	/**
@@ -431,6 +531,31 @@ class Blogs extends BaseAdmin {
 		}
 
 		return $filename;
+	}
+
+	/**
+	 * Process a file to download.
+	 *
+	 * @return $file export
+	 */
+	public function export() {
+
+		// Get type file to export
+		$type = Input::get('rel');
+		// Get data to export
+		$blogs = $this->blogs->select('id','name','description','status','updated_at','created_at')->get();
+		// Export file to type
+		Excel::create('blogs', function($excel) use($blogs) {
+			// Set the spreadsheet title, creator, and description
+			$excel->setTitle('Export List');
+			$excel->setCreator('Laravel')->setCompany('laravel.com');
+			$excel->setDescription('export file');
+
+			$excel->sheet('Sheet 1', function($sheet) use($blogs) {
+				$sheet->fromArray($blogs);
+			});
+		})->export($type);
+
 	}
 
 	/**

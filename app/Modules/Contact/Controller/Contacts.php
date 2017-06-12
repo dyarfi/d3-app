@@ -8,10 +8,10 @@ use App\Modules\BaseAdmin;
 use App\Modules\Contact\Model\Contact, App\Modules\User\Model\User;
 
 class Contacts extends BaseAdmin {
+	
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Set contacts data.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
 	 */
 	protected $contacts;
 
