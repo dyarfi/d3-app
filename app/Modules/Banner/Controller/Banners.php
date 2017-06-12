@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Banner\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Image, Validator, View;
+use Route, Request, Session, Redirect, Input, Image, Validator, View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 // Load main base controller
@@ -12,9 +12,8 @@ use App\Modules\Banner\Model\Banner;
 class Banners extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Users repository.
+	 * Set banner data.
 	 *
-	 * @var \Cartalyst\Sentinel\Users\EloquentUser
 	 */
 	protected $banners;
 
@@ -25,7 +24,6 @@ class Banners extends BaseAdmin {
 	 */
 	public function __construct()
 	{
-		//dd(storage_path());
 
 		// Parent constructor
 		parent::__construct();
@@ -238,7 +236,7 @@ class Banners extends BaseAdmin {
 			'name' 	   	   => 'required',
 			'slug' 		   => 'required',
 			'description'  => 'required',
-			'image'  	   => 'required',
+			'image'  	   => ($mode == 'create') ? 'required' : '',
 			'status'	   => 'boolean'
 		];
 
@@ -252,7 +250,12 @@ class Banners extends BaseAdmin {
 			if (isset($input['image']) && Input::hasFile('image')) {
 
 				// Set filename
-				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'client_');
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'banner_');
+
+			}
+			else {
+
+				$filename = $banner->image;
 
 			}
 
@@ -262,7 +265,7 @@ class Banners extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
@@ -279,7 +282,7 @@ class Banners extends BaseAdmin {
 			if (isset($input['image']) && Input::hasFile('image')) {
 
 				// Set filename
-				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'client_');
+				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'banner_');
 
 			}
 
@@ -289,7 +292,7 @@ class Banners extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($input['image']) ? array_set($result, 'image', @$filename) : array_set($result, 'image', '');

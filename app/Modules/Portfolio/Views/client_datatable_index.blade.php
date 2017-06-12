@@ -3,8 +3,8 @@
 {{-- Page content --}}
 @section('body')
 <div class="page-header">
-	<h1><a href="{{ route('admin.portfolios.index') }}">Portfolios</a>
-		<span class="pull-right"><a href="{{ route('admin.portfolios.create') }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{$junked ? ' &raquo; Trashed' :''}}
+	<h1><a href="{{ route('admin.clients.index') }}">Clients</a>
+		<span class="pull-right"><a href="{{ route('admin.clients.create') }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{$junked ? ' &raquo; Trashed' :''}}
 		<div class="pull-right">
 		   <div class="col-md-6 dropdown">
 			   <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -12,8 +12,8 @@
 				  <span class="caret"></span>
 			   </button>
 			   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				   <li><a href="{{route('admin.portfolios.export','rel=xls')}}" class=""><span class="fa fa-file-excel-o"></span> XLS</a></li>
-				   <li><a href="{{route('admin.portfolios.export','rel=csv')}}" class=""><span class="fa fa-file-text-o"></span> CSV</a></li>
+				   <li><a href="{{route('admin.clients.export','rel=xls')}}" class=""><span class="fa fa-file-excel-o"></span> XLS</a></li>
+				   <li><a href="{{route('admin.clients.export','rel=csv')}}" class=""><span class="fa fa-file-text-o"></span> CSV</a></li>
 			   </ul>
 		   </div>
 	   </div>
@@ -22,11 +22,11 @@
 @if($deleted)
 <div class="clearfix">
 	<div class="pull-right">
-		<a href="{{route('admin.portfolios.index','path=trashed')}}" title="Restored Deleted" class="btn btn-link btn-xs"><span class="fa fa-trash"></span> {{ $deleted }} Deleted</a>
+		<a href="{{route('admin.clients.index','path=trashed')}}" title="Restored Deleted" class="btn btn-link btn-xs"><span class="fa fa-trash"></span> {{ $deleted }} Deleted</a>
 	</div>
 </div>
 @endif
-{!! Form::open(['route'=>'admin.portfolios.change']) !!}
+{!! Form::open(['route'=>'admin.clients.change']) !!}
 	<table class="table table-bordered table-hover" id="datatable-table" rel="portfolio">
 		<thead>
 			<tr>

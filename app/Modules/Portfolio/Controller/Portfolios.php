@@ -1,13 +1,14 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, Image, Excel;
+use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\User\Model\User;
-use App\Modules\Portfolio\Model\Portfolio,App\Modules\Portfolio\Model\Project,App\Modules\Portfolio\Model\Client;
-// Datatable
+use App\Modules\Portfolio\Model\Portfolio,
+	App\Modules\Portfolio\Model\Project,
+	App\Modules\Portfolio\Model\Client;
+// Load Datatable
 use Datatables;
 
 class Portfolios extends BaseAdmin {
@@ -40,9 +41,6 @@ class Portfolios extends BaseAdmin {
 		// Crop to fit image size
 		$this->imgFit 		= [1200,1200];
 
-		// Get the entity object
-		$product = $this->portfolios->find(1);
-
 	}
 
 	/**
@@ -56,17 +54,57 @@ class Portfolios extends BaseAdmin {
 		$deleted = $this->portfolios->onlyTrashed()->get()->count();
 
 	   	// Set data to return
-	   	$data = ['deleted' => $deleted,'junked' => Input::get('path')];
+	   	$data = ['deleted' => $deleted, 'junked' => Input::get('path')];
 
 	   	// Load needed scripts
 	   	$scripts = [
 	   				'dataTables' => asset('themes/ace-admin/js/jquery.dataTables.min.js'),
-	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js')
+	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
+					'library' => asset("themes/ace-admin/js/library.js")
 	   				];
 
+		// Set inline script or style
+		$inlines = [
+			// Script execution on a specific controller page
+			'script' => "
+			// --- datatable handler [".route('admin.portfolios.index')."]--- //
+				var datatable  = $('#datatable-table');
+				var controller = datatable.attr('rel');
+
+				$('#datatable-table').DataTable({
+					processing: true,
+					serverSide: true,
+					ajax: '".route('admin.portfolios.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
+					columns: [
+						{data: 'id', name:'id', orderable: false, searchable: false},
+						{data: 'name', name: 'name'},
+						{data: 'description', name: 'description'},
+						{data: 'status', name: 'status'},
+						{data: 'created_at', name: 'created_at'},
+						{data: 'updated_at', name: 'updated_at'},
+						{data: 'action', name: 'action', orderable: false, searchable: false}
+					],
+					language: {
+						processing: ''
+					},
+					fnDrawCallback : function (oSettings) {
+						$('#datatable-table > thead > tr > th:first-child')
+						.removeClass('sorting_asc')
+						.find('input[type=checkbox]')
+						.prop('checked',false);
+						$('#datatable-table > tbody > tr > td:first-child').addClass('center');
+						$('[data-rel=tooltip]').tooltip();
+					}
+				});
+			",
+		];
 
 		// Return data and view
-	   	return $this->view('Portfolio::portfolio_datatable_index')->data($data)->scripts($scripts)->title('Portfolio List');
+	   	return $this->view('Portfolio::portfolio_datatable_index')
+		->data($data)
+		->scripts($scripts)
+		->inlines($inlines)
+		->title('Portfolio List');
 
 	}
 
@@ -141,7 +179,9 @@ class Portfolios extends BaseAdmin {
 	   	$data = ['row'=>$portfolio];
 
 	   	// Return data and view
-	   	return $this->view('Portfolio::portfolio_show')->data($data)->title('View Portfolio');
+	   	return $this->view('Portfolio::portfolio_show')
+		->data($data)
+		->title('View Portfolio');
 
 	}
 
@@ -283,10 +323,14 @@ class Portfolios extends BaseAdmin {
 
 		$scripts = [
 			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
+			'ckeditor'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
 			'library'=>asset("themes/ace-admin/js/library.js")
 		];
 
-		return $this->view('Portfolio::portfolio_form')->data(compact('mode','row','clients','projects','portfolios','tags','model'))->scripts($scripts)->title('Portfolio '.$mode);
+		return $this->view('Portfolio::portfolio_form')
+		->data(compact('mode','row','clients','projects','portfolios','tags','model'))
+		->scripts($scripts)
+		->title('Portfolio '.$mode);
 	}
 
 	/**
@@ -338,7 +382,7 @@ class Portfolios extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
@@ -372,7 +416,7 @@ class Portfolios extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($input['image']) ? array_set($result, 'image', @$filename) : array_set($result, 'image', '');
@@ -431,7 +475,7 @@ class Portfolios extends BaseAdmin {
 	{
 		if ($id) {
 			if ($portfolio = $this->portfolios->find($id)) {
-				// Return Json Response
+				// Return Json Response with specific item
 				return response()->json($portfolio->tags->lists('name'), 200);
 			}
 		} else {

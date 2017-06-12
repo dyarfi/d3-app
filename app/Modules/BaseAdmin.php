@@ -21,7 +21,7 @@ class BaseAdmin extends ThemeAdmin {
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->user = Sentinel::getUser();
 
 	}
@@ -53,8 +53,8 @@ class BaseAdmin extends ThemeAdmin {
 				// return abort(403);
 				// return abort(403, 'Unauthorized action.');
 				// return Redirect::back()->withInput()->withErrors('Unauthorized access!');
-				
-			}			
+
+			}
 
 			// Return no access view
 			return View::make('Auth::errors.noaccess');
@@ -65,9 +65,9 @@ class BaseAdmin extends ThemeAdmin {
 			return Redirect::to(route('admin.login'))->withErrors('Unauthorized access!');
 
 		}
-		
+
 	}
-    
+
 
     /**
     * First time setup for developers only
@@ -77,7 +77,7 @@ class BaseAdmin extends ThemeAdmin {
 	public function setup() {
 
 		// Default variable setup
-		$exitCode = ''; 
+		$exitCode = '';
 		$message = '';
 		$user = '';
 
@@ -89,20 +89,20 @@ class BaseAdmin extends ThemeAdmin {
 
 			// Check user
 			if (!$user_check) {
-				
+
 
 				$set_acl = [];
 
 				foreach (config('setting.acl') as $acl) {
 					if (isset($acl['Admin'])) {
 						$set_acl = array_flatten($acl['Admin']);
-					}	
+					}
 				}
 
 				$set_acl = array_fill_keys($set_acl,true);
 
 				$is_admin = Request::input('is_admin') == 1 ? $set_acl : [];
-				
+
 				$credentials = [
 				    'email'    => Request::input('email'),
 				    'password' => Request::input('password'),
@@ -155,7 +155,7 @@ class BaseAdmin extends ThemeAdmin {
 		if ($message) {
 			// Flash a key / value pair to the session
 	 		//Session::flash('success', $message .' '. $exitCode > 0 ? '- '. $exitCode .' migration' : 'But no migration');
-	 		Session::flash('success', $message);		
+	 		Session::flash('success', $message);
 		}
  		// Forget the message
  		//Session::forget('success');

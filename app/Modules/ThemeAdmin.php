@@ -59,6 +59,12 @@ abstract class ThemeAdmin extends BaseController {
 	*/
 		protected $styles = array();
 
+	/**
+	* Inline script or styles
+	* @var string
+	*/
+	   protected $inlines = array();
+
 	 /**
 	* Set default subview layout
 	* @param string $sublayout
@@ -159,6 +165,22 @@ abstract class ThemeAdmin extends BaseController {
 	 }
 
 	 /**
+	* Set page inline style or script
+	* @param string $inlines
+	* @return Response
+	*/
+	 protected function inlines(array $inlines)
+	 {
+
+		 // Define inlines variables
+		 $this->inlines = $inlines;
+		 // append subview data to view data
+		 $this->data['inlines'] = $this->inlines;
+
+		 return $this;
+	 }
+
+	 /**
 	* Render the subview
 	* @return Response
 	*/
@@ -184,6 +206,7 @@ abstract class ThemeAdmin extends BaseController {
 		->nest('content', $this->view, $this->data)
 		->with('scripts', $this->scripts)
 		->with('styles', $this->styles)
+		->with('inlines', $this->inlines)
 		->with('title', $this->title)
 		;
 	 }

@@ -27,7 +27,7 @@
   @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach
 @endif
     <!-- inline styles related to this page -->
-    <script>var base_url = '{{ url() }}'; var base_ADM = '{{ url(config("setting.admin_url")) }}';</script>
+    <script>var base_URL = '{{ url() }}'; var base_ADM = '{{ url(config("setting.admin_url")) }}';</script>
     <!-- ace settings handler -->
     <script src="{{ asset('themes/ace-admin/js/ace-extra.min.js') }}"></script>
     <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
@@ -284,8 +284,14 @@
     <script src="{{ asset('themes/ace-admin/js/bootstrap.min.js') }}"></script>
 
 @if(isset($scripts)) @foreach($scripts as $script => $js) {!! Html::script($js, ['rel'=>$script]) !!} @endforeach @endif
-
-    <!-- page specific plugin scripts -->
+@if(isset($inlines))
+    <!-- page specific plugin scripts and styles -->
+    @foreach($inlines as $inline => $line)
+        @if($inline == 'script')<script type="text/javascript">{!! $line !!}</script>
+        @elseif($inline == 'style')<style type="text/css">{!! $line !!}</style>
+        @endif
+    @endforeach
+@endif
 
     <!--[if lte IE 8]>
       <script src="{{ asset('themes/ace-admin/js/excanvas.min.js') }}"></script>
@@ -399,9 +405,7 @@
               // Set Slug form
               $('input[id="slug"]').val(value);
           });
-
         }
-
 
         function showErrorAlert (reason, detail) {
             var msg='';
@@ -452,8 +456,6 @@
         }).prev().addClass('wysiwyg-style2');
 
         // TABLE -----------------------------------------
-
-
         if ($('#dynamic-table').size() > 0 && $.fn.dataTable) {
           //initiate dataTables plugin
           var oTable1 =
@@ -483,7 +485,6 @@
             //"iDisplayLength": 50
             } );
           //oTable1.fnAdjustColumnSizing();
-
 
           //TableTools settings
           TableTools.classes.container = "btn-group btn-overlap";
@@ -540,8 +541,6 @@
             });
           }, 200);
 
-
-
           //ColVis extension
           var colvis = new $.fn.dataTable.ColVis( oTable1, {
             "buttonText": "<i class='fa fa-search'></i>",
@@ -552,7 +551,6 @@
             "fnLabel": function(i, title, th) {
               return $(th).text();//remove icons, etc
             }
-
           });
 
           //style it
@@ -569,14 +567,12 @@
           .find('li').wrapInner('<a href="javascript:void(0)" />') //'A' tag is required for better styling
           .find('input[type=checkbox]').addClass('ace').next().addClass('lbl padding-8');
 
-
-
           /////////////////////////////////
           //table checkboxes
           //$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
 
           //select/deselect all rows according to table header checkbox
-          /*
+
           $('#dynamic-table > thead > tr > th input[type=checkbox], #datatable-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
             var th_checked = this.checked;//checkbox inside "TH" table header
 
@@ -586,7 +582,7 @@
               else tableTools_obj.fnDeselect(row);
             });
           });
-         */
+         
 
           //select/deselect a row when the checkbox is checked/unchecked
         /*
@@ -655,7 +651,6 @@
         // TABLE DATA ---------------------------------------
 
         var FormStatus = function () {
-
           var handleStatusForm = function () {
               $('#select_action').change(
                 function () {
@@ -667,7 +662,7 @@
             return {
                 //main function to initiate the module
                 init: function () {
-              handleStatusForm();
+                    handleStatusForm();
                 }
 
             };
@@ -1015,72 +1010,9 @@
     });
 
 
-
-
-
-        $('#datatable-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: base_ADM + '/portfolio/datatable'+ ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
-            columns: [
-                {data: 'id', name:'id', orderable: false, searchable: false},
-                {data: 'name', name: 'name'},
-                {data: 'description', name: 'description'},
-                {data: 'status', name: 'status'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'updated_at', name: 'updated_at'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ],
-            language: {
-                "processing": ''
-            },
-            fnDrawCallback : function (oSettings) {
-                $('#datatable-table > thead > tr > th:first-child')
-                .removeClass('sorting_asc')
-                .find('input[type=checkbox]')
-                .prop('checked',false);
-                $('#datatable-table > tbody > tr > td:first-child').addClass('center');
-                $('[data-rel="tooltip"]').tooltip();
-            }
-        });
-
-        /*
-        $('#datatable-table > thead > tr > th:first-child input[type="checkbox"]').on('click',function(){
-            if( $(this).prop('checked') === true) {
-                alert($('#datatable-table > tbody > tr > td').find('input[type="checkbox"]').html());
-            } else {
-
-            }
-        })
-        */
-
-        $('#datatable-table').on('click', 'thead > tr > th:first-child input[type=checkbox]', function() {
-            var check_boxes = $('#datatable-table > tbody > tr > td:first-child input[type="checkbox"]');
-            if( $(this).prop('checked') === true) {
-                check_boxes.each(function() { $(this).prop('checked',true); });
-            } else {
-                check_boxes.each(function() { $(this).prop('checked',false); });
-            }
-        });
-
-      })
-        //public function to get a paremeter by name from URL
-        $.extend({
-            getURLParameter: function (paramName) {
-                var searchString = window.location.search.substring(1),
-                    i, val, params = searchString.split("&");
-
-                for (i = 0; i < params.length; i++) {
-                    val = params[i].split("=");
-                    if (val[0] == paramName) {
-                        return unescape(val[1]);
-                    }
-                }
-                return null;
-            }
-        });
-    </script>
-    <script>
+})
+</script>
+<script>
     jQuery(document).ready(function() {
         if (typeof FormImageCrop === 'function') {
             FormImageCrop.init();

@@ -49,7 +49,7 @@
 						$users = $role->users()->get();
 						foreach ($users as $user) {
 						?>
-							<option value="{{$user->id}}" onclick="location.href = base_url + '/{{ $admin_url }}/permission/'+this.value+'?access=user'">
+							<option value="{{$user->id}}" onclick="location.href = base_URL + '/{{ $admin_url }}/permission/'+this.value+'?access=user'">
 								{{ $user->first_name, $user->last_name }}
 							</option>
 						<?php

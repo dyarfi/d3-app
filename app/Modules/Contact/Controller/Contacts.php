@@ -267,7 +267,7 @@ class Contacts extends BaseAdmin {
 				$result = $input;
 
 				// Set user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = array_set($result, 'image', $fileName);
@@ -302,7 +302,7 @@ class Contacts extends BaseAdmin {
 				$result = $input;
 
 				// Set user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = is_array($result['image']) ? array_set($result, 'image', '') : array_set($result, 'image', $fileName);

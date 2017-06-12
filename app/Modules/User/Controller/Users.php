@@ -84,7 +84,7 @@ class Users extends BaseAdmin {
 		}
 
 		// Set return data
-	   	$user = Sentinel::getUser() ? User::find(Sentinel::getUser()->id) : '';
+	   	$user = Sentinel::getUser() ? User::find($this->user->id) : '';
 
 	   	// Set data to return
 	   	$data = ['row'=>$user];
@@ -293,7 +293,7 @@ class Users extends BaseAdmin {
 
 			}
 
-			$id = Sentinel::getUser()->id;
+			$id = $this->user->id;
 
 		}
 
@@ -444,7 +444,7 @@ class Users extends BaseAdmin {
 	        $excel->setTitle('Export List');
 	        $excel->setCreator('Laravel')->setCompany('laravel.com');
 	        $excel->setDescription('export file');
-			
+
 		    $excel->sheet('Sheet 1', function($sheet) use($users) {
 		        $sheet->fromArray($users);
 		    });

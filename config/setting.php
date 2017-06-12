@@ -209,7 +209,7 @@ return [
 								// Action for first index
 								'action' => ['clients.index'],
 								// Controller method list
-								'method' => ['clients.index','clients.edit','clients.update','clients.change','clients.create','clients.store','clients.trash','clients.delete','clients.restored','clients.show']
+								'method' => ['clients.index','clients.edit','clients.update','clients.change','clients.create','clients.store','clients.trash','clients.delete','clients.restored','clients.show','clients.datatable','clients.export']
 							]
 						],
 						//------ Projects controller
@@ -217,7 +217,7 @@ return [
 								// Action for first index
 								'action' => ['projects.index'],
 								// Controller method list
-								'method' => ['projects.index','projects.edit','projects.update','projects.change','projects.create','projects.store','projects.trash','projects.delete','projects.restored','projects.show']
+								'method' => ['projects.index','projects.edit','projects.update','projects.change','projects.create','projects.store','projects.trash','projects.delete','projects.restored','projects.show','projects.datatable','projects.export']
 							]
 						],
 						//------ Portfolios controller

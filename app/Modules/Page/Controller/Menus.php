@@ -278,7 +278,7 @@ class Menus extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = array_set($result, 'image', @$fileName);
@@ -327,7 +327,7 @@ class Menus extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($result['image']) ? array_set($result, 'image', '') : array_set($result, 'image', @$fileName);

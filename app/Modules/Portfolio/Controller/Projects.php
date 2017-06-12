@@ -1,11 +1,15 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View;
+use Route, Request, Session, Redirect, Input, Validator, View;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\Portfolio\Model\Portfolio, App\Modules\Portfolio\Model\Project, App\Modules\Portfolio\Model\Client;
+use App\Modules\Portfolio\Model\Portfolio,
+	App\Modules\Portfolio\Model\Project,
+	App\Modules\Portfolio\Model\Client;
+// Load Datatable
+use Datatables;
 
 class Projects extends BaseAdmin {
 
@@ -45,26 +49,124 @@ class Projects extends BaseAdmin {
 	public function index()
 	{
 
-	   	//dd ($this->projects->find(1)->roles);
-
-		// Set return data
-	   	$projects = Input::get('path') === 'trashed' ? $this->projects->with('client')->onlyTrashed() : $this->projects->get();
-
 	   	// Get deleted count
 		$deleted = $this->projects->with('client')->onlyTrashed()->get()->count();
 
 	   	// Set data to return
-	   	$data = ['rows'=>$projects,'deleted'=>$deleted,'junked'=>Input::get('path')];
+	   	$data = ['deleted'=>$deleted,'junked'=>Input::get('path')];
 
-  		// Load needed scripts
+		// Load needed scripts
 	   	$scripts = [
-	   				'dataTables'=> 'themes/ace-admin/js/jquery.dataTables.min.js',
-	   				'dataTableBootstrap'=> 'themes/ace-admin/js/jquery.dataTables.bootstrap.min.js',
-	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
-	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
+	   				'dataTables' => asset('themes/ace-admin/js/jquery.dataTables.min.js'),
+	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
+					'library' => asset("themes/ace-admin/js/library.js")
 	   				];
 
-	   	return $this->view('Portfolio::project_index')->data($data)->scripts($scripts)->title('Projects List');
+		// Set inline script or style
+		$inlines = [
+			// Script execution on a specific controller page
+			'script' => "
+			// --- datatable handler [".route('admin.projects.index')."]--- //
+				var datatable  = $('#datatable-table');
+				var controller = datatable.attr('rel');
+
+				$('#datatable-table').DataTable({
+					processing: true,
+					serverSide: true,
+					ajax: '".route('admin.projects.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
+					columns: [
+						{data: 'id', name:'id', orderable: false, searchable: false},
+						{data: 'name', name: 'name'},
+						{data: 'client', name: 'client'},
+						{data: 'description', name: 'description'},
+						{data: 'status', name: 'status'},
+						{data: 'created_at', name: 'created_at'},
+						{data: 'updated_at', name: 'updated_at'},
+						{data: 'action', name: 'action', orderable: false, searchable: false}
+					],
+					language: {
+						processing: ''
+					},
+					fnDrawCallback : function (oSettings) {
+						$('#datatable-table > thead > tr > th:first-child')
+						.removeClass('sorting_asc')
+						.find('input[type=checkbox]')
+						.prop('checked',false);
+						$('#datatable-table > tbody > tr > td:first-child').addClass('center');
+						$('[data-rel=tooltip]').tooltip();
+					}
+				});
+			",
+		];
+
+	   	return $this->view('Portfolio::project_datatable_index')
+		->data($data)
+		->scripts($scripts)
+		->inlines($inlines)
+		->title('Projects List');
+	}
+
+	/**
+	 * Process datatables ajax request.
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function datatable(Request $request)
+	{
+		$rows = Input::get('path') === 'trashed' ? $this->projects->with('client')->onlyTrashed()->get() : $this->projects->with('client')->orderBy('index', 'asc')->get();
+
+		return Datatables::of($rows)
+			// Set action buttons
+			->editColumn('action', function ($row) {
+				if (Input::get('path') !== 'trashed') {
+					return '
+						<a data-rel="tooltip" data-original-title="View" title="" href="'.route('admin.projects.show', $row->id).'" class="btn btn-xs btn-success tooltip-default">
+							<i class="ace-icon fa fa-check bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Edit"  href="'.route('admin.projects.edit', $row->id).'" class="btn btn-xs btn-info tooltip-default">
+							<i class="ace-icon fa fa-pencil bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Trashed"  href="'.route('admin.projects.trash', $row->id).'" class="btn btn-xs btn-danger tooltip-default">
+							<i class="ace-icon fa fa-trash-o bigger-120"></i>
+						</a>';
+				} else {
+					return '
+						<a data-rel="tooltip" data-original-title="Restore!" href="'.route('admin.projects.restored', $row->id).'" class="btn btn-xs btn-primary tooltip-default">
+							<i class="ace-icon fa fa-save bigger-120"></i>
+						</a>
+						<a data-rel="tooltip" data-original-title="Permanent Delete!" href="'.route('admin.projects.delete', $row->id).'" class="btn btn-xs btn-danger">
+							<i class="ace-icon fa fa-trash bigger-120"></i>
+						</a>';
+				}
+			})
+			// Edit column client
+			->editColumn('client', function ($row) {
+				return 	'
+				<a data-rel="tooltip" data-original-title="Client" href="'.route('admin.clients.show', $row->client->id).'" class="tooltip-default">
+					'.$row->client->name.'
+				</a>';
+			})
+			// Edit column id
+			->editColumn('id', function ($row) {
+				return 	'
+				<label class="pos-rel">
+					<input type="checkbox" class="ace" name="check[]" id="check_'.$row->id.'" value="'.$row->id.'" />
+					<span class="lbl"></span>
+				</label>';
+			})
+			// Set description limit
+			->editColumn('description', function ($row) {
+				return 	str_limit(strip_tags($row->description), 60);
+			})
+			// Set status icon and text
+			->editColumn('status', function ($row) {
+				return '
+				<span class="label label-'.($row->status == 1 ? 'success' : 'warning').' arrowed-in arrowed-in-right">
+					<span class="fa fa-'.($row->status == 1 ? 'flag' : 'exclamation-circle').' fa-sm"></span>
+					'.config('setting.status')[$row->status].'
+				</span>';
+			})
+			->make(true);
 	}
 
 	/**
@@ -236,7 +338,7 @@ class Projects extends BaseAdmin {
 			'client_id' => 'required',
 			'name'  => 'required',
 			'description' => 'required',
-			'status' => 'required'
+			'status' => 'boolean'
 		];
 
 		if ($id)
@@ -299,6 +401,31 @@ class Projects extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.projects.index'))->with('error','Data not Available!');
 		}
+	}
+
+	/**
+	 * Process a file to download.
+	 *
+	 * @return $file export
+	 */
+	public function export() {
+
+		// Get type file to export
+		$type = Input::get('rel');
+		// Get data to export
+		$projects = $this->projects->select('id','name','description','status','updated_at','created_at')->get();
+		// Export file to type
+		Excel::create('projects', function($excel) use($projects) {
+			// Set the spreadsheet title, creator, and description
+	        $excel->setTitle('Export List');
+	        $excel->setCreator('Laravel')->setCompany('laravel.com');
+	        $excel->setDescription('export file');
+
+		    $excel->sheet('Sheet 1', function($sheet) use($projects) {
+				$sheet->fromArray($projects);
+		    });
+		})->export($type);
+
 	}
 
 	/**

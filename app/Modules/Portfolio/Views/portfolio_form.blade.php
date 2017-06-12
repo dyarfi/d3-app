@@ -40,7 +40,7 @@
 			'placeholder'=>'Enter the Portfolio Description.',
 			'name'=>'description',
 			'id'=>'description',
-			'class'=>'form-control']); !!}
+			'class'=>'form-control ckeditor']); !!}
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 
@@ -94,9 +94,10 @@
 		<select id="status" name="status" class="form-control input-sm">
 			<option value="">&nbsp;</option>
 			@foreach (config('setting.status') as $config => $val)
-				<option value="{{ $val ? $val : Input::old('status', $row->status) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
+				<option value="{{ $config ? $config : Input::old('status', $row->status) }}" {{ $config == $row->status ? 'selected' : '' }}>{{$val}}</option>
 			@endforeach
 		</select>
+		<span class="help-block">{{{ $errors->first('status', ':message') }}}</span>
 	</div>
 
 	<button type="submit" class="btn btn-default">Submit</button>

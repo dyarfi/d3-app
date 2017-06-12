@@ -262,7 +262,7 @@ class BlogCategories extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
@@ -292,7 +292,7 @@ class BlogCategories extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($input['image']) ? array_set($result, 'image', @$filename) : array_set($result, 'image', '');

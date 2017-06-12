@@ -54,7 +54,7 @@
 						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
 							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span>
 							@foreach (config('setting.status') as $config => $val)
-								{{ $val == $row->status ? $config : '' }}
+								{{ $config == $row->status ? $val : '' }}
 							@endforeach
 		                </span>
 					</td>
@@ -97,7 +97,7 @@
 						<select id="select_action" class="form-control input-sm" name="select_action">
 							<option value="">&nbsp;</option>
 							@foreach (config('setting.status') as $config => $val)
-								<option value="{{$val}}">{{$config}}</option>
+								<option value="{{$config}}">{{$val}}</option>
 							@endforeach
 						</select>
 						</div>

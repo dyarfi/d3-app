@@ -236,7 +236,7 @@ class Blogs extends BaseAdmin {
 		$scripts = [
 			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
 			'bootstrap-datepicker'=>asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
-			'summernote'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
+			'ckeditor'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
 			'library'=>asset("themes/ace-admin/js/library.js")
 		];
 
@@ -297,7 +297,7 @@ class Blogs extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
@@ -331,7 +331,7 @@ class Blogs extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
 				$result = isset($input['image']) ? array_set($result, 'image', @$filename) : array_set($result, 'image', '');

@@ -76,7 +76,7 @@
 	<span class="help-block">{{{ $errors->first('end_date', ':message') }}}</span>
 </div>
 
-<div class="form-group">
+<div class="form-group{{ $errors->first('image', ' has-error') }}">
 	@if ($row->image)
 		<img src="{{ asset('uploads/'.$row->image) }}" alt="{{ $row->image }}" class="image-alt img-thumbnail" style="width:300px"/>
 	@endif
@@ -91,8 +91,19 @@
 					</span>
 				</span>
 			</label>
+			<span class="help-block">{{{ $errors->first('image', ':message') }}}</span>
 		</div>
 	</div>
+</div>
+
+<div class="form-group{{ $errors->first('status', ' has-error') }}">
+	<label for="status">Status</label>
+	<select id="status" name="status" class="form-control input-sm">
+		<option value="">&nbsp;</option>
+		@foreach (config('setting.status') as $config => $val)
+			<option value="{{ $config ? $config : Input::old('status', $row->status) }}" {{ ($config == 1 || $config == $row->status) ? 'selected' : '' }}>{{$val}}</option>
+		@endforeach
+	</select>
 </div>
 
 {!! Form::submit(ucfirst($mode).' New Banner', ['class' => 'btn btn-primary btn-xs']) !!}

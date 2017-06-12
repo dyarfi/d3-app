@@ -19,8 +19,11 @@
  */
 Route::group(['prefix' => config('setting.admin_url')], function()
 {
+    // Portfolios DataTables routes
+    Route::get('client/datatable', ['as'=>'admin.clients.datatable','uses'=>'App\Modules\Portfolio\Controller\Clients@datatable']);
     // Clients Controller routes
     Route::get('client', ['as'=>'admin.clients.index','uses'=>'App\Modules\Portfolio\Controller\Clients@index']);
+    Route::get('client/export', ['as'=>'admin.clients.export','uses'=>'App\Modules\Portfolio\Controller\Clients@export']);
     Route::get('client/create', ['as'=>'admin.clients.create','uses'=>'App\Modules\Portfolio\Controller\Clients@create']);
     Route::post('client/create', ['as'=>'admin.clients.store','uses'=>'App\Modules\Portfolio\Controller\Clients@store']);
     Route::post('client/change', ['as'=>'admin.clients.change','uses'=>'App\Modules\Portfolio\Controller\Clients@change']);
@@ -32,11 +35,9 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('client/{id}/restored', ['as'=>'admin.clients.restored','uses'=>'App\Modules\Portfolio\Controller\Clients@restored']);
     Route::get('client/{id}/delete', ['as'=>'admin.clients.delete','uses'=>'App\Modules\Portfolio\Controller\Clients@delete']);
 
-    // Portfolios Controller routes
-
-    // DataTables routes
+    // Portfolios DataTables routes
     Route::get('portfolio/datatable', ['as'=>'admin.portfolios.datatable','uses'=>'App\Modules\Portfolio\Controller\Portfolios@datatable']);
-
+    // Portfolios Main Controller routes
     Route::get('portfolio', ['as'=>'admin.portfolios.index','uses'=>'App\Modules\Portfolio\Controller\Portfolios@index']);
     Route::get('portfolio/export', ['as'=>'admin.portfolios.export','uses'=>'App\Modules\Portfolio\Controller\Portfolios@export']);
     Route::get('portfolio/create', ['as'=>'admin.portfolios.create','uses'=>'App\Modules\Portfolio\Controller\Portfolios@create']);
@@ -53,8 +54,11 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('portfolio/tags/all', ['as'=>'admin.portfolios.tags','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tags']);
     Route::get('portfolio/tags/{id}/show', ['as'=>'admin.portfolios.tags.show','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tagsShow']);
 
-    // Projects Controller routes
+    // Portfolios DataTables routes
+    Route::get('project/datatable', ['as'=>'admin.projects.datatable','uses'=>'App\Modules\Portfolio\Controller\Projects@datatable']);
+    // Portfolios Main Controller routes
     Route::get('project', ['as'=>'admin.projects.index','uses'=>'App\Modules\Portfolio\Controller\Projects@index']);
+    Route::get('project/export', ['as'=>'admin.projects.export','uses'=>'App\Modules\Portfolio\Controller\Projects@export']);
     Route::get('project/create', ['as'=>'admin.projects.create','uses'=>'App\Modules\Portfolio\Controller\Projects@create']);
     Route::post('project/create', ['as'=>'admin.projects.store','uses'=>'App\Modules\Portfolio\Controller\Projects@store']);
     Route::post('project/change', ['as'=>'admin.projects.change','uses'=>'App\Modules\Portfolio\Controller\Projects@change']);

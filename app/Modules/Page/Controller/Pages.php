@@ -233,7 +233,7 @@ class Pages extends BaseAdmin {
 			'menu_id' => 'required',
 			'name'  => 'required',
 			'description' => 'required',
-			'status' => 'required'
+			'status' => 'boolean'
 		];
 
 		if ($id)

@@ -234,9 +234,10 @@ class Divisions extends BaseAdmin {
 		$input = array_filter(Input::all());
 
 		$rules = [
-			'name' => 'required',
-			'slug'  => 'required',
-			'description' => 'required'
+			'name' 			=> 'required',
+			'slug'  		=> 'required',
+			'description' 	=> 'required'
+			'status' 		=> 'boolean',
 		];
 
 		if ($id)
@@ -251,7 +252,7 @@ class Divisions extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				$division->update($result);
 
@@ -268,7 +269,7 @@ class Divisions extends BaseAdmin {
 				$result = $input;
 
 				// Slip user id
-				$result = array_set($result, 'user_id', Sentinel::getUser()->id);
+				$result = array_set($result, 'user_id', $this->user->id);
 
 				//$menu = $this->menus->create($input);
 				$division = $this->division->create($result);
