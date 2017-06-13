@@ -63,7 +63,8 @@ class Users extends BaseAdmin {
 	   				'dataTables'=> 'themes/ace-admin/js/jquery.dataTables.min.js',
 	   				'dataTableBootstrap'=> 'themes/ace-admin/js/jquery.dataTables.bootstrap.min.js',
 	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
-	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
+	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js',
+					'library' => asset("themes/ace-admin/js/library.js")
 	   				];
 
 	   	return $this->view('User::sentinel.users.index')->data($data)->scripts($scripts)->title('User List');

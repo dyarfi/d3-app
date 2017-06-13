@@ -64,22 +64,6 @@ class Settings extends BaseAdmin {
 	 */
 	public function index() {
 
-		// print_r(Setting::slug('site-theme')->firstOrFail()->value);
-
-		//print_r($this->settings->setToConfig());
-		//exit;
-		//Config::set('setting.configure', $this->settings->setToConfig());
-		//print_r(Config::get('setting.configure'));
-		//exit;
-
-		//$arrays = array_dot($settings);
-
-		//foreach ($this->settings->setToConfig() as $key => $val) {
-			//print_r($key);
-			//$asdf = $array['group'];
-			//print_r($val['group']);
-		//}
-
 		// Set return data
 	   	$settings = Input::get('path') === 'trashed' ? $this->settings->onlyTrashed()->orderBy('name')->get() : $this->settings->orderBy('name')->get();
 
@@ -243,11 +227,19 @@ class Settings extends BaseAdmin {
 			$setting = $this->settings;
 		}
 
-	   	// Load needed scripts
-	   	//$scripts = ['typehead.jquery'=> 'themes/ace-admin/js/typeahead.jquery.min.js'];
-		$scripts = [];
+		// Get all group in setting database
+		$groups_tmp = array_unique(head($this->settings->get()->lists('group')));
+		$groups = '';
+		foreach ($groups_tmp as $tmp) {
+			$groups[$tmp] = ucfirst($tmp);
+		}
 
-		return $this->view('User::settings.form')->data(compact('mode', 'setting'))->scripts($scripts)->title('Setting '.$mode);
+		// Load needed scripts
+		$scripts = [
+					'library' => asset("themes/ace-admin/js/library.js")
+				];
+
+		return $this->view('User::settings.form')->data(compact('mode', 'setting', 'groups'))->scripts($scripts)->title('Setting '.$mode);
 	}
 
 	/**
@@ -263,6 +255,7 @@ class Settings extends BaseAdmin {
 
 		$rules = [
 			'name' 		   => 'required',
+			'group' 	   => 'required',
 			'slug' 		   => 'required',
 			'input_type'   => 'required',
 			'description'  => 'required',
@@ -286,10 +279,14 @@ class Settings extends BaseAdmin {
 		}
 		else
 		{
+
 			$messages = $this->validateSetting($input, $rules);
 
 			if ($messages->isEmpty())
 			{
+
+				$input = array_set($input, 'key', str_slug($input['name'],'.'));
+
 				$setting = $this->settings->create($input);
 			}
 		}

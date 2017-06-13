@@ -62,6 +62,7 @@ class Images extends BaseAdmin {
 			'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js',
 			// ColorBox
 	   		'jquery.colorbox' => asset('themes/ace-admin/js/jquery.colorbox.min.js'),
+			'library' => asset("themes/ace-admin/js/library.js")
 
 	   	];
 	   	$styles 	= [

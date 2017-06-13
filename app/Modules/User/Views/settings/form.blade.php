@@ -8,11 +8,18 @@
 </div>
 
 <!--form method="post" action="" autocomplete="off"-->
-{!! Form::model($setting, 
+{!! Form::model($setting,
 	[
 		'route' => ($mode == 'create') ? 'admin.settings.create' : ['admin.settings.update', $setting->id]
-	]) 
+	])
 !!}
+
+
+	<div class="form-group{{ $errors->first('category_id', ' has-error') }}">
+		<label for="category_id">Category</label>
+		{!! Form::select('group', $groups, Input::get('group') ? Input::get('group') : Input::old('group', @$row->group),['class'=>'form-control']); !!}
+		<span class="help-block">{{{ $errors->first('group', ':message') }}}</span>
+	</div>
 
 	<div class="form-group{{ $errors->first('name', ' has-error') }}">
 		{!! Form::label('name', 'Name'); !!}
@@ -51,7 +58,7 @@
 			'class' => 'form-control']); !!}
 		<span class="help-block">{{{ $errors->first('value', ':message') }}}</span>
 	</div>
-	
+
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		{!! Form::label('description', 'Description'); !!}
 		{!! Form::textarea('description',Input::old('description', $setting->description),[
@@ -89,7 +96,8 @@
 			'id'=>'status','class' => 'form-control']) !!}
 		<span class="help-block">{{{ $errors->first('status', ':message') }}}</span>
 	</div>
-	<button type="submit" class="btn btn-default">Submit</button>	
+
+	<button type="submit" class="btn btn-default">Submit</button>
 {!! Form::close() !!}
 
 @stop

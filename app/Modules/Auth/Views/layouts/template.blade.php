@@ -310,6 +310,8 @@
     <script type="text/javascript">
       jQuery(function($) {
 
+
+          
           // Add active class to current page menu
           $('.submenu').find('.active').parents('li').addClass('active').find('b').removeClass('arrow fa fa-angle-down');
 
