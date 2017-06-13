@@ -186,7 +186,7 @@ return [
 		/*
 		 * https://datatables.yajrabox.com/starter
 		 */
-		Yajra\Datatables\DatatablesServiceProvider::class
+		Yajra\Datatables\DatatablesServiceProvider::class,
 
 	],
 
@@ -211,7 +211,11 @@ return [
         'Blade'     => Illuminate\Support\Facades\Blade::class,
         'Bus'       => Illuminate\Support\Facades\Bus::class,
         'Cache'     => Illuminate\Support\Facades\Cache::class,
-        'Config'    => Illuminate\Support\Facades\Config::class,
+		// ------- Original Laravel Config Class - end ----------------
+        //'Config'    => Illuminate\Support\Facades\Config::class,
+		// ------- Save changes to the configuration file in script. | https://github.com/larapack/config-writer ----------
+		'Config' 	=> Larapack\ConfigWriter\Facade::class,
+		'ConfigWriter' => Larapack\ConfigWriter\Repository::class,
         'Cookie'    => Illuminate\Support\Facades\Cookie::class,
         'Crypt'     => Illuminate\Support\Facades\Crypt::class,
         'DB'        => Illuminate\Support\Facades\DB::class,
@@ -260,7 +264,7 @@ return [
 		'Carbon'		=> Carbon\Carbon::class,
 		// An eloquent way of importing and exporting Excel and CSV files
 		'Excel' 		=> Maatwebsite\Excel\Facades\Excel::class,
-		
+
 		// Modular service provider
 		//'Modules'		=> Modules\ModulesServiceProvider::class,
 

@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Participant\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Auth, Activation, Socialite, Input, Validator, View;
+use Route, Request, Session, Redirect, Input, Validator, View;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models

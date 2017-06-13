@@ -72,6 +72,7 @@ class Projects extends BaseAdmin {
 				$('#datatable-table').DataTable({
 					processing: true,
 					serverSide: true,
+				  	bAutoWidth: false,
 					ajax: '".route('admin.projects.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
 					columns: [
 						{data: 'id', name:'id', orderable: false, searchable: false},

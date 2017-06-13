@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Participant\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Auth, Activation, Socialite, Input, Validator, View, Excel;
+use Route, Request, Session, Redirect, Input, Validator, View, Excel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -71,6 +71,7 @@ class Participants extends BaseAdmin {
 				$('#datatable-table').DataTable({
 					processing: true,
 					serverSide: true,
+					bAutoWidth: false,
 					ajax: '".route('admin.participants.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
 					columns: [
 						{data: 'id', name:'id', orderable: false, searchable: false},

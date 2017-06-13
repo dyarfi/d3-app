@@ -12,7 +12,7 @@ use App\Modules\Portfolio\Model\Portfolio,
 use Datatables;
 
 class Portfolios extends BaseAdmin {
-	
+
 	/**
 	 * Set portfolios data.
 	 *
@@ -74,6 +74,7 @@ class Portfolios extends BaseAdmin {
 				$('#datatable-table').DataTable({
 					processing: true,
 					serverSide: true,
+ 				    bAutoWidth: false,
 					ajax: '".route('admin.portfolios.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
 					columns: [
 						{data: 'id', name:'id', orderable: false, searchable: false},

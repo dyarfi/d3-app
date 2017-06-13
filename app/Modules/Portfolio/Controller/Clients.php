@@ -12,7 +12,7 @@ use App\Modules\Portfolio\Model\Portfolio,
 use Datatables;
 
 class Clients extends BaseAdmin {
-	
+
 	/**
 	 * Set clients data.
 	 *
@@ -69,6 +69,7 @@ class Clients extends BaseAdmin {
 				$('#datatable-table').DataTable({
 					processing: true,
 					serverSide: true,
+ 				    bAutoWidth: false,
 					ajax: '".route('admin.clients.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
 					columns: [
 						{data: 'id', name:'id', orderable: false, searchable: false},

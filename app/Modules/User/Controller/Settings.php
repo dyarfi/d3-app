@@ -89,14 +89,10 @@ class Settings extends BaseAdmin {
 	   	// Set data to return
 	   	$data = ['settings' => $settings,'deleted' => $deleted,'junked' => Input::get('path'), 'config_settings' => $this->settings->setToConfig()];
 
-	   	// Load needed scripts
-	   	$scripts = [
-	   				//'dataTables'=> 'themes/ace-admin/js/jquery.dataTables.min.js',
-	   				//'dataTableBootstrap'=> 'themes/ace-admin/js/jquery.dataTables.bootstrap.min.js',
-	   				//'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
-	   				//'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js',
-	   				//'typehead.jquery'=> 'assets.assets/js/typeahead.jquery.min.js'
-	   				];
+		// Load needed scripts
+		$scripts = [
+					'library' => asset("themes/ace-admin/js/library.js")
+					];
 
 		// Return data and view
 	   	return $this->view('User::settings.index')->data($data)->scripts($scripts)->title('Setting List');

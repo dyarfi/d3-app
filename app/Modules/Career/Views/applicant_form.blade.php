@@ -35,6 +35,17 @@
 		<span class="help-block">{{{ $errors->first('password', ':message') }}}</span>
 	</div>
 
+    <div class="form-group{{ $errors->first('status', ' has-error') }}">
+    	<label for="status">Status</label>
+    	<select id="status" name="status" class="form-control input-sm">
+    		<option value="">&nbsp;</option>
+    		@foreach (config('setting.status') as $config => $val)
+    			<option value="{{ $config ? $config : Input::old('status', $row->status) }}" {{ $config == $row->status ? 'selected' : '' }}>{{$val}}</option>
+    		@endforeach
+    	</select>
+    	<span class="help-block">{{{ $errors->first('status', ':message') }}}</span>
+    </div>
+
 	<button type="submit" class="btn btn-default">Submit</button>
 {!! Form::close() !!}
 

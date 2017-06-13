@@ -54,7 +54,14 @@ class Roles extends BaseAdmin {
 		// Get trashed mode
 		$junked  = Input::get('path');
 
-		return $this->view('User::sentinel.roles.index')->data(compact('rows','deleted','junked'))->title('Role Listing');
+		// Load needed scripts
+		$scripts = [
+					'library' => asset("themes/ace-admin/js/library.js")
+					];
+
+		return $this->view('User::sentinel.roles.index')
+		->data(compact('rows','deleted','junked'))
+		->title('Role Listing');
 	}
 
 	/**

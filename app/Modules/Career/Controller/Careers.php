@@ -1,15 +1,17 @@
 <?php namespace App\Modules\Career\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Image, Validator, View;
+use Route, Request, Session, Redirect, Input, Image, Validator, View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\Career\Model\Career;
-use App\Modules\Career\Model\Division;
-use App\Modules\Career\Model\Applicant;
+use App\Modules\Career\Model\Career,
+	App\Modules\Career\Model\Division,
+	App\Modules\Career\Model\Applicant;
+// Load Datatable
+use Datatables;
 
 class Careers extends BaseAdmin {
 

@@ -82,6 +82,7 @@ class Blogs extends BaseAdmin {
 				$('#datatable-table').DataTable({
 					processing: true,
 					serverSide: true,
+					bAutoWidth: false,
 					ajax: '".route('admin.blogs.datatable')."' + ($.getURLParameter('path') ? '?path=' + $.getURLParameter('path') : ''),
 					columns: [
 						{data: 'id', name:'id', orderable: false, searchable: false},

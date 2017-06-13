@@ -7,9 +7,10 @@ use Sentinel, Socialite;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\User\Model\User;
-use App\Modules\User\Model\Role;
-use App\Modules\Task\Models\Task;
+use App\Modules\User\Model\User,
+	App\Modules\User\Model\Role;
+// Load Larapack config writer
+use Config, ConfigWriter;
 
 class Permissions extends BaseAdmin {
 
@@ -36,6 +37,13 @@ class Permissions extends BaseAdmin {
 
 		$this->permissions  = Sentinel::getRoleRepository();
 		$this->users 		= Sentinel::getUserRepository();
+
+		// ******** These are the method for writing in config files ******** //
+		//$config = new ConfigWriter('setting');
+		//$config->set('configure','');
+		//$config->save();
+		// or use config facade
+		//Config::write('setting', ['configure.safe_mode' => false]);
 	}
 
 	/**
@@ -53,9 +61,17 @@ class Permissions extends BaseAdmin {
 			//return $value;
 		//});
 
+		// Load needed scripts
+	   	$scripts = [
+					'library' => asset("themes/ace-admin/js/library.js")
+	   				];
+
 		$data = ['permissions'=>$permissions];
 
-		return $this->view('User::sentinel.permissions.index')->data($data)->title('Permission Listing');
+		return $this->view('User::sentinel.permissions.index')
+		->data($data)
+		->scripts($scripts)
+		->title('Permission Listing');
 	}
 
 
@@ -270,7 +286,13 @@ class Permissions extends BaseAdmin {
 		// Read ACL settings config for any permission access
     	$acl = config('setting.acl');
 
-		return $this->view('User::sentinel.permissions.'.$access.'_form')->data(compact('mode','role','acl','user','access'))->title(ucfirst($access).' Permission');
+		// Load needed scripts
+		$scripts = ['library' => asset("themes/ace-admin/js/library.js")];
+
+		return $this->view('User::sentinel.permissions.'.$access.'_form')
+		->data(compact('mode','role','acl','user','access'))
+		->scripts($scripts)
+		->title(ucfirst($access).' Permission');
 	}
 
 	/**

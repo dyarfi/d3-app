@@ -19,8 +19,12 @@
  */
 Route::group(['prefix' => config('setting.admin_url')], function()
 {
+    // Portfolios DataTables routes
+    Route::get('contact/datatable', ['as'=>'admin.contacts.datatable','uses'=>'App\Modules\Contact\Controller\Contacts@datatable']);
+
     // Contacts Controller routes
     Route::get('contact', ['as'=>'admin.contacts.index','uses'=>'App\Modules\Contact\Controller\Contacts@index']);
+    Route::get('contact/export', ['as'=>'admin.contacts.export','uses'=>'App\Modules\Contact\Controller\Contacts@export']);
     Route::get('contact/create', ['as'=>'admin.contacts.create','uses'=>'App\Modules\Contact\Controller\Contacts@create']);
     Route::post('contact/create', ['as'=>'admin.contacts.store','uses'=>'App\Modules\Contact\Controller\Contacts@store']);
     Route::post('contact/change', ['as'=>'admin.contacts.change','uses'=>'App\Modules\Contact\Controller\Contacts@change']);

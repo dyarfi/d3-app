@@ -1,12 +1,14 @@
 <?php namespace App\Modules\Career\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View;
+use Route, Request, Session, Redirect, Input, Validator, View, Excel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\Career\Model\Career;
-use App\Modules\Career\Model\Applicant;
+use App\Modules\Career\Model\Career,
+	App\Modules\Career\Model\Applicant;
+// Load Datatable
+use Datatables;
 
 class Applicants extends BaseAdmin {
 
@@ -233,7 +235,8 @@ class Applicants extends BaseAdmin {
 		$rules = [
 			'first_name' => 'required',
 			'last_name'  => 'required',
-			'email'      => 'required|unique:applicants'
+			'email'      => 'required|unique:applicants',
+			'status'	 => 'boolean'
 		];
 
 		if ($id)

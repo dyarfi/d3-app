@@ -177,7 +177,7 @@ return [
 								// Action for first index
 								'action' => ['contacts.index'],
 								// Controller method list
-								'method' => ['contacts.index','contacts.edit','contacts.update','contacts.change','contacts.create','contacts.store','contacts.trash','contacts.delete','contacts.restored','contacts.show']
+								'method' => ['contacts.index','contacts.edit','contacts.update','contacts.change','contacts.create','contacts.store','contacts.trash','contacts.delete','contacts.restored','contacts.show','contacts.datatable','contacts.export']
 							]
 						]
 					]
@@ -270,5 +270,5 @@ return [
 			'0' => 'Inactive'
 		],
 
-	'configure'	=> []
+	'configure'	=> ['install' => true,'safe_mode'=> 'http://your-site.com/']
 ];

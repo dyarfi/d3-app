@@ -1,13 +1,13 @@
 <?php namespace App\Modules\Career\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View;
+use Route, Request, Session, Redirect, Input, Validator, View;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\Career\Model\Division;
-// Load the vendor libraries
-use Excel;
+// Load Datatable
+use Datatables;
 
 class Divisions extends BaseAdmin {
 
@@ -235,7 +235,7 @@ class Divisions extends BaseAdmin {
 		$rules = [
 			'name' 			=> 'required',
 			'slug'  		=> 'required',
-			'description' 	=> 'required'
+			'description' 	=> 'required',
 			'status' 		=> 'boolean',
 		];
 

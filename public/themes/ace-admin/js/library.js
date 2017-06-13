@@ -1,5 +1,6 @@
 $(document).ready(function() {
     // Initiate layout and plugins
+    // $.fn.dataTableExt.sErrMode = 'throw';
 
     // ---------------------- ADMINISTRATOR Javascript Custom Function -- start [ --------------------------
     // File name in input form
