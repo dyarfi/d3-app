@@ -254,7 +254,7 @@
         </li>
       </ul>
     </li>
-
+    
     <li class="light-blue">
       <a data-toggle="dropdown" href="#" class="dropdown-toggle">
         <?php
@@ -272,7 +272,6 @@
         </span>
         <i class="ace-icon fa fa-caret-down"></i>
       </a>
-
       <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
         <li class="{{ stristr(route('admin.dashboard'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.dashboard')) ? 'active' : '' }}">
           <a href="{{ route('admin.dashboard') }}">
@@ -280,29 +279,24 @@
             Dashboard
           </a>
         </li>
-
         <li class="{{ stristr(route('admin.settings.index'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.settings.index')) ? 'active' : '' }}">
           <a href="{{ route('admin.settings.index') }}">
             <i class="ace-icon fa fa-cog"></i>
             Settings
           </a>
         </li>
-
         <li class="{{ stristr(route('admin.account'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.account')) ? 'active' : '' }}">
           <a href="{{ route('admin.account') }}">
             <i class="ace-icon fa fa-user"></i>
             Profile
           </a>
         </li>
-
         <li>
           <a href="{{ URL::to($admin_url.'/account') }}" class="btn disabled btn-xs">
             Last Login : {{ Sentinel::getUser()->last_login }}
           </a>
         </li>
-
         <li class="divider"></li>
-
         <li>
           <a href="{{ route('admin.logout') }}">
             <i class="ace-icon fa fa-power-off"></i>

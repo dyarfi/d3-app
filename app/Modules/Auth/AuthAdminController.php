@@ -31,10 +31,6 @@ class AuthAdminController extends Controller {
 
 		$this->middleware('auth.admin', ['only' => 'getLogin','getLogout','getIndex']);
 
-		//$this->auth = $auth;
-
-		//dd($auth::check());
-
 		$this->setting 		= config('setting');
 
 		$this->admin_app	= $this->setting['admin_app'];
@@ -44,14 +40,14 @@ class AuthAdminController extends Controller {
 	}
 
 	public function index() {
-		
+
 		if( ! Sentinel::check() ) {
 
 			 return Redirect::to(route('admin.login'));
 
 		} else {
 
-			 return Redirect::to(route('admin.dashboard'));			
+			 return Redirect::to(route('admin.dashboard'));
 
 		}
 
@@ -94,11 +90,18 @@ class AuthAdminController extends Controller {
 
 			$remember = (bool) Input::get('remember', false);
 
-			if (Sentinel::authenticate(Input::all(), $remember))
+			if (Sentinel::authenticate($input, $remember))
 			{
-				return Redirect::intended($this->admin_url.'/dashboard');
-			}			
-			
+				// Check if previous url is valid
+				if ($input['previous_url'] && $input['previous_url'] !== route('admin.noaccess')) {
+					// Redirect to previous url
+					return Redirect::intended($input['previous_url']);
+				} else {
+					// Or redirect to dashboard
+					return Redirect::intended($this->admin_url.'/dashboard');
+				}
+			}
+
 			$errors = 'Invalid login or password.';
 		}
 		catch (NotActivatedException $e)

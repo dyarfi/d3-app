@@ -56,7 +56,12 @@ class BaseAdmin extends ThemeAdmin {
 
 			}
 
-			// Return no access view
+			// Check if user visited the access with referer or not
+			if (Request::server('HTTP_REFERER') =='' || Request::server('HTTP_REFERER') == route('admin.noaccess')) {
+				// If yes redirect to dashboard
+				return Redirect::intended(route('admin.dashboard'));
+			}
+
 			return View::make('Auth::errors.noaccess');
 
 		} else {
