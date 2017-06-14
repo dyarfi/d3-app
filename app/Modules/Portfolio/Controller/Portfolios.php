@@ -280,14 +280,21 @@ class Portfolios extends BaseAdmin {
 		if ($portfolio = $this->portfolios->onlyTrashed()->find($id))
 		{
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$portfolio->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$portfolio->image);
+
+			}
+
 			// Completely delete from database
 			$portfolio->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Permanently Deleted!');
+			return Redirect::to(route('admin.portfolios.index','path=trashed'))->with('success', 'Portfolio Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.portfolios.index'))->with('error', 'Portfolio Not Found!');
+		return Redirect::to(route('admin.portfolios.index','path=trashed'))->with('error', 'Portfolio Not Found!');
 	}
 
 	/**

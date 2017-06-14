@@ -291,14 +291,21 @@ class Blogs extends BaseAdmin {
 		if ($blog = $this->blogs->onlyTrashed()->find($id))
 		{
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$blog->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$blog->image);
+
+			}
+
 			// Completely delete from database
 			$blog->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.blogs.index'))->with('success', 'Blog Permanently Deleted!');
+			return Redirect::to(route('admin.blogs.index','path=trashed'))->with('success', 'Blog Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.blogs.index'))->with('error', 'Blog Not Found!');
+		return Redirect::to(route('admin.blogs.index','path=trashed'))->with('error', 'Blog Not Found!');
 	}
 
 	/**

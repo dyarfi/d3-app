@@ -1,9 +1,9 @@
 <?php namespace App\Modules\Banner\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Image, Validator, View, Excel;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use Route, Request, Session, Redirect, Input, Image, Validator, View, Excel, File;
+//use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -282,15 +282,21 @@ class Banners extends BaseAdmin {
 	{
 		if ($banner = $this->banners->onlyTrashed()->find($id))
 		{
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$banner->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$banner->image);
+
+			}
 
 			// Completely delete from database
 			$banner->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.banners.index'))->with('success', 'Banner Permanently Deleted!');
+			return Redirect::to(route('admin.banners.index','path=trashed'))->with('success', 'Banner Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.banners.index'))->with('error', 'Banner Not Found!');
+		return Redirect::to(route('admin.banners.index','path=trashed'))->with('error', 'Banner Not Found!');
 	}
 
 	/**
@@ -319,7 +325,10 @@ class Banners extends BaseAdmin {
 		//$divisions = $this->divisions->lists('name', 'id')->all();
 
 	   	// Load needed javascripts
-	   	$scripts = ['bootstrap-datepicker'=> 'themes/ace-admin/js/bootstrap-datepicker.min.js'];
+	   	$scripts = [
+					'bootstrap-datepicker'=> asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
+					'library' => asset('themes/ace-admin/js/library.js')
+				];
 
 		// Load needed stylesheets
 	   	$styles = ['stylesheet'=> 'themes/ace-admin/css/datepicker.min.css'];
@@ -478,7 +487,7 @@ class Banners extends BaseAdmin {
 		// Get type file to export
 		$type = Input::get('rel');
 		// Get data to export
-		$banners = $this->banners->select('id','name','description','status','updated_at','created_at')->get();
+		$banners = $this->banners->select('id','name','image','description','status','updated_at','created_at')->get();
 		// Export file to type
 		Excel::create('banners', function($excel) use($banners) {
 			// Set the spreadsheet title, creator, and description

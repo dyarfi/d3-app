@@ -228,13 +228,20 @@ class Users extends BaseAdmin {
 			// Delete from pivot table many to many
 			$this->users->onlyTrashed()->find($id)->roles()->detach();
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$user->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$user->image);
+
+			}
+
 			// Permanently delete
 			$user->forceDelete();
 
-			return Redirect::to(route('admin.users.index'))->with('success', 'User Permanently Deleted!');
+			return Redirect::to(route('admin.users.index','path=trashed'))->with('success', 'User Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.users.index'))->with('error', 'User Not Found!');
+		return Redirect::to(route('admin.users.index','path=trashed'))->with('error', 'User Not Found!');
 	}
 
 	/**

@@ -176,14 +176,21 @@ class Menus extends BaseAdmin {
 		if ($menu = $this->menus->onlyTrashed()->find($id))
 		{
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$menu->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$menu->image);
+
+			}
+
 			// Completely delete from database
 			$menu->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.menus.index'))->with('success', 'Menu Permanently Deleted!');
+			return Redirect::to(route('admin.menus.index','path=trashed'))->with('success', 'Menu Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.menus.index'))->with('error', 'Menu Not Found!');
+		return Redirect::to(route('admin.menus.index','path=trashed'))->with('error', 'Menu Not Found!');
 	}
 
 	/**

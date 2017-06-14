@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Blog\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View, Excel;
+use Route, Request, Session, Redirect, Input, Validator, View, Excel, File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -239,10 +239,10 @@ class BlogCategories extends BaseAdmin {
 			$category->delete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.categories.index'))->with('success', 'Blog Category Trashed!');
+			return Redirect::to(route('admin.categories.index','path=trashed'))->with('success', 'Blog Category Trashed!');
 		}
 
-		return Redirect::to(route('admin.categories.index'))->with('error', 'Blog Category Not Found!');
+		return Redirect::to(route('admin.categories.index','path=trashed'))->with('error', 'Blog Category Not Found!');
 	}
 
 	/**
@@ -276,6 +276,13 @@ class BlogCategories extends BaseAdmin {
 	{
 		if ($category = $this->categories->onlyTrashed()->find($id))
 		{
+
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$banner->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$banner->image);
+
+			}
 
 			// Completely delete from database
 			$category->forceDelete();

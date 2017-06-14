@@ -285,15 +285,22 @@ class Projects extends BaseAdmin {
 		{
 
 			// Delete from pivot table many to many
-			$this->projects->onlyTrashed()->find($id)->roles()->detach();
+			$this->projects->onlyTrashed()->find($id)->client()->detach();
+
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$project->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$project->image);
+
+			}
 
 			// Permanently delete
 			$project->forceDelete();
 
-			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Permanently Deleted!');
+			return Redirect::to(route('admin.projects.index','path=trashed'))->with('success', 'Project Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.projects.index'))->with('error', 'Project Not Found!');
+		return Redirect::to(route('admin.projects.index','path=trashed'))->with('error', 'Project Not Found!');
 	}
 
 	/**

@@ -106,7 +106,7 @@
 	</select>
 </div>
 
-{!! Form::submit(ucfirst($mode).' New Banner', ['class' => 'btn btn-primary btn-xs']) !!}
+{!! Form::submit(ucfirst($mode).' Banner', ['class' => 'btn btn-primary btn-xs']) !!}
 
 {!! Form::close() !!}
 

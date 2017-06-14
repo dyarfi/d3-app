@@ -174,14 +174,21 @@ class Tasks extends BaseAdmin {
 		if ($task = $this->tasks->onlyTrashed()->find($id))
 		{
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$task->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$task->image);
+
+			}
+
 			// Completely delete from database
 			$task->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.tasks.index'))->with('success', 'Task Permanently Deleted!');
+			return Redirect::to(route('admin.tasks.index','path=trashed'))->with('success', 'Task Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.tasks.index'))->with('error', 'Task Not Found!');
+		return Redirect::to(route('admin.tasks.index','path=trashed'))->with('error', 'Task Not Found!');
 	}
 
 	/**

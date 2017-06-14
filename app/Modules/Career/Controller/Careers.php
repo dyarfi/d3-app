@@ -183,14 +183,21 @@ class Careers extends BaseAdmin {
 		if ($career = $this->careers->onlyTrashed()->find($id))
 		{
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$career->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$career->image);
+
+			}
+
 			// Completely delete from database
 			$career->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.careers.index'))->with('success', 'Career Permanently Deleted!');
+			return Redirect::to(route('admin.careers.index','path=trashed'))->with('success', 'Career Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.careers.index'))->with('error', 'Career Not Found!');
+		return Redirect::to(route('admin.careers.index','path=trashed'))->with('error', 'Career Not Found!');
 	}
 
 	/**

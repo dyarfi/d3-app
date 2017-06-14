@@ -187,13 +187,20 @@ class Divisions extends BaseAdmin {
 			// Delete from pivot table many to many
 			$this->division->onlyTrashed()->find($id)->roles()->detach();
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$division->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$division->image);
+
+			}
+
 			// Permanently delete
 			$division->forceDelete();
 
-			return Redirect::to(route('admin.divisions.index'))->with('success', 'Division Permanently Deleted!');
+			return Redirect::to(route('admin.divisions.index','path=trashed'))->with('success', 'Division Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.divisions.index'))->with('error', 'Division Not Found!');
+		return Redirect::to(route('admin.divisions.index','path=trashed'))->with('error', 'Division Not Found!');
 	}
 
 	/**

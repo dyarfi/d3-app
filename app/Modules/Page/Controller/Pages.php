@@ -180,15 +180,22 @@ class Pages extends BaseAdmin {
 		{
 
 			// Delete from pivot table many to many
-			$this->pages->onlyTrashed()->find($id)->roles()->detach();
+			$this->pages->onlyTrashed()->find($id)->menu()->detach();
+
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$page->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$page->image);
+
+			}
 
 			// Permanently delete
 			$page->forceDelete();
 
-			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Permanently Deleted!');
+			return Redirect::to(route('admin.pages.index','path=trashed'))->with('success', 'Page Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.pages.index'))->with('error', 'Page Not Found!');
+		return Redirect::to(route('admin.pages.index','path=trashed'))->with('error', 'Page Not Found!');
 	}
 
 	/**

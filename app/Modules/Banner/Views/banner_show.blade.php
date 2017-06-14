@@ -15,15 +15,15 @@
 
 <div class="row">
     <div class="col-md-6">
-        <a href="{{ route('admin.careers.index') }}" class="btn btn-info btn-xs">Back to all careers</a>
-        <a href="{{ route('admin.careers.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Career</a>
+        <a href="{{ route('admin.banners.index') }}" class="btn btn-info btn-xs">Back to all banners</a>
+        <a href="{{ route('admin.banners.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Banner</a>
     </div>
     <div class="col-md-6 text-right">
         {!! Form::open([
             'method' => 'DELETE',
-            'route' => ['admin.careers.trash', $row->id]
+            'route' => ['admin.banners.trash', $row->id]
         ]) !!}
-            {!! Form::submit('Delete this career?', ['class' => 'btn btn-danger btn-xs']) !!}
+            {!! Form::submit('Delete this banner?', ['class' => 'btn btn-danger btn-xs']) !!}
         {!! Form::close() !!}
     </div>
 </div>

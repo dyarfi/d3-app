@@ -185,11 +185,11 @@ class Roles extends BaseAdmin {
 			$role->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Permanently Deleted!');
+			return Redirect::to(route('admin.roles.index','path=trashed'))->with('success', 'Role Permanently Deleted!');
 
 		}
 
-		return Redirect::to(route('admin.roles.index'))->with('error', 'Role Not Found!');;
+		return Redirect::to(route('admin.roles.index','path=trashed'))->with('error', 'Role Not Found!');;
 	}
 
 	/**

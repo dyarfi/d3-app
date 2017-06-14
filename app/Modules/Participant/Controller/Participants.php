@@ -284,13 +284,20 @@ class Participants extends BaseAdmin {
 			// Delete from pivot table many to many
 			$this->participants->onlyTrashed()->find($id)->roles()->detach();
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$participant->avatar)) {
+				// Delete the single file
+				File::delete('uploads/'.$participant->avatar);
+
+			}
+
 			// Permanently delete
 			$participant->forceDelete();
 
-			return Redirect::to(route('admin.participants.index'))->with('success', 'Participant Permanently Deleted!');
+			return Redirect::to(route('admin.participants.index','path=trashed'))->with('success', 'Participant Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.participants.index'))->with('error', 'Participant Not Found!');
+		return Redirect::to(route('admin.participants.index','path=trashed'))->with('error', 'Participant Not Found!');
 	}
 
 	/**

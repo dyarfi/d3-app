@@ -283,14 +283,21 @@ class Contacts extends BaseAdmin {
 		if ($contact = $this->contacts->onlyTrashed()->find($id))
 		{
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$contact->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$contact->image);
+
+			}
+
 			// Completely delete from database
 			$contact->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.contacts.index'))->with('success', 'Contact Permanently Deleted!');
+			return Redirect::to(route('admin.contacts.index','path=trashed'))->with('success', 'Contact Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.contacts.index'))->with('error', 'Contact Not Found!');
+		return Redirect::to(route('admin.contacts.index','path=trashed'))->with('error', 'Contact Not Found!');
 	}
 
 	/**

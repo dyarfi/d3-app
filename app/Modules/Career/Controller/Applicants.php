@@ -184,16 +184,20 @@ class Applicants extends BaseAdmin {
 		if ($applicant = $this->applicants->onlyTrashed()->find($id))
 		{
 
-			// Delete from pivot table many to many
-			$this->applicants->onlyTrashed()->find($id);
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$applicant->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$applicant->image);
+
+			}
 
 			// Permanently delete
 			$applicant->forceDelete();
 
-			return Redirect::to(route('admin.applicants.index'))->with('success', 'Applicant Permanently Deleted!');
+			return Redirect::to(route('admin.applicants.index','path=trashed'))->with('success', 'Applicant Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.applicants.index'))->with('error', 'Applicant Not Found!');
+		return Redirect::to(route('admin.applicants.index','path=trashed'))->with('error', 'Applicant Not Found!');
 	}
 
 	/**

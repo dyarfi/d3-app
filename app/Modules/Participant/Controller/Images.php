@@ -188,15 +188,22 @@ class Images extends BaseAdmin {
 		{
 
 			// Delete from pivot table many to many
-			$this->images->onlyTrashed()->find($id)->roles()->detach();
+			$this->images->onlyTrashed()->find($id)->participant()->detach();
+
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$image->file_name)) {
+				// Delete the single file
+				File::delete('uploads/'.$image->file_name);
+
+			}
 
 			// Permanently delete
 			$image->forceDelete();
 
-			return Redirect::to(route('admin.images.index'))->with('success', 'Image Permanently Deleted!');
+			return Redirect::to(route('admin.images.index','path=trashed'))->with('success', 'Image Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.images.index'))->with('error', 'Image Not Found!');
+		return Redirect::to(route('admin.images.index','path=trashed'))->with('error', 'Image Not Found!');
 	}
 
 	/**

@@ -276,14 +276,21 @@ class Clients extends BaseAdmin {
 		if ($client = $this->clients->onlyTrashed()->find($id))
 		{
 
+			// Delete if there is an image attached
+			if(File::exists('uploads/'.$client->image)) {
+				// Delete the single file
+				File::delete('uploads/'.$client->image);
+
+			}
+
 			// Completely delete from database
 			$client->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.clients.index'))->with('success', 'Client Permanently Deleted!');
+			return Redirect::to(route('admin.clients.index','path=trashed'))->with('success', 'Client Permanently Deleted!');
 		}
 
-		return Redirect::to(route('admin.clients.index'))->with('error', 'Client Not Found!');
+		return Redirect::to(route('admin.clients.index','path=trashed'))->with('error', 'Client Not Found!');
 	}
 
 	/**
