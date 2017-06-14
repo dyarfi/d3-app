@@ -2,7 +2,6 @@ $(document).ready(function() {
     // Initiate layout and plugins
     // TABLE -----------------------------------------
 
-
         if ($('#dynamic-table').size() > 0 && $.fn.dataTable) {
           //initiate dataTables plugin
           var oTable1 =
@@ -143,9 +142,7 @@ $(document).ready(function() {
           });
 
 
-
-
-            $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+        $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
@@ -387,6 +384,12 @@ $(document).ready(function() {
     }();
 
     FormInit.init();
+
+    // jCrop Init
+    if (typeof FormImageCrop === 'object') {
+        FormImageCrop.init();
+    }
+
     // ---------------------- ADMINISTRATOR Javascript Custom Function -- end ] --------------------------
 
 

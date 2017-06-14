@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel;
+use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel, File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models

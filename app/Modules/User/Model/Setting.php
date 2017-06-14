@@ -17,20 +17,20 @@ class Setting extends Model {
 
 	/**
      * Fillable fields
-     * 
+     *
      * @var array
      */
     protected $fillable = [
         'group',
         'key',
         'name',
-        'slug',  
+        'slug',
         'description',
         'value',
         'help_text',
         'input_type',
         'editable',
-        'weight',        
+        'weight',
         'attributes',
         'status'
     ];
@@ -70,10 +70,17 @@ class Setting extends Model {
 
     }
 
+    // Scope query for group field
+    public function scopeGroup($query, $string) {
+
+        return $query->where('group', $string)->get(['slug','group','key','value']);
+
+    }
+
     public function setToConfig() {
 
         return $this->all(['group','key','value','slug','name','description','input_type'])->groupBy('group');
 
-    }    
+    }
 
 }

@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Career\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Image, Validator, View;
+use Route, Request, Session, Redirect, Input, Image, Validator, View, File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 // Load main base controller

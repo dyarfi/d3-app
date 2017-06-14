@@ -13,27 +13,27 @@
 	       	'class' =>'form-horizontal'
 		]) !!}
 
-			{!! Form::hidden('_private', base64_encode(csrf_token() .'::'. $row->email .'::'. $row->roles()->first()->id) ) !!}	
+			{!! Form::hidden('_private', base64_encode(csrf_token() .'::'. $row->email .'::'. $row->roles()->first()->id) ) !!}
 
 			<div class="form-group">
-				<div class="col-md-12">	
+				<div class="col-md-12">
 					<p class="lead"><span class="fa fa-pencil-square-o"></span> Joined : {{ $row->created_at }}</p>
 					@if (count($row->email) === 1)
 				    	<p class="lead"><span class="fa fa-envelope-o"></span> Email : {{ $row->email }}</p>
 					@else
 					    You don't have an email!
-					@endif 
+					@endif
 
 					@if (count($row->provider) === 1)
 				    	<p class="lead"><span class="fa fa-check-square-o"></span> Register with : {{ $row->provider }}</p>
 					@else
 					    You don't have any providers!
-					@endif 
+					@endif
 				</div>
 			</div>
 
 			<div class="form-group">
-				<div class="col-md-12{{ $errors->first('username', ' has-error') }}">		
+				<div class="col-md-12{{ $errors->first('username', ' has-error') }}">
 				    {!! Form::label('username', 'Username:', ['class' => 'control-label']) !!}
 				    {!! Form::text('username', $row->username, ['class' => 'form-control']) !!}
 				    <span class="help-block red">{{{ $errors->first('username', ':message') }}}</span>
@@ -45,7 +45,7 @@
 				</div>
 				<div class="col-md-6{{ $errors->first('last_name', ' has-error') }}">
 					{!! Form::label('last_name', 'Last Name:', ['class' => 'control-label']) !!}
-				    {!! Form::text('last_name', $row->last_name, ['class' => 'form-control']) !!}			
+				    {!! Form::text('last_name', $row->last_name, ['class' => 'form-control']) !!}
 				    <span class="help-block red">{{{ $errors->first('last_name', ':message') }}}</span>
 				</div>
 			</div>
@@ -61,27 +61,25 @@
 			<div class="form-group">
 				<div class="col-md-12{{ $errors->first('avatar', ' has-error') }}">
 				    {!! Form::label('avatar', 'Avatar:', ['class' => 'control-label']) !!}
-				    {!! Form::text('avatar', $row->avatar, ['class' => 'form-control']) !!}		
+				    {!! Form::text('avatar', $row->avatar, ['class' => 'form-control']) !!}
 				    <span class="help-block red">{{{ $errors->first('avatar', ':message') }}}</span>
 				</div>
 			</div>
 
 			<div class="space-6"></div>
 
-			<div class="form-group">	
+			<div class="form-group">
 				<div class="col-md-12{{ $errors->first('image', ' has-error') }}">
 					{!! Form::label('image', ($row->image) ? 'Replace Profile Image:' : 'Profile Image:',['class'=>'center-block']); !!}
 					@if ($row->image)
-
 						<img src="{{ asset('uploads/'.$row->image) }}" alt="{{ $row->image }}" class="image-alt" style="max-width:300px" id="demo3"/>
 						<div class="clearfix space-6"></div>
-
 						<!-- This is the form that our event handler fills -->
 						<div id="image-crop-holder">
-							<input type="hidden" id="crop_x" name="x" value="{{ $row->attributes->crop_x }}"/>
-							<input type="hidden" id="crop_y" name="y" value="{{ $row->attributes->crop_y }}"/>
-							<input type="hidden" id="crop_w" name="w" value="{{ $row->attributes->crop_w }}"/>
-							<input type="hidden" id="crop_h" name="h" value="{{ $row->attributes->crop_h }}"/>
+							<input type="hidden" id="crop_x" name="x" value="{{ isset($row->attributes->crop_x) ? $row->attributes->crop_x : 0 }}"/>
+							<input type="hidden" id="crop_y" name="y" value="{{ isset($row->attributes->crop_y) ? $row->attributes->crop_y : 10 }}"/>
+							<input type="hidden" id="crop_w" name="w" value="{{ isset($row->attributes->crop_w) ? $row->attributes->crop_w : 10 }}"/>
+							<input type="hidden" id="crop_h" name="h" value="{{ isset($row->attributes->crop_h) ? $row->attributes->crop_h : 10 }}"/>
 							<input type="hidden" id="image" name="image" value="{{ $row->image }}"/>
 							<input type="hidden" id="path" name="path" value="{{ public_path() . '/uploads' }}"/>
 							<input type="submit" id="demo3_form" value="Crop Image" class="btn btn-large green"/>
@@ -91,7 +89,6 @@
 								</div>
 							</div>
 						</div>
-
 					@endif
 					<div class="row">
 						<div class="col-xs-6">
@@ -104,12 +101,12 @@
 								</span>
 							</label>
 						</div>
-					</div>	
+					</div>
 					<span class="help-block red">{{{ $errors->first('image', ':message') }}}</span>
 				</div>
 			</div>
 
-			<div class="clearfix space-6"></div>			
+			<div class="clearfix space-6"></div>
 
 			@if(config('setting.attributes') && $row->attributes)
 			<div class="form-group">
@@ -117,12 +114,12 @@
 				<span class="clearfix">Skins:</span>
 				@foreach (config('setting.attributes') as $setting => $attribute)
 					@if ($setting == 'skins')
-						@foreach ($attribute as $attr => $val)	
+						@foreach ($attribute as $attr => $val)
 							<div class="col-md-2">
 								<div class="pull-left" style="background-color:{{ $attr }}">
-									{!! Form::label('attributes[skins]', $attr, ['class' => 'control-label white']) !!}									
-									{!! Form::radio('attributes[skins]', $attr, ($row->attributes->skins === $attr ? true : false)) !!}		
-								</div>						
+									{!! Form::label('attributes[skins]', $attr, ['class' => 'control-label white']) !!}
+									{!! Form::radio('attributes[skins]', $attr, (@$row->attributes->skins === $attr ? true : false)) !!}
+								</div>
 							</div>
 						@endforeach
 					@endif
@@ -130,7 +127,7 @@
 				</div>
 			</div>
 			@endif
-			
+
 			<div class="clearfix space-6"></div>
 
 			<div class="form-group">
@@ -138,10 +135,9 @@
 				{!! Form::submit('Update Profile', ['class' => 'btn btn-primary btn-xs']) !!}
 				</div>
 			</div>
-			
+
 		{!! Form::close() !!}
-		
+
 	</div>
 </div>
-
 @stop

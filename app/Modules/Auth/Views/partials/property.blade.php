@@ -257,9 +257,9 @@
 
     <li class="light-blue">
       <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-        <?php 
+        <?php
             $first_name = Sentinel::getUser()->first_name;
-            if (Sentinel::getUser()->image) {
+            if (Sentinel::getUser()->image && File::exists('uploads/'.str_replace('.jpg','-100x100px.jpg', Sentinel::getUser()->image))) {
                 $img = asset('uploads/'.str_replace('.jpg','-100x100px.jpg', Sentinel::getUser()->image));
             } else {
                 $img = asset('themes/ace-admin/avatars/user.jpg');
@@ -275,21 +275,21 @@
 
       <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
         <li class="{{ stristr(route('admin.dashboard'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.dashboard')) ? 'active' : '' }}">
-          <a href="{{ URL::to($admin_url.'/dashboard') }}">
+          <a href="{{ route('admin.dashboard') }}">
             <i class="ace-icon fa fa-home"></i>
             Dashboard
           </a>
         </li>
 
         <li class="{{ stristr(route('admin.settings.index'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.settings.index')) ? 'active' : '' }}">
-          <a href="{{ URL::to($admin_url.'/setting') }}">
+          <a href="{{ route('admin.settings.index') }}">
             <i class="ace-icon fa fa-cog"></i>
             Settings
           </a>
         </li>
 
         <li class="{{ stristr(route('admin.account'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.account')) ? 'active' : '' }}">
-          <a href="{{ URL::to($admin_url.'/account') }}">
+          <a href="{{ route('admin.account') }}">
             <i class="ace-icon fa fa-user"></i>
             Profile
           </a>
@@ -298,13 +298,13 @@
         <li>
           <a href="{{ URL::to($admin_url.'/account') }}" class="btn disabled btn-xs">
             Last Login : {{ Sentinel::getUser()->last_login }}
-          </a>          
+          </a>
         </li>
 
         <li class="divider"></li>
 
         <li>
-          <a href="{{ URL::to($admin_url.'/logout') }}">
+          <a href="{{ route('admin.logout') }}">
             <i class="ace-icon fa fa-power-off"></i>
             Logout
           </a>

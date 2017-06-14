@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Task\Controller;
 
 // Load Laravel classes
-use Route, Request, Sentinel, Session, Redirect, Input, Validator, View;
+use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -51,10 +51,11 @@ class Tasks extends BaseAdmin {
 
 	   	// Load needed scripts
 	   	$scripts = [
-	   				'dataTables'=> 'themes/ace-admin/js/jquery.dataTables.min.js',
-	   				'dataTableBootstrap'=> 'themes/ace-admin/js/jquery.dataTables.bootstrap.min.js',
-	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
-	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
+	   				'dataTables'=> asset('themes/ace-admin/js/jquery.dataTables.min.js'),
+	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
+	   				'dataTableTools'=> asset('themes/ace-admin/js/dataTables.tableTools.min.js'),
+	   				'dataTablesColVis'=> asset('themes/ace-admin/js/dataTables.colVis.min.js'),
+					'library' => asset("themes/ace-admin/js/library.js")
 	   				];
 
 		// Return data and view

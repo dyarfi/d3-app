@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Blog\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel;
+use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel, File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -345,7 +345,7 @@ class Blogs extends BaseAdmin {
 			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
 			'bootstrap-datepicker'=>asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
 			'ckeditor'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
-			'library'=>asset("themes/ace-admin/js/library.js")
+			'library'=>asset('themes/ace-admin/js/library.js')
 		];
 
 		// Load needed stylesheets

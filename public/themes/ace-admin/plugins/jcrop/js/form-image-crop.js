@@ -53,15 +53,15 @@ var FormImageCrop = function () {
 
             xsize = $pcnt.width(),
             ysize = $pcnt.height();
-        
+
             console.log('init',[xsize,ysize]);
 
-            var imgHldr = $('#image-crop-holder');  
+            var imgHldr = $('#image-crop-holder');
             var crop_x = imgHldr.find('#crop_x').val();
             var crop_y = imgHldr.find('#crop_y').val();
             var crop_w = imgHldr.find('#crop_w').val();
             var crop_h = imgHldr.find('#crop_h').val();
-        
+
         $('#demo3').Jcrop({
           //setSelect: [ crop_x, crop_y, crop_w, crop_h ],
           onChange: updatePreview,
@@ -113,9 +113,9 @@ var FormImageCrop = function () {
             //alert('Please select a crop region then press submit.');
         //return false;
 
-            var imgHldr = $('#image-crop-holder');  
+            var imgHldr = $('#image-crop-holder');
             var image = imgHldr.find('#image').val();
-            var path = imgHldr.find('#path').val();            
+            var path = imgHldr.find('#path').val();
             var crop_x = imgHldr.find('#crop_x').val();
             var crop_y = imgHldr.find('#crop_y').val();
             var crop_w = imgHldr.find('#crop_w').val();
@@ -128,7 +128,8 @@ var FormImageCrop = function () {
                 url: base_ADM + '/user/crop/' + image,
                 data: params
             }).done(function( msg ) {
-                alert( "Data Saved: " + msg );
+                // alert( "Data Saved: " + msg );
+                location.reload();
             });
             // Set submit to false
             return false;
@@ -284,7 +285,7 @@ var FormImageCrop = function () {
         // In this example, since Jcrop may be attached or detached
         // at the whim of the user, I've wrapped the call into a function
         initJcrop();
-        
+
         // The function is pretty simple
         function initJcrop()//{{{
         {
@@ -306,7 +307,7 @@ var FormImageCrop = function () {
 
             $('#ar_lock,#size_lock,#bg_swap').attr('checked',false);
             //App.updateUniform('#ar_lock,#size_lock,#bg_swap');
-            
+
             $('.requiresjcrop').show();
 
           });
@@ -537,11 +538,11 @@ var FormImageCrop = function () {
         $('.responsive-1024').each(function(){
           $(this).attr("data-class", $(this).attr("class"));
           $(this).attr("class", 'responsive-1024 col-md-12');
-        }); 
+        });
       } else {
         $('.responsive-1024').each(function(){
           if ($(this).attr("data-class")) {
-            $(this).attr("class", $(this).attr("data-class"));  
+            $(this).attr("class", $(this).attr("data-class"));
             $(this).removeAttr("data-class");
           }
         });
@@ -551,7 +552,7 @@ var FormImageCrop = function () {
     return {
         //main function to initiate the module
         init: function () {
-            
+
             if (!jQuery().Jcrop) {;
                 return;
             }

@@ -7,11 +7,11 @@
 </div>
 
 <!--form method="post" action="" autocomplete="off"-->
-{!! Form::model($row, 
+{!! Form::model($row,
 	[
 		'route' => ($mode == 'create') ? 'admin.tasks.create' : ['admin.tasks.update', $row->id],
 		'files' => true
-	]) 
+	])
 !!}
 
 <div class="form-group{{ $errors->first('title', ' has-error') }}">
@@ -47,7 +47,7 @@
 	<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 </div>
 
-<div class="form-group{{ $errors->first('image', ' has-error') }}">	
+<div class="form-group{{ $errors->first('image', ' has-error') }}">
 	{!! Form::label('image', 'Image:'); !!}
 	@if ($row->image)
 		{!! Form::label('image', ($row->image) ? 'Replace Image:' : 'Profile Image:', ['class' => 'control-label center-block ace-file-input']) !!}
@@ -64,11 +64,22 @@
 				</span>
 			</label>
 		</div>
-	</div>	
+	</div>
 	<span class="help-block red">{{{ $errors->first('image', ':message') }}}</span>
 </div>
 
-{!! Form::submit(ucfirst($mode).' New Task', ['class' => 'btn btn-primary btn-xs']) !!}
+<div class="form-group{{ $errors->first('status', ' has-error') }}">
+	<label for="status">Status</label>
+	<select id="status" name="status" class="form-control input-sm">
+		<option value="">&nbsp;</option>
+		@foreach (config('setting.status') as $config => $val)
+			<option value="{{ $config ? $config : Input::old('status', $row->status) }}" {{ $config == $row->status ? 'selected' : '' }}>{{$val}}</option>
+		@endforeach
+	</select>
+	<span class="help-block">{{{ $errors->first('status', ':message') }}}</span>
+</div>
+
+{!! Form::submit(ucfirst($mode).' Task', ['class' => 'btn btn-primary btn-xs']) !!}
 
 {!! Form::close() !!}
 

@@ -60,55 +60,47 @@
         @include('Auth::partials.property')
       </div><!-- /.navbar-container -->
     </div>
-
     <div class="main-container" id="main-container">
-
       <script type="text/javascript">
         try{ace.settings.check('main-container' , 'fixed')}catch(e){}
       </script>
-
       @include('Auth::partials.navigation')
-
       <div class="main-content">
         <div class="main-content-inner">
-          <div class="breadcrumbs" id="breadcrumbs">
+          <div class="breadcrumbs hidden" id="breadcrumbs">
             <script type="text/javascript">
               try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
             </script>
-
-            @if (isset($controller) && isset($action) && $controller != 'BaseAdmin')
-            <ul class="breadcrumb">
-              <li>
-                <i class="ace-icon fa fa-home home-icon"></i>
-                <a href="{{ URL::to($admin_url.'/dashboard') }}">Home</a>
-              </li>
-              <li class="active">
-                <a href="{{ route('admin.'.strtolower(@$controller).'.index') }}">{{ ucfirst(@$controller) }}</a>
-              </li>
-                @if(@$action)
-                <li class="">
-                  {{ ucfirst(@$action) }}
-                </li>
-                @endif
-            </ul><!-- /.breadcrumb -->
-            @endif
-
-            <!--div class="nav-search" id="nav-search">
+            <div class="nav-search" id="nav-search">
               <form class="form-search">
                 <span class="input-icon">
                   <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
                   <i class="ace-icon fa fa-search nav-search-icon"></i>
                 </span>
               </form>
-            </div--><!-- /.nav-search -->
+            </div><!-- /.nav-search -->
           </div>
+          @if (isset($controller) && isset($action) && $controller != 'BaseAdmin')
+          <ul class="breadcrumb">
+            <li>
+              <i class="ace-icon fa fa-home home-icon"></i>
+              <a href="{{ URL::to($admin_url.'/dashboard') }}">Home</a>
+            </li>
+            <li class="active">
+              <a href="{{ route('admin.'.strtolower(@$controller).'.index') }}">{{ ucfirst(@$controller) }}</a>
+            </li>
+              @if(@$action)
+              <li class="">
+                {{ ucfirst(@$action) }}
+              </li>
+              @endif
+          </ul><!-- /.breadcrumb -->
+          @endif
           <div class="page-content">
-
             <div class="ace-settings-container" id="ace-settings-container">
               <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
                 <i class="ace-icon fa fa-cog bigger-130"></i>
               </div>
-
               <div class="ace-settings-box clearfix" id="ace-settings-box">
                 <div class="pull-left width-50">
                   <div class="ace-settings-item">
@@ -135,27 +127,22 @@
                     </div>
                     <span>&nbsp; Choose Skin</span>
                   </div>
-
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
                     <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
                   </div>
-
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
                     <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
                   </div>
-
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
                     <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
                   </div>
-
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
                     <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
                   </div>
-
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
                     <label class="lbl" for="ace-settings-add-container">
@@ -164,18 +151,15 @@
                     </label>
                   </div>
                 </div><!-- /.pull-left -->
-
                 <div class="pull-left width-50">
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" />
                     <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
                   </div>
-
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" />
                     <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
                   </div>
-
                   <div class="ace-settings-item">
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" />
                     <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
@@ -183,30 +167,15 @@
                 </div><!-- /.pull-left -->
               </div><!-- /.ace-settings-box -->
             </div><!-- /.ace-settings-container -->
-
-            <!--div class="page-header">
-              <h1>
-                {{ $admin_app }}
-                <small>
-                  <i class="ace-icon fa fa-angle-double-right"></i>
-                  overview &amp; stats
-                </small>
-              </h1>
-            </div--><!-- /.page-header -->
-
             <div class="space-16"></div>
-
             <div class="row">
               <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
-
                 <!--div class="alert alert-block alert-success">
                   <button type="button" class="close" data-dismiss="alert">
                     <i class="ace-icon fa fa-times"></i>
                   </button>
-
                   <i class="ace-icon fa fa-check green"></i>
-
                   Welcome to
                   <strong class="green">
                     Ace
@@ -214,11 +183,8 @@
                   </strong>,
   легкий, много-функциональный и простой в использовании шаблон для админки на bootstrap 3.3. Загрузить исходники с <a href="https://github.com/bopoda/ace">github</a> (with minified ace js files).
                 </div-->
-
                 @include('Auth::partials.notification')
-
                 @yield('body')
-
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -229,23 +195,18 @@
         <div class="footer-inner">
           <div class="footer-content">
             <span class="bigger-120">
-              <span class="blue bolder">Apanel</span>
-              Application &copy; 2013-2014
+              <span class="blue bolder">
+                  {{ @app('App\Modules\User\Model\Setting')->slug('site-name')->value }}
+              </span> &copy; 2013-{{ date('Y') }}
             </span>
 
             &nbsp; &nbsp;
             <span class="action-buttons">
-              <a href="#">
-                <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-              </a>
-
-              <a href="#">
-                <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-              </a>
-
-              <a href="#">
-                <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-              </a>
+                @foreach (@app('App\Modules\User\Model\Setting')->group('socmed') as $socmed)
+                <a href="{{$socmed->value}}">
+                  <i class="ace-icon fa fa-{{str_replace('socmed-','',$socmed->slug)}}-square light-blue bigger-150"></i>
+                </a>
+                @endforeach
             </span>
           </div>
         </div>
@@ -297,7 +258,7 @@
       <script src="{{ asset('themes/ace-admin/js/excanvas.min.js') }}"></script>
     <![endif]-->
 
-    <!-- boostrap assets -->
+    <!-- bootstrap assets -->
     <!--script src="{{ asset('themes/ace-admin/js/jquery-ui.custom.min.js') }}"></script-->
     <script src="{{ asset('themes/ace-admin/js/bootbox.min.js') }}"></script>
     <script src="{{ asset('themes/ace-admin/js/jquery-ui.custom.min.js') }}"></script>
@@ -674,12 +635,5 @@
 
 })
 </script>
-<script>
-    jQuery(document).ready(function() {
-        if (typeof FormImageCrop === 'function') {
-            FormImageCrop.init();
-        }
-    });
-</script>
-  </body>
+</body>
 </html>

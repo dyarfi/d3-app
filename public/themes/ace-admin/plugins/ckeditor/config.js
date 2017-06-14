@@ -32,10 +32,10 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.extraPlugins = 'mediaembed';
 
-	config.filebrowserBrowseUrl = base_url + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=files';
-	config.filebrowserImageBrowseUrl = base_url + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=images';
-	config.filebrowserFlashBrowseUrl = base_url + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=flash';
-	config.filebrowserUploadUrl = base_url + '/themes/ace-admin/plugins/kcfinder/upload.php?opener=ckeditor&type=files';
-	config.filebrowserImageUploadUrl = base_url + '/themes/ace-admin/plugins/kcfinder/upload.php?opener=ckeditor&type=images';
-	config.filebrowserFlashUploadUrl = base_url + '/themes/ace-admin/plugins/kcfinder/upload.php?opener=ckeditor&type=flash';
+	config.filebrowserBrowseUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=files';
+	config.filebrowserImageBrowseUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=images';
+	config.filebrowserFlashBrowseUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=flash';
+	config.filebrowserUploadUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/upload.php?opener=ckeditor&type=files';
+	config.filebrowserImageUploadUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/upload.php?opener=ckeditor&type=images';
+	config.filebrowserFlashUploadUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/upload.php?opener=ckeditor&type=flash';
 };

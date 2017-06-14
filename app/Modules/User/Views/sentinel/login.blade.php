@@ -30,7 +30,7 @@ Login
 
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-push-4">
-			<label class="text-warning">{!! Form::checkbox('remember') !!} Remember me
+			<label class="text-warning" for="remember">{!! Form::checkbox('remember','','',['class'=>'input']) !!} Remember me
 			</label>
 		</div>
 	</div>
@@ -44,7 +44,7 @@ Login
 	</div>
 
 {!! Form::close() !!}
-			
+
 			<?php /*
                 <div id="login-box" class="login-box visible widget-box no-border">
                   <div class="widget-body">

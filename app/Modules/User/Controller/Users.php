@@ -1,7 +1,7 @@
 <?php namespace App\Modules\User\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Activation, Sentinel, Input, Validator, View, Excel;
+use Route, Request, Session, Redirect, Activation, Sentinel, Input, Validator, View, Excel, File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -60,11 +60,11 @@ class Users extends BaseAdmin {
 
    		// Load needed scripts
 	   	$scripts = [
-	   				'dataTables'=> 'themes/ace-admin/js/jquery.dataTables.min.js',
-	   				'dataTableBootstrap'=> 'themes/ace-admin/js/jquery.dataTables.bootstrap.min.js',
-	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
-	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js',
-					'library' => asset("themes/ace-admin/js/library.js")
+	   				'dataTables'=> asset('themes/ace-admin/js/jquery.dataTables.min.js'),
+	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
+	   				'dataTableTools'=> asset('themes/ace-admin/js/dataTables.tableTools.min.js'),
+	   				'dataTablesColVis'=> asset('themes/ace-admin/js/dataTables.colVis.min.js'),
+					'library' => asset('themes/ace-admin/js/library.js')
 	   				];
 
 	   	return $this->view('User::sentinel.users.index')->data($data)->scripts($scripts)->title('User List');
@@ -92,19 +92,20 @@ class Users extends BaseAdmin {
 
 	   	// Load needed scripts
 	   	$scripts = [
-	   				'jcolor'=> 'themes/ace-admin/plugins/jcrop/js/jquery.color.js',
-	   				'jcrop'=> 'themes/ace-admin/plugins/jcrop/js/jquery.Jcrop.min.js',
-	   				'jcrop-form-image'=> 'themes/ace-admin/plugins/jcrop/js/form-image-crop.js',
+	   				'jcolor'=> asset('themes/ace-admin/plugins/jcrop/js/jquery.color.js'),
+	   				'jcrop'=> asset('themes/ace-admin/plugins/jcrop/js/jquery.Jcrop.min.js'),
+	   				'jcrop-form-image'=> asset('themes/ace-admin/plugins/jcrop/js/form-image-crop.js'),
+					'library' => asset('themes/ace-admin/js/library.js')
 	   				];
 
 		// Load needed styles
 	   	$styles = [
-	   				'jcrop'=> 'themes/ace-admin/plugins/jcrop/css/jquery.Jcrop.min.css',
-	   				'imageCrop'=> 'themes/ace-admin/plugins/jcrop/css/image-crop.css'
+	   				'jcrop'=> asset('themes/ace-admin/plugins/jcrop/css/jquery.Jcrop.min.css'),
+	   				'imageCrop'=> asset('themes/ace-admin/plugins/jcrop/css/image-crop.css')
 	   				];
 
 	   	// Return data and view
-	   	return $this->view('User::sentinel.users.profile')->data($data)->styles($styles)->scripts($scripts)->title('User Profile');
+	   	return $this->view('User::sentinel.users.profile')->data($data)->scripts($scripts)->styles($styles)->title('User Profile');
 	}
 
 	/**
@@ -280,12 +281,13 @@ class Users extends BaseAdmin {
 	 */
 	protected function processForm($mode, $id = null)
 	{
+
 		$input = array_filter(Input::all());
 		$rules = [
 			'first_name' => 'required',
 			'last_name'  => 'required',
 			'role_id'  	 => 'required',
-			'image' 	 => 'image|mimes:jpg,jpeg,png|max:500kb',
+			'image' 	 => ($mode == 'update') ? '' : 'image|mimes:jpg,jpeg|max:500kb',
 			'email'      => ($id) ? 'email|required' : 'email|required|unique:users'
 		];
 
@@ -315,7 +317,7 @@ class Users extends BaseAdmin {
 			if ($messages->isEmpty())
 			{
 
-				if (!empty($input['image']) && !$input['image']->getError()) {
+				if (!empty($input['image']) && Input::hasFile('image')) {
 				      $destinationPath = public_path().'/uploads'; // upload path
 				      $extension = $input['image']->getClientOriginalExtension(); // getting image extension
 				      $fileName = 'usr-'.rand(11111,99999).'.'.$extension; // renameing image
@@ -364,7 +366,7 @@ class Users extends BaseAdmin {
 
 			if ($messages->isEmpty())
 			{
-				if (!empty($input['image']) && !$input['image']->getError()) {
+				if (!empty($input['image']) && Input::hasFile('image')) {
 				      $destinationPath = public_path().'/uploads'; // upload path
 				      $extension = $input['image']->getClientOriginalExtension(); // getting image extension
 				      $fileName = 'usr-'.rand(11111,99999).'.'.$extension; // renameing image
