@@ -55,8 +55,14 @@ class Banners extends BaseAdmin {
 	   	$scripts = [
 	   				'dataTables' => asset('themes/ace-admin/js/jquery.dataTables.min.js'),
 	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
+					// ColorBox
+			   		'jquery.colorbox' => asset('themes/ace-admin/js/jquery.colorbox.min.js'),
 					'library' => asset("themes/ace-admin/js/library.js")
 	   				];
+
+		$styles 	= [
+	 	   			'jquery.colorbox' => asset('themes/ace-admin/css/colorbox.min.css'),
+	 	   			];
 
 		// Set inline script or style
 		$inlines = [
@@ -91,6 +97,7 @@ class Banners extends BaseAdmin {
 						.prop('checked',false);
 						$('#datatable-table > tbody > tr > td:first-child').addClass('center');
 						$('[data-rel=tooltip]').tooltip();
+						//FormInit.handleColorbox();
 					}
 				});
 			",
@@ -100,6 +107,7 @@ class Banners extends BaseAdmin {
 	   	return $this->view('Banner::banner_datatable_index')
 		->data($data)
 		->scripts($scripts)
+		->styles($styles)
 		->inlines($inlines)
 		->title('Banner List');
 	}
@@ -144,7 +152,7 @@ class Banners extends BaseAdmin {
 			})
 			// Edit column image
 			->editColumn('image', function ($row) {
-				$html = '<a href="#'.route('admin.banners.show', $row->id).'"><img src="'.asset('uploads/'.$row->image).'" height="50px"/></a>';
+				$html = '<a data-rel="colorbox" class="cboxElement" href="'.asset('uploads/'.$row->image).'"><img src="'.asset('uploads/'.$row->image).'" height="50px"/></a>';
 				return $html;
 			})
 			// Edit column id

@@ -2,8 +2,6 @@
 
 // Load Laravel classes
 use Route, Request, Session, Redirect, Input, Image, Validator, View, File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models

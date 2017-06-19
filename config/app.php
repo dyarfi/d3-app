@@ -188,6 +188,10 @@ return [
 		 */
 		Yajra\Datatables\DatatablesServiceProvider::class,
 
+		/*
+		 * https://github.com/plank/laravel-mediable
+		 */
+		Plank\Mediable\MediableServiceProvider::class
 	],
 
 	/*
@@ -269,7 +273,10 @@ return [
 		//'Modules'		=> Modules\ModulesServiceProvider::class,
 
 		// Datatables jquery
-		'Datatables' => Yajra\Datatables\Facades\Datatables::class
+		'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+
+		// Attach MediaUploader in models
+		'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
 
 	],
 

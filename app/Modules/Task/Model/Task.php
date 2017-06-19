@@ -2,11 +2,15 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Plank\Mediable\Mediable;
 
 class Task extends Model {
-   
+
     // Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;
+    
+    // Mediable Eloquent Model
+    use Mediable;
 
 	/**
 	 * The database table used by the model.
@@ -17,7 +21,7 @@ class Task extends Model {
 
 	/**
      * Fillable fields
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -47,7 +51,7 @@ class Task extends Model {
     public function user()  {
 
         return $this->belongsTo('App\Modules\User\Model\User','user_id','id');
-        
+
     }
 
     // Scope query for active status field

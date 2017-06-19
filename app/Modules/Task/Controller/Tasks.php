@@ -6,6 +6,8 @@ use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, File;
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\Task\Model\Task, App\Modules\User\Model\User;
+// MediaAble Uploader
+use MediaUploader;
 
 class Tasks extends BaseAdmin {
 	/**
@@ -55,7 +57,7 @@ class Tasks extends BaseAdmin {
 	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
 	   				'dataTableTools'=> asset('themes/ace-admin/js/dataTables.tableTools.min.js'),
 	   				'dataTablesColVis'=> asset('themes/ace-admin/js/dataTables.colVis.min.js'),
-					'library' => asset("themes/ace-admin/js/library.js")
+					'library' => asset('themes/ace-admin/js/library.js')
 	   				];
 
 		// Return data and view
@@ -213,8 +215,9 @@ class Tasks extends BaseAdmin {
 		{
 			$row = $this->tasks;
 		}
+		$scripts = ['library' => asset('themes/ace-admin/js/library.js')];
 
-		return $this->view('Task::form')->data(compact('mode', 'row'))->title('Task '.$mode);
+		return $this->view('Task::form')->data(compact('mode', 'row'))->scripts($scripts)->title('Task '.$mode);
 	}
 
 	/**
@@ -226,15 +229,11 @@ class Tasks extends BaseAdmin {
 	 */
 	protected function processForm($mode, $id = null)
 	{
-		//$request = new Request;
-
+		// Filter all input
 		$input = array_filter(Input::all());
-		//$input = $request;
-		//print_r($input);
-		//exit;
-		//$input['slug'] = isset($input['title']) ? snake_case($input['title']) : '';
-
-		//$request = $input;
+		// Set mediaable uploader
+		$media = '';
+		//dd($input);
 
 		$rules = [
 			'title' 	   => 'required',
@@ -250,23 +249,15 @@ class Tasks extends BaseAdmin {
 
 			$messages = $this->validateTask($input, $rules);
 
-			// checking file is valid.
-		    //if ($request->file('image') && $request->file('image')->isValid()) {
-			if (!empty($input['image']) && !$input['image']->getError()) {
-		      $destinationPath = public_path().'/uploads'; // upload path
-		      $extension = $input['image']->getClientOriginalExtension(); // getting image extension
-		      $fileName = rand(11111,99999).'.'.$extension; // renameing image
-		      $input['image']->move($destinationPath, $fileName); // uploading file to given path
-		      // sending back with message
-		      //Session::flash('success', 'Upload successfully');
-		      //return Redirect::to(route('admin.tasks.create'));
-		    }
-		    //else {
-			      // sending back with error message.
-			      // Session::flash('error', 'uploaded file is not valid');
-			      // return Redirect::to('tasks/'.$id.'/edit');
-		    	  //$fileName = old('image') ? old('image') : $task->image;
-		    //}
+
+			// If user upload a file
+			if (isset($input['image']) && Input::hasFile('image')) {
+
+				// Set filename
+				// $filename = $this->imageUploadToDb($input['image'], 'uploads', 'task_');
+				$media = MediaUploader::fromSource($input['image'])->upload();
+
+			}
 
 			if ($messages->isEmpty())
 			{
@@ -277,31 +268,29 @@ class Tasks extends BaseAdmin {
 				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
-				$result = array_set($result, 'image', $fileName);
+				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
 
+				// Update data
 				$task->update($result);
-				//$task->update($input);
+
+				// Sync mediaable data
+				if($media) $task->syncMedia($media, 'thumbnail');
+
 			}
 
 		}
 		else
 		{
 			$messages = $this->validateTask($input, $rules);
-			// checking file is valid.
-		    if (!empty($input['image']) && !$input['image']->getError()) {
-		      $destinationPath = public_path().'/uploads'; // upload path
-		      $extension = $input['image']->getClientOriginalExtension(); // getting image extension
-		      $fileName = rand(11111,99999).'.'.$extension; // renameing image
-		      $input['image']->move($destinationPath, $fileName); // uploading file to given path
-		      // sending back with message
-		      //Session::flash('success', 'Upload successfully');
-		      //return Redirect::to(route('admin.tasks.create'));
-		    }
-		    //else {
-		      // sending back with error message.
-		      //Session::flash('error', 'uploaded file is not valid');
-		      //return Redirect::to(route('admin.tasks.create'));
-		    //}
+
+			// If user upload a file
+			if (isset($input['image']) && Input::hasFile('image')) {
+
+				// Set filename
+				// $filename = $this->imageUploadToDb($input['image'], 'uploads', 'task_');
+				$media = MediaUploader::fromSource($input['image'])->upload();
+
+			}
 
 			if ($messages->isEmpty())
 			{
@@ -312,10 +301,13 @@ class Tasks extends BaseAdmin {
 				$result = array_set($result, 'user_id', $this->user->id);
 
 				// Slip image file
-				$result = is_array($result['image']) ? array_set($result, 'image', '') : array_set($result, 'image', $fileName);
+				$result = isset($input['image']) ? array_set($result, 'image', @$filename) : array_set($result, 'image', '');
 
-				//$task = $this->tasks->create($input);
+				// Create data
 				$task = $this->tasks->create($result);
+
+				// Attach mediaable data
+				if ($media) $task->attachMedia($media, 'thumbnail');
 
 			}
 		}
@@ -353,6 +345,30 @@ class Tasks extends BaseAdmin {
 		    // Set message
 		    return Redirect::to(route('admin.tasks.index'))->with('error','Data not Available!');
 		}
+	}
+
+	/**
+	 * Process a file upload save the filename to DB.
+	 *
+	 * @param  array  $file
+	 * @param  string $path
+	 * @param  string $type
+	 * @return $filename
+	 */
+	protected function imageUploadToDb($file='', $path='', $type='')
+	{
+		// Set filename upload
+		$filename = '';
+
+		// Check if input and upload already assigned
+		if (!empty($file) && !$file->getError()) {
+			$destinationpath = public_path($path); // Upload path start with slashes
+			$extension = $file->getClientOriginalExtension(); // Getting image extension
+			$filename = $type . rand(11111,99999) . '.' . $extension; // Renaming image
+			$file->move($destinationpath, $filename); // Uploading file and move to given path
+		}
+
+		return $filename;
 	}
 
 	/**

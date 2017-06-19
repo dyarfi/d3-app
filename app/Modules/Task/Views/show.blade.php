@@ -4,11 +4,22 @@
 
 <h1>{{ $row->title }}</h1>
 <p class="lead">
+@if($media = $row->getMedia('thumbnail')->first())
+<div class="clearfix">
+    <a href="{{ asset('uploads/'.$media->getDiskPath()) }}" target="_blank" title="{{ $media->getDiskPath() }}"/>
+        <img src="{{ asset('uploads/'.$media->getDiskPath()) }}" class="pull-left img-responsive"/>
+    </a>
+</div>
+@endif
+
+<?php /*
 @if ($row->image != '')
     <a href="{{ asset('uploads/'.$row->image) }}" target="_blank" title="{{ $row->image }}"/>
         <img src="{{ asset('uploads/'.$row->image) }}" class="pull-left img-responsive"/>
     </a>
 @endif
+*/ ?>
+
 {{ $row->description }}
 </p>
 <hr>
