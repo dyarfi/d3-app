@@ -71,7 +71,12 @@
             <script type="text/javascript">
               try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
             </script>
-            <div class="nav-search" id="nav-search">
+            <ul class="breadcrumb">
+                <li><i class="ace-icon fa fa-home home-icon"></i><a href="#">Home</a></li>
+                <li><a href="#">More Pages</a></li>
+                <li class="active">User Profile</li>
+            </ul><!-- /.breadcrumb -->
+            <div class="nav-search hidden" id="nav-search">
               <form class="form-search">
                 <span class="input-icon">
                   <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
@@ -84,7 +89,7 @@
           <ul class="breadcrumb">
             <li>
               <i class="ace-icon fa fa-home home-icon"></i>
-              <a href="{{ URL::to($admin_url.'/dashboard') }}">Home</a>
+              <a href="{{ route('admin.dashboard') }}">Home</a>
             </li>
             <li class="active">
               <a href="{{ route('admin.'.strtolower(@$controller).'.index') }}">{{ ucfirst(@$controller) }}</a>

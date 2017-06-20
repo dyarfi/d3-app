@@ -5,13 +5,11 @@
         <i class="ace-icon fa fa-tasks"></i>
         <span class="badge badge-grey">4</span>
       </a>
-
       <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
         <li class="dropdown-header">
           <i class="ace-icon fa fa-check"></i>
           4 Tasks to complete
         </li>
-
         <li class="dropdown-content">
           <ul class="dropdown-menu dropdown-navbar">
             <li>
@@ -20,26 +18,22 @@
                   <span class="pull-left">Software Update</span>
                   <span class="pull-right">65%</span>
                 </div>
-
                 <div class="progress progress-mini">
                   <div style="width:65%" class="progress-bar"></div>
                 </div>
               </a>
             </li>
-
             <li>
               <a href="#">
                 <div class="clearfix">
                   <span class="pull-left">Hardware Upgrade</span>
                   <span class="pull-right">35%</span>
                 </div>
-
                 <div class="progress progress-mini">
                   <div style="width:35%" class="progress-bar progress-bar-danger"></div>
                 </div>
               </a>
             </li>
-
             <li>
               <a href="#">
                 <div class="clearfix">
@@ -52,7 +46,6 @@
                 </div>
               </a>
             </li>
-
             <li>
               <a href="#">
                 <div class="clearfix">
@@ -67,7 +60,6 @@
             </li>
           </ul>
         </li>
-
         <li class="dropdown-footer">
           <a href="#">
             See tasks with details
@@ -76,19 +68,16 @@
         </li>
       </ul>
     </li>
-
     <li class="purple hidden">
       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
         <i class="ace-icon fa fa-bell icon-animated-bell"></i>
         <span class="badge badge-important">8</span>
       </a>
-
       <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
         <li class="dropdown-header">
           <i class="ace-icon fa fa-exclamation-triangle"></i>
           8 Notifications
         </li>
-
         <li class="dropdown-content">
           <ul class="dropdown-menu dropdown-navbar navbar-pink">
             <li>
@@ -102,14 +91,12 @@
                 </div>
               </a>
             </li>
-
             <li>
               <a href="#">
                 <i class="btn btn-xs btn-primary fa fa-user"></i>
                 Bob just signed up as an editor ...
               </a>
             </li>
-
             <li>
               <a href="#">
                 <div class="clearfix">
@@ -121,7 +108,6 @@
                 </div>
               </a>
             </li>
-
             <li>
               <a href="#">
                 <div class="clearfix">
@@ -135,7 +121,6 @@
             </li>
           </ul>
         </li>
-
         <li class="dropdown-footer">
           <a href="#">
             See all notifications
@@ -144,19 +129,16 @@
         </li>
       </ul>
     </li>
-
     <li class="green hidden">
       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
         <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
         <span class="badge badge-success">5</span>
       </a>
-
       <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
         <li class="dropdown-header">
           <i class="ace-icon fa fa-envelope-o"></i>
           5 Messages
         </li>
-
         <li class="dropdown-content">
           <ul class="dropdown-menu dropdown-navbar">
             <li>
@@ -167,7 +149,6 @@
                     <span class="blue">Alex:</span>
                     Ciao sociis natoque penatibus et auctor ...
                   </span>
-
                   <span class="msg-time">
                     <i class="ace-icon fa fa-clock-o"></i>
                     <span>a moment ago</span>
@@ -175,7 +156,6 @@
                 </span>
               </a>
             </li>
-
             <li>
               <a href="#" class="clearfix">
                 <img src="{{ asset('themes/ace-admin/avatars/avatar3.png') }}" class="msg-photo" alt="Susan's Avatar" />
@@ -192,7 +172,6 @@
                 </span>
               </a>
             </li>
-
             <li>
               <a href="#" class="clearfix">
                 <img src="{{ asset('themes/ace-admin/avatars/avatar4.png') }}" class="msg-photo" alt="Bob's Avatar" />
@@ -201,7 +180,6 @@
                     <span class="blue">Bob:</span>
                     Nullam quis risus eget urna mollis ornare ...
                   </span>
-
                   <span class="msg-time">
                     <i class="ace-icon fa fa-clock-o"></i>
                     <span>3:15 pm</span>
@@ -209,7 +187,6 @@
                 </span>
               </a>
             </li>
-
             <li>
               <a href="#" class="clearfix">
                 <img src="{{ asset('themes/ace-admin/avatars/avatar2.png') }}" class="msg-photo" alt="Kate's Avatar" />
@@ -218,7 +195,6 @@
                     <span class="blue">Kate:</span>
                     Ciao sociis natoque eget urna mollis ornare ...
                   </span>
-
                   <span class="msg-time">
                     <i class="ace-icon fa fa-clock-o"></i>
                     <span>1:33 pm</span>
@@ -226,7 +202,6 @@
                 </span>
               </a>
             </li>
-
             <li>
               <a href="#" class="clearfix">
                 <img src="{{ asset('themes/ace-admin/avatars/avatar5.png') }}" class="msg-photo" alt="Fred's Avatar" />
@@ -235,7 +210,6 @@
                     <span class="blue">Fred:</span>
                     Vestibulum id penatibus et auctor  ...
                   </span>
-
                   <span class="msg-time">
                     <i class="ace-icon fa fa-clock-o"></i>
                     <span>10:09 am</span>
@@ -245,7 +219,6 @@
             </li>
           </ul>
         </li>
-
         <li class="dropdown-footer">
           <a href="inbox.html">
             See all messages
@@ -254,7 +227,6 @@
         </li>
       </ul>
     </li>
-    
     <li class="light-blue">
       <a data-toggle="dropdown" href="#" class="dropdown-toggle">
         <?php

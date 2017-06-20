@@ -19,8 +19,9 @@
     </a>
 @endif
 */ ?>
-
-{{ $row->description }}
+  <div class="space-6"></div>
+  {{ $row->description }}
+  <div class="space-6"></div>
 </p>
 <hr>
 

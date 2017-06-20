@@ -25,13 +25,6 @@
           </div>
         </div--><!-- /.sidebar-shortcuts -->
         <ul class="nav nav-list">
-        <!--li class="active">
-          <a href="{{ URL::to($admin_url.'/dashboard') }}">
-            <i class="menu-icon fa fa-tachometer"></i>
-            <span class="menu-text"> Dashboard </span>
-          </a>
-          <b class="arrow"></b>
-        </li-->
         <li class="{{ stristr(route('admin.dashboard'), Request::segment(2)) || stristr(Route::getCurrentRoute()->getName(), route('admin.dashboard')) ? 'active' : '' }}">
             <a href="{{ route('admin.dashboard') }}">
                 <i class="menu-icon fa fa-tachometer"></i>

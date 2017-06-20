@@ -8,7 +8,7 @@ class Task extends Model {
 
     // Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;
-    
+
     // Mediable Eloquent Model
     use Mediable;
 
@@ -28,7 +28,6 @@ class Task extends Model {
         'title',
         'slug',
         'description',
-        'image',
         'user_id',
         'status'
     ];

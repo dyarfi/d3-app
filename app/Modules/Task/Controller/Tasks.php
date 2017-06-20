@@ -274,7 +274,7 @@ class Tasks extends BaseAdmin {
 				$task->update($result);
 
 				// Sync mediaable data
-				if($media) $task->syncMedia($media, 'thumbnail');
+				if($media) $task->syncMedia($media, 'featured');
 
 			}
 
@@ -307,7 +307,7 @@ class Tasks extends BaseAdmin {
 				$task = $this->tasks->create($result);
 
 				// Attach mediaable data
-				if ($media) $task->attachMedia($media, 'thumbnail');
+				if ($media) $task->attachMedia($media, 'featured');
 
 			}
 		}
@@ -353,7 +353,7 @@ class Tasks extends BaseAdmin {
 	 * @param  array  $file
 	 * @param  string $path
 	 * @param  string $type
-	 * @return $filename
+	 * @return string $filename
 	 */
 	protected function imageUploadToDb($file='', $path='', $type='')
 	{
