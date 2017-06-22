@@ -215,7 +215,9 @@ class Menus extends BaseAdmin {
 			$row = $this->menus;
 		}
 
-		return $this->view('Page::menu_form')->data(compact('mode', 'row'))->title('Menu '.$mode);
+		$model	 	= $this->menus;
+
+		return $this->view('Page::menu_form')->data(compact('mode', 'row', 'models'))->title('Menu '.$mode);
 	}
 
 	/**

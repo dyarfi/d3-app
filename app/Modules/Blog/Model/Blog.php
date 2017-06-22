@@ -32,6 +32,7 @@ class Blog extends Model implements TaggableInterface {
         'slug',
         'name',
         'image',
+        'excerpt',
         'description',
         'publish_date',
         'attributes',

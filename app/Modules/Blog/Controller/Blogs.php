@@ -375,7 +375,7 @@ class Blogs extends BaseAdmin {
 		$rules = [
 			'category_id'  => 'required',
 			'name' 	   	   => 'required',
-			//'slug' 	   => 'required',
+			'excerpt' 	   => 'max:2000',
 			'description'  => 'required',
 			'publish_date' => 'date_format:Y-m-d|required',
 			'status'	   => 'boolean',

@@ -25,10 +25,11 @@ class Banner extends Model {
         'name',
         'description',
         'image',
+        'index',
         'attributes',
         'options',
         'end_date',
-        'division_id',
+        'user_id',
         'status'
     ];
 

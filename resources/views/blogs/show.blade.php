@@ -2,12 +2,11 @@
 
 @section('content')
 		<section id="page-title">
-			<div class="container clearfix">
-				<h1>{{ $blog->name }}</h1>
-				<ol class="breadcrumb">
+			<div class="container">
+				<ol class="breadcrumb clearfix col-md-12">
 					<li><a href="{{ route('home') }}">Home</a></li>
 					<li><a href="{{ route('blog') }}">Blog</a></li>
-					<li class="active">{{ $blog->name }}</li>
+					<li class="active">{{ str_limit($blog->name,75) }}</li>
 				</ol>
 			</div>
 		</section>
@@ -25,49 +24,47 @@
 							<div class="entry clearfix">
 								<!-- Entry Title
 								============================================= -->
-								<div class="entry-title">
-									<h2>Standard post with a Preview Image</h2>
-								</div><!-- .entry-title end -->
+								<h1 class="clearfix">{{ $blog->name }}</h1>
+								<!--div class="entry-title">
+									<h3>Standard post with a Preview Image</h3>
+								</div--><!-- .entry-title end -->
 								<!-- Entry Meta
 								============================================= -->
 								<ul class="entry-meta clearfix">
 									<li><i class="icon-calendar3"></i> {{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}</li>
-									<li><a href="#"><i class="icon-user"></i> admin</a></li>
-									<li><i class="icon-folder-open"></i> <a href="#">General</a>, <a href="#">Media</a></li>
-									<li><a href="#"><i class="icon-comments"></i> 43 Comments</a></li>
-									<li><a href="#"><i class="icon-camera-retro"></i></a></li>
+									<li><a href="#"><i class="icon-user"></i> {{ $blog->user->first_name }} {{ $blog->user->last_name }}</a></li>
+									<li>
+										@if($blog->category)
+										<i class="icon-folder-open"></i> <a href="#">{{ $blog->category->name }}</a>
+										@endif
+									</li>
+									<!--li><i class="icon-folder-open"></i> <a href="#">General</a>, <a href="#">Media</a></li-->
+									<!--li><a href="#"><i class="icon-comments"></i> 43 Comments</a></li>
+									<li><a href="#"><i class="icon-camera-retro"></i></a></li-->
 								</ul><!-- .entry-meta end -->
-								<!-- Entry Image
-								============================================= -->
-								<div class="entry-image">
-									<a href="#"><img src="images/blog/full/1.jpg" alt="Blog Single"></a>
-								</div><!-- .entry-image end -->
+								@if(File::exists('uploads/'.$blog->image))
+									<!-- Entry Image
+									============================================= -->
+									<div class="entry-image">
+										<a href="{{ asset('uploads/'.$blog->image) }}" class="colorbox"><img src="{{ asset('uploads/'.$blog->image) }}" alt="Blog Single"></a>
+									</div><!-- .entry-image end -->
+								@endif
+								<div class="entry-title">
+									{!! $blog->excerpt !!}
+								</div><!-- .entry-title end -->
 								<!-- Entry Content
 								============================================= -->
 								<div class="entry-content notopmargin">
-									<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-									<p>Nullam id dolor id nibh ultricies vehicula ut id elit. <a href="#">Curabitur blandit tempus porttitor</a>. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper.</p>
-									<blockquote><p>Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.</p></blockquote>
-									<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus.</p>
-									<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam. <a href="#">Nullam quis risus eget urna</a> mollis ornare vel eu leo. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-<pre>
-#header-inner {
-	width: 940px;
-	margin: 0 auto;
-	padding-top: 40px;
-}</pre>
-									<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-									<p>Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper.</p>
+									<p>
+										{!!  $blog->description !!}
+									</p>
 									<!-- Post Single - Content End -->
 									<!-- Tag Cloud
 									============================================= -->
 									<div class="tagcloud clearfix bottommargin">
-										<a href="#">general</a>
-										<a href="#">information</a>
-										<a href="#">media</a>
-										<a href="#">press</a>
-										<a href="#">gallery</a>
-										<a href="#">illustration</a>
+										@foreach($blog->tags as $tag)
+											<a href="{{ route('blog.tag',$tag->slug) }}">{{ $tag->name }}</a>&nbsp;
+										@endforeach
 									</div><!-- .tagcloud end -->
 									<div class="clear"></div>
 									<!-- Post Single - Share
@@ -180,7 +177,7 @@
 									</div>
 									<div class="mpost clearfix">
 										<div class="entry-image">
-											<a href="#"><img src="images/blog/small/22.jpg" alt="Blog Single"></a>
+											<a href="#"><img src="assets/images/blog/small/22.jpg" alt="Blog Single"></a>
 										</div>
 										<div class="entry-c">
 											<div class="entry-title">

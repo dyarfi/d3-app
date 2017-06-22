@@ -33,28 +33,42 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	public function map(Router $router, Request $request)
 	{
-		
+
 		$locale = $request->segment(1);
-		
+
 		$routes = ['namespace' => $this->namespace];
 
 		if ( array_key_exists($locale, $this->app->config->get('app.locales'))) {
-			
+
 			$routes = array_merge($routes, ['prefix' => $locale]);
 
 		} else {
 
 			$default = $this->app->config->get('app.locale');
-			
+
 			$locale = $default;
 
 		}
 
 		$this->app->setLocale($locale);
-		
+
 		$router->group($routes, function($router) {
 			require app_path('Http/routes.php');
 		});
+
+		// This is supposed to be the main default for all menu pages in the Apps
+		/*
+		if (! app()->runningInConsole()) {
+            foreach (Menu::all() as $menu) {
+                $router->get($menu->uri, ['as' => $menu->name, function () use ($menu, $router) {
+                    return $this->app->call('SundaySim\Http\Controllers\PageController@show', [
+                        'page' => $menu,
+                        'parameters' => $router->current()->parameters()
+                    ]);
+                }]);
+            }
+        }
+		*/
 	}
 
 

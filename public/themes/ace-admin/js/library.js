@@ -295,6 +295,10 @@ $(document).ready(function() {
       return false;
     });
 
+    $('select[name="access_user"] option').on('click',function() {
+        location.href = base_ADM + '/permission/'+$(this).val()+'?access=user';
+    });
+
     // Set and find form Slug input from Name input
     if ($('input[id="name"], input[id="title"]').size() > 0 && $('input[id="slug"]').size() > 0) {
       // Detects if user type on the input
@@ -415,13 +419,15 @@ $(document).ready(function() {
 
     }();
 
-    FormInit.init();
+
 
     // jCrop Init
     if (typeof FormImageCrop === 'object') {
         FormImageCrop.init();
     }
 
+    FormInit.init();
+    
     // ---------------------- ADMINISTRATOR Javascript Custom Function -- end ] --------------------------
 
 

@@ -24,6 +24,12 @@
         <img src="{{ asset('uploads/'.$row->image) }}" class="img-responsive"/>
     </div>
     @endif
+    @if($row->excerpt)
+    <h4 class="red">Excerpt</h4>
+    <div class="row-fluid">
+        {!! $row->excerpt !!}
+    </div>
+    @endif
     @if($row->description)
     <h4 class="red">Description</h4>
     <div class="row-fluid">

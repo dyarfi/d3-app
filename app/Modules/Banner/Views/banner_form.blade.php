@@ -96,6 +96,16 @@
 	</div>
 </div>
 
+<div class="form-group{{ $errors->first('index', ' has-error') }}">
+	{!! Form::label('index', 'Index'); !!}
+	{!! Form::text('index',($row->index ? Input::old('index', $row->index) : $model->max('index') + 1),[
+		'placeholder'=>'Enter the Portfolio Index.',
+		'name'=>'index',
+		'id'=>'index',
+		'class'=>'form-control']); !!}
+	<span class="help-block">{{{ $errors->first('index', ':message') }}}</span>
+</div>
+
 <div class="form-group{{ $errors->first('status', ' has-error') }}">
 	<label for="status">Status</label>
 	<select id="status" name="status" class="form-control input-sm">

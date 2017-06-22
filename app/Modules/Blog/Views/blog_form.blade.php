@@ -28,6 +28,16 @@
 		<span class="help-block">{{{ $errors->first('category_id', ':message') }}}</span>
 	</div>
 
+	<div class="form-group{{ $errors->first('excerpt', ' has-error') }}">
+		{!! Form::label('excerpt', 'Excerpt'); !!}
+		{!! Form::textarea('excerpt',Input::old('excerpt', $row->excerpt),[
+			'placeholder'=>'Enter the Blog Excerpt.',
+			'name'=>'excerpt',
+			'id'=>'excerpt',
+			'class'=>'form-control ckeditor']); !!}
+		<span class="help-block">{{{ $errors->first('excerpt', ':message') }}}</span>
+	</div>
+
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		{!! Form::label('description', 'Description'); !!}
 		{!! Form::textarea('description',Input::old('description', $row->description),[

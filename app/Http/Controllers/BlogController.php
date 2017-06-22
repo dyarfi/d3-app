@@ -58,7 +58,7 @@ class BlogController extends BasePublic {
 
 		// Return view
 		return $this->view('menus.blog')->data($data)->title('Page | Blog');
-		//
+
 	}
 
 	/**
@@ -82,12 +82,35 @@ class BlogController extends BasePublic {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display the specified blogresource.
 	 *
 	 * @param  string $slug
 	 * @return Response
 	 */
 	public function show($slug)
+	{
+
+		// Get data from database
+        $blog = Blog::where('slug',$slug)->with('category')->with('tags')->first();
+
+		// Get data list from database
+		$blogs = Blog::active()->with('category')->with('tags')->orderBy('publish_date','ASC')->get();
+
+		// Set data to view
+		$data = ['blog'=>$blog,'blogs'=>$blogs];
+
+	   	// Return data and view
+	   	return $this->view('blogs.show')->data($data)->title('View Blog - Blogs');
+
+	}
+
+	/**
+	 * Display the specified blog tags resource.
+	 *
+	 * @param  string $slug
+	 * @return Response
+	 */
+	public function tag($slug)
 	{
 
 		// Get data from database

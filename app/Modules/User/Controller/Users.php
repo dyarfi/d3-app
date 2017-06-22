@@ -29,7 +29,6 @@ class Users extends BaseAdmin {
 		parent::__construct();
 
 		// Load Http/Middleware/Admin controller
-		//$this->middleware('auth.admin');
 		$this->middleware('auth.admin',['except'=>['profile','crop']]);
 
 		// Load users and get repository data from Sentinel

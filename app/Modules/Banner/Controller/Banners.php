@@ -97,7 +97,7 @@ class Banners extends BaseAdmin {
 						.prop('checked',false);
 						$('#datatable-table > tbody > tr > td:first-child').addClass('center');
 						$('[data-rel=tooltip]').tooltip();
-						//FormInit.handleColorbox();
+						$('[data-rel=colorbox]').colorbox();
 					}
 				});
 			",
@@ -329,6 +329,9 @@ class Banners extends BaseAdmin {
 			$row = $this->banners;
 		}
 
+		// Set this model
+		$model	 	= $this->banners;
+
 		// Set division model to name and id only for lookup input
 		//$divisions = $this->divisions->lists('name', 'id')->all();
 
@@ -341,7 +344,7 @@ class Banners extends BaseAdmin {
 		// Load needed stylesheets
 	   	$styles = ['stylesheet'=> 'themes/ace-admin/css/datepicker.min.css'];
 
-		return $this->view('Banner::banner_form')->data(compact('mode', 'row'/*,'divisions'*/))->scripts($scripts)->styles($styles)->title('Banner '.$mode);
+		return $this->view('Banner::banner_form')->data(compact('mode', 'row', 'model'))->scripts($scripts)->styles($styles)->title('Banner '.$mode);
 	}
 
 	/**
@@ -360,6 +363,7 @@ class Banners extends BaseAdmin {
 			'slug' 		   => 'required',
 			'description'  => 'required',
 			'image'  	   => ($mode == 'create') ? 'required' : '',
+			'index'	   	   => 'numeric|digits_between:1,999',
 			'status'	   => 'boolean'
 		];
 

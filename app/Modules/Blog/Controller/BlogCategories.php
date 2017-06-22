@@ -338,7 +338,7 @@ class BlogCategories extends BaseAdmin {
 		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'-') : '';
 
 		$rules = [
-			'name' 	   	   => 'required',
+			'name' 	   	   => 'required|max:20',
 			//'slug' 		   => 'required',
 			'description'  => 'required',
 			'status'	   => 'boolean',

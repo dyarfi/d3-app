@@ -63,7 +63,11 @@ return [
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-			'strict'    => false,			
+			'strict'    => true,
+			'modes' => [
+                'STRICT_TRANS_TABLES',
+                'ONLY_FULL_GROUP_BY',
+            ],			
 			'unix_socket' => env('DB_SOCKET', '')
 		],
 

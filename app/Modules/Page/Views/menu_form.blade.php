@@ -56,7 +56,7 @@
 
 	<div class="form-group{{ $errors->first('index', ' has-error') }}">
 		{!! Form::label('index', 'Index'); !!}
-		{!! Form::text('index',Input::old('index', $row->index),[
+		{!! Form::text('index',($row->index ? Input::old('index', $row->index) : $model->max('index') + 1),[
 			'placeholder'=>'Enter the Menu Index.',
 			'name'=>'index',
 			'id'=>'index',

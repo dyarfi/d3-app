@@ -4,7 +4,7 @@
 
 <h1>{{ $row->title }}</h1>
 <p class="lead">
-@if($media = $row->getMedia('thumbnail')->first())
+@if($media = $row->getMedia('featured')->first())
 <div class="clearfix">
     <a href="{{ asset('uploads/'.$media->getDiskPath()) }}" target="_blank" title="{{ $media->getDiskPath() }}"/>
         <img src="{{ asset('uploads/'.$media->getDiskPath()) }}" class="pull-left img-responsive"/>

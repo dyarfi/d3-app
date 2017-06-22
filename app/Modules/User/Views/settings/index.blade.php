@@ -3,9 +3,9 @@
 {{-- Page content --}}
 @section('body')
 <div class="page-header">
-	<h1>Settings 
+	<h1>Settings
 		@if(Sentinel::getUser()->roles[0]->slug == 'admin')
-		<span class="pull-right"><a href="{{ route('admin.settings.create') }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{$junked ? ' &raquo; Trashed' :''}}
+		<span class="pull-right"><a href="{{ route('admin.settings.create') }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{$junked ? ' &raquo; Trashed' :''}}
 		@endif
 	</h1>
 </div>
@@ -20,11 +20,11 @@
 @endif
 @if ($settings->count())
 <div class="row">
-	<div class="col-xs-12">		
+	<div class="col-xs-12">
 		<div class="clearfix">
 			<div class="pull-right tableTools-container"></div>
 		</div>
-		{!! Form::open(['route'=>'admin.settings.index']) !!}		
+		{!! Form::open(['route'=>'admin.settings.index']) !!}
 		<table id="dynamic-table" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -32,7 +32,7 @@
 					<th class="col-lg-2">Name</th>
 					<th class="col-lg-3">Description</th>
 					<th class="col-lg-3">Value</th>
-					<th class="col-lg-2">Created At</th>				
+					<th class="col-lg-2">Created At</th>
 					<th class="col-lg-6 col-xs-3">Actions</th>
 				</tr>
 			</thead>
@@ -45,10 +45,10 @@
 							<span class="lbl"></span>
 						</label>
 					</td>
-					<td>{{ $setting->name }}</td>					
-					<td>{{ str_limit($setting->description, 30, '...') }}</td>					
+					<td>{{ $setting->name }}</td>
+					<td>{{ str_limit($setting->description, 30, '...') }}</td>
 					<td>{{ $setting->value }}</td>
-					<td>{{ $setting->created_at }}</td>					
+					<td>{{ $setting->created_at }}</td>
 					<td>
 						<div class="btn-group">
 							@if (!$setting->deleted_at)
@@ -64,7 +64,7 @@
 							<!--a data-rel="tooltip" data-original-title="Permanent Delete" href="" class="btn btn-xs btn-warning tooltip-default">
 								<i class="ace-icon fa fa-flag bigger-120"></i>
 							</a-->
-							@else 
+							@else
 							<a data-rel="tooltip" data-original-title="Restore!" href="{{route('admin.settings.restored', $setting->id)}}" class="btn btn-xs btn-primary tooltip-default">
 								<i class="ace-icon fa fa-save bigger-120"></i>
 							</a>
@@ -92,10 +92,10 @@
 						</select>
 						</div>
 				      </div>
-				 </div>   
+				 </div>
 			    </td>
 			</tr>
-		</table>		
+		</table>
 		{!! Form::close() !!}
 	</div>
 </div>
@@ -113,7 +113,7 @@
 		<div class="tabbable">
 			<ul class="nav nav-tabs setting" id="myTab">
 				<?php
-				$i = 0; 
+				$i = 0;
 				foreach ($config_settings as $key => $val) { ?>
 					<li <?php if ($i == 0) echo 'class="active"';?>>
 						<a data-toggle="tab" href="#{{$key}}" rel="{{$key}}">
@@ -129,7 +129,7 @@
 			<div class="tab-content">
 				<?php
 				$j = 0;
-				foreach ($config_settings as $key => $val) { ?>					
+				foreach ($config_settings as $key => $val) { ?>
 					<div id="{{$key}}" class="tab-pane fade <?php if($j == 0) { echo 'in active'; } ?>">
 						<?php
 						foreach ($val as $setting) {
@@ -146,7 +146,7 @@
 										'id'=> $setting->slug,
 										'class'=>'form-control'
 										]); !!}
-									@endif	
+									@endif
 									@if ($setting['input_type'] == 'textarea')
 									{!! Form::textarea($setting->slug,Input::old($setting->slug, $setting->value),[
 										'placeholder'=>'Enter the '.$setting->name,
@@ -156,10 +156,10 @@
 										]); !!}
 									@endif
 									@if ($setting['input_type'] == 'file')
-										<div class="form-group{{ $errors->first('image', ' has-error') }}">	
+										<div class="form-group{{ $errors->first('image', ' has-error') }}">
 											@if ($setting->value)
 												<span class="help-block">Replace File ? {{--!! $setting->value !!--}}</span>
-												<img src="{{ asset('uploads/'.$setting->value) }}" alt="{{ $setting->value }}" class="image-alt" style="width:300px"/>											
+												<img src="{{ asset('uploads/'.$setting->value) }}" alt="{{ $setting->value }}" class="image-alt" style="width:300px"/>
 											@endif
 											<div class="row">
 												<div class="col-xs-6">
@@ -177,7 +177,7 @@
 														</span>
 													</label>
 												</div>
-											</div>	
+											</div>
 											<span class="help-block red">{{{ $errors->first('image', ':message') }}}</span>
 										</div>
 									@endif
@@ -186,12 +186,12 @@
 							<?php
 							}
 						}
-						?>					
+						?>
 					</div>
-				<?php 
+				<?php
 				$j++;
 				}
-				?>	
+				?>
 			</div>
 		</div>
 		<?php /*
@@ -242,7 +242,7 @@
 			</div>
 		</div>
 		*/
-		?>	
+		?>
 		<div class="height20"></div>
 		<div class="form-group">
 			{!! Form::submit('Save Setting', ['class' => 'btn btn-primary btn-xs']) !!}

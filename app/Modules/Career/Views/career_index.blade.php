@@ -4,7 +4,7 @@
 @section('body')
 
 <div class="page-header">
-	<h1>Careers <span class="pull-right"><a href="{{ route('admin.careers.create') }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{$junked ? ' &raquo; Trashed' :''}}</h1>
+	<h1>Careers <span class="pull-right"><a href="{{ route('admin.careers.create') }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{$junked ? ' &raquo; Trashed' :''}}</h1>
 </div>
 @if($deleted)
 <div class="pull-right">

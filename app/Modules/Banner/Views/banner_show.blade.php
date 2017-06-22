@@ -9,7 +9,7 @@
         <img src="{{ asset('uploads/'.$row->image) }}" class="pull-left img-responsive"/>
     </a>
 @endif
-{!!  $row->description !!}
+{!! $row->description !!}
 </p>
 <hr>
 
