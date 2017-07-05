@@ -102,19 +102,19 @@
          <div style="font-family: Arial, sans-serif; line-height: 20px; color: #444444; font-size: 13px;">
        <b style="color: #777777;">His/Her Application : </b>
        <br><br>
-       Applying Job : {{ $vacancy }}<br>
-       Name : {{ $name }}<br>
-       Email : {{ $email }}<br>
-       Birthdate : {{ $birthdate }}<br>
-       Phone : {{ $phone_number }}<br>
+       <b>Applying Job :</b> {{ $vacancy }}<br>
+       <b>Name :</b> {{ $name }}<br>
+       <b>Email :</b> {{ $email }}<br>
+       <b>Birthdate :</b> {{ $birthdate }}<br>
+       <b>Phone :</b> {{ $phone_number }}<br>
        @if($website)
-       Website : {{ $website }}<br>
+       <b>Website :</b> {{ $website }}<br>
        @endif
-       Application : {{ $about }}<br>
+       <b>Application :</b> {{ $about }}<br>
        @if ($file_name && File::exists('uploads/'.$file_name))
-       CV : <a href="{{ asset('uploads/'.$file_name) }}">{{ $file_name }}</a><br/>
+       <b>CV :</b> <a href="{{ asset('uploads/'.$file_name) }}">{{ $file_name }}</a><br/>
        @endif
-       Availability Date : {{ $availability_date }}<br><br>
+       <b>Availability Date :</b> {{ $availability_date }}<br><br>
        <b style="color: #777777;">Please review the application, thank you.</b>
      </div>
        </td></tr></tbody></table>

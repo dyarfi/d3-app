@@ -66,7 +66,14 @@ class Setting extends Model {
     // Scope query for slug field
     public function scopeSlug($query, $string) {
 
-        return $query->where('slug', $string)->firstOrFail();
+        return $query->where('slug', $string)->first();
+
+    }
+
+    // Scope query for slug field
+    public function scopeKey($query, $string) {
+
+        return $query->where('key', $string)->first();
 
     }
 

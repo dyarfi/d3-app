@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 // Load Laravel classes
-use Request;
+use Request, DB;
 
 // Load datetime helper
 use Carbon\Carbon;
@@ -112,18 +112,33 @@ class BlogController extends BasePublic {
 	 */
 	public function tag($slug)
 	{
-
 		// Get data from database
-        $blog = Blog::where('slug',$slug)->with('category')->with('tags')->first();
-
-		// Get data list from database
-		$blogs = Blog::active()->with('category')->with('tags')->orderBy('publish_date','ASC')->get();
+        $blogs = Blog::whereTag($slug)->with('category')->orderBy('publish_date','ASC')->get();
 
 		// Set data to view
-		$data = ['blog'=>$blog,'blogs'=>$blogs];
+		$data = ['tag'=>DB::table('tags')->where('slug', $slug)->first(),'blogs'=>$blogs];
 
 	   	// Return data and view
-	   	return $this->view('blogs.show')->data($data)->title('View Blog - Blogs');
+	   	return $this->view('blogs.tag')->data($data)->title('View Blog Tags - Blog Tags');
+
+	}
+
+	/**
+	 * Display the specified blog tags resource.
+	 *
+	 * @param  string $slug
+	 * @return Response
+	 */
+	public function tags()
+	{
+		// Get data from database
+		$blogs = Blog::active()->with('category')->orderBy('publish_date','ASC')->get();
+
+		// Set data to view
+		$data = ['tag'=>Blog::allTags()->get(),'blogs'=>$blogs];
+
+		// Return data and view
+		return $this->view('blogs.tag')->data($data)->title('View All Blog Tags - Blog Tags');
 
 	}
 

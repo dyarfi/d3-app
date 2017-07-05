@@ -33,7 +33,6 @@ class BasePublic extends Controller {
 		$this->menu = new Menu;
 
 		View::share('menus', $this->menu->where('status',1)->take(10)->orderBy('index','ASC')->get());
-		View::share('settings', Setting::all());
 
 	}
 

@@ -102,16 +102,16 @@
          <div style="font-family: Arial, sans-serif; line-height: 20px; color: #444444; font-size: 13px;">
        <b style="color: #777777;">Your application : </b>
        <br><br>
-       Applying Job : {{ $vacancy }}<br>
-       Name : {{ $name }}<br>
-       Email : {{ $email }}<br>
-       Birthdate : {{ $birthdate }}<br>
-       Phone : {{ $phone_number }}<br>
+       <b>Applying Job :</b> {{ $vacancy }}<br>
+       <b>Name :</b> {{ $name }}<br>
+       <b>Email :</b> {{ $email }}<br>
+       <b>Birthdate :</b> {{ $birthdate }}<br>
+       <b>Phone :</b> {{ $phone_number }}<br>
        @if($website)
-       Website : {{ $website }}<br>
+       <b>Website :</b> {{ $website }}<br>
        @endif
-       Application : {{ $about }}<br>
-       Availability Date : {{ $availability_date }}<br><br>
+       <b>Application :</b> {{ $about }}<br>
+       <b>Availability Date :</b> {{ $availability_date }}<br><br>
        <b style="color: #777777;">We will respond your application as soon as possible.</b>
      </div>
        </td></tr></tbody></table>

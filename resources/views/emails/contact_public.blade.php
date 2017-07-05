@@ -102,12 +102,12 @@
          <div style="font-family: Arial, sans-serif; line-height: 20px; color: #444444; font-size: 13px;">
        <b style="color: #777777;">Your message : </b>
        <br><br>
-       Name : {{ $name }}<br>
-       Email : {{ $email }}<br>
-       Phone : {{ $phone }}<br>
-       Subject : {{ $subject }}<br>
-       Service : {{ $about }}<br>
-       Message : {{ $description }}<br><br>
+       <b>Name :</b> {{ $name }}<br>
+       <b>Email :</b> {{ $email }}<br>
+       <b>Phone :</b> {{ $phone }}<br>
+       <b>Subject :</b> {{ $subject }}<br>
+       <b>Service :</b> {{ $about }}<br>
+       <b>Message :</b> {{ $description }}<br><br>
        <b style="color: #777777;">We will reply your message as soon as possible.</b>
      </div>
        </td></tr></tbody></table>

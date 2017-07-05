@@ -159,7 +159,7 @@
 										<div class="form-group{{ $errors->first('image', ' has-error') }}">
 											@if ($setting->value)
 												<span class="help-block">Replace File ? {{--!! $setting->value !!--}}</span>
-												<img src="{{ asset('uploads/'.$setting->value) }}" alt="{{ $setting->value }}" class="image-alt" style="width:300px"/>
+												<img src="{{ asset('images/logo/'.$setting->value) }}" alt="{{ $setting->value }}" class="image-alt" style="width:300px"/>
 											@endif
 											<div class="row">
 												<div class="col-xs-6">

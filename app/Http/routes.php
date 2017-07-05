@@ -80,6 +80,7 @@ Route::get('portfolio', ['as'=>'portfolio','uses'=>'PortfolioController@index'])
 Route::get('portfolio/{slug}', ['as'=>'portfolio.show','uses'=>'PortfolioController@show']);
 // Blog page routes...
 Route::get('blog/tag/{slug}', ['as'=>'blog.tag','uses'=>'BlogController@tag']);
+Route::get('blog/tags', ['as'=>'blog.tags','uses'=>'BlogController@tags']);
 Route::get('blog', ['as'=>'blog','uses'=>'BlogController@index']);
 Route::get('blog/{slug}', ['as'=>'blog.show','uses'=>'BlogController@show']);
 // Career page routes...

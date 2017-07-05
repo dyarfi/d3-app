@@ -37,10 +37,12 @@
         <div id="header-wrap">
             <div class="container clearfix">
                 <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+                @if($logo = app('App\Modules\User\Model\Setting')->key('logo')->value)
                 <div id="logo">
-                    <a href="{{ route('home') }}" class="standard-logo" data-dark-logo="{{ asset('images/dxd3logo.png') }}"><img src="{{ asset('images/dxd3logo.png') }}" alt="d3 Logo"></a>
-                    <a href="{{ route('home') }}" class="retina-logo" data-dark-logo="{{ asset('images/d3logo@2x.png') }}"><img src="{{ asset('images/d3logo@2x.png') }}" alt="d3 Logo"></a>
+                    <a href="{{ route('home') }}" class="standard-logo" data-dark-logo="{{ File::exists(public_path('images/logo/'.$logo)) ? asset('images/logo/'.$logo) : asset('images/logo-resto.png') }}"><img src="{{ File::exists(public_path('images/logo/'.$logo)) ? asset('images/logo/'.$logo) : asset('images/logo-resto.png') }}" alt="d3 Logo"></a>
+                    <!--a href="{{ route('home') }}" class="retina-logo" data-dark-logo="{{ asset('images/d3logo@2x.png') }}"><img src="{{ asset('images/d3logo@2x.png') }}" alt="d3 Logo"></a-->
                 </div>
+                @endif
                 <nav id="primary-menu" class="dark">
                     <ul>
                         @foreach ($menus as $menu)

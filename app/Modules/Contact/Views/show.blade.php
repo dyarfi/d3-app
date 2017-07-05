@@ -2,15 +2,16 @@
 
 @section('body')
 
-<h1>{{ $row->name }}</h1>
-<h3>{{ $row->subject }}</h3>
-<h3>{{ $row->about }}</h3>
+<h1>Name : {{ $row->name }}</h1>
+<h3>Subject : {{ $row->subject }}</h3>
+<h3>Service : {{ $row->about }}</h3>
 <p class="lead">
 @if ($row->image != '')
     <a href="{{ asset('uploads/'.$row->image) }}" target="_blank" title="{{ $row->image }}"/>
         <img src="{{ asset('uploads/'.$row->image) }}" class="pull-left img-responsive"/>
     </a>
 @endif
+Message : 
 {{ $row->description }}
 </p>
 <hr>

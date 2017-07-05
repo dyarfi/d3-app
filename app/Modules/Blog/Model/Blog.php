@@ -56,26 +56,6 @@ class Blog extends Model implements TaggableInterface {
 	    // 'is_admin' => 'boolean',
 	];
 
-	/**
-	 * A blog can have many clients.
-	 *
-	 */
-	//public function clients()
-	//{
-		//return $this->hasMany('App\Modules\Blog\Model\Blog','blog_id');
-	//}
-
-    /**
-     * A blog belongs to a client.
-     *
-     */
-    public function client()
-    {
-
-        return $this->belongsTo('App\Modules\Blog\Model\Client','client_id','id');
-
-    }
-
     /**
      * A blog belongs to a project.
      *
@@ -109,6 +89,13 @@ class Blog extends Model implements TaggableInterface {
     public function scopeSlug($query, $string) {
 
         return $query->where('slug', $string)->firstOrFail();
+
+    }
+
+    // Scope query for slug field
+    public function scopeTag($query, $string) {
+
+        return $query->where('tag', $string)->firstOrFail();
 
     }
 

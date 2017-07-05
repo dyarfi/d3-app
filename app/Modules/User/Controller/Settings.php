@@ -353,9 +353,10 @@ class Settings extends BaseAdmin {
 				if ($messages->isEmpty()) {
 
 					if (!empty($input['image-logo']) && !$input['image-logo']->getError()) {
-					      $destinationPath = public_path().'/uploads'; // upload path
-					      $extension = $input['image-logo']->getClientOriginalExtension(); // getting image extension
-					      $fileName = 'logo-'.rand(11111,99999).'.'.$extension; // renameing image
+					      $destinationPath = public_path().'/images/logo'; // upload path
+						  //$extension = $input['image-logo']->getClientOriginalExtension(); // getting image extension
+					      //$fileName = 'logo-'.rand(11111,99999).'.'.$extension; // renameing image
+						  $fileName = $input['image-logo']->getClientOriginalName(); // renameing image
 					      $input['image-logo']->move($destinationPath, $fileName); // uploading file to given path
 
 					      // Slip image file

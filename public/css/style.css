@@ -4425,7 +4425,8 @@ body:not(.device-touch):not(.device-xs):not(.device-xxs) .portfolio-1.portfolio-
 /* Portfolio - Parallax
 -----------------------------------------------------------------*/
 
-.portfolio.portfolio-parallax { margin: 0 !important; }
+/*.portfolio.portfolio-parallax { margin: 0 !important; }*/
+.portfolio.portfolio-parallax { margin-left: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; }
 
 .portfolio.portfolio-parallax .portfolio-item {
 	float: none;
