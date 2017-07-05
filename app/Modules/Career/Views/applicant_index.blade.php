@@ -22,7 +22,7 @@
 			<thead>
 				<tr>
 					<th class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></th>
-					<th class="col-lg-4">Name</th>
+					<th class="col-lg-5">Name</th>
 					<th class="col-lg-2">Email</th>
 					<th class="col-lg-1">Status</th>
 					<th class="col-lg-2">Created At</th>
@@ -48,6 +48,9 @@
 						@endif
 						@if ($row->career['name'])
 							<b class="text-danger">({{ $row->career['name'] }})</b>
+						@endif
+						@if ($row->file_name && File::exists('uploads/'.$row->file_name))
+							&nbsp;<a href="{{ asset('uploads/'.$row->file_name) }}"><span class="glyphicon glyphicon-file"></span> {{$row->file_name}}</a>
 						@endif
 					</td>
 					<td>{{ $row->email }}</td>

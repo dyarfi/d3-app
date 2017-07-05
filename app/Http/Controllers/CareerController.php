@@ -153,6 +153,9 @@ class CareerController extends BasePublic {
 				//Session::flash('error', 'uploaded file is not valid');
 				//return Redirect::to('career/'.$slug.'/apply');
 			//}
+
+			$vacancy = Career::where('slug', $input['jobform_position'])->first();
+
 			$fields = [
 				'provider_id'		=> '',
 				'provider'			=> '',
@@ -184,20 +187,27 @@ class CareerController extends BasePublic {
 				'completed'			=> '',
 				'logged_in'			=> '',
 				'last_login'		=> '',
+				'attribute_id'		=> $vacancy->id,
 				'session_id'		=> '',
 				'join_date'			=> '',
 				'status'			=> 1
 			];
 
+			// Slip vacancy fields
+			$fields['vacancy'] = $vacancy->name;
+
+			// Filter the blank values
+			$fields = array_filter($fields);
+
 			// Sent thank you email to public
 		    $sent_public = Mail::send('emails.career_apply_public', $fields, function($e) use ($fields)
 			    {
-			     	$e->to($fields['email'])->subject('Career Apply | ' . url());
+			     	$e->to($fields['email'])->subject('Career Apply | '.$fields['vacancy'].' - ' . url());
 			    }
 			);
 
 			// Setup for website administrator email data
-			$admin = Setting::where('group','email')->where('key','contact')->firstOrFail();
+			$admin = Setting::where('group','email')->where('key','contact')->first();
 
 			// Set email admin view variables
 			$fields['admin_name'] = $admin->name;
@@ -206,7 +216,7 @@ class CareerController extends BasePublic {
 			// Sent thank you email to admin
 		    $sent_admin = Mail::send('emails.career_apply_admin', $fields, function($ea) use ($fields)
 			    {
-					$ea->to($fields['admin_email'])->subject('Career Apply from ' . $fields['name']);
+					$ea->to($fields['admin_email'])->subject('Career Apply for '.$fields['vacancy'].' from ' . $fields['name']);
 			    }
 			);
 
@@ -216,11 +226,13 @@ class CareerController extends BasePublic {
 		     	return Redirect::to('career')->withErrors('Failed to send email message.');
 		    }
 
+			// Unset unwanted fields
+
 			// Create new applicants
 			Applicant::create($fields);
 
 			// Set session flash to user
-			Session::flash('flash_message', 'Career applied successfully!');
+			Session::flash('flash_message', $vacancy->name.' Career applied successfully!');
 
 		}
 

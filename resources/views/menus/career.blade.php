@@ -181,8 +181,8 @@
 		    <small><span class="fa fa-lock"></span> {{ $career->end_date }}</small>
 		    <p>{{ str_limit($career->description, 400,' [...]')}}</p>
 		    <p>
-		        <a href="{{ route('career.show', $career->slug) }}" class="btn btn-info btn-xs"><span class="fa fa-search"></span> View Career</a>
-		        <a href="{{ route('career.apply', $career->slug) }}" class="btn btn-primary btn-xs"><span class="fa fa-upload"></span> Apply Career</a>
+		        <a href="{{-- route('career.show', $career->slug) --}}" class="btn btn-info btn-xs"><span class="fa fa-search"></span> View Career</a>
+		        <a href="{{-- route('career.apply', $career->slug) --}}" class="btn btn-primary btn-xs"><span class="fa fa-upload"></span> Apply Career</a>
 		    </p>
 		    <hr>
 		</div>

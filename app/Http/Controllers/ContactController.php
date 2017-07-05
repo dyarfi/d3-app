@@ -98,7 +98,7 @@ class ContactController extends BasePublic {
 			);
 
 			// Setup for website administrator email data
-			$admin = Setting::where('group','email')->where('key','contact')->firstOrFail();
+			$admin = Setting::where('group','email')->where('key','contact')->first();
 
 			// Set email admin view variables
 			$fields['admin_name'] = $admin->name;

@@ -211,7 +211,7 @@
             <span class="action-buttons">
                 @foreach (@app('App\Modules\User\Model\Setting')->group('socmed') as $socmed)
                 <a href="{{$socmed->value}}">
-                  <i class="ace-icon fa fa-{{str_replace('socmed-','',$socmed->slug)}}-square light-blue bigger-150"></i>
+                  <i class="ace-icon fa fa-{{str_replace('socmed-','',$socmed->slug)}} light-blue bigger-150"></i>
                 </a>
                 @endforeach
             </span>
