@@ -71,49 +71,47 @@ View::share('admin_app', $setting['admin_app']);
 View::share('company_name', $setting['company_name']);
 
 /*** Site Menus ***/
+// About Us page routes...
 Route::get('about_us', ['as'=>'about_us','uses'=>'AboutUsController@index']);
+// Service page routes...
 Route::get('services', ['as'=>'services','uses'=>'ServicesController@index']);
+// Portfolio page routes...
 Route::get('portfolio', ['as'=>'portfolio','uses'=>'PortfolioController@index']);
 Route::get('portfolio/{slug}', ['as'=>'portfolio.show','uses'=>'PortfolioController@show']);
+// Blog page routes...
 Route::get('blog/tag/{slug}', ['as'=>'blog.tag','uses'=>'BlogController@tag']);
 Route::get('blog', ['as'=>'blog','uses'=>'BlogController@index']);
 Route::get('blog/{slug}', ['as'=>'blog.show','uses'=>'BlogController@show']);
-
+// Career page routes...
 Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
 Route::post('career/post', ['as'=>'career.post','uses'=>'CareerController@post']);
-
 Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
 Route::post('career/post', ['as'=>'career.post','uses'=>'CareerController@post']);
-
 Route::get('career/{slug}', ['as'=>'career.show','uses'=>'CareerController@show']);
 Route::get('career/detail/{slug}', ['as'=>'career.detail','uses'=>'CareerController@detail']);
 Route::get('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@apply']);
 Route::post('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@store']);
-
+// Gallery page routes...
 Route::get('gallery', ['as'=>'gallery','uses'=>'GalleryController@index']);
 Route::get('gallery/upload', ['as'=>'gallery.upload','uses'=>'GalleryController@upload']);
 Route::post('gallery/response', ['as'=>'gallery.response','uses'=>'GalleryController@response']);
 Route::get('gallery/response', ['as'=>'gallery.response','uses'=>'GalleryController@response']);
+// Contact page routes...
+Route::get('contact', ['as'=>'contact','uses'=>'ContactController@index']);
+Route::post('contact', ['as'=>'contact.send','uses'=>'ContactController@sendContact']);
 
 //Route::get('gallery/{slug}', ['as'=>'gallery.show','uses'=>'GalleryController@show']);
 //Route::get('gallery/{slug}/make', ['as'=>'gallery.make','uses'=>'GalleryController@make']);
-
-// Contac page routes...
-Route::get('contact', ['as'=>'contact','uses'=>'ContactController@index']);
-Route::post('contact', ['as'=>'contact.send','uses'=>'ContactController@sendContact']);
 
 // User related routes...
 Route::get('profile',['as'=>'profile','uses'=>'UsersController@profile']);
 Route::get('profile/{id}', ['as'=>'profile.edit', 'uses'=>'UsersController@edit']);
 Route::patch('profile/{id}', ['as'=>'profile.update', 'uses'=>'UsersController@update']);
-
 // Route::get('auth/profile', 'Auth\AuthSocialController@profile');
 // Route::get('auth/logout', 'Auth\AuthSocialController@logout');
-
 // Sentinel Routes...
 Route::get('auth/social/{provider}', 'Auth\AuthSocialController@redirectToProvider');
 Route::get('auth/social', 'Auth\AuthSocialController@handleProviderCallback');
-
 // Authentication routes...
 Route::get('auth/login', ['as'=>'login','uses'=>'Auth\AuthController@getLogin']);
 Route::post('auth/login', ['as'=>'login.post','uses'=>'Auth\AuthController@postLogin']);
@@ -125,7 +123,6 @@ Route::post('auth/password/email','Auth\PasswordController@postEmail');
 // Registration routes...
 Route::get('register', ['as'=>'register','uses'=>'Auth\AuthController@getRegister']);
 Route::post('register', ['as'=>'register.post','uses'=>'Auth\AuthController@postRegister']);
-
 
 /*
 // Display all SQL executed in Eloquent
@@ -156,7 +153,7 @@ Route::group(['prefix' => 'apanel/roles'], function()
 
 Route::get('wait', function()
 {
-    return View::make('sentinel.wait');
+    return View::make('User::sentinel.wait');
 });
 
 Route::get('activate/{id}/{code}', function($id, $code)
@@ -216,7 +213,11 @@ Route::get('deactivate', function()
 
 Route::get('reset', function()
 {
-    return View::make('sentinel.reset.begin');
+    if(Sentinel::check()) {
+        return Redirect::to(route('admin.dashboard'));
+    }
+
+    return View::make('User::sentinel.reset.begin');
 });
 
 Route::post('reset', function()
@@ -245,29 +246,33 @@ Route::post('reset', function()
             ->withErrors('No user with that email address belongs in our system.');
     }
 
-    // $reminder = Reminder::exists($user) ?: Reminder::create($user);
+    $reminder = Reminder::exists($user) ?: Reminder::create($user);
 
-    // $code = $reminder->code;
+    $code = $reminder->code;
 
-    // $sent = Mail::send('sentinel.emails.reminder', compact('user', 'code'), function($m) use ($user)
-    // {
-    //  $m->to($user->email)->subject('Reset your account password.');
-    // });
+    $sent = Mail::send('User::sentinel.emails.reminder', compact('user', 'code'), function($m) use ($user)
+    {
+     $m->to($user->email)->subject('Reset your account password.');
+    });
 
-    // if ($sent === 0)
-    // {
-    //  return Redirect::to('register')
-    //      ->withErrors('Failed to send reset password email.');
-    // }
+    if ($sent === 0)
+    {
+     return Redirect::to('register')
+         ->withErrors('Failed to send reset password email.');
+    }
 
     return Redirect::to('wait');
 });
 
 Route::get('reset/{id}/{code}', function($id, $code)
 {
+    if(Sentinel::check()) {
+        return Redirect::to(route('admin.dashboard'));
+    }
+
     $user = Sentinel::findById($id);
 
-    return View::make('sentinel.reset.complete');
+    return View::make('User::sentinel.reset.complete');
 
 })->where('id', '\d+');
 
@@ -297,12 +302,13 @@ Route::post('reset/{id}/{code}', function($id, $code)
 
     if ( ! Reminder::complete($user, $code, Input::get('password')))
     {
-        return Redirect::to('login')
+        return Redirect::to(route('admin.login'))
             ->withErrors('Invalid or expired reset code.');
     }
 
-    return Redirect::to('login')
+    return Redirect::to(route('admin.login'))
         ->withSuccess("Password Reset.");
+
 })->where('id', '\d+');
 
 Route::group(['prefix' => 'account', 'before' => 'auth'], function()
@@ -314,7 +320,7 @@ Route::group(['prefix' => 'account', 'before' => 'auth'], function()
 
         $persistence = Sentinel::getPersistenceRepository();
 
-        return View::make('sentinel.account.home', compact('user', 'persistence'));
+        return View::make('User::sentinel.account.home', compact('user', 'persistence'));
     });
 
     Route::get('kill', function()

@@ -110,16 +110,33 @@
 					</div>
 
 					<div class="sidebar col_last nobottommargin">
-						<address>
+						@foreach($company as $object)
+							@if($object->key === 'address')
+							<address>
+								<strong>Address:</strong><br>
+								{{ $object->value }}
+							</address>
+							@else
+							<abbr title="{!! $object->description !!}"><strong>{{ $object->name }}:</strong></abbr> {{ $object->value }}<br>
+							@endif
+						@endforeach
+						<!--address>
 							<strong>Headquarters:</strong><br>
 							Menara Sentraya, Floor 36<br>
 							Jl. Iskandarsyah Raya No.1A, Jakarta 12130<br>
 						</address>
 						<abbr title="Phone Number"><strong>Phone:</strong></abbr> (62) 21 304 5632<br>
 						<abbr title="Fax"><strong>Fax:</strong></abbr> (62) 21 4752 1433<br>
-						<abbr title="Email Address"><strong>Email:</strong></abbr> info@dentsu.digital
+						<abbr title="Email Address"><strong>Email:</strong></abbr> info@dentsu.digital-->
+
 						<div class="widget noborder notoppadding">
-							<a href="#" class="social-icon si-small si-dark si-facebook">
+							@foreach ($socials as $social)
+							<a href="{{ $social->value }}" class="social-icon si-small si-dark si-{{ $social->key }}">
+								<i class="icon-{{ $social->key }}"></i>
+								<i class="icon-{{ $social->key }}"></i>
+							</a>
+							@endforeach
+							<!--a href="#" class="social-icon si-small si-dark si-facebook">
 								<i class="icon-facebook"></i>
 								<i class="icon-facebook"></i>
 							</a>
@@ -142,7 +159,7 @@
 							<a href="#" class="social-icon si-small si-dark si-gplus">
 								<i class="icon-gplus"></i>
 								<i class="icon-gplus"></i>
-							</a>
+							</a-->
 						</div>
 					</div><!-- .sidebar end -->
 				</div>

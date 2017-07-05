@@ -227,6 +227,7 @@
         </li>
       </ul>
     </li>
+    @if(Sentinel::check())
     <li class="light-blue">
       <a data-toggle="dropdown" href="#" class="dropdown-toggle">
         <?php
@@ -263,11 +264,13 @@
             Profile
           </a>
         </li>
+        @if(Sentinel::check())
         <li>
           <a href="{{ URL::to($admin_url.'/account') }}" class="btn disabled btn-xs">
             Last Login : {{ Sentinel::getUser()->last_login }}
           </a>
         </li>
+        @endif
         <li class="divider"></li>
         <li>
           <a href="{{ route('admin.logout') }}">
@@ -277,5 +280,6 @@
         </li>
       </ul>
     </li>
+    @endif
   </ul>
 </div>

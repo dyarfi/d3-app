@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow">
     <title>{{ isset($title) ? $title : '' }} {{ isset($title) ? ' | '. $admin_app : $admin_app }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description" content="User login page" />
@@ -49,7 +50,7 @@
                   <span class="red">Apanel</span>
                   <span class="white" id="id-text2">Apps</span>
                 </h1>
-                <h4 class="blue" id="id-company-text">&copy; {{ $company_name }}</h4>
+                <!--h4 class="blue" id="id-company-text">&copy; {{ $company_name }}</h4-->
               </div>
 
               <!-- [notifications] -->
@@ -121,35 +122,34 @@
         $(target).addClass('visible');//show target
        });
       });
-      
-      
-      
+
+
+
       //you don't need this, just used for changing background
       jQuery(function($) {
        $('#btn-login-dark').on('click', function(e) {
         $('body').attr('class', 'login-layout');
         $('#id-text2').attr('class', 'white');
         $('#id-company-text').attr('class', 'blue');
-        
+
         e.preventDefault();
        });
        $('#btn-login-light').on('click', function(e) {
         $('body').attr('class', 'login-layout light-login');
         $('#id-text2').attr('class', 'grey');
         $('#id-company-text').attr('class', 'blue');
-        
+
         e.preventDefault();
        });
        $('#btn-login-blur').on('click', function(e) {
         $('body').attr('class', 'login-layout blur-login');
         $('#id-text2').attr('class', 'white');
         $('#id-company-text').attr('class', 'light-blue');
-        
+
         e.preventDefault();
        });
-       
+
       });
     </script>
   </body>
 </html>
-

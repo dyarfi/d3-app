@@ -1,15 +1,16 @@
 <?php namespace App\Http\Controllers;
 
-use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
-use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
+//use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+//use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 // Load Laravel classes
-//use Route, Request, Input, Validator, Redirect, Session;
 //use Illuminate\Http\Request;
 //use Illuminate\Routing\Controller;
-use Route, Input, Request, Validator, Redirect, Session;
+use Route, Input, Request, Validator, Redirect, Session, Mail;
 // Load main models
 use App\Modules\Career\Model\Applicant;
 use App\Modules\Career\Model\Career;
+// Apps Setting model
+use App\Modules\User\Model\Setting;
 
 class CareerController extends BasePublic {
 
@@ -187,6 +188,33 @@ class CareerController extends BasePublic {
 				'join_date'			=> '',
 				'status'			=> 1
 			];
+
+			// Sent thank you email to public
+		    $sent_public = Mail::send('emails.career_apply_public', $fields, function($e) use ($fields)
+			    {
+			     	$e->to($fields['email'])->subject('Career Apply | ' . url());
+			    }
+			);
+
+			// Setup for website administrator email data
+			$admin = Setting::where('group','email')->where('key','contact')->firstOrFail();
+
+			// Set email admin view variables
+			$fields['admin_name'] = $admin->name;
+			$fields['admin_email'] = $admin->value;
+
+			// Sent thank you email to admin
+		    $sent_admin = Mail::send('emails.career_apply_admin', $fields, function($ea) use ($fields)
+			    {
+					$ea->to($fields['admin_email'])->subject('Career Apply from ' . $fields['name']);
+			    }
+			);
+
+			// Send message if failed
+		    if ($sent_public === 0 && $sent_admin === 0)
+		    {
+		     	return Redirect::to('career')->withErrors('Failed to send email message.');
+		    }
 
 			// Create new applicants
 			Applicant::create($fields);

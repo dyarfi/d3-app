@@ -1,4 +1,5 @@
-      <div id="sidebar" class="sidebar responsive">
+@if(Sentinel::check())
+    <div id="sidebar" class="sidebar responsive">
         <script type="text/javascript">
           try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
         </script>
@@ -64,4 +65,5 @@
         <script type="text/javascript">
           try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
         </script>
-      </div>
+    </div>
+@endif

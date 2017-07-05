@@ -1,15 +1,20 @@
 @extends('Auth::layouts.template')
 
 @section('body')
-
-<h1>{{ $setting->name }}</h1>
-
-<p class="lead">
+<div class="container-fluid">
+<h1>{{ $setting->name }} <small>{{ ucfirst($setting->group) }} Setting</small></h1>
+<div class="lead">
+    Name : {{ $setting->name }}
+</div>
+<div class="lead">
+    Value : {{ $setting->value }}
+</div>
+<div class="lead">
     Description : {{ $setting->description }}
-</p>
-<p>
+</div>
+<div class="lead">
     Help Text : {{ $setting->help_text }}
-</p>
+</div>
 <hr>
 
 <div class="row">
@@ -26,5 +31,5 @@
         {!! Form::close() !!}
     </div>
 </div>
-
+</div>
 @stop

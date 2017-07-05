@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use Mail;
+
 class HomeController extends BasePublic  {
 
 
@@ -21,6 +23,8 @@ class HomeController extends BasePublic  {
 	 */
 	public function __construct() {
 		parent::__construct();
+		// Send
+		//print_r(env('APP_ENV'));
 
 	}
 
@@ -31,14 +35,24 @@ class HomeController extends BasePublic  {
 	 */
 	public function index()
 	{
-		
+		//print_r(mail('defrian.yarfi@gmail.com', 'Test Subject From Sending Email from local computer','Message Test Sending From MACOSX',"From: Me <defrianyarfi@defrian.local>rn"));
+
+		// $mail = Mail::send('User::sentinel.emails.activatea', ['title' => 'test', 'content' => 'content'], function ($message)
+		// {
+		//
+		// 	$message->to('defrian.yarfi@gmail.com');
+		//
+		// });
+		//dd(mail('defrian.yarfi@gmail.com', 'Test Subject From Sending Email from local computer','Message Test Sending From MACOSX',"From: Me <defrianyarfi@defrian.local>rn"));
+		//exit;
+
 		//echo trans('passwords.reset');
 		// Set data to return
 	   	//$data = ['menus'=>$this->menu->all()];
 		$data = [];
 
 		return $this->view('home')->data($data)->title('Home'); //- See more at: http://laravelsnippets.com/snippets/base-controller-extended#sthash.qTHFuvbZ.dpuf
-		
+
 	}
 
 }

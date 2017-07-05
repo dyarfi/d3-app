@@ -34,9 +34,7 @@
 				<th class="col-lg-2">Name</th>
 				<th class="col-lg-1">Email</th>
 				<th class="col-lg-1">Phone</th>
-				<th class="col-lg-1">Subject</th>
-				<th class="col-lg-1">About</th>
-				<th class="col-lg-1">Description</th>
+				<th class="col-lg-3">Subject</th>
 				<th class="col-lg-1">Status</th>
 				<th class="col-lg-1">Created At</th>
 				<th class="col-lg-2 col-md-3 col-sm-3 col-xs-3">Actions</th>

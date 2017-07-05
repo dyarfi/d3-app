@@ -76,9 +76,7 @@ class Contacts extends BaseAdmin {
  					   {data: 'email', name: 'email'},
  					   {data: 'phone', name: 'phone'},
 					   {data: 'subject', name: 'subject'},
-					   {data: 'about', name: 'about'},
-					   {data: 'description', name: 'description'},
- 					   {data: 'status', name: 'status'},
+					   {data: 'status', name: 'status'},
  					   {data: 'created_at', name: 'created_at'},
  					   {data: 'action', name: 'action', orderable: false, searchable: false}
  				   ],
@@ -155,9 +153,9 @@ class Contacts extends BaseAdmin {
 					<span class="lbl"></span>
 				</label>';
 			})
-			// Set description limit
-			->editColumn('description', function ($row) {
-				return 	str_limit(strip_tags($row->description), 60);
+			// Set subject limit
+			->editColumn('subject', function ($row) {
+				return 	str_limit(strip_tags($row->subject), 28);
 			})
 			// Set status icon and text
 			->editColumn('status', function ($row) {

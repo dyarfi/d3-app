@@ -1,6 +1,7 @@
 .has-error .sm-form-control { border-color: #e42c3e; }
 .has-error label { color : #e42c3e; }
 .help-block { margin-bottom: 0px; }
+.alert { margin-top: 20px; }
 span.help-block { line-height: 1.25em}
 .contact-form-result { margin-bottom: 15px; }
 #portfolio #entry-listing .entry { margin: 0; padding: 0; border: 0}

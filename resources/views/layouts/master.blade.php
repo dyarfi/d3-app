@@ -38,7 +38,7 @@
             <div class="container clearfix">
                 <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
                 <div id="logo">
-                    <a href="{{ route('home') }}" class="standard-logo" data-dark-logo="{{ asset('images/d3.png') }}"><img src="{{ asset('images/d3.png') }}" alt="d3 Logo"></a>
+                    <a href="{{ route('home') }}" class="standard-logo" data-dark-logo="{{ asset('images/dxd3logo.png') }}"><img src="{{ asset('images/dxd3logo.png') }}" alt="d3 Logo"></a>
                     <a href="{{ route('home') }}" class="retina-logo" data-dark-logo="{{ asset('images/d3logo@2x.png') }}"><img src="{{ asset('images/d3logo@2x.png') }}" alt="d3 Logo"></a>
                 </div>
                 <nav id="primary-menu" class="dark">

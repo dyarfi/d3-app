@@ -102,6 +102,7 @@
           </ul><!-- /.breadcrumb -->
           @endif
           <div class="page-content">
+            @if(Sentinel::check())
             <div class="ace-settings-container" id="ace-settings-container">
               <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
                 <i class="ace-icon fa fa-cog bigger-130"></i>
@@ -172,6 +173,7 @@
                 </div><!-- /.pull-left -->
               </div><!-- /.ace-settings-box -->
             </div><!-- /.ace-settings-container -->
+            @endif
             <div class="space-16"></div>
             <div class="row">
               <div class="col-xs-12">

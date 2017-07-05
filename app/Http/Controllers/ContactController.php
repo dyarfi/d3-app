@@ -1,10 +1,13 @@
 <?php namespace App\Http\Controllers;
 
 // Load Laravel classes
-use Request, Input, Validator, Redirect, Session;
+use Request, Input, Validator, Redirect, Session, Mail;
 
 // Load main models
+// Apps Contact model
 use App\Modules\Contact\Model\Contact;
+// Apps Setting model
+use App\Modules\User\Model\Setting;
 
 class ContactController extends BasePublic {
 
@@ -18,6 +21,7 @@ class ContactController extends BasePublic {
 
 		// Set contact object
 		$this->contact = new Contact;
+
 	}
 
 	/**
@@ -36,8 +40,15 @@ class ContactController extends BasePublic {
 			'jquery-gmap' => asset("js/jquery.gmap.js"),
 			'gmaps' => asset('js/gmaps.js')
 		];
+
+		// Social media icons
+		$socials = Setting::where('group','socmed')->where('status',1)->get(['name','key','value']);
+
+		// Company data
+		$company = Setting::where('group','company')->where('status',1)->get(['name','key','description','value']);
+
 		// Set data to return
-	   	$data = ['menu'=>$this->menu->where('slug', $path)->first(),'contact'=>$this->contact];
+	   	$data = ['menu'=>$this->menu->where('slug', $path)->first(),'contact'=>$this->contact,'socials'=>$socials,'company'=>$company];
 
 	   	// Return data and view
 	   	return $this->view('contacts.form')->scripts($scripts)->data($data)->title('Page | Contact');
@@ -78,6 +89,33 @@ class ContactController extends BasePublic {
 				'about' 			=> $input['contactform_service'],
 				'status'			=> 1
 			];
+
+			// Sent thank you email to public
+		    $sent_public = Mail::send('emails.contact_public', $fields, function($e) use ($fields)
+			    {
+			     	$e->to($fields['email'])->subject('Contact Message | ' . url());
+			    }
+			);
+
+			// Setup for website administrator email data
+			$admin = Setting::where('group','email')->where('key','contact')->firstOrFail();
+
+			// Set email admin view variables
+			$fields['admin_name'] = $admin->name;
+			$fields['admin_email'] = $admin->value;
+
+			// Sent thank you email to admin
+		    $sent_admin = Mail::send('emails.contact_admin', $fields, function($ea) use ($fields)
+			    {
+					$ea->to($fields['admin_email'])->subject('Contact Message From ' . $fields['name']);
+			    }
+			);
+
+			// Send message if failed
+		    if ($sent_public === 0 && $sent_admin === 0)
+		    {
+		     	return Redirect::to('contact')->withErrors('Failed to send email message.');
+		    }
 
 			// Create new applicants
 			Contact::create($fields);
