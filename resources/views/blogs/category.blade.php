@@ -1,16 +1,16 @@
 @extends('layouts.master')
 @section('content')
 <?php
-$n = count($tag);
+$n = count($category);
 ?>
 	<section id="page-title">
 		<div class="container">
 			<ol class="breadcrumb clearfix col-md-12">
 				<li><a href="{{ route('home') }}">Home</a></li>
 				<li><a href="{{ route('blog') }}">Blog </a></li>
-				<li {!! $n !== 1 ? 'class="active"':'' !!}><a href="{{ route('blog.tags') }}">Tags </a></li>
+				<li {!! $n !== 1 ? 'class="active"':'' !!}><a href="{{ route('blog.categories') }}">Categories </a></li>
 				@if($n === 1)
-				<li class="active">{{ str_limit($tag->name,75) }}</li>
+				<li class="active">{{ str_limit($category->name,75) }}</li>
 				@endif
 			</ol>
 		</div>
@@ -20,13 +20,13 @@ $n = count($tag);
 			<div class="container clearfix">
 				@if($n !== 1)
 				<h1 class="clearfix nomargin">
-					Blog Tags :
+					Blog Categories :
 				</h1>
 				<h2 class="clearfix">
 					<?php
 					$i = 1;
-					foreach ($tag as $val) { ?>
-						<a href="{{ route('blog.tag',$val->slug) }}" title="@if($val->count > 0){{$val->name .' ('.$val->count.')' }}@endif">
+					foreach ($category as $val) { ?>
+						<a href="{{ route('blog.category',$val->slug) }}" title="@if($val->count > 0){{$val->name}}@endif">
 							{{ $val->name . ($i!=$n ? ', ' : '') }}
 						</a>
 						<?php
@@ -38,7 +38,7 @@ $n = count($tag);
 					Latest Blog :
 				</h1>
 				@else
-				<h1 class="clearfix nopadding">Tag : {{ $tag->name }}</h1>
+				<h1 class="clearfix nopadding">Category : {{ $category->name }}</h1>
 				@endif
 				<div id="posts" class="post-grid grid-container clearfix" data-layout="fitRows">
 					@foreach ($blogs as $blog)

@@ -414,7 +414,9 @@ class Blogs extends BaseAdmin {
 				$blog->update($result);
 
 				// Using the `slug` column
-				$blog->setTags($result['tags']);
+				if($result['tags']) {
+					$blog->setTags($result['tags']);
+				}
 
 			}
 
@@ -448,7 +450,9 @@ class Blogs extends BaseAdmin {
 				$blog = $this->blogs->create($result);
 
 				// Using the `slug` column
-				$blog->setTags($result['tags']);
+				if($result['tags']) {
+					$blog->setTags($result['tags']);
+				}
 
 			}
 		}

@@ -34,7 +34,7 @@
 							<li><a href="#"><i class="icon-user"></i> {{ $blog->user->first_name }} {{ $blog->user->last_name }}</a></li>
 							<li>
 								@if($blog->category)
-								<i class="icon-folder-open"></i> <a href="#">{{ $blog->category->name }}</a>
+								<i class="icon-folder-open"></i> <a href="{{ route('blog.category', $blog->category->slug) }}">{{ $blog->category->name }}</a>
 								@endif
 							</li>
 							<!--li><i class="icon-folder-open"></i> <a href="#">General</a>, <a href="#">Media</a></li-->
@@ -423,7 +423,27 @@
 					<div class="widget clearfix">
 						<h4>Portfolio Carousel</h4>
 						<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+							@foreach ($portfolios as $portfolio)
 							<div class="oc-item">
+								<div class="iportfolio">
+									@if($portfolio->image && File::exists(public_path('uploads/'.$portfolio->image)))
+									<div class="portfolio-image">
+										<a href="#">
+											<img src="{{ asset('uploads/'.$portfolio->image) }}" alt="Mac Sunglasses">
+										</a>
+										<div class="portfolio-overlay">
+											<a href="{{ asset('uploads/'.$portfolio->image) }}" class="center-icon" data-lightbox="iframe"><i class="fa fa-search-plus"></i></a>
+										</div>
+									</div>
+									@endif
+									<div class="portfolio-desc center nobottompadding">
+										<h3><a href="{{ route('portfolio.show', $portfolio->slug)}}">{{ $portfolio->name }}</a></h3>
+										<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
+									</div>
+								</div>
+							</div>
+							@endforeach
+							<!--div class="oc-item">
 								<div class="iportfolio">
 									<div class="portfolio-image">
 										<a href="#">
@@ -454,22 +474,15 @@
 										<span><a href="#">Media</a>, <a href="#">Icons</a></span>
 									</div>
 								</div>
-							</div>
+							</div-->
 						</div>
 					</div>
 					<div class="widget clearfix">
 						<h4>Tag Cloud</h4>
 						<div class="tagcloud">
-							<a href="#">general</a>
-							<a href="#">videos</a>
-							<a href="#">music</a>
-							<a href="#">media</a>
-							<a href="#">photography</a>
-							<a href="#">parallax</a>
-							<a href="#">ecommerce</a>
-							<a href="#">terms</a>
-							<a href="#">coupons</a>
-							<a href="#">modern</a>
+							@foreach ($tags as $tag)
+								<a href="{{ route('blog.tag',$tag->slug) }}" title="Blog Tag : {{$tag->name}}">{{$tag->name}}</a>
+							@endforeach
 						</div>
 					</div>
 				</div>

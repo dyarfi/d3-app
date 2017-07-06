@@ -11,6 +11,8 @@ use App\Modules\Page\Model\Menu, App\Modules\Page\Model\Page;
 
 // Load models
 use App\Modules\Blog\Model\Blog;
+use App\Modules\Blog\Model\BlogCategory;
+use App\Modules\Portfolio\Model\Portfolio;
 
 class BlogController extends BasePublic {
 
@@ -35,12 +37,8 @@ class BlogController extends BasePublic {
 
 	}
 
-	public function home()
-	{
-		return $this->view('pages.home')->title('Home - Laravel Tasks');
-	}
 	/**
-	 * Display a listing of the resource.
+	 * Display a listing of the blogs resource.
 	 *
 	 * @return Response
 	 */
@@ -54,31 +52,14 @@ class BlogController extends BasePublic {
 		$blogs = Blog::active()->with('category')->with('tags')->orderBy('index','ASC')->paginate(10);
 
 		// Set data to return
-	   	$data = ['menu'=>$this->menu->where('slug', $path)->first(),'blogs'=>$blogs];
+	   	$data = [
+			'menu' =>$this->menu->where('slug', $path)->first(),
+			'blogs' =>$blogs
+		];
 
 		// Return view
 		return $this->view('menus.blog')->data($data)->title('Page | Blog');
 
-	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
 	}
 
 	/**
@@ -91,16 +72,21 @@ class BlogController extends BasePublic {
 	{
 
 		// Get data from database
-        $blog = Blog::where('slug',$slug)->with('category')->with('tags')->first();
+        $blog = Blog::where('slug',$slug)->with('category')->with('tags')->with('user')->first();
 
 		// Get data list from database
 		$blogs = Blog::active()->with('category')->with('tags')->orderBy('publish_date','ASC')->get();
 
 		// Set data to view
-		$data = ['blog'=>$blog,'blogs'=>$blogs];
+		$data = [
+			'blog' => $blog,
+			'blogs' => $blogs,
+			'portfolios' => Portfolio::active()->with('client')->with('project')->orderBy('created_at','DESC')->take(10)->get(),
+			'tags' => Blog::allTags()->get()
+		];
 
 	   	// Return data and view
-	   	return $this->view('blogs.show')->data($data)->title('View Blog - Blogs');
+	   	return $this->view('blogs.show')->data($data)->title('View Blog - '.$blog->name.' By : '.$blog->user->first_name.' '.$blog->user->last_name);
 
 	}
 
@@ -142,38 +128,45 @@ class BlogController extends BasePublic {
 
 	}
 
-
 	/**
-	 * Show the form for editing the specified resource.
+	 * Display the specified blog category resource.
 	 *
-	 * @param  int  $id
+	 * @param  string $slug
 	 * @return Response
 	 */
-	public function edit($id)
+	public function category($slug)
 	{
-		//
+		// Get category data from database
+		$category = BlogCategory::slug($slug);
+
+		// Get all blogs with category id data from database
+        $blogs = Blog::where('category_id',$category->id)->orderBy('publish_date','ASC')->get();
+
+		// Set data to view
+		$data = ['category'=>$category, 'blogs'=>$blogs];
+
+	   	// Return data and view
+	   	return $this->view('blogs.category')->data($data)->title('View Blog Categories - Blog Categories');
+
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Display the specified blog categories resource.
 	 *
-	 * @param  int  $id
+	 * @param  string $slug
 	 * @return Response
 	 */
-	public function update($id)
+	public function categories()
 	{
-		//
-	}
+		// Get data from database
+		$blogs = Blog::active()->with('category')->orderBy('publish_date','ASC')->get();
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		// Set data to view
+		$data = ['category'=>BlogCategory::active()->get(),'blogs'=>$blogs];
+
+		// Return data and view
+		return $this->view('blogs.category')->data($data)->title('View All Blog Categories - Blog Categories');
+
 	}
 
 }

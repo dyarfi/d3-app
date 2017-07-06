@@ -1055,7 +1055,9 @@ var SEMICOLON = SEMICOLON || {};
 				    item        : '.entry',
 				    pagination  : '.pagination',
 				    next        : 'a[rel="next"]',
-				    loader      : '<div class="clearfix"><img class="center-block" src="'+ base_URL + 'img/ajax-loader.gif"/></div>',
+				    //loader      : '<div class="clearfix"><img class="center-block" src="'+ base_URL + 'img/ajax-loader.gif"/></div>',
+					//loader		: '<div class="css3-spinner-bounce1"></div><div class="css3-spinner-bounce2"></div><div class="css3-spinner-bounce3"></div>';
+					loader      : '<div class="clearfix css3-spinner-black"><div class="css3-spinner-bounce1"></div><div class="css3-spinner-bounce2"></div><div class="css3-spinner-bounce3"></div></div>',					
 				    delay       : 1000,
 				    history     : false,
 				    negativeMargin : 100,
