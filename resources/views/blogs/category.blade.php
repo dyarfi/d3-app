@@ -3,7 +3,7 @@
 <?php
 $n = count($category);
 ?>
-	<section id="page-title">
+	<section id="page-title" {!! ($menu->image && File::exists(public_path('uploads/'.$menu->image))) ? 'style="background:url('.asset("uploads/".$menu->image).') 100% 0% fixed no-repeat"' : '' !!}>
 		<div class="container">
 			<ol class="breadcrumb clearfix col-md-12">
 				<li><a href="{{ route('home') }}">Home</a></li>

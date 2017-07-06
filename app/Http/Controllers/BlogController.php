@@ -46,7 +46,7 @@ class BlogController extends BasePublic {
 	{
 
 		// Get the page path that requested
-		$path = pathinfo(Request::path(), PATHINFO_BASENAME);
+		$path = Request::segment(1);
 
 		// Get active blogs with paginated
 		$blogs = Blog::active()->with('category')->with('tags')->orderBy('index','ASC')->paginate(10);
@@ -70,6 +70,8 @@ class BlogController extends BasePublic {
 	 */
 	public function show($slug)
 	{
+		// Get the page path that requested
+		$path = Request::segment(1);
 
 		// Get data from database
         $blog = Blog::where('slug',$slug)->with('category')->with('tags')->with('user')->first();
@@ -79,6 +81,7 @@ class BlogController extends BasePublic {
 
 		// Set data to view
 		$data = [
+			'menu' =>$this->menu->where('slug', $path)->first(),
 			'blog' => $blog,
 			'blogs' => $blogs,
 			'portfolios' => Portfolio::active()->with('client')->with('project')->orderBy('created_at','DESC')->take(10)->get(),
@@ -98,11 +101,18 @@ class BlogController extends BasePublic {
 	 */
 	public function tag($slug)
 	{
+		// Get the page path that requested
+		$path = Request::segment(1);
+
 		// Get data from database
         $blogs = Blog::whereTag($slug)->with('category')->orderBy('publish_date','ASC')->get();
 
 		// Set data to view
-		$data = ['tag'=>DB::table('tags')->where('slug', $slug)->first(),'blogs'=>$blogs];
+		$data = [
+				'menu' =>$this->menu->where('slug', $path)->first(),
+				'tag'=>DB::table('tags')->where('slug', $slug)->first(),
+				'blogs'=>$blogs
+			];
 
 	   	// Return data and view
 	   	return $this->view('blogs.tag')->data($data)->title('View Blog Tags - Blog Tags');
@@ -117,11 +127,18 @@ class BlogController extends BasePublic {
 	 */
 	public function tags()
 	{
+		// Get the page path that requested
+		$path = Request::segment(1);
+
 		// Get data from database
 		$blogs = Blog::active()->with('category')->orderBy('publish_date','ASC')->get();
 
 		// Set data to view
-		$data = ['tag'=>Blog::allTags()->get(),'blogs'=>$blogs];
+		$data = [
+				'menu' =>$this->menu->where('slug', $path)->first(),
+				'tag'=>Blog::allTags()->get(),
+				'blogs'=>$blogs
+			];
 
 		// Return data and view
 		return $this->view('blogs.tag')->data($data)->title('View All Blog Tags - Blog Tags');
@@ -136,6 +153,9 @@ class BlogController extends BasePublic {
 	 */
 	public function category($slug)
 	{
+		// Get the page path that requested
+		$path = Request::segment(1);
+
 		// Get category data from database
 		$category = BlogCategory::slug($slug);
 
@@ -143,7 +163,11 @@ class BlogController extends BasePublic {
         $blogs = Blog::where('category_id',$category->id)->orderBy('publish_date','ASC')->get();
 
 		// Set data to view
-		$data = ['category'=>$category, 'blogs'=>$blogs];
+		$data = [
+			'menu' =>$this->menu->where('slug', $path)->first(),
+			'category'=>$category,
+			'blogs'=>$blogs
+		];
 
 	   	// Return data and view
 	   	return $this->view('blogs.category')->data($data)->title('View Blog Categories - Blog Categories');
@@ -158,11 +182,18 @@ class BlogController extends BasePublic {
 	 */
 	public function categories()
 	{
+		// Get the page path that requested
+		$path = Request::segment(1);
+
 		// Get data from database
 		$blogs = Blog::active()->with('category')->orderBy('publish_date','ASC')->get();
 
 		// Set data to view
-		$data = ['category'=>BlogCategory::active()->get(),'blogs'=>$blogs];
+		$data = [
+			'menu' =>$this->menu->where('slug', $path)->first(),
+			'category'=>BlogCategory::active()->get(),
+			'blogs'=>$blogs
+		];
 
 		// Return data and view
 		return $this->view('blogs.category')->data($data)->title('View All Blog Categories - Blog Categories');

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-		<section id="page-title">
+		<section id="page-title" {!! ($menu->image && File::exists(public_path('uploads/'.$menu->image))) ? 'style="background:url('.asset("uploads/".$menu->image).') 100% 0% no-repeat"' : '' !!}>
 			<div class="container clearfix">
 				<h1>{{ $menu->name }}</h1>
 				<span>{{ $menu->description }}</span>
@@ -11,7 +11,6 @@
 				</ol>
 			</div>
 		</section>
-
 		<section id="content">
 			<div class="content-wrap">
 				<div class="container clearfix">

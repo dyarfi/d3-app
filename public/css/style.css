@@ -3324,6 +3324,7 @@ body:not(.stretched) .slider-parallax .slider-parallax-inner { left: auto; }
 	padding: 50px 0;
 	background-color: #F5F5F5;
 	border-bottom: 1px solid #EEE;
+	text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
 }
 
 #page-title .container { position: relative; }
@@ -12635,13 +12636,13 @@ body:not(.no-transition) #wrapper,
 	background-color: #ff0000;
 }
 
-.css3-spinner .css3-spinner-bounce1, .css3-spinner-black .css3-spinner-bounce1 {
+.css3-spinner .css3-spinner-bounce1, .css3-spinner-red .css3-spinner-bounce1 {
 	margin-left: -31px;
 	-webkit-animation-delay: -0.32s;
 	animation-delay: -0.32s;
 }
 
-.css3-spinner .css3-spinner-bounce2, .css3-spinner-black .css3-spinner-bounce2 {
+.css3-spinner .css3-spinner-bounce2, .css3-spinner-red .css3-spinner-bounce2 {
 	margin-left: -9px;
 	-webkit-animation-delay: -0.16s;
 	animation-delay: -0.16s;

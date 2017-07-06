@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<section id="page-title">
+<section id="page-title" {!! ($menu->image && File::exists(public_path('uploads/'.$menu->image))) ? 'style="background:url('.asset("uploads/".$menu->image).') 100% 0% fixed no-repeat"' : '' !!}>
 	<div class="container">
 		<ol class="breadcrumb clearfix col-md-12">
 			<li><a href="{{ route('home') }}">Home</a></li>
@@ -41,7 +41,7 @@
 							<!--li><a href="#"><i class="icon-comments"></i> 43 Comments</a></li>
 							<li><a href="#"><i class="icon-camera-retro"></i></a></li-->
 						</ul><!-- .entry-meta end -->
-						@if(File::exists('uploads/'.$blog->image))
+						@if(File::exists(public_path('uploads/'.$blog->image)))
 							<!-- Entry Image
 							============================================= -->
 							<div class="entry-image">

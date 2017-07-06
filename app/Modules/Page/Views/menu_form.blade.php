@@ -69,7 +69,7 @@
 		<select id="status" name="status" class="form-control input-sm">
 			<option value="">&nbsp;</option>
 			@foreach (config('setting.status') as $config => $val)
-				<option value="{{ Input::old('status', $val) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
+				<option value="{{ Input::old('status', $config) }}" {{ $config == $row->status ? 'selected' : '' }}>{{$val}}</option>
 			@endforeach
 		</select>
 	</div>
