@@ -71,30 +71,35 @@
 							<div class="si-share noborder clearfix">
 								<span>Share this Post:</span>
 								<div>
-									<a href="#" class="social-icon si-borderless si-facebook">
+									<a href="javascript:;" class="social-icon si-borderless si-facebook addthis_button_facebook">
 										<i class="icon-facebook"></i>
 										<i class="icon-facebook"></i>
 									</a>
-									<a href="#" class="social-icon si-borderless si-twitter">
+									<a href="javascript:;" class="social-icon si-borderless si-twitter addthis_button_twitter">
 										<i class="icon-twitter"></i>
 										<i class="icon-twitter"></i>
 									</a>
-									<a href="#" class="social-icon si-borderless si-pinterest">
+									<a href="javascript:;" class="social-icon si-borderless si-pinterest addthis_button_pinterest_share">
 										<i class="icon-pinterest"></i>
 										<i class="icon-pinterest"></i>
 									</a>
-									<a href="#" class="social-icon si-borderless si-gplus">
+									<a href="javascript:;" class="social-icon si-borderless si-gplus addthis_button_google_plusone_share">
 										<i class="icon-gplus"></i>
 										<i class="icon-gplus"></i>
 									</a>
-									<a href="#" class="social-icon si-borderless si-rss">
+									<a href="javascript:;" class="social-icon si-borderless si-linkedin addthis_button_linkedin">
+										<i class="icon-linkedin"></i>
+										<i class="icon-linkedin"></i>
+									</a>
+									<!--a href="#" class="social-icon si-borderless si-rss">
 										<i class="icon-rss"></i>
 										<i class="icon-rss"></i>
 									</a>
-									<a href="#" class="social-icon si-borderless si-email3">
+									<a href="#" class="social-icon si-borderless si-email3 addthis_button_email">
 										<i class="icon-email3"></i>
 										<i class="icon-email3"></i>
-									</a>
+									</a-->
+									<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-595dff1bacdf455c" async="async"></script>
 								</div>
 							</div><!-- Post Single - Share End -->
 						</div>
@@ -126,8 +131,27 @@
 					<div class="line"></div>
 					<h4>Related Posts:</h4>
 					<div class="related-posts clearfix">
-						<div class="col_half nobottommargin">
-							<div class="mpost clearfix">
+						<div class="col_full nobottommargin">
+							@foreach ($blogs as $blog)
+							<div class="mpost col-sm-6">
+								@if($blog->image && File::exists(public_path('uploads/'.$blog->image)))
+								<div class="entry-image">
+									<a href="{{route('blog.show',$blog->slug)}}"><img src="{{asset('uploads/'.$blog->image)}}" alt="{{$blog->name}}"></a>
+								</div>
+								@endif
+								<div class="entry-c">
+									<div class="entry-title">
+										<h4><a href="{{route('blog.show',$blog->slug)}}">{{str_limit($blog->name,35)}}</a></h4>
+									</div>
+									<ul class="entry-meta clearfix">
+										<li><i class="icon-calendar3"></i> {{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}</li>
+										<li><a href="#"><i class="icon-folder-open"></i> {{$blog->category->name}}</a></li>
+									</ul>
+									<div class="entry-content">{{str_limit(strip_tags($blog->name),100)}}</div>
+								</div>
+							</div>
+							@endforeach
+							<!--div class="mpost col-sm-6 clearfix">
 								<div class="entry-image">
 									<a href="#"><img src="images/blog/small/10.jpg" alt="Blog Single"></a>
 								</div>
@@ -142,7 +166,7 @@
 									<div class="entry-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia nisi perferendis.</div>
 								</div>
 							</div>
-							<div class="mpost clearfix">
+							<div class="mpost col-sm-6 clearfix">
 								<div class="entry-image">
 									<a href="#"><img src="images/blog/small/20.jpg" alt="Blog Single"></a>
 								</div>
@@ -157,9 +181,7 @@
 									<div class="entry-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia nisi perferendis.</div>
 								</div>
 							</div>
-						</div>
-						<div class="col_half nobottommargin col_last">
-							<div class="mpost clearfix">
+							<div class="mpost col-sm-6 clearfix">
 								<div class="entry-image">
 									<a href="#"><img src="images/blog/small/21.jpg" alt="Blog Single"></a>
 								</div>
@@ -174,7 +196,7 @@
 									<div class="entry-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia nisi perferendis.</div>
 								</div>
 							</div>
-							<div class="mpost clearfix">
+							<div class="mpost col-sm-6 clearfix">
 								<div class="entry-image">
 									<a href="#"><img src="assets/images/blog/small/22.jpg" alt="Blog Single"></a>
 								</div>
@@ -188,7 +210,7 @@
 									</ul>
 									<div class="entry-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia nisi perferendis.</div>
 								</div>
-							</div>
+							</div-->
 						</div>
 					</div>
 					<!-- Comments
