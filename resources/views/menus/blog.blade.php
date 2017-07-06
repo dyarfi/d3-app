@@ -23,7 +23,7 @@
 							</div>
 							@endif
 							<div class="entry-title">
-								<h2><a href="{{ route('blog.show', $blog->slug) }}">{{ $blog->name }}</a></h2>
+								<h2><a href="{{ route('blog.show', $blog->slug) }}">{{ str_limit($blog->name,65,'') }}</a></h2>
 							</div>
 							<ul class="entry-meta clearfix">
 								<li><i class="icon-calendar3"></i>

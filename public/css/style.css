@@ -5445,9 +5445,9 @@ body:not(.device-touch) .entry-link {
 
 .spost:first-child,
 .mpost:first-child {
-	margin-top: 0;
-	padding-top: 0;
-	border-top: 0;
+	/*margin-top: 0;*/
+	/*padding-top: 0;*/
+	/*border-top: 0;*/
 }
 
 .spost .entry-image,

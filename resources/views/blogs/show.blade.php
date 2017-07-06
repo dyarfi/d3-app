@@ -106,7 +106,7 @@
 					</div><!-- .entry end -->
 					<!-- Post Navigation
 					============================================= -->
-					<div class="post-navigation clearfix">
+					<div class="post-navigation clearfix hidden">
 						<div class="col_half nobottommargin">
 							<a href="#">&lArr; This is a Standard post with a Slider Gallery</a>
 						</div>
@@ -119,21 +119,24 @@
 					============================================= -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Posted by <span><a href="#">John Doe</a></span></h3>
+							<h3 class="panel-title">Posted by <span><a href="#">{{ $blog->user->first_name .' '. $blog->user->last_name }}</a></span></h3>
 						</div>
 						<div class="panel-body">
+							@if($blog->user->image && File::exists(public_path('uploads/'.$blog->user->image)))
 							<div class="author-image">
 								<img src="images/author/1.jpg" alt="" class="img-circle">
 							</div>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, eveniet, eligendi et nobis neque minus mollitia sit repudiandae ad repellendus recusandae blanditiis praesentium vitae ab sint earum voluptate velit beatae alias fugit accusantium laboriosam nisi reiciendis deleniti tenetur molestiae maxime id quaerat consequatur fugiat aliquam laborum nam aliquid. Consectetur, perferendis?
+							@endif
+							{{ ($blog->user->about) ? $blog->user->about : '' }}
 						</div>
 					</div><!-- Post Single - Author End -->
 					<div class="line"></div>
-					<h4>Related Posts:</h4>
+					@if ($blogs)
+					<h4 class="nobottommargin">Related Posts:</h4>
 					<div class="related-posts clearfix">
 						<div class="col_full nobottommargin">
 							@foreach ($blogs as $blog)
-							<div class="mpost col-sm-6">
+							<div class="spost col-sm-6">
 								@if($blog->image && File::exists(public_path('uploads/'.$blog->image)))
 								<div class="entry-image">
 									<a href="{{route('blog.show',$blog->slug)}}"><img src="{{asset('uploads/'.$blog->image)}}" alt="{{$blog->name}}"></a>
@@ -213,9 +216,10 @@
 							</div-->
 						</div>
 					</div>
+					@endif
 					<!-- Comments
 					============================================= -->
-					<div id="comments" class="clearfix">
+					<div id="comments" class="clearfix hidden">
 						<h3 id="comments-title"><span>3</span> Comments</h3>
 						<!-- Comments List
 						============================================= -->
