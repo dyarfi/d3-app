@@ -191,7 +191,13 @@ return [
 		/*
 		 * https://github.com/plank/laravel-mediable
 		 */
-		Plank\Mediable\MediableServiceProvider::class
+		Plank\Mediable\MediableServiceProvider::class,
+
+
+		/*
+		 * https://github.com/mpociot/teamwork
+		 */
+		Mpociot\Teamwork\TeamworkServiceProvider::class
 	],
 
 	/*

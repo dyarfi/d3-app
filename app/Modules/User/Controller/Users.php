@@ -7,6 +7,7 @@ use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\User\Model\Role;
 use App\Modules\User\Model\User;
+use App\Modules\User\Model\Team;
 
 class Users extends BaseAdmin {
 
@@ -40,6 +41,20 @@ class Users extends BaseAdmin {
 		// Crop to fit image size
 		$this->imgFit 		= [1200,1200];
 
+		//$myOtherCompany = new Team();
+		//$myOtherCompany->owner_id = $this->user->id;
+		//$myOtherCompany->name = 'My other awesome team';
+		//$myOtherCompany->save();
+		//$user = $this>user->first();
+		//$user = User::where('id', '=', '20')->first();
+
+		// team attach alias
+		//$user->attachTeam(1, $pivotData); // First parameter can be a Team object, array, or id
+
+		// or eloquent's original technique
+		//$user->teams()->attach(2); // id only
+		//dd(User::where('id', '=', '20')->first());
+		dd($this->user->currentTeam->name);
 	}
 
 	/**

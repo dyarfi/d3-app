@@ -19,7 +19,8 @@
 		"cartalyst/tags": "2.0.*",
 		"yajra/laravel-datatables-oracle": "6.0",
 		"larapack/config-writer": "1.*",
-		"plank/laravel-mediable": "^2.4"
+		"plank/laravel-mediable": "^2.4",
+		"mpociot/teamwork": "~2.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
