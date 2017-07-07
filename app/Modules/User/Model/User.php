@@ -59,6 +59,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	/**
+	 * A user can have many blogs.
+	 *
+	 */
+	public function blogs()
+	{
+		return $this->hasMany('App\Modules\Blog\Model\Blog','user_id');
+	}
+
+	/**
 	 * A user can have one roles.
 	 *
 	 */

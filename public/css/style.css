@@ -5494,6 +5494,9 @@ body:not(.device-touch) .entry-link {
 	margin: 0 10px 0 0;
 }
 
+.spost .entry-content {
+	margin-top: 10px;
+}
 
 /* Medium Post
 -----------------------------------------------------------------*/

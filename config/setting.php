@@ -244,7 +244,7 @@ return [
 	 |
 	 */
 
-	 'attributes' =>
+	 'attributes' => [
 		['skins' =>
 			['#438EB9' => true, '#222A2D' => false, '#C6487E' => false, '#D0D0D0' => false]
 	 	],
@@ -254,6 +254,10 @@ return [
 	 	['show_profile' =>
 	 		['Yes' => 1, 'No' => 0]
 	 	],
+	 	['show_profile_image' =>
+	 		['Yes' => 1, 'No' => 0]
+	 	],
+	],
 
 	/*
 	 |--------------------------------------------------------------------------

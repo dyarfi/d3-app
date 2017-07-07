@@ -31,7 +31,13 @@
 						============================================= -->
 						<ul class="entry-meta clearfix">
 							<li><i class="icon-calendar3"></i> {{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}</li>
-							<li><a href="#"><i class="icon-user"></i> {{ $blog->user->first_name }} {{ $blog->user->last_name }}</a></li>
+							<li><a href="#"><i class="icon-user"></i>
+								@if(!empty($blog->user->attributes->show_profile))
+								{{ $blog->user->first_name }} {{ $blog->user->last_name }}
+								@else
+								{{ 'Anonymous' }}
+								@endif
+							</a></li>
 							<li>
 								@if($blog->category)
 								<i class="icon-folder-open"></i> <a href="{{ route('blog.category', $blog->category->slug) }}">{{ $blog->category->name }}</a>
@@ -119,15 +125,37 @@
 					============================================= -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Posted by <span><a href="#">{{ $blog->user->first_name .' '. $blog->user->last_name }}</a></span></h3>
+							@if(!empty($blog->user->attributes->show_profile))
+								<h3 class="panel-title">Posted by <span><a href="#">{{ $blog->user->first_name .' '. $blog->user->last_name }}</a></span></h3>
+							@else
+								<h3 class="panel-title">Posted by <span><a href="#">{{ 'Anonymous' }}</a></span></h3>
+							@endif
 						</div>
 						<div class="panel-body">
-							@if($blog->user->image && File::exists(public_path('uploads/'.$blog->user->image)))
+							@if(!empty($blog->user->attributes->show_profile_image))
+								@if($blog->user->image && File::exists(public_path('uploads/'.$blog->user->image)))
+								<?php
+									$pathinfo = pathinfo($blog->user->image);
+									$filename = $pathinfo['filename'].'-100x100px.'.$pathinfo['extension'];
+								?>
+								<div class="author-image">
+									<img src="{{ asset('uploads/'.$filename) }}" alt="{{$blog->user->name}}" class="img-circle">
+								</div>
+								@else
+								<div class="author-image">
+									<img src="{{ asset('images/author/1.jpg') }}" alt="{{$blog->user->name}}" class="img-circle">
+								</div>
+								@endif
+							@else
 							<div class="author-image">
-								<img src="images/author/1.jpg" alt="" class="img-circle">
+								<img src="{{ asset('images/author/1.jpg') }}" alt="{{$blog->user->name}}" class="img-circle">
 							</div>
 							@endif
-							{{ ($blog->user->about) ? $blog->user->about : '' }}
+							@if(!empty($blog->user->attributes->show_profile))
+								{{ ($blog->user->about) ? $blog->user->about : '' }}
+							@else
+								{{ 'Anonymous' }}
+							@endif
 						</div>
 					</div><!-- Post Single - Author End -->
 					<div class="line"></div>
@@ -310,7 +338,7 @@
 			============================================= -->
 			<div class="sidebar nobottommargin col_last clearfix">
 				<div class="sidebar-widgets-wrap">
-					<div class="widget widget-twitter-feed clearfix">
+					<!--div class="widget widget-twitter-feed clearfix">
 						<h4>Twitter Feed</h4>
 						<ul class="iconlist twitter-feed" data-username="envato" data-count="2">
 							<li></li>
@@ -320,7 +348,7 @@
 					<div class="widget clearfix">
 						<h4>Flickr Photostream</h4>
 						<div id="flickr-widget" class="flickr-feed masonry-thumbs" data-id="613394@N22" data-count="16" data-type="group" data-lightbox="gallery"></div>
-					</div>
+					</div-->
 					<div class="widget clearfix">
 						<div class="tabs nobottommargin clearfix" id="sidebar-tabs">
 							<ul class="tab-nav clearfix">

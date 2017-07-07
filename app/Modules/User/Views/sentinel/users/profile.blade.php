@@ -108,31 +108,56 @@
 
 			<div class="clearfix space-6"></div>
 
-			@if(config('setting.attributes') && $row->attributes)
+
 			<div class="form-group">
-				<div class="col-md-12">
-				<span class="clearfix">Skins:</span>
-				@foreach (config('setting.attributes') as $setting => $attribute)
-					@if ($setting == 'skins')
-						@foreach ($attribute as $attr => $val)
-							<div class="col-md-2">
-								<div class="pull-left" style="background-color:{{ $attr }}">
-									{!! Form::label('attributes[skins]', $attr, ['class' => 'control-label white']) !!}
-									{!! Form::radio('attributes[skins]', $attr, (@$row->attributes->skins === $attr ? true : false)) !!}
+				<div class="col-lg-12">
+				@if($settings = config('setting.attributes'))
+					@foreach ($settings as $setting => $val)
+						@if (isset($val['skins']))
+							<span class="clearfix">Skins:</span>
+							@foreach ($val['skins'] as $attr => $obj)
+								<div class="col-md-2">
+									<div class="pull-left" style="margin:0 auto;padding:0px 8px;background-color:{{ $attr }}">
+										{!! Form::label('attributes[skins]', $attr, ['class' => 'control-label white']) !!}
+										{!! Form::radio('attributes[skins]', $attr, (@$row->attributes->skins === $attr ? true : false)) !!}
+									</div>
 								</div>
-							</div>
-						@endforeach
-					@endif
-				@endforeach
+							@endforeach
+						@endif
+						@if (isset($val['show_profile']))
+							<span class="clearfix">Show Profile:</span>
+							@foreach ($val['show_profile'] as $attr => $obj)
+								<div class="col-md-1">
+									<div class="pull-left">
+										{!! Form::label('attributes[show_profile]', $attr, ['class' => 'control-label']) !!}
+										{!! Form::radio('attributes[show_profile]', $obj, (@$row->attributes->show_profile === $obj ? true : false)) !!}
+									</div>
+								</div>
+							@endforeach
+						@endif
+						<div class="clearfix"></div>
+						@if (isset($val['show_profile_image']))
+							<span class="clearfix">Show Profile Image:</span>
+							@foreach ($val['show_profile_image'] as $attr => $obj)
+								<div class="col-md-1">
+									<div class="pull-left">
+										{!! Form::label('attributes[show_profile_image]', $attr, ['class' => 'control-label']) !!}
+										{!! Form::radio('attributes[show_profile_image]', $obj, (@$row->attributes->show_profile_image === $obj ? true : false)) !!}
+									</div>
+								</div>
+							@endforeach
+						@endif
+						<div class="space-10"></div>
+					@endforeach
+				@endif
 				</div>
 			</div>
-			@endif
 
 			<div class="clearfix space-6"></div>
 
 			<div class="form-group">
 				<div class="col-md-12">
-				{!! Form::submit('Update Profile', ['class' => 'btn btn-primary btn-xs']) !!}
+				{!! Form::submit('Update Profile', ['class' => 'btn btn-primary']) !!}
 				</div>
 			</div>
 

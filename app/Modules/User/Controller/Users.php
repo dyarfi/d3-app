@@ -34,7 +34,11 @@ class Users extends BaseAdmin {
 		// Load users and get repository data from Sentinel
 		$this->users = new User;
 
+		// Load role model
 		$this->roles = new Role;
+
+		// Crop to fit image size
+		$this->imgFit 		= [1200,1200];
 
 	}
 
@@ -420,12 +424,8 @@ class Users extends BaseAdmin {
 	 */
 	public function dashboard() {
 
-		//dd ($this->user);
-
 		// Set return data
 	   	$user = $this->user;
-
-	   	//dd($user);
 
 	   	// Set data to return
 	   	$data = ['user'=>$user];
@@ -435,7 +435,6 @@ class Users extends BaseAdmin {
     				'jqueryflot' => 'themes/ace-admin/js/jquery.flot.min.js',
     				'jqueryflotpie'=>'themes/ace-admin/js/jquery.flot.pie.min.js',
     				'jqueryflotresize'=>'themes/ace-admin/js/jquery.flot.resize.min.js'];
-
 
 	   	// Return data and view
 	   	return $this->view('User::sentinel.users.dashboard')->data($data)->scripts($scripts)->title('User Dashboard');
