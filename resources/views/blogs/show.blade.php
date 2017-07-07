@@ -20,7 +20,7 @@
 				<div class="single-post nobottommargin">
 					<!-- Single Post
 					============================================= -->
-					<div class="entry clearfix">
+					<div class="entry noborder clearfix nobottommargin">
 						<!-- Entry Title
 						============================================= -->
 						<h1 class="clearfix">{{ $blog->name }}</h1>
@@ -74,7 +74,7 @@
 							<div class="clear"></div>
 							<!-- Post Single - Share
 							============================================= -->
-							<div class="si-share noborder clearfix">
+							<div class="si-share clearfix">
 								<span>Share this Post:</span>
 								<div>
 									<a href="javascript:;" class="social-icon si-borderless si-facebook addthis_button_facebook">
@@ -120,7 +120,7 @@
 							<a href="#">This is an Embedded Audio Post &rArr;</a>
 						</div>
 					</div><!-- .post-navigation end -->
-					<div class="line"></div>
+					<div class="line hidden"></div>
 					<!-- Post Author Info
 					============================================= -->
 					<div class="panel panel-default">
@@ -143,12 +143,12 @@
 								</div>
 								@else
 								<div class="author-image">
-									<img src="{{ asset('images/author/1.jpg') }}" alt="{{$blog->user->name}}" class="img-circle">
+									<img src="{{ asset('images/author/is-soldier.jpg') }}" alt="{{$blog->user->name}}" class="img-circle">
 								</div>
 								@endif
 							@else
 							<div class="author-image">
-								<img src="{{ asset('images/author/1.jpg') }}" alt="{{$blog->user->name}}" class="img-circle">
+								<img src="{{ asset('images/author/is-soldier.jpg') }}" alt="{{$blog->user->name}}" class="img-circle">
 							</div>
 							@endif
 							@if(!empty($blog->user->attributes->show_profile))
@@ -158,7 +158,6 @@
 							@endif
 						</div>
 					</div><!-- Post Single - Author End -->
-					<div class="line"></div>
 					@if ($blogs)
 					<h4 class="nobottommargin">Related Posts:</h4>
 					<div class="related-posts clearfix">

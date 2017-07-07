@@ -76,10 +76,10 @@
 						<div class="clearfix space-6"></div>
 						<!-- This is the form that our event handler fills -->
 						<div id="image-crop-holder">
-							<input type="hidden" id="crop_x" name="x" value="{{ isset($row->attributes->crop_x) ? $row->attributes->crop_x : 0 }}"/>
-							<input type="hidden" id="crop_y" name="y" value="{{ isset($row->attributes->crop_y) ? $row->attributes->crop_y : 10 }}"/>
-							<input type="hidden" id="crop_w" name="w" value="{{ isset($row->attributes->crop_w) ? $row->attributes->crop_w : 10 }}"/>
-							<input type="hidden" id="crop_h" name="h" value="{{ isset($row->attributes->crop_h) ? $row->attributes->crop_h : 10 }}"/>
+							<input type="hidden" id="crop_x" name="attributes[crop_x]" value="{{ isset($row->attributes->crop_x) ? $row->attributes->crop_x : 0 }}"/>
+							<input type="hidden" id="crop_y" name="attributes[crop_y]" value="{{ isset($row->attributes->crop_y) ? $row->attributes->crop_y : 10 }}"/>
+							<input type="hidden" id="crop_w" name="attributes[crop_w]" value="{{ isset($row->attributes->crop_w) ? $row->attributes->crop_w : 10 }}"/>
+							<input type="hidden" id="crop_h" name="attributes[crop_h]" value="{{ isset($row->attributes->crop_h) ? $row->attributes->crop_h : 10 }}"/>
 							<input type="hidden" id="image" name="image" value="{{ $row->image }}"/>
 							<input type="hidden" id="path" name="path" value="{{ public_path() . '/uploads' }}"/>
 							<input type="submit" id="demo3_form" value="Crop Image" class="btn btn-large green"/>
@@ -130,7 +130,7 @@
 								<div class="col-md-1">
 									<div class="pull-left">
 										{!! Form::label('attributes[show_profile]', $attr, ['class' => 'control-label']) !!}
-										{!! Form::radio('attributes[show_profile]', $obj, (@$row->attributes->show_profile === $obj ? true : false)) !!}
+										{!! Form::radio('attributes[show_profile]', $obj, (@$row->attributes->show_profile == $obj ? true : false)) !!}
 									</div>
 								</div>
 							@endforeach
@@ -142,7 +142,7 @@
 								<div class="col-md-1">
 									<div class="pull-left">
 										{!! Form::label('attributes[show_profile_image]', $attr, ['class' => 'control-label']) !!}
-										{!! Form::radio('attributes[show_profile_image]', $obj, (@$row->attributes->show_profile_image === $obj ? true : false)) !!}
+										{!! Form::radio('attributes[show_profile_image]', $obj, (@$row->attributes->show_profile_image == $obj ? true : false)) !!}
 									</div>
 								</div>
 							@endforeach
