@@ -27,7 +27,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name','username','first_name','last_name','email','avatar','image','provider_id','provider','about','attributes','password'];
+	protected $fillable = ['name','username','first_name','last_name','email','avatar','image','provider_id','provider','about','attributes','password','current_team_id'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -76,6 +76,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		//return $this->hasOne('App\Db\RoleUser');
 		return $this->belongsToMany('App\Modules\User\Model\Role','role_users');
+
+	}
+
+	/**
+	 * A user can have many teams.
+	 *
+	 */
+	public function teams()
+	{
+		//return $this->hasOne('App\Db\RoleUser');
+		return $this->belongsToMany('App\Modules\User\Model\Team','team_user','user_id','team_id');
 
 	}
 

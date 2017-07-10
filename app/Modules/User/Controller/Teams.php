@@ -7,16 +7,17 @@ use Sentinel, Socialite;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\User\Model\Role;
+use App\Modules\User\Model\User;
+use App\Modules\User\Model\Team;
 
 class Teams extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Roles repository.
+	 * Holds the Sentinel Teams repository.
 	 *
-	 * @var \Cartalyst\Sentinel\Roles\EloquentRole
+	 * @var \Cartalyst\Sentinel\Teams\EloquentTeam
 	 */
-	protected $roles;
+	protected $teams;
 
 	/**
 	 * Constructor.
@@ -32,24 +33,27 @@ class Teams extends BaseAdmin {
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
-		// Load roles and create model from Sentinel
-		$this->roles = Sentinel::getRoleRepository()->createModel();
+		// Load teams and create model from Sentinel
+		$this->teams = new Team;
 
 	}
 
 	/**
-	 * Display a listing of roles.
+	 * Display a listing of teams.
 	 *
 	 * @return \Illuminate\View\View
 	 */
 	public function index()
 	{
 
+		// Set model
+		$team = new Team;
+
 		// Set return data
-	   	$rows = Input::get('path') === 'trashed' ? Role::onlyTrashed()->paginate(10) : Role::paginate(10);
+	   	$rows = Input::get('path') === 'trashed' ? Team::onlyTrashed()->paginate(10) : Team::paginate(10);
 
 	   	// Get deleted count
-		$deleted = Role::onlyTrashed()->get()->count();
+		$deleted = Team::onlyTrashed()->get()->count();
 
 		// Get trashed mode
 		$junked  = Input::get('path');
@@ -59,9 +63,9 @@ class Teams extends BaseAdmin {
 					'library' => asset("themes/ace-admin/js/library.js")
 					];
 
-		return $this->view('User::sentinel.roles.index')
-		->data(compact('rows','deleted','junked'))
-		->title('Role Listing');
+		return $this->view('User::sentinel.teams.index')
+		->data(compact('team','rows','deleted','junked'))
+		->title('Team Listing');
 	}
 
 	/**
@@ -73,21 +77,21 @@ class Teams extends BaseAdmin {
 	public function show($id)
 	{
 		// Get data from database
-        $role = $this->roles->findOrFail($id);
+        $team = $this->teams->findOrFail($id);
 
         // Read ACL settings config for any permission access
         $acl = config('setting.acl');
 
 		// Set data to return
-	   	$data = ['row'=>$role,'acl'=>$acl];
+	   	$data = ['row'=>$team,'acl'=>$acl];
 
 	   	// Return data and view
-	   	return $this->view('User::sentinel.roles.show')->data($data)->title('View Role');
+	   	return $this->view('User::sentinel.teams.show')->data($data)->title('View Team');
 
 	}
 
 	/**
-	 * Show the form for creating new role.
+	 * Show the form for creating new team.
 	 *
 	 * @return \Illuminate\View\View
 	 */
@@ -97,7 +101,7 @@ class Teams extends BaseAdmin {
 	}
 
 	/**
-	 * Handle posting of the form for creating new role.
+	 * Handle posting of the form for creating new team.
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
@@ -107,7 +111,7 @@ class Teams extends BaseAdmin {
 	}
 
 	/**
-	 * Show the form for updating role.
+	 * Show the form for updating team.
 	 *
 	 * @param  int  $id
 	 * @return mixed
@@ -118,7 +122,7 @@ class Teams extends BaseAdmin {
 	}
 
 	/**
-	 * Handle posting of the form for updating role.
+	 * Handle posting of the form for updating team.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
@@ -129,24 +133,24 @@ class Teams extends BaseAdmin {
 	}
 
 	/**
-	 * Remove the specified role.
+	 * Remove the specified team.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function trash($id)
 	{
-		if ($role = Role::find($id))
+		if ($team = Team::find($id))
 		{
 
 			// Add deleted_at and not completely delete
-			$role->delete();
+			$team->delete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Trashed!');
+			return Redirect::to(route('admin.teams.index'))->with('success', 'Team Trashed!');
 		}
 
-		return Redirect::to(route('admin.roles.index'))->with('error', 'Role Not Found!');;
+		return Redirect::to(route('admin.teams.index'))->with('error', 'Team Not Found!');;
 	}
 
 	/**
@@ -157,39 +161,39 @@ class Teams extends BaseAdmin {
 	 */
 	public function restored($id)
 	{
-		if ($role = Role::onlyTrashed()->find($id))
+		if ($team = Team::onlyTrashed()->find($id))
 		{
 
 			// Restored back from deleted_at database
-			$role->restore();
+			$team->restore();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Restored!');
+			return Redirect::to(route('admin.teams.index'))->with('success', 'Team Restored!');
 		}
 
-		return Redirect::to(route('admin.roles.index'))->with('error', 'Role Not Found!');
+		return Redirect::to(route('admin.teams.index'))->with('error', 'Team Not Found!');
 	}
 
 	/**
-	 * Remove the specified role.
+	 * Remove the specified team.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function delete($id)
 	{
-		if ($role = Role::onlyTrashed()->find($id))
+		if ($team = Team::onlyTrashed()->find($id))
 		{
 
 			// Completely delete from database
-			$role->forceDelete();
+			$team->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.roles.index','path=trashed'))->with('success', 'Role Permanently Deleted!');
+			return Redirect::to(route('admin.teams.index','path=trashed'))->with('success', 'Team Permanently Deleted!');
 
 		}
 
-		return Redirect::to(route('admin.roles.index','path=trashed'))->with('error', 'Role Not Found!');;
+		return Redirect::to(route('admin.teams.index','path=trashed'))->with('error', 'Team Not Found!');;
 	}
 
 	/**
@@ -203,23 +207,21 @@ class Teams extends BaseAdmin {
 	{
 		if ($id)
 		{
-			if ( ! $row = $this->roles->find($id))
+			if ( ! $row = $this->teams->find($id))
 			{
-				return Redirect::to(route('admin.roles.index'));
+				return Redirect::to(route('admin.teams.index'));
 			}
 
-			$row = Role::find($id);
+			$row = Team::find($id);
 
 		}
 		else
 		{
-			//$role = $this->roles;
-			$row = $this->roles;
+			//$team = $this->teams;
+			$row = $this->teams;
 		}
 
-		$acl = config('setting.acl');
-
-		return $this->view('User::sentinel.roles.form')->data(compact('mode', 'row', 'acl'))->title('Roles '.$mode);
+		return $this->view('User::sentinel.teams.form')->data(compact('mode', 'row'))->title('Teams '.$mode);
 	}
 
 	/**
@@ -231,71 +233,99 @@ class Teams extends BaseAdmin {
 	 */
 	protected function processForm($mode, $id = null)
 	{
+
 		$input = Input::all();
 
-		//dd ($input);
-
-		if ($input['permissions'] === 'true') {
-
-			$input['permissions'] = ['admin'=>true];
-
-		} else {
-
-			$input['permissions'] = ['admin'=>false];
-
-		}
-
 		$rules = [
-			'name' => 'required',
-			'slug' => 'required|unique:roles'
+			'name' => 'required|max:32'
 		];
 
 		if ($id)
 		{
 
-			$role = $this->roles->find($id);
+			$team = $this->teams->find($id);
 
-			$rules['slug'] .= ",slug,{$role->slug},slug";
-
-			$messages = $this->validateRole($input, $rules);
+			$messages = $this->validateTeam($input, $rules);
 
 			if ($messages->isEmpty())
 			{
-				$role->fill($input);
+				$team->fill($input);
 
-				$role->save();
+				$team->save();
 			}
 		}
 		else
 		{
 
-			$messages = $this->validateRole($input, $rules);
+			$messages = $this->validateTeam($input, $rules);
 
 			if ($messages->isEmpty())
 			{
 
-				$role = $this->roles->create($input);
+				$team = $this->teams->create($input);
 
 			}
 		}
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.roles.show', $role->id))->with('success', 'Role Updated!');;
+			return Redirect::to(route('admin.teams.show', $team->id))->with('success', 'Team Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
 	}
 
 	/**
-	 * Validates a role.
+	 * List invitation.
+	 *
+	 * @return \Illuminate\Support\MessageBag
+	 */
+	protected function invitation()
+	{
+		//$rules = [
+			//'email' => 'required|email|max:32'
+		//];
+
+		//$validator = Validator::make($data, $rules);
+
+		//$validator->passes();
+
+		$data = ['rows'=>''];
+		//return $validator->errors();
+		// Return data and view
+		return $this->view('User::sentinel.teams.invitation')->data($data)->title('Invitation Team');
+
+	}
+
+	/**
+	 * Validates a team.
 	 *
 	 * @param  array  $data
 	 * @param  mixed  $id
 	 * @return \Illuminate\Support\MessageBag
 	 */
-	protected function validateRole($data, $rules)
+	protected function validateTeam($data, $rules)
 	{
+		$validator = Validator::make($data, $rules);
+
+		$validator->passes();
+
+		return $validator->errors();
+	}
+
+	/**
+	 * Send invitation to a team.
+	 *
+	 * @param  array  $data
+	 * @param  mixed  $team_id
+	 * @return \Illuminate\Support\MessageBag
+	 */
+	protected function invite($data, $team_id)
+	{
+		$rules = [
+			'email' => 'required|email|max:32'
+		];
+
 		$validator = Validator::make($data, $rules);
 
 		$validator->passes();

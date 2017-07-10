@@ -79,6 +79,20 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('role/{id}/restored', ['as'=>'admin.roles.restored','uses'=>'App\Modules\User\Controller\Roles@restored']);
     Route::get('role/{id}/delete', ['as'=>'admin.roles.delete','uses'=>'App\Modules\User\Controller\Roles@delete']);
 
+    // Teams Controller routes
+    Route::get('team', ['as'=>'admin.teams.index','uses'=>'App\Modules\User\Controller\Teams@index']);
+    // Send invitation to the team
+    Route::get('team/invitation', ['as'=>'admin.teams.invitation','uses'=>'App\Modules\User\Controller\Teams@invitation']);
+    Route::post('team/{id}/invite', ['as'=>'admin.teams.invite','uses'=>'App\Modules\User\Controller\Teams@invite']);
+    Route::get('team/create', ['as'=>'admin.teams.create','uses'=>'App\Modules\User\Controller\Teams@create']);
+    Route::post('team/create', ['as'=>'admin.teams.store','uses'=>'App\Modules\User\Controller\Teams@store']);
+    Route::get('team/{id}/show', ['as'=>'admin.teams.show', 'uses'=>'App\Modules\User\Controller\Teams@show']);
+    Route::get('team/{id}', ['as'=>'admin.teams.edit','uses'=>'App\Modules\User\Controller\Teams@edit']);
+    Route::post('team/{id}', ['as'=>'admin.teams.update','uses'=>'App\Modules\User\Controller\Teams@update']);
+    Route::get('team/{id}/trash', ['as'=>'admin.teams.trash','uses'=>'App\Modules\User\Controller\Teams@trash']);
+    Route::get('team/{id}/restored', ['as'=>'admin.teams.restored','uses'=>'App\Modules\User\Controller\Teams@restored']);
+    Route::get('team/{id}/delete', ['as'=>'admin.teams.delete','uses'=>'App\Modules\User\Controller\Teams@delete']);
+
      // Permissions Controller routes
     Route::get('permission', ['as'=>'admin.permissions.index','uses'=>'App\Modules\User\Controller\Permissions@index']);
     Route::get('permission/create', ['as'=>'admin.permissions.create','uses'=>'App\Modules\User\Controller\Permissions@create']);

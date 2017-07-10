@@ -51,6 +51,14 @@ return [
 								'method' => ['roles.index','roles.edit','roles.update','roles.change','roles.create','roles.trash','roles.delete','roles.restored','roles.store','roles.show']
 							]
 						],
+						//------ User teams controller
+						['Teams' => [
+								// Action for first index
+								'action' => ['teams.index'],
+								// Controller method list
+								'method' => ['teams.index','teams.edit','teams.update','teams.change','teams.create','teams.delete','teams.restored','teams.trash','teams.store','teams.show','teams.invite','teams.invitation','teams.attach','teams.detach']
+							]
+						],
 						//------ Admin permissions controller
 						['Permissions' => [
 								// Action for first index

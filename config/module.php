@@ -76,9 +76,9 @@
 		       	],
 		       	'User' => [
 		       		// Controller
-		       		'Controller' => ['Users','Roles','Settings'],
+		       		'Controller' => ['Users','Roles','Teams','Settings'],
 		       		// Model
-		       		'Model' => ['User','Role','RoleUser','Setting']
+		       		'Model' => ['User','Role','Team','RoleUser','Setting']
 		       	]
 	    ]
 	];

@@ -11,7 +11,7 @@
 	<a href="{{route('admin.blogs.index','path=trashed')}}" title="Restored Deleted"><span class="fa fa-trash"></span> {{ $deleted }} Deleted</a>
 </div>
 @endif
-@if ($rows->count())
+@if ($rows)
 <div class="row">
 	<div class="col-xs-12">
 		<div class="clearfix">

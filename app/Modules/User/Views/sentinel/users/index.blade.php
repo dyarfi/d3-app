@@ -23,7 +23,7 @@
 	<a href="{{route('admin.users.index','path=trashed')}}" title="Restored Deleted"><span class="fa fa-trash"></span> {{ $deleted }} Deleted</a>
 </div>
 @endif
-@if ($rows->count())
+@if ($rows)
 <div class="row">
 	<div class="col-xs-12">
 		<div class="clearfix">
@@ -86,7 +86,7 @@
 		            @endif
 		        	</td>
 		        	<td>
-		        		{{ $row->created_at}}
+		        		{{ $row->created_at }}
 		        	</td>
 					<td>
 						<div class="btn-group">

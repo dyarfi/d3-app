@@ -52,9 +52,14 @@ class Users extends BaseAdmin {
 		//$user->attachTeam(1, $pivotData); // First parameter can be a Team object, array, or id
 
 		// or eloquent's original technique
-		//$user->teams()->attach(2); // id only
+		//$user = User::where('id', '=', 20)->first();
+		//$user->teams()->attach(1); // id only
 		//dd(User::where('id', '=', '20')->first());
-		dd($this->user->currentTeam->name);
+		//$user = User::where('id', '=', 20)->first();
+		//dd($user->ownedTeams()->get());
+		//$team = new Team();
+		//dd($team->get());
+
 	}
 
 	/**
