@@ -2,13 +2,14 @@
 {{-- Page content --}}
 @section('body')
 <div class="page-header">
-	<h1>Teams <span class="pull-right"><a href="{{ route('admin.teams.invitation') }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-envelope"></span> Send Invitations</a> <a href="{{ route('admin.teams.create') }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{@$junked ? ' &raquo; Trashed' :''}}</h1>
+	<h1>Team Invitation</h1>
 </div>
 @if(@$deleted)
 <div class="pull-right">
 	<a href="{{route('admin.teams.index','path=trashed')}}" title="Restored Deleted"><span class="fa fa-trash"></span> {{ @$deleted }} Deleted</a>
 </div>
 @endif
+<?php /*
 @if (@$rows)
 <small class="grey">@if (@$rows->count()) Page {{ @$rows->currentPage() }} of {{ @$rows->lastPage() }} @endif</small>
 <table class="table table-bordered table-hover">
@@ -101,6 +102,27 @@
 <div class="well">
 	Nothing to show here.
 </div>
+*/?>
+{!! Form::open([
+    'route' => 'admin.teams.invite',
+]) !!}
+	<div class="form-group{{ $errors->first('team_id', ' has-error') }}">
+		<label for="team_id">Team</label>
+		{!! Form::select('team_id', $teams, Input::get('team_id') ? Input::get('team_id') : Input::old('team_id', @$row->id),['placeholder' => 'Pick a Team','class'=>'form-control']); !!}
+		<span class="help-block">{{{ $errors->first('team_id', ':message') }}}</span>
+	</div>
+	<div class="form-group{{ $errors->first('email', ' has-error') }}">
+		{!! Form::label('email', 'Email'); !!}
+		{!! Form::text('name',Input::old('email'),[
+			'placeholder'=>'Enter the Email.',
+			'name'=>'email',
+			'id'=>'email',
+			'class' => 'form-control']); !!}
+		<span class="help-block">{{{ $errors->first('email', ':message') }}}</span>
+	</div>
+	<button type="submit" class="btn btn-default">Submit</button>
+{!! Form::close() !!}
+<?php /*
 @endif
-
+*/?>
 @stop

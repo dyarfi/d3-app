@@ -1,7 +1,9 @@
 <?php namespace App\Modules\User\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View;
+use Route, Session, Redirect, Input, Validator, View;
+use Illuminate\Http\Request;
+
 // Load Sentinel and Socialite classes
 use Sentinel, Socialite;
 // Load main base controller
@@ -50,7 +52,7 @@ class Teams extends BaseAdmin {
 		$team = new Team;
 
 		// Set return data
-	   	$rows = Input::get('path') === 'trashed' ? Team::onlyTrashed()->paginate(10) : Team::paginate(10);
+	   	$rows = Input::get('path') === 'trashed' ? Team::with('owner')->onlyTrashed()->paginate(10) : Team::with('owner')->paginate(10);
 
 	   	// Get deleted count
 		$deleted = Team::onlyTrashed()->get()->count();
@@ -77,7 +79,7 @@ class Teams extends BaseAdmin {
 	public function show($id)
 	{
 		// Get data from database
-        $team = $this->teams->findOrFail($id);
+        $team = $this->teams->with('owner')->findOrFail($id);
 
         // Read ACL settings config for any permission access
         $acl = config('setting.acl');
@@ -249,6 +251,9 @@ class Teams extends BaseAdmin {
 
 			if ($messages->isEmpty())
 			{
+
+				//$input['owner_id'] = $this->user->id;
+
 				$team->fill($input);
 
 				$team->save();
@@ -257,12 +262,18 @@ class Teams extends BaseAdmin {
 		else
 		{
 
+			//$input['owner_id'] = $this->user->id;
+
 			$messages = $this->validateTeam($input, $rules);
 
 			if ($messages->isEmpty())
 			{
 
-				$team = $this->teams->create($input);
+				//$team = $this->teams->create($input);
+				$team	= new Team();
+				$team->owner_id = $this->user->id;
+				$team->name = $input['name'];
+				$team->save();
 
 			}
 		}
@@ -273,28 +284,6 @@ class Teams extends BaseAdmin {
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
-	}
-
-	/**
-	 * List invitation.
-	 *
-	 * @return \Illuminate\Support\MessageBag
-	 */
-	protected function invitation()
-	{
-		//$rules = [
-			//'email' => 'required|email|max:32'
-		//];
-
-		//$validator = Validator::make($data, $rules);
-
-		//$validator->passes();
-
-		$data = ['rows'=>''];
-		//return $validator->errors();
-		// Return data and view
-		return $this->view('User::sentinel.teams.invitation')->data($data)->title('Invitation Team');
-
 	}
 
 	/**
@@ -313,24 +302,57 @@ class Teams extends BaseAdmin {
 		return $validator->errors();
 	}
 
+
+	/**
+	 * List invitation.
+	 *
+	 * @return \Illuminate\Support\MessageBag
+	 */
+	protected function invitation()
+	{
+ 		// Set data to view
+		$data = ['teams'=>Team::all()->lists('name','id')];
+
+		// Return data and view
+		return $this->view('User::sentinel.teams.invitation')->data($data)->title('Invitation Team');
+
+	}
+
 	/**
 	 * Send invitation to a team.
 	 *
-	 * @param  array  $data
+	 * @param  array  $request
 	 * @param  mixed  $team_id
 	 * @return \Illuminate\Support\MessageBag
 	 */
-	protected function invite($data, $team_id)
+	protected function invite(Request $request)
 	{
-		$rules = [
-			'email' => 'required|email|max:32'
-		];
+		//dd($request);
+		//$input = array_filter(Input::all());
+		// Split form input value on commas followed by any number of spaces (returns an array)
+		$request->replace(array('email' => preg_split('~, *~', $request->email)));
+		//dd($request);
+		// How we should define our validator rule
+		$validator = Validator::make($request->all(), [
+			'team_id' => 'required',
+		    'email.*' => 'required|email|unique:users,email',
+		]);
+		// dd($input);
+		// Turn back to our first value
+		//$input['email'] = implode(', ', $input['email']);
 
-		$validator = Validator::make($data, $rules);
+		//$validator = Validator::make($input, $rules);
 
-		$validator->passes();
-
-		return $validator->errors();
+		// Turn back to our first value
+		//if(isset($request->email)) {
+			//$request->email = implode(', ', $request->email);
+		//}
+		// dd($validator->errors('email')->first());
+		$messages = $validator->errors();
+		dd($messages);
+		//return $validator->errors();
+		//return $this->view('User::sentinel.teams.invitation')->data($data)->title('Invitation Team')->withErrors($validator->errors());
+		return Redirect::back()->withInput()->withErrors($messages);
 	}
 
 }

@@ -24,6 +24,9 @@
 		<tr class="{{ $row->deleted_at ? ' bg-warning' :'' }}">
 			<td>
 				{{ $row->name }}
+				@if($row->owner )
+					<small class="label label-info label-sm clearfix">Owner : {{ $row->owner->first_name.' '.$row->owner->last_name}}</small>
+				@endif
 			</td>
 			<td>
 				<!-- {{ Carbon::parse($row->created_at)->format('l, jS M Y') }} -->

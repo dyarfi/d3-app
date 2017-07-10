@@ -83,7 +83,7 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('team', ['as'=>'admin.teams.index','uses'=>'App\Modules\User\Controller\Teams@index']);
     // Send invitation to the team
     Route::get('team/invitation', ['as'=>'admin.teams.invitation','uses'=>'App\Modules\User\Controller\Teams@invitation']);
-    Route::post('team/{id}/invite', ['as'=>'admin.teams.invite','uses'=>'App\Modules\User\Controller\Teams@invite']);
+    Route::post('team/invite', ['as'=>'admin.teams.invite','uses'=>'App\Modules\User\Controller\Teams@invite']);
     Route::get('team/create', ['as'=>'admin.teams.create','uses'=>'App\Modules\User\Controller\Teams@create']);
     Route::post('team/create', ['as'=>'admin.teams.store','uses'=>'App\Modules\User\Controller\Teams@store']);
     Route::get('team/{id}/show', ['as'=>'admin.teams.show', 'uses'=>'App\Modules\User\Controller\Teams@show']);

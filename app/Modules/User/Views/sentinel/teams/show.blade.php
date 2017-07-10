@@ -4,9 +4,8 @@
 <div class="container-fluid">
     <h4 class="red">Name</h4>
     <div>{{ $row->name }}</div>
-    <h4 class="red">Users</h4>
-    <!-- this should be remove if you choice is to show non accessible controller -->
     @if (count($row->users))
+        <h4 class="red">Users</h4>
         <div class="row">
             <div class="col-lg-12">
             {!! Form::open(['route'=>['admin.permissions.change',$row->id],'method'=>'POST','class'=>'form-vertical','team'=>'form','id'=>'permissions_update']) !!}
@@ -49,8 +48,11 @@
         </div>
         <hr/>
     @else
-        <span class="label label-danger label-sm">No Permissions</span>
+        <!--span class="label label-danger label-sm">No Permissions</span-->
     @endif
+    <h4 class="red">Owner</h4>
+    <div>{{ @$row->owner->first_name .' '. @$row->owner->last_name }}</div>
+    <div class="space-10 clearfix"></div>
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.teams.index') }}" class="btn btn-info btn-xs">Back to all teams</a>
@@ -66,5 +68,4 @@
         </div>
     </div>
 </div>
-
 @stop

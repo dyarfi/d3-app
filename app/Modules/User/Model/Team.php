@@ -34,4 +34,15 @@ class Team extends TeamworkTeam
  		return $this->belongsToMany('App\Modules\User\Model\User','team_user','team_id','user_id');
 
  	}
+
+    /**
+    * A user can have many roles.
+    *
+    */
+   public function owner()
+   {
+       return $this->belongsTo('App\Modules\User\Model\User','owner_id');
+       //return $this->belongsToMany('App\Modules\User\Model\User','team_user','team_id','user_id');
+
+   }
 }
