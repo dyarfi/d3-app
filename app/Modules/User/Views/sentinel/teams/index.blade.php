@@ -10,7 +10,7 @@
 </div>
 @endif
 @if ($rows)
-<small class="grey">@if ($rows) Page {{ @$rows->currentPage() }} of {{ @$rows->lastPage() }} @endif</small>
+<!--small class="grey">@if ($rows) Page {{ @$rows->currentPage() }} of {{ @$rows->lastPage() }} @endif</small-->
 <table class="table table-bordered table-hover">
 	<thead>
 		<th class="col-lg-2">Name</th>
@@ -95,7 +95,7 @@
 		@endforeach
 	</tbody>
 </table>
-<small class="grey">@if ($rows) Page {{ @$rows->currentPage() }} of {{ @$rows->lastPage() }} @endif</small>
+<!--small class="grey">@if ($rows) Page {{ @$rows->currentPage() }} of {{ @$rows->lastPage() }} @endif</small-->
 <div class="pull-right">
 	{!! $rows->render() !!}
 </div>

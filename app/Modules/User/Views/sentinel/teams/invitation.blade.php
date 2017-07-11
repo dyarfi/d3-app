@@ -114,7 +114,7 @@
 	<div class="form-group{{ $errors->first('email', ' has-error') }}">
 		{!! Form::label('email', 'Email'); !!}
 		{!! Form::text('name',Input::old('email'),[
-			'placeholder'=>'Enter the Email.',
+			'placeholder'=>'Enter the Email with (, ) comma and space delimiter.',
 			'name'=>'email',
 			'id'=>'email',
 			'class' => 'form-control']); !!}

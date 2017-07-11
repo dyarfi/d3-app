@@ -46,6 +46,11 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('register', 'App\Modules\Auth\AuthAdminController@register');
     Route::post('register', 'App\Modules\Auth\AuthAdminController@processRegistration');
 
+    // Get users team invitation process
+    Route::get('invitation/{id}/{action}', ['as'=>'admin.invitation','uses'=>'App\Modules\Auth\AuthAdminController@invitation']);
+
+    //Route::get('invitation', ['as'=>'admin.invitation','uses'=>'App\Modules\Auth\AuthAdminController@invitation']);
+
     // } ****************** Auth\AuthAdminController ****************** //
 
     // Users Controller

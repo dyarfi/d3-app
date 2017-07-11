@@ -217,6 +217,7 @@ return [
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
 		// ------- Original Laravel Auth Class - start --------------
         'Auth'      => Illuminate\Support\Facades\Auth::class,
+		//'Auth'		=> Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 		// ------- Original Laravel Auth Class - end ----------------
         'Blade'     => Illuminate\Support\Facades\Blade::class,
         'Bus'       => Illuminate\Support\Facades\Bus::class,
@@ -283,6 +284,9 @@ return [
 
 		// Attach MediaUploader in models
 		'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
+
+		// Attach Alias for Teamwork provider
+		'Teamwork' => Mpociot\Teamwork\Facades\Teamwork::class,
 
 	],
 

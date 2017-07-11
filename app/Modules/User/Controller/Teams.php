@@ -1,9 +1,7 @@
 <?php namespace App\Modules\User\Controller;
 
 // Load Laravel classes
-use Route, Session, Redirect, Input, Validator, View;
-use Illuminate\Http\Request;
-
+use Route, Session, Redirect, Input, Validator, View, Mail;
 // Load Sentinel and Socialite classes
 use Sentinel, Socialite;
 // Load main base controller
@@ -245,18 +243,17 @@ class Teams extends BaseAdmin {
 		if ($id)
 		{
 
+			// Get data
 			$team = $this->teams->find($id);
-
+			// Set validation messages
 			$messages = $this->validateTeam($input, $rules);
 
 			if ($messages->isEmpty())
 			{
-
-				//$input['owner_id'] = $this->user->id;
-
+				// Update data
 				$team->fill($input);
-
 				$team->save();
+
 			}
 		}
 		else
@@ -325,33 +322,98 @@ class Teams extends BaseAdmin {
 	 * @param  mixed  $team_id
 	 * @return \Illuminate\Support\MessageBag
 	 */
-	protected function invite(Request $request)
+	protected function invite()
 	{
-		//dd($request);
-		//$input = array_filter(Input::all());
-		// Split form input value on commas followed by any number of spaces (returns an array)
-		$request->replace(array('email' => preg_split('~, *~', $request->email)));
-		//dd($request);
+
+		// Filter input all
+		$input = array_filter(Input::all());
+
 		// How we should define our validator rule
-		$validator = Validator::make($request->all(), [
+		$validator = Validator::make($input, [
 			'team_id' => 'required',
-		    'email.*' => 'required|email|unique:users,email',
+		    'email' => 'required|regex:/^([_a-z0-9\-]+)(\.[_a-z0-9\-]+)*@([a-z0-9\-]{2,}\.)*([a-z]{2,4})(,\s([_a-z0-9\-]+)(\.[_a-z0-9\-]+)*@([a-z0-9\-]{2,}\.)*([a-z]{2,4}))*$/
+',
 		]);
-		// dd($input);
-		// Turn back to our first value
-		//$input['email'] = implode(', ', $input['email']);
 
-		//$validator = Validator::make($input, $rules);
+	   	// Set messages
+	   	$messages = $validator->errors();
 
-		// Turn back to our first value
-		//if(isset($request->email)) {
-			//$request->email = implode(', ', $request->email);
-		//}
-		// dd($validator->errors('email')->first());
-		$messages = $validator->errors();
-		dd($messages);
-		//return $validator->errors();
-		//return $this->view('User::sentinel.teams.invitation')->data($data)->title('Invitation Team')->withErrors($validator->errors());
+		// Set default state
+		$state = false;
+
+		// If Passes check the email in the database
+		if ($messages->isEmpty())
+		{
+			// Explode email having the separator (, )
+			$emails = explode(', ', $input['email']);
+
+			// Check if the emails is an array
+			if (is_array($emails)) {
+				// Set default existed
+				$existed = '';
+				// Check in the loop
+				foreach ($emails as $email) {
+					// Check if email existed in the database
+					$count = User::where('email','=',$email)->count();
+					// if existed
+					if ($count) {
+						// Set emails with count
+						$existed[$email] = $count;
+					} else {
+						// We can continue the process
+						$state = true;
+					}
+				}
+
+				// If not existed in database and state is true
+				if (!$existed && $state) {
+
+					// Send email invitation and save to database
+					$team = Team::find($input['team_id']);
+					$user = $this->user;
+
+					// Loop for mass mailing and insert invitation to database
+					foreach ($emails as $email) {
+						// Set invitation models
+						$invite               = app()->make(config('teamwork.invite_model'));
+						$invite->user_id      = $user->id;
+						// Set model data
+						$invite->team_id      = $team->id;
+						$invite->type         = 'invite';
+						$invite->email        = $email;
+						$invite->accept_token = md5( uniqid( microtime() ) );
+						$invite->deny_token   = md5( uniqid( microtime() ) );
+
+						// Send email to user / let them know that they got invited
+						$sent = Mail::send('User::sentinel.emails.invitation', compact('invite', 'user', 'team'), function($m) use ($email) {
+							// Send to and subject
+					 		$m->to($email)->subject('Team Invitation');
+						});
+
+						// Save Model
+						$invite->save();
+					}
+
+					//if ($sent === 0)
+					//{
+					 //return Redirect::to('register')
+						 //->withErrors('Failed to send reset password email.');
+					//}
+
+					// Redirect to default page
+					// return Redirect::to(route('admin.teams.invitation'))->with('success', 'Team Invited!');
+
+				} else {
+
+					// Set email error messages
+					$messages = ['email' => 'Email existed : '. implode(", ", array_keys($existed))];
+
+				}
+
+			}
+
+		}
+
 		return Redirect::back()->withInput()->withErrors($messages);
 	}
 

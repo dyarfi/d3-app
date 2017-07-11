@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 //use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 //use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 //use Cartalyst\Sentinel\Activations;
-use Sentinel, Email;
+use Sentinel, Email, Teamwork;
 
 // Load Laravel classes
 use Input, View, Validator, Redirect;
@@ -29,7 +29,7 @@ class AuthAdminController extends Controller {
 	public function __construct(Sentinel $auth)
 	{
 
-		$this->middleware('auth.admin', ['only' => 'getLogin','getLogout','getIndex']);
+		$this->middleware('auth.admin', ['only' => 'getLogin','getLogout','getIndex','getInvitation']);
 
 		$this->setting 		= config('setting');
 
@@ -130,6 +130,92 @@ class AuthAdminController extends Controller {
 	public function register()
 	{
 		return View::make('User::sentinel.register');
+	}
+
+	/**
+	 * Handle team invitation cancel page for the user.
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+   	//public function invitationCancel()
+   	//{
+
+		//return View::make('User::sentinel.invitation',['title'=>'Invitation Page']);
+
+   	//}
+
+	/**
+	 * Handle team invitation page for the user.
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function invitation($code='', $action='')
+	{
+		// Set empty messages
+		$message	= '';
+		// Set default state
+		$state 		= false;
+
+		if ($code && $action) {
+
+			if ($action == 'accept') {
+
+				$invite = Teamwork::getInviteFromAcceptToken( $code ); // Returns a TeamworkInvite model or null
+
+				if( $invite ) // valid token found
+				{
+					// Set new user base on the invitation code
+					// $user = new User;
+					// $user->email = $invite->email;
+					// $user->password = null;
+					// $user->save();
+
+					// Set user data array
+					$invited['email'] = $invite->email;
+					$invited['password'] = 'password';
+
+					// Register account
+					Sentinel::registerAndActivate($invited);
+
+					// Delete invitation
+					$invite->delete();
+
+					// Set state
+					$state = true;
+					$message = 'Your account has been created, please continue!';
+					// Teamwork::acceptInvite( $invite );
+
+				} else {
+
+					$message = 'Invitation not existed!';
+
+				}
+
+			} elseif ($action == 'deny') {
+
+				$invite = Teamwork::getInviteFromDenyToken( $code ); // Returns a TeamworkInvite model or null
+
+				if( $invite ) // valid token found
+				{
+
+					$invite->delete();
+					$message = 'Your invitation has been cancel, thank you!';
+					// Teamwork::denyInvite( $invite );
+
+				} else {
+
+					$message = 'Invitation not existed anymore!';
+
+				}
+			}
+
+		} else {
+
+			return Redirect::back()->with('error','No other action included!');
+
+		}
+
+		return View::make('User::sentinel.invitation',['title'=>'Invitation Page','message'=>$message])->with($message);
 	}
 
 	/**
