@@ -56,13 +56,15 @@ class BaseAdmin extends ThemeAdmin {
 
 			}
 
-			// Check if user visited the access with referer or not
-			if (Request::server('HTTP_REFERER') =='' || Request::server('HTTP_REFERER') == route('admin.noaccess')) {
+			// Check if user visited the access with referer or not and has access to dashboard
+			if ((Request::server('HTTP_REFERER') == '' || Request::server('HTTP_REFERER') == route('admin.noaccess'))
+					&& Sentinel::hasAccess(['admin.dashboard'])) {
+
 				// If yes redirect to dashboard
 				return Redirect::intended(route('admin.dashboard'));
 			}
 
-			return View::make('Auth::errors.noaccess');
+			return View::make('Auth::errors.noaccess')->withErrors('Unauthorized access!');
 
 		} else {
 

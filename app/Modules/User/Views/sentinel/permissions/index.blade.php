@@ -49,7 +49,13 @@
 						$users = $role->users()->get();
 						foreach ($users as $user) {
 						?>
-							<a href="{{ route('admin.permissions.edit', $user->id .'?access=user') }}" data-placement="top" data-rel="tooltip" data-original-title="View Permissions">[{{ $user->first_name }} {{ $user->last_name }}]</a>&nbsp;
+							<a href="{{ route('admin.permissions.edit', $user->id .'?access=user') }}" data-placement="top" data-rel="tooltip" data-original-title="View Permissions">
+								@if($user->first_name && $user->last_name)
+								[{{ $user->first_name }} {{ $user->last_name }}]
+								@else
+								[{{ $user->email }}]
+								@endif
+							</a>&nbsp;
 						<?php
 						}
 					?>

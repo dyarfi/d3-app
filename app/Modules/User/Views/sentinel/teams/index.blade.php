@@ -43,9 +43,13 @@
 				<?php
 				//print_r($row->users->count());
 				foreach ($row->users as $user) {
-					echo '<a href="'.route('admin.users.show',$user->id).'" class="btn btn-info btn-xs"><span class="fa fa-user"></span>&nbsp;';
-					echo $user->first_name.' '.$user->last_name;
-					echo '</a>&nbsp;';
+					echo '<a style="margin-bottom:2px;margin-right:2px;" href="'.route('admin.users.show',$user->id).'" class="btn btn-info btn-xs"><span class="fa fa-user fa-1x"></span>&nbsp;';
+					if($user->first_name && $user->last_name) {
+						echo $user->first_name.' '.$user->last_name;
+					} else {
+						echo $user->email;
+					}
+					echo '</a>';
 				}
 				?>
 				<!--span class="label label-info">
@@ -63,6 +67,7 @@
 						@endif
 					@endif
 				</span-->
+				<div class="space-2"></div>
 				<a href="{{ route('admin.teams.invite', $row->id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-envelope"></span> Invite User</a>
 			</td>
 			<td>

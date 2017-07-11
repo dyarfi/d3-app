@@ -40,7 +40,7 @@ class Admin {
 	 */
 	public function handle($request, Closure $next)
 	{
-		
+
 		// Get controller and action from request
 		$action 		= $this->router->getRoutes()->match($request)->getActionName();
 
@@ -67,7 +67,7 @@ class Admin {
 		// Sentinel auth check
 		if (! Sentinel::check()) {
 
-			return Redirect::to('apanel/noaccess')->withErrors(['Only admins can access this page.']);
+			return Redirect::intended('apanel/noaccess')->withErrors(['Only admins can access this page.']);
 
 		} else if (Sentinel::hasAccess($accessRoutes)) {
 
@@ -75,7 +75,7 @@ class Admin {
 
 		} else {
 
-			return Redirect::to('apanel/noaccess')->withErrors(['Luke.. you do not have access permission to this page!']);
+			return Redirect::intended(route('admin.noaccess'))->withErrors(['Luke.. you do not have access permission to this page!']);
 		}
 
 		return $next($request);

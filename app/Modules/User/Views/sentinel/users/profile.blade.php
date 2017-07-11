@@ -1,7 +1,6 @@
 @extends('Auth::layouts.template')
 
 @section('body')
-
 <h1 class="green">Profile <small>{{ $row->email }}</small></h1>
 <hr>
 <div class="row-fluid">
@@ -13,7 +12,7 @@
 	       	'class' =>'form-horizontal'
 		]) !!}
 
-			{!! Form::hidden('_private', base64_encode(csrf_token() .'::'. $row->email .'::'. $row->roles()->first()->id) ) !!}
+			{!! Form::hidden('_private', base64_encode(csrf_token() .'::'. $row->email .'::'. @$row->roles()->first()->id) ) !!}
 
 			<div class="form-group">
 				<div class="col-md-12">

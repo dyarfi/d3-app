@@ -231,17 +231,21 @@
     <li class="light-blue">
       <a data-toggle="dropdown" href="#" class="dropdown-toggle">
         <?php
-            $first_name = Sentinel::getUser()->first_name;
+            $user = Sentinel::getUser();
             if (Sentinel::getUser()->image && File::exists('uploads/'.str_replace('.jpg','-100x100px.jpg', Sentinel::getUser()->image))) {
                 $img = asset('uploads/'.str_replace('.jpg','-100x100px.jpg', Sentinel::getUser()->image));
             } else {
                 $img = asset('themes/ace-admin/avatars/user.jpg');
             }
         ?>
-        <img class="nav-user-photo" src="{{ $img }}" alt="{{$first_name}}'s Photo" />
+        <img class="nav-user-photo" src="{{ $img }}" alt="{{ (isset($user->first_name) ? $user->first_name : $user->email) }}'s Photo" />
         <span class="user-info">
           <small>Welcome,</small>
-          {{ $first_name }}
+            @if($user->first_name)
+                {{ $user->first_name }}
+            @else
+                {{ $user->email }}
+            @endif
         </span>
         <i class="ace-icon fa fa-caret-down"></i>
       </a>

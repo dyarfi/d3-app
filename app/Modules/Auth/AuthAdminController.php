@@ -10,6 +10,9 @@ use Sentinel, Email, Teamwork;
 // Load Laravel classes
 use Input, View, Validator, Redirect;
 
+// Load User models
+use App\Modules\User\Model\User;
+
 class AuthAdminController extends Controller {
 
 	//protected $auth = '';
@@ -175,7 +178,11 @@ class AuthAdminController extends Controller {
 					$invited['password'] = 'password';
 
 					// Register account
-					Sentinel::registerAndActivate($invited);
+					$user = Sentinel::registerAndActivate($invited);
+					// Set user's team
+					$user_teams = User::where('email','=',$invite->email)->first();
+					$user_teams->teams()->attach($invite->team_id);
+					Sentinel::login($user);
 
 					// Delete invitation
 					$invite->delete();
@@ -215,7 +222,12 @@ class AuthAdminController extends Controller {
 
 		}
 
-		return View::make('User::sentinel.invitation',['title'=>'Invitation Page','message'=>$message])->with($message);
+		return View::make('User::sentinel.invitation',
+		[
+			'title'=>'Invitation Page',
+			'message'=>$message,
+			'user'=>$user
+		])->with($message);
 	}
 
 	/**

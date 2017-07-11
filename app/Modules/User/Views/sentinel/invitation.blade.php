@@ -18,7 +18,7 @@ Please Wait
 					</span>
 					<div class="space-12"></div>
 					<div class="clearfix">
-						<a class="width-35 pull-right btn btn-sm btn-primary" href={{ route('home') }}>
+						<a class="width-35 pull-right btn btn-sm btn-primary" href={{ route('admin.dashboard') }}>
 							<i class="ace-icon glyphicon glyphicon-ok"></i> <span class="bigger-110">Continue</span>
 						</a>
 					</div>

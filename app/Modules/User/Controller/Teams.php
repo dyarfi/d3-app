@@ -394,14 +394,14 @@ class Teams extends BaseAdmin {
 						$invite->save();
 					}
 
-					//if ($sent === 0)
-					//{
-					 //return Redirect::to('register')
-						 //->withErrors('Failed to send reset password email.');
-					//}
+					if ($sent === 0)
+					{
+					 return Redirect::to(route('admin.teams.invitation'))
+						 ->withErrors('Failed to send invitation email.');
+					}
 
 					// Redirect to default page
-					// return Redirect::to(route('admin.teams.invitation'))->with('success', 'Team Invited!');
+					return Redirect::to(route('admin.teams.invitation'))->with('success', 'Team Invited!');
 
 				} else {
 
