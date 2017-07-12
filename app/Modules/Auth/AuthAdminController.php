@@ -174,6 +174,7 @@ class AuthAdminController extends Controller {
 					// $user->save();
 
 					// Set user data array
+					$invited['username'] = strstr($invite->email, '@', true);
 					$invited['email'] = $invite->email;
 					$invited['password'] = 'password';
 

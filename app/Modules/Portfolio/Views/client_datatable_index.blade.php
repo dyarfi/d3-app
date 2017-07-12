@@ -32,7 +32,8 @@
 			<tr>
 				<th class="center col-lg-1"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></th>
 				<th class="col-lg-2">Name</th>
-				<th class="col-lg-4">Description</th>
+				<th class="col-lg-2">Logo</th>
+				<th class="col-lg-2">Description</th>
 				<th class="col-lg-1">Status</th>
 				<th class="col-lg-1">Created At</th>
 				<th class="col-lg-1">Updated At</th>

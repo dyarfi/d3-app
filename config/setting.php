@@ -279,7 +279,7 @@ return [
 	 'status' =>
 		[
 			'1' => 'Active',
-			'0' => 'Inactive'
+			'2' => 'Inactive'
 		],
 
 	'configure'	=> ['install' => true,'safe_mode'=> 'http://your-site.com/']

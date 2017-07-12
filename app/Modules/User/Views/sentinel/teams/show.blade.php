@@ -16,7 +16,11 @@
                         <ul class="list-unstyled">
                         @foreach ($row->users as $users => $user)
                             <li>
+                                @if($user->first_name && $user->last_name )
                                 <h4 class="row green">{{ $user->first_name .' '.$user->last_name }}</h4>
+                                @else
+                                <h4 class="row green">{{ $user->email }}</h4>
+                                @endif
                                 <div class="control-group">
                                     <div class="form-group">
                                         <div class="clearfix">
@@ -56,7 +60,8 @@
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.teams.index') }}" class="btn btn-info btn-xs">Back to all teams</a>
-            <a href="{{ route('admin.teams.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit team</a>
+            <a href="{{ route('admin.teams.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Team</a>
+            <a href="{{ route('admin.teams.create') }}" class="btn btn-warning btn-xs">Create Team</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([

@@ -52,7 +52,8 @@
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.blogs.index') }}" class="btn btn-info btn-xs">Back to all blogs</a>
-            <a href="{{ route('admin.blogs.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit blog</a>
+            <a href="{{ route('admin.blogs.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Blog</a>
+            <a href="{{ route('admin.blogs.create') }}" class="btn btn-warning btn-xs">Create Blog</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([

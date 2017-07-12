@@ -55,8 +55,14 @@ class Clients extends BaseAdmin {
 	   	$scripts = [
 	   				'dataTables' => asset('themes/ace-admin/js/jquery.dataTables.min.js'),
 	   				'dataTableBootstrap'=> asset('themes/ace-admin/js/jquery.dataTables.bootstrap.min.js'),
+					// ColorBox
+			   		'jquery.colorbox' => asset('themes/ace-admin/js/jquery.colorbox.min.js'),
 					'library' => asset("themes/ace-admin/js/library.js")
 	   				];
+
+		$styles 	= [
+	 	   			'jquery.colorbox' => asset('themes/ace-admin/css/colorbox.min.css'),
+	 	   			];
 
 		// Set inline script or style
 		$inlines = [
@@ -74,6 +80,7 @@ class Clients extends BaseAdmin {
 					columns: [
 						{data: 'id', name:'id', orderable: false, searchable: false},
 						{data: 'name', name: 'name'},
+						{data: 'image', name: 'logo'},
 						{data: 'description', name: 'description'},
 						{data: 'status', name: 'status'},
 						{data: 'created_at', name: 'created_at'},
@@ -90,6 +97,7 @@ class Clients extends BaseAdmin {
 						.prop('checked',false);
 						$('#datatable-table > tbody > tr > td:first-child').addClass('center');
 						$('[data-rel=tooltip]').tooltip();
+						$('[data-rel=colorbox]').colorbox();
 					}
 				});
 			",
@@ -135,6 +143,11 @@ class Clients extends BaseAdmin {
 							<i class="ace-icon fa fa-trash bigger-120"></i>
 						</a>';
 				}
+			})
+			// Edit column image
+			->editColumn('image', function ($row) {
+				$html = '<a data-rel="colorbox" class="cboxElement" href="'.asset('uploads/'.$row->image).'"><img src="'.asset('uploads/'.$row->image).'" height="50px"/></a>';
+				return $html;
 			})
 			// Edit column name
 			->editColumn('name', function ($row) {
@@ -340,7 +353,7 @@ class Clients extends BaseAdmin {
 			'name' 	   	   => 'required',
 			//'slug' 		   => 'required',
 			'description'  => 'required',
-			'status'	   => 'boolean',
+			//'status'	   => 'boolean',
 			'image' 	   => ($mode == 'create' ? 'required|' : '').'mimes:jpg,jpeg,png|max:999',
 			'index'	   	   => 'numeric|digits_between:1,999',
 		];

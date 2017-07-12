@@ -9,12 +9,12 @@
         <li>
             @if ($row->permissions)
                 @foreach ($row->permissions as $permissions => $permission)
-                    [{{ ucfirst($permissions) }}] 
+                    [{{ ucfirst($permissions) }}]
                 @endforeach
             @else
                 <span class="label label-danger label-sm">No Role</span>
-            @endif    
-        </li> 
+            @endif
+        </li>
     </ul>
     <h4 class="red">Permissions</h4>
     <!-- this should be remove if you choice is to show non accessible controller -->
@@ -22,25 +22,25 @@
         <div class="row">
             <div class="col-lg-12">
             {!! Form::open(['route'=>['admin.permissions.change',$row->id],'method'=>'POST','class'=>'form-horizontal','role'=>'form','id'=>'permissions_update']) !!}
-            {!! Form::hidden('role_form',csrf_token()) !!}    
+            {!! Form::hidden('role_form',csrf_token()) !!}
             <div class="well well-sm height170">
-                <div class="container-fluid">          
+                <div class="container-fluid">
                     <div class="checkbox-handler">
-                        <ul class="list-unstyled">            
-                        @foreach ($acl as $key => $values)    
-                            <?php 
-                            $access = head(array_keys($values)); 
-                            $_access = strtolower($access); 
+                        <ul class="list-unstyled">
+                        @foreach ($acl as $key => $values)
+                            <?php
+                            $access = head(array_keys($values));
+                            $_access = strtolower($access);
                             ?>
-                            <li>         
+                            <li>
                                 <h4 class="row green">{{ $access }}</h4>
-                                <div class="control-group"> 
-                                    <div class="form-group">   
-                                            <?php 
+                                <div class="control-group">
+                                    <div class="form-group">
+                                            <?php
                                             // Set default variable checking
                                             $is_admin = true; // Set this to false if we want to set superadmin disallowed to change admin permissions
                                             $readonly = '';
-                                            $message  = '';                                             
+                                            $message  = '';
                                             // Check current user if they are admin or not
                                             if( !Sentinel::inRole('admin') && !Sentinel::hasAccess('admin')) {
                                                 $is_admin = false;
@@ -49,8 +49,8 @@
                                             if ($access == 'Admin') {
                                                 $readonly   = $is_admin ? '' : ' disabled';
                                                 $message    = '&nbsp;<small class="btn btn-success btn-xs disabled"><i class="ace-icon fa fa-exclamation-triangle"></i> SUPERADMIN ONLY</small>';
-                                            }   
-                                            ?>  
+                                            }
+                                            ?>
                                             @if (isset($row->permissions[$_access]) && array_get($row->permissions, $_access) == 1)
                                                 <input type="checkbox" class="checked" id="role_permission[{{$_access}}]" name="role_permission[{{$_access}}]" checked value="true" {{ $readonly }} />
                                                 @if ($readonly)
@@ -59,35 +59,36 @@
                                             @else
                                                 <input type="checkbox" class="checked" id="role_permission[{{$_access}}]" name="role_permission[{{$_access}}]" value="false" {{ $readonly }} />
                                             @endif
-                                            <label for="role_permission[{{$_access}}]">{{ ucwords(str_replace('.',' ',$_access)) }}</label>                            
+                                            <label for="role_permission[{{$_access}}]">{{ ucwords(str_replace('.',' ',$_access)) }}</label>
                                     </div>
-                                </div>                    
+                                </div>
                             </li>
-                        @endforeach 
+                        @endforeach
                             <li>
                                 <div class="input-sm">
                                     <input type="checkbox" name="check_all" id="check_all" />
                                     <label class="blue" for="check_all">Check All</label>
                                     {!! $message !!}
-                                </div>       
-                                <div class="space-10"></div>    
+                                </div>
+                                <div class="space-10"></div>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="pull-right">{!! Form::submit('Save All Permissions',['class'=>'btn btn-primary btn-sm']) !!}</div>
             {!! Form::close() !!}
             </div>
         </div>
         <hr/>
-    @else 
+    @else
         <span class="label label-danger label-sm">No Permissions</span>
     @endif
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.roles.index') }}" class="btn btn-info btn-xs">Back to all roles</a>
-            <a href="{{ route('admin.roles.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit role</a>
+            <a href="{{ route('admin.roles.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Role</a>
+            <a href="{{ route('admin.roles.create') }}" class="btn btn-warning btn-xs">Create Role</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([

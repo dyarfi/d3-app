@@ -24,18 +24,31 @@
         {{ $row->description }}
     </div>
     @endif
+    @if($row->status)
+    <h4 class="red">Status</h4>
+    <div class="row-fluid">
+        {{ config('setting.status')[$row->status] }}
+    </div>
+    @endif
+    @if($row->created_at)
+    <h4 class="red">Created At</h4>
+    <div class="row-fluid">
+        {{ $row->created_at }}
+    </div>
+    @endif
     <hr/>
     <div class="row">
         <div class="col-md-5 col-xs-6">
-            <a href="{{ route('admin.pages.index') }}" class="btn btn-info btn-xs">Back to all pages</a>
-            <a href="{{ route('admin.pages.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit page</a>
+            <a href="{{ route('admin.projects.index') }}" class="btn btn-info btn-xs">Back to all projects</a>
+            <a href="{{ route('admin.projects.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Project</a>
+            <a href="{{ route('admin.projects.create') }}" class="btn btn-warning btn-xs">Create Project</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([
                 'method' => 'DELETE',
-                'route' => ['admin.pages.trash', $row->id]
+                'route' => ['admin.projects.trash', $row->id]
             ]) !!}
-                {!! Form::submit('Delete this page?', ['class' => 'btn btn-danger btn-xs']) !!}
+                {!! Form::submit('Delete this project?', ['class' => 'btn btn-danger btn-xs']) !!}
             {!! Form::close() !!}
         </div>
     </div>

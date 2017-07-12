@@ -24,6 +24,12 @@
         {{ $row->description }}
     </div>
     @endif
+    @if($row->status)
+    <h4 class="red">Status</h4>
+    <div class="row-fluid">
+        {{ config('setting.status')[$row->status] }}
+    </div>
+    @endif
     @if($row->created_at)
     <h4 class="red">Created At</h4>
     <div class="row-fluid">
@@ -34,7 +40,8 @@
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.clients.index') }}" class="btn btn-info btn-xs">Back to all clients</a>
-            <a href="{{ route('admin.clients.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit client</a>
+            <a href="{{ route('admin.clients.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Client</a>
+            <a href="{{ route('admin.clients.create') }}" class="btn btn-warning btn-xs">Create Client</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([

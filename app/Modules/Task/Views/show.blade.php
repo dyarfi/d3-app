@@ -22,6 +22,12 @@
   <div class="space-6"></div>
   {{ $row->description }}
   <div class="space-6"></div>
+  @if($row->status)
+  <h4 class="red">Status</h4>
+  <div class="row-fluid">
+      {{ config('setting.status')[$row->status] }}
+  </div>
+  @endif
 </p>
 <hr>
 
@@ -29,6 +35,7 @@
     <div class="col-md-6">
         <a href="{{ route('admin.tasks.index') }}" class="btn btn-info btn-xs">Back to all tasks</a>
         <a href="{{ route('admin.tasks.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Task</a>
+        <a href="{{ route('admin.tasks.create') }}" class="btn btn-warning btn-xs">Create Task</a>
     </div>
     <div class="col-md-6 text-right">
         {!! Form::open([

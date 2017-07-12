@@ -24,6 +24,12 @@
         {{ $row->description }}
     </div>
     @endif
+    @if($row->status)
+    <h4 class="red">Status</h4>
+    <div class="row-fluid">
+        {{ config('setting.status')[$row->status] }}
+    </div>
+    @endif
     @if($row->created_at)
     <h4 class="red">Created At</h4>
     <div class="row-fluid">
@@ -34,7 +40,8 @@
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.portfolios.index') }}" class="btn btn-info btn-xs">Back to all portfolios</a>
-            <a href="{{ route('admin.portfolios.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit portfolio</a>
+            <a href="{{ route('admin.portfolios.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Portfolio</a>
+            <a href="{{ route('admin.portfolios.create') }}" class="btn btn-warning btn-xs">Create Portfolio</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([

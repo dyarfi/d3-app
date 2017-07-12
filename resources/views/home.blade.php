@@ -495,13 +495,20 @@ What do you think makes a great site building and customization experience? Outs
 		</div>
 		<div class="container clear-bottommargin clearfix">
 			<div class="row">
+				@foreach($blogs as $blog)
 				<div class="col-md-3 col-sm-6 bottommargin">
 					<div class="ipost clearfix">
+						@if($blog->image && File::exists(public_path('uploads/'.$blog->image)))
+						<div class="entry-image">
+							<a href="{{ route('blog.show',$blog->slug) }}"><img class="image_fade" src="{{ asset('uploads/'.$blog->image) }}" alt="Image"></a>
+						</div>
+						@else
 						<div class="entry-image">
 							<a href="#"><img class="image_fade" src="{{ asset('images/magazine/thumb/1.jpg') }}" alt="Image"></a>
 						</div>
+						@endif
 						<div class="entry-title">
-							<h3><a href="#blog-single.html">Chinese Stocks Erase All Gains for the Year as Crackdown Deepens</a></h3>
+							<h3><a href="{{route('blog.show',$blog->slug)}}">{{ $blog->name }}</a></h3>
 						</div>
 						<ul class="entry-meta clearfix">
 							<li><i class="icon-calendar3"></i> 13th April 2017</li>
@@ -512,57 +519,7 @@ What do you think makes a great site building and customization experience? Outs
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3 col-sm-6 bottommargin">
-					<div class="ipost clearfix">
-						<div class="entry-image">
-							<a href="#"><img class="image_fade" src="{{ asset('images/magazine/thumb/2.jpg') }}" alt="Image"></a>
-						</div>
-						<div class="entry-title">
-							<h3><a href="#blog-single.html">Samsung Rejects Holding Company as Profit Tops Estimates</a></h3>
-						</div>
-						<ul class="entry-meta clearfix">
-							<li><i class="icon-calendar3"></i> 24th Apr 2017</li>
-							<li><a href="#blog-single.html#comments"><i class="icon-comments"></i> 17</a></li>
-						</ul>
-						<div class="entry-content">
-							<p>Cross-agency coordination clean water rural, promising development turmoil inclusive education transformative community.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 bottommargin">
-					<div class="ipost clearfix">
-						<div class="entry-image">
-							<a href="#"><img class="image_fade" src="{{ asset('images/magazine/thumb/3.jpg') }}" alt="Image"></a>
-						</div>
-						<div class="entry-title">
-							<h3><a href="#blog-single.html">Hong Kong's Luxury Homes Are No Longer World's Most Expensive</a></h3>
-						</div>
-						<ul class="entry-meta clearfix">
-							<li><i class="icon-calendar3"></i> 26th Apr 2017</li>
-							<li><a href="#blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
-						</ul>
-						<div class="entry-content">
-							<p>Micro-finance; vaccines peaceful contribution citizens of change generosity. Measures design thinking accelerate progress medical initiative.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 bottommargin">
-					<div class="ipost clearfix">
-						<div class="entry-image">
-							<a href="#"><img class="image_fade" src="{{ asset('images/magazine/thumb/4.jpg') }}" alt="Image"></a>
-						</div>
-						<div class="entry-title">
-							<h3><a href="#blog-single.html">Compassion conflict resolution, progressive; tackle</a></h3>
-						</div>
-						<ul class="entry-meta clearfix">
-							<li><i class="icon-calendar3"></i> 15th Jan 2014</li>
-							<li><a href="#blog-single.html#comments"><i class="icon-comments"></i> 54</a></li>
-						</ul>
-						<div class="entry-content">
-							<p>Community health workers best practices, effectiveness meaningful work The Elders fairness. Our ambitions local solutions globalization.</p>
-						</div>
-					</div>
-				</div>
+				@endforeach
 			</div>
 		</div>
 		<div class="section">

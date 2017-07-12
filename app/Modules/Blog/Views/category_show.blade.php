@@ -34,7 +34,8 @@
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.blogcategories.index') }}" class="btn btn-info btn-xs">Back to all categories</a>
-            <a href="{{ route('admin.blogcategories.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit category</a>
+            <a href="{{ route('admin.blogcategories.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Category</a>
+            <a href="{{ route('admin.blogcategories.create') }}" class="btn btn-warning btn-xs">Create Category</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([

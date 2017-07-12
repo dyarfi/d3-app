@@ -9,27 +9,42 @@
     <a href="{{ asset('uploads/'.$row->image) }}" target="_blank" title="{{ $row->image }}"/>
         <img src="{{ asset('uploads/'.$row->image) }}" class="img-responsive"/>
     </a>
-</div>    
+</div>
 @endif
 <div class="container clearfix">
     <div class="col-md-12">
-        <h3>Description</h3>
+        <h4 class="red">Description</h4>
         {!! $row->description !!}
     </div>
     <div class="col-md-12">
-        <h3>Requirement</h3>
+        <h4 class="red">Requirement</h4>
         {!! $row->requirement !!}
     </div>
     <div class="col-md-12">
-        <h3>Responsibility</h3>
+        <h4 class="red">Responsibility</h4>
         {!! $row->responsibility !!}
     </div>
     <div class="col-md-12">
-        <h3>Facility</h3>
+        <h4 class="red">Facility</h4>
         {!! $row->facility !!}
     </div>
+    @if($row->status)
+    <div class="col-md-12">
+        <h4 class="red">Status</h4>
+        <div class="row-fluid">
+            {{ config('setting.status')[$row->status] }}
+        </div>
+    </div>
+    @endif
+    @if($row->created_at)
+    <div class="col-md-12">
+        <h4 class="red">Created At</h4>
+        <div class="row-fluid">
+            {{ $row->created_at }}
+        </div>
+    </div>
+    @endif
 </div>
-
 </p>
 <hr>
 
@@ -37,6 +52,7 @@
     <div class="col-md-6">
         <a href="{{ route('admin.careers.index') }}" class="btn btn-info btn-xs">Back to all careers</a>
         <a href="{{ route('admin.careers.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit Career</a>
+        <a href="{{ route('admin.careers.create') }}" class="btn btn-warning btn-xs">Create Career</a>
     </div>
     <div class="col-md-6 text-right">
         {!! Form::open([

@@ -116,7 +116,8 @@
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.users.index') }}" class="btn btn-info btn-xs">Back to all users</a>
-            <a href="{{ route('admin.users.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit user</a>
+            <a href="{{ route('admin.users.edit', $row->id) }}" class="btn btn-primary btn-xs">Edit User</a>
+            <a href="{{ route('admin.users.create') }}" class="btn btn-warning btn-xs">Create User</a>
         </div>
         <div class="col-md-5 col-xs-6 text-right">
             {!! Form::open([
