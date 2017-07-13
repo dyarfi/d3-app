@@ -1,8 +1,6 @@
 @extends('Auth::layouts.template')
 
 @section('body')
-
-<h1>{{ $row->name }}</h1>
 <p class="lead">
 @if ($row->image != '')
 <div class="container clearfix">
@@ -12,6 +10,10 @@
 </div>
 @endif
 <div class="container clearfix">
+    <div class="col-md-12">
+        <h4 class="red">Name</h4>
+        {!! $row->name !!}
+    </div>
     <div class="col-md-12">
         <h4 class="red">Description</h4>
         {!! $row->description !!}
