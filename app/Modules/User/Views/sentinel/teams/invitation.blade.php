@@ -103,12 +103,14 @@
 	Nothing to show here.
 </div>
 */?>
+<div class="container-fluid">
 {!! Form::open([
     'route' => 'admin.teams.invite',
+	'id' => 'form-team-invite'
 ]) !!}
 	<div class="form-group{{ $errors->first('team_id', ' has-error') }}">
 		<label for="team_id">Team</label>
-		{!! Form::select('team_id', $teams, Input::get('team_id') ? Input::get('team_id') : Input::old('team_id', @$row->id),['placeholder' => 'Pick a Team','class'=>'form-control']); !!}
+		{!! Form::select('team_id', $teams, Input::get('team_id') ? Input::get('team_id') : Input::old('team_id', @$row->id),['placeholder' => '-- Pick a Team --','class'=>'form-control']); !!}
 		<span class="help-block">{{{ $errors->first('team_id', ':message') }}}</span>
 	</div>
 	<div class="form-group{{ $errors->first('email', ' has-error') }}">
@@ -122,6 +124,7 @@
 	</div>
 	<button type="submit" class="btn btn-default">Submit</button>
 {!! Form::close() !!}
+</div>
 <?php /*
 @endif
 */?>

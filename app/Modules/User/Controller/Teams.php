@@ -310,8 +310,30 @@ class Teams extends BaseAdmin {
  		// Set data to view
 		$data = ['teams'=>Team::all()->lists('name','id')];
 
+		// Set inline script or style
+		$inlines = [
+			// Script execution on a specific controller page
+			'script' => "
+			// --- form team invitation submit handler [".route('admin.teams.invitation')."]--- //
+				var forminvite  = $('#form-team-invite');
+				forminvite.submit(function() {
+					if(forminvite.find('select[name=team_id]').val() != ''
+						&& forminvite.find('input[name=email]').val() != '') {
+							$(this).before('<div class=\"dataTables_processing\">&nbsp;</div>');
+							return true;
+					} else {
+						var label = $(this).find('label');
+						var text = label.html();
+						label.next('span.red').remove();
+						label.after('<span class=\"red\"> * required</span>');
+						return false;
+					}
+				});
+			",
+		];
+
 		// Return data and view
-		return $this->view('User::sentinel.teams.invitation')->data($data)->title('Invitation Team');
+		return $this->view('User::sentinel.teams.invitation')->data($data)->inlines($inlines)->title('Invitation Team');
 
 	}
 
