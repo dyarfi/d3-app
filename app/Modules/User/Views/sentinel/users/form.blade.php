@@ -3,6 +3,15 @@
 {{-- Page content --}}
 @section('body')
 
+@if($errors->has())
+<div>
+   @foreach ($errors->all() as $error)
+      <span class="label label-danger"><span class="fa fa-exclamation-triangle"></span> {{ $error }}</span>
+  @endforeach
+</div>
+<div class="clearfix space-10"></div>
+@endif
+
 <div class="page-header">
 	<h1>{{ $mode == 'create' ? 'Create User' : 'Update User' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
 </div>
@@ -51,6 +60,17 @@
 		<label for="role_id">Roles</label>
 		{!! Form::select('role_id', $roles, Input::get('role_id') ? Input::get('role_id') : Input::old('role_id', @$row->roles()->first()->id),['class'=>'form-control']); !!}
 		<span class="help-block">{{{ $errors->first('role_id', ':message') }}}</span>
+	</div>
+	<div class="form-group{{ $errors->first('team_id', ' has-error') }}">
+		<label for="role_id">Teams</label>
+		{!!
+			Form::select('team_id[]',
+				$teams,
+				$user_teams,
+				['class'=>'form-control','id'=>'form-field-select-2','multiple'=>'multiple']
+			);
+		!!}
+		<span class="help-block">{{{ $errors->first('team_id', ':message') }}}</span>
 	</div>
 
 	<div class="form-group{{ $errors->first('image', ' has-error') }}">

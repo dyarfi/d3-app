@@ -154,15 +154,13 @@ class Participants extends BaseAdmin {
 				return 	str_limit(strip_tags($row->description), 60);
 			})
 			// Set status icon and text
-			/*
 			->editColumn('status', function ($row) {
 				return '
 				<span class="label label-'.($row->status == 1 ? 'success' : 'warning').' arrowed-in arrowed-in-right">
 					<span class="fa fa-'.($row->status == 1 ? 'flag' : 'exclamation-circle').' fa-sm"></span>
-					'.config('setting.status')[@$row->status].'
+					'.config('setting.status')[$row->status].'
 				</span>';
-			})
-			*/
+            })
 			->make(true);
 	}
 

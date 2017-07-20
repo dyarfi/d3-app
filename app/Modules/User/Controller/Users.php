@@ -38,6 +38,9 @@ class Users extends BaseAdmin {
 		// Load role model
 		$this->roles = new Role;
 
+		// Load team model
+		$this->teams = new Team;
+
 		// Crop to fit image size
 		$this->imgFit 		= [1200,1200];
 
@@ -278,21 +281,26 @@ class Users extends BaseAdmin {
 	protected function showForm($mode, $id = null)
 	{
 
+		$roles = array_merge(['0'=>' -- NO ROLE -- '], $this->roles->lists('name', 'id')->all());
+		$teams = array_merge(['0'=>' -- NO TEAM -- '], $this->teams->lists('name', 'id')->all());
+		$user_teams = '';
+
 		if ($id)
 		{
 			if ( ! $row = $this->users->find($id))
 			{
 				return Redirect::to(route('admin.users'));
 			}
+			// Check if users had teams
+			$user_teams = User::find($row->id)->teams()->lists('team_id')->toArray();
 		}
 		else
 		{
 			$row = Sentinel::getUserRepository()->createModel();
 		}
 
-		$roles = array_merge(['0'=>' -- NO ROLE -- '], $this->roles->lists('name', 'id')->all());
 
-		return $this->view('User::sentinel.users.form')->data(compact('mode', 'row', 'roles'))->title('User '.$mode);
+		return $this->view('User::sentinel.users.form')->data(compact('mode', 'row', 'roles','teams','user_teams'))->title('User '.$mode);
 	}
 
 	/**
@@ -306,10 +314,12 @@ class Users extends BaseAdmin {
 	{
 
 		$input = array_filter(Input::all());
+		// dd($input);
 		$rules = [
 			'first_name' => 'required',
 			'last_name'  => 'required',
 			'role_id'  	 => 'required',
+			'team_id'  	 => 'required',
 			'image' 	 => ($mode == 'update') ? '' : 'image|mimes:jpg,jpeg|max:500kb',
 			'email'      => ($id) ? 'email|required' : 'email|required|unique:users'
 		];
@@ -379,7 +389,15 @@ class Users extends BaseAdmin {
 					}
 
 				}
-
+				//dd($input);
+				if (head($input['team_id']) != 0) {
+					// Attach Team
+					User::find($user->id)->teams()->attach($input['team_id']);
+				} else {
+					// Detach Teams
+					$team_ids = User::find($user->id)->teams()->lists('team_id')->toArray();
+					User::find($user->id)->detachTeams($team_ids);
+				}
 			}
 		}
 		else
@@ -405,6 +423,10 @@ class Users extends BaseAdmin {
 
 				// Syncing relationship Many To Many // Create New
 				$user->roles()->sync(['role_id'=>$input['role_id']]);
+
+				if (!empty($input['team_id'])) {
+					User::find($user->id)->teams()->attach($input['team_id']);
+				}
 
 				$code = Activation::create($user);
 
