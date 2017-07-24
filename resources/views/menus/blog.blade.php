@@ -27,10 +27,12 @@
 							</div>
 							<ul class="entry-meta clearfix">
 								<li><i class="icon-calendar3"></i>
-									{{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}
+									<?php /*{{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}*/?>
+									{{ Carbon::parse($blog->publish_date)->format('jS M Y') }}
 								</li>
-								<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
-								<li><a href="#"><i class="icon-camera-retro"></i></a></li>
+								<li><a href="#"><i class="icon-folder-open"></i> {{ $blog->category->name }}</a></li>
+								<!--li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
+								<li><a href="#"><i class="icon-camera-retro"></i></a></li-->
 							</ul>
 							<div class="entry-content">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
@@ -38,6 +40,7 @@
 							</div>
 						</div>
 						@endforeach
+						<?php /*
 						<div class="entry clearfix">
 							<div class="entry-image">
 								<a href="images/blog/full/17.jpg" data-lightbox="image"><img class="image_fade" src="images/blog/grid/17.jpg" alt="Standard Post with Image"></a>
@@ -192,11 +195,12 @@
 								<a href="blog-single-full.html" class="more-link">Read More</a>
 							</div>
 						</div>
+						*/ ?>
 					</div><!-- #posts end -->
 
 					<!-- Pagination
 					============================================= -->
-					<ul class="pagination nobottommargin">
+					<ul class="pagination nobottommargin hidden">
 						<li class="disabled"><a href="#">&laquo;</a></li>
 						<li class="active"><a href="#">1</a></li>
 						<li><a href="#">2</a></li>

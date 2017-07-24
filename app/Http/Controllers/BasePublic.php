@@ -29,6 +29,7 @@ class BasePublic extends Controller {
 		parent::__construct();
 
 		// $this->user = Auth::getUser();
+		
 		// Site Menus
 		$this->menu = new Menu;
 
