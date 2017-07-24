@@ -28,11 +28,20 @@ class BasePublic extends Controller {
 	{
 		parent::__construct();
 
-		$this->user = Auth::getUser();
-
+		// $this->user = Auth::getUser();
+		// Site Menus
 		$this->menu = new Menu;
 
-		View::share('menus', $this->menu->where('status',1)->take(10)->orderBy('index','ASC')->get());
+		$data = [
+			// Site Menus
+			'menus' 	=> Menu::where('status',1)->take(10)->orderBy('index','ASC')->get(),
+			// Social media links
+			'socials' 	=> Setting::where('group','socmed')->where('status',1)->get(['name','key','value']),
+			// Company data
+			'company'	=> Setting::where('group','company')->where('status',1)->get(['name','key','description','value'])
+		];
+
+		View::share($data);
 
 	}
 
