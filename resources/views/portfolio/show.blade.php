@@ -21,23 +21,26 @@
 						<div class="fancy-title title-bottom-border">
 							<h2>Project Info:</h2>
 						</div>
-                        {{ $portfolio->description }}
+                        {!! $portfolio->description !!}
 						<!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, dolores, facere, corrupti delectus ex quidem adipisci tempore.</p>
 						<p>Illum molestias cupiditate eveniet dolore obcaecati voluptatibus est quos eos id recusandae officia. Cupiditate, voluptates quibusdam ipsum vel corporis laboriosam id est doloremque?</p-->
 						<div class="line"></div>
 						<ul class="portfolio-meta bottommargin">
 							<!--li><span><i class="icon-user"></i>Created by:</span> Nick North</li>
 							<li><span><i class="icon-calendar3"></i>Completed on:</span> 17th March 2017</li!-->
+							<?php
+							$i=1;
+							$t=count($portfolio->tags);
+							if($t > 0) { ?>
 							<li><span><i class="icon-tags"></i>Tags:</span> <!-- HTML5 / PHP / CSS3 -->
 								<?php
-								$i=1;
-								$t=count($portfolio->tags);
 								foreach ($portfolio->tags as $tags) { ?>
 									<a href="javascript:;" title="{{ $tags->name }}">{{ $tags->name }}@if ($i != $t),@endif</a>
 									<?php $i++;
 								}
 								?>
 							</li>
+							<?php } ?>
 							<li><span><i class="icon-link"></i>Client:</span> <a href="#">{{ $portfolio->client->name }}</a></li>
 						</ul>
 						<div class="si-share clearfix">

@@ -21,7 +21,7 @@
     @if($row->description)
     <h4 class="red">Description</h4>
     <div class="row-fluid">
-        {{ $row->description }}
+        {!! $row->description !!}
     </div>
     @endif
     @if($row->status)

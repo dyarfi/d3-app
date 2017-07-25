@@ -1,7 +1,7 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
- 
+
 /**
 * ServiceProvider
 *
@@ -14,7 +14,7 @@ use Illuminate\Support\ServiceProvider;
 */
 class ModulesServiceProvider extends ServiceProvider
 {
-    
+
     /**
      * This namespace is applied to the controller routes in your routes file.
      *
@@ -34,13 +34,13 @@ class ModulesServiceProvider extends ServiceProvider
         // For each of the registered modules, include their routes and Views
         $modules = config('module.modules');
 
-        while (list($module, $dir) = each($modules)) {            
+        while (list($module, $dir) = each($modules)) {
 
             // Load the routes for each of the modules
             if(file_exists(app_path('/Modules/'.$module.'/routes.php'))) {
                 // include __DIR__.'/'.$module.'/routes.php';
                 include app_path('/Modules/'.$module.'/routes.php');
-            }            
+            }
 
             // Load the views
             if(is_dir(app_path('/Modules/'.$module.'/Views'))) {
@@ -49,7 +49,7 @@ class ModulesServiceProvider extends ServiceProvider
             }
 
         }
-    }    
+    }
 
     /**
      * Register the services provided by the provider.
@@ -57,5 +57,5 @@ class ModulesServiceProvider extends ServiceProvider
      * @return array
      */
     public function register() { }
-    
+
 }

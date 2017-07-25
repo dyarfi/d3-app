@@ -30,13 +30,13 @@
 									<?php /*{{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}*/?>
 									{{ Carbon::parse($blog->publish_date)->format('jS M Y') }}
 								</li>
-								<li><a href="#"><i class="icon-folder-open"></i> {{ $blog->category->name }}</a></li>
+								<li><a href="{{ route('blog.category',$blog->category->slug) }}"><i class="icon-folder-open"></i> {{ $blog->category->name }}</a></li>
 								<!--li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
 								<li><a href="#"><i class="icon-camera-retro"></i></a></li-->
 							</ul>
 							<div class="entry-content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
-								<a href="blog-single-full.html" class="more-link">Read More</a>
+								<p>{{str_limit(strip_tags($blog->description),200)}}</p>
+								<a href="{{ route('blog.show',$blog->slug) }}" class="more-link">Read More</a>
 							</div>
 						</div>
 						@endforeach
