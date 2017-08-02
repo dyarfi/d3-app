@@ -29,7 +29,7 @@ class BasePublic extends Controller {
 		parent::__construct();
 
 		// $this->user = Auth::getUser();
-		
+
 		// Site Menus
 		$this->menu = new Menu;
 
@@ -42,7 +42,7 @@ class BasePublic extends Controller {
 			'company'	=> Setting::where('group','company')->where('status',1)->get(['name','key','description','value'])
 		];
 
-		View::share($data);
+		view()->share($data);
 
 	}
 

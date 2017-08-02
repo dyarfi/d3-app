@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Blog\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel, File;
+use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel, File, Storage;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -36,7 +36,7 @@ class Blogs extends BaseAdmin {
 		$this->categories	= new BlogCategory;
 
 		// Crop to fit image size
-		$this->imgFit 		= [1200,1200];
+		$this->imgFit 		= ['400x300','1200x1200'];
 
 
 		// Get the entity object
@@ -519,31 +519,31 @@ class Blogs extends BaseAdmin {
 	 * @param  string $type
 	 * @return $filename
 	 */
-	protected function imageUploadToDb($file='', $path='', $type='')
-	{
-		// Set filename upload
-		$filename = '';
-
-		// Check if input and upload already assigned
-		if (!empty($file) && !$file->getError()) {
-
-			// Upload path
-			$destinationpath = public_path($path);
-			// Getting image extension
-			$extension = $file->getClientOriginalExtension();
-			// Renaming image
-			$filename = $type . rand(11111,99999) . '.' . $extension;
-			// Uploading file and move to given path
-			$file->move($destinationpath, $filename);
-			// Set intervention image for image manipulation
-			$image_fit = implode('x',$this->imgFit);
-			$image = Image::make($path .'/'. $filename);
-			$image->fit($this->imgFit[0],$this->imgFit[1])->save($path .'/'. $image_fit.'px_'. $filename);
-
-		}
-
-		return $filename;
-	}
+ 	protected function imageUploadToDb($file='', $path='', $type='')
+  	{
+ 	 	// Set filename upload
+ 	 	$filename = '';
+ 	 	// Check if input and upload already assigned
+ 	 	if (!empty($file) && !$file->getError()) {
+ 	 		// Getting image extension
+ 	 		$extension = $file->getClientOriginalExtension();
+ 	 		// Renaming image
+ 	 		$filename = $type . rand(11111,99999) . '.' . $extension;
+ 	 		// Set intervention image for image manipulation
+ 	 		Storage::disk('local_uploads')->put($filename,
+ 	 			file_get_contents($file->getRealPath())
+ 	 		);
+ 	 		// If image has a resize crop data in constructor
+ 	 		if (!empty($this->imgFit)) {
+ 	 			$image = Image::make($path .'/'. $filename);
+ 	 			foreach ($this->imgFit as $imgFit) {
+ 	 				$size = explode('x',$imgFit);
+ 	 				$image->fit($size[0],$size[1])->save($path .'/'. $imgFit.'px_'. $filename);
+ 	 			}
+ 	 		}
+ 	 	}
+ 	 	return $filename;
+  	}
 
 	/**
 	 * Process a file to download.

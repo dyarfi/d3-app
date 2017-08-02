@@ -4,6 +4,7 @@ use Mail;
 // Load modules
 use App\Modules\Banner\Model\Banner;
 use App\Modules\Portfolio\Model\Portfolio;
+use App\Modules\Portfolio\Model\Client;
 use App\Modules\Blog\Model\Blog;
 
 class HomeController extends BasePublic  {
@@ -43,7 +44,8 @@ class HomeController extends BasePublic  {
 
 		$data = [
 			'banners'=>Banner::where('status',1)->orderBy('created_at')->take(4)->get(),
-			'blogs'=>Blog::active()->orderBy('created_at')->take(4)->get()
+			'blogs'=>Blog::active()->orderBy('created_at')->take(4)->get(),
+			'clients'=>Client::active()->orderBy('created_at')->take(24)->get(),
 		];
 
 		return $this->view('home')->data($data)->title('Home'); //- See more at: http://laravelsnippets.com/snippets/base-controller-extended#sthash.qTHFuvbZ.dpuf

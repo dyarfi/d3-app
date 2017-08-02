@@ -62,13 +62,13 @@ Sentinel::disableCheckpoints();
 $setting = config('setting');
 
 // Share a var with all views : $admin_url
-View::share('admin_url', $setting['admin_url']);
+view()->share('admin_url', $setting['admin_url']);
 
 // Share a var with all views : $admin_url
-View::share('admin_app', $setting['admin_app']);
+view()->share('admin_app', $setting['admin_app']);
 
 // Share a var with all views : $admin_url
-View::share('company_name', $setting['company_name']);
+view()->share('company_name', $setting['company_name']);
 
 /*** Site Menus ***/
 // About Us page routes...

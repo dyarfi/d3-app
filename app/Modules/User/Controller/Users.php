@@ -482,8 +482,47 @@ class Users extends BaseAdmin {
 	   	return $this->view('User::sentinel.users.dashboard')->data($data)->scripts($scripts)->title('User Dashboard');
 	}
 
-	public function export() {
+	/**
+	 * Process a file upload save the filename to DB.
+	 *
+	 * @param  array  $file
+	 * @param  string $path
+	 * @param  string $type
+	 * @return $filename
+	 */
+	protected function imageUploadToDb($file='', $path='', $type='')
+		{
+		// Set filename upload
+		$filename = '';
+		// Check if input and upload already assigned
+		if (!empty($file) && !$file->getError()) {
+			// Getting image extension
+			$extension = $file->getClientOriginalExtension();
+			// Renaming image
+			$filename = $type . rand(11111,99999) . '.' . $extension;
+			// Set intervention image for image manipulation
+			Storage::disk('local_uploads')->put($filename,
+				file_get_contents($file->getRealPath())
+			);
+			// If image has a resize crop data in constructor
+			if (!empty($this->imgFit)) {
+				$image = Image::make($path .'/'. $filename);
+				foreach ($this->imgFit as $imgFit) {
+					$size = explode('x',$imgFit);
+					$image->fit($size[0],$size[1])->save($path .'/'. $imgFit.'px_'. $filename);
+				}
+			}
+		}
+		return $filename;
+	}
 
+	/**
+	 * Process a file generated headers for users tables.
+	 *
+	 * @param  void
+	 * @return header .xls
+	 */
+	public function export() {
 		// Get type file to export
 		$type = Input::get('rel');
 		// Get data to export
@@ -499,9 +538,15 @@ class Users extends BaseAdmin {
 		        $sheet->fromArray($users);
 		    });
 		})->export($type);
-
 	}
 
+	/**
+	 * Process an uploaded image profile and save it to user table attributes.
+	 *
+	 * @accepts  post $request
+	 * @param  get 	$user_id
+	 * @return void
+	 */
 	public function crop($id='') {
 		/**
 		 * Jcrop image cropping plugin for jQuery
