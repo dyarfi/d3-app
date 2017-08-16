@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html dir="ltr" lang="{{ app()->getLocale() }}">
 <head>
 <meta name="author" content="Dentsu Digital" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
