@@ -111,7 +111,7 @@
     <script type="text/javascript">
       if('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('themes/ace-admin/js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
     </script>
-
+    <script src="{{ asset('themes/ace-admin/js/bootstrap.min.js') }}"></script>
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
       jQuery(function($) {

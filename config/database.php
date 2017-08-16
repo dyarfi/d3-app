@@ -67,7 +67,7 @@ return [
 			'modes' => [
                 'STRICT_TRANS_TABLES',
                 'ONLY_FULL_GROUP_BY',
-            ],			
+            ],
 			'unix_socket' => env('DB_SOCKET', '')
 		],
 

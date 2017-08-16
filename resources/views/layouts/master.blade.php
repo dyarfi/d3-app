@@ -96,13 +96,7 @@
                 </div>
                 <div class="col_half col_last tright">
                     <div class="fright clearfix">
-                        @foreach ($socials as $social)
-                        <a href="{{ $social->value }}" class="social-icon si-small si-borderless si-{{ $social->key }}">
-                            <i class="icon-{{ $social->key }}"></i>
-                            <i class="icon-{{ $social->key }}"></i>
-                        </a>
-                        @endforeach
-                        <!--a href="#" class="social-icon si-small si-borderless si-facebook">
+                        <a href="#" class="social-icon si-small si-borderless si-facebook">
                             <i class="icon-facebook"></i>
                             <i class="icon-facebook"></i>
                         </a>
@@ -121,7 +115,7 @@
                         <a href="#" class="social-icon si-small si-borderless si-linkedin">
                             <i class="icon-linkedin"></i>
                             <i class="icon-linkedin"></i>
-                        </a-->
+                        </a>
                     </div>
                     <div class="clear"></div>
                     <i class="icon-envelope2"></i>&nbsp;<a href="mailto:info@dentsu.digital"> info@dentsu.digital </a><span class="middot">&middot;</span> <i class="icon-headphones"></i> +62-21-6541-6369 <span class="middot">&middot;</span>
