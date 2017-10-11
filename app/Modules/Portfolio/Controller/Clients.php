@@ -80,7 +80,7 @@ class Clients extends BaseAdmin {
 					columns: [
 						{data: 'id', name:'id', orderable: false, searchable: false},
 						{data: 'name', name: 'name'},
-						{data: 'image', name: 'logo'},
+						{data: 'image', name: 'image'},
 						{data: 'description', name: 'description'},
 						{data: 'status', name: 'status'},
 						{data: 'created_at', name: 'created_at'},
@@ -173,6 +173,7 @@ class Clients extends BaseAdmin {
 					'.config('setting.status')[$row->status].'
 				</span>';
 			})
+			->rawColumns(['id','image','action','status'])
 			->make(true);
 	}
 

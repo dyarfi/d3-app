@@ -20,8 +20,8 @@
     @endif
     @if($row->description)
     <h4 class="red">Description</h4>
-    <div class="row-fluid">
-        {{ $row->description }}
+    <div class="row-fluid" style="overflow-x:auto;overflow-y:auto">
+        {!! $row->description !!}
     </div>
     @endif
     @if($row->address)
@@ -30,8 +30,8 @@
         {{ $row->address }}
     </div>
     @endif
+    @if($row->about)    
     <h4 class="red">About</h4>
-    @if($row->about)
     <div class="row-fluid">
         {{ $row->about }}
     </div>

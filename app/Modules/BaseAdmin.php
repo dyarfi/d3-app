@@ -168,10 +168,10 @@ class BaseAdmin extends ThemeAdmin {
  		//Session::forget('success');
 
  		 // Set layout template
- 		$this->layout = 'admin.template_login';
+ 		$this->layout = 'Auth::layouts.template_login';
 
 		// Return no access view
-		return $this->view('admin.sentinel.account.first_time')->title('First Setup and Migrate!');
+		return $this->view('User::sentinel.account.first_time')->title('First Setup and Migrate!');
 
 	}
 

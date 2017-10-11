@@ -2,17 +2,23 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
+*/
+/*
+Route::get('/', function () {
+    return view('welcome');
+});
 */
 
 //Route::get('/', 'WelcomeController@index');
 //Route::get('home', 'HomeController@index');
+
 
 // Front routes endpoint for home page
 Route::get('/', [
@@ -50,25 +56,6 @@ Route::get('page', [
 
 // Disable checkpoints (throttling, activation) for demo purposes
 Sentinel::disableCheckpoints();
-
-/* **************************************
- *
- * Load Administrator config setting
- *
- * **************************************
- */
-
-// Load config/setting.php file
-$setting = config('setting');
-
-// Share a var with all views : $admin_url
-view()->share('admin_url', $setting['admin_url']);
-
-// Share a var with all views : $admin_url
-view()->share('admin_app', $setting['admin_app']);
-
-// Share a var with all views : $admin_url
-view()->share('company_name', $setting['company_name']);
 
 /*** Site Menus ***/
 // About Us page routes...

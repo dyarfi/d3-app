@@ -220,9 +220,22 @@ class Pages extends BaseAdmin {
 			$row = $this->pages;
 		}
 
-		$menus = $this->menus->lists('name', 'id')->all();
+		$menus = $this->menus->pluck('name', 'id')->all();
 
-		return $this->view('Page::page_form')->data(compact('mode', 'row', 'menus'))->title('Page '.$mode);
+	   	// Load needed javascripts
+		$scripts = [
+			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
+			'bootstrap-datepicker'=>asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
+			'ckeditor'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
+			'library'=>asset('themes/ace-admin/js/library.js')
+		];
+
+		// Load needed stylesheets
+		$styles = [
+			'stylesheet-datepicker'=> asset('themes/ace-admin/css/datepicker.min.css')
+		];
+
+		return $this->view('Page::page_form')->data(compact('mode', 'row', 'menus'))->scripts($scripts)->styles($styles)->title('Page '.$mode);
 	}
 
 	/**

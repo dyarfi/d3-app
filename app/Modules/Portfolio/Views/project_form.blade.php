@@ -36,7 +36,7 @@
 
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		<label for="description">Description</label>
-		<textarea class="form-control" name="description" id="description" placeholder="Enter the project description.">{{ Input::old('description', $row->description) }}</textarea>
+		<textarea class="form-control ckeditor" name="description" id="description" placeholder="Enter the project description.">{{ Input::old('description', $row->description) }}</textarea>
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 

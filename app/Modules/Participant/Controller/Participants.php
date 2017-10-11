@@ -161,6 +161,7 @@ class Participants extends BaseAdmin {
 					'.config('setting.status')[$row->status].'
 				</span>';
             })
+			->rawColumns(['id','action','status'])
 			->make(true);
 	}
 

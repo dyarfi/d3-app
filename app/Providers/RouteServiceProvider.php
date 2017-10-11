@@ -1,6 +1,7 @@
 <?php namespace App\Providers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 
@@ -21,9 +22,9 @@ class RouteServiceProvider extends ServiceProvider {
 	 * @param  \Illuminate\Routing\Router  $router
 	 * @return void
 	 */
-	public function boot(Router $router)
+	public function boot()
 	{
-		parent::boot($router);
+		parent::boot();
 	}
 
 	/**
@@ -53,8 +54,26 @@ class RouteServiceProvider extends ServiceProvider {
 		$this->app->setLocale($locale);
 
 		$router->group($routes, function($router) {
-			require app_path('Http/routes.php');
+			require base_path('routes/web.php');
 		});
+		
+		$this->mapApiRoutes();
+
+        $this->mapWebRoutes();
+
+
+
+		 //Route::middleware('web')
+             //->namespace($this->namespace)
+             //->group(base_path('routes/web.php'));
+
+//dd($router);
+
+		//Route::middleware('web')
+             //->namespace($this->namespace)
+             //->group($routes, function($router) {
+             	//require base_path('routes/web.php');
+         //});
 
 		// This is supposed to be the main default for all menu pages in the Apps
 		/*
@@ -70,6 +89,35 @@ class RouteServiceProvider extends ServiceProvider {
         }
 		*/
 	}
+
+ 	/**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapWebRoutes()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::prefix('api')
+             ->middleware('api')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/api.php'));
+    }
 
 
 }

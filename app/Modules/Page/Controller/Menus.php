@@ -217,7 +217,20 @@ class Menus extends BaseAdmin {
 
 		$model	 	= $this->menus;
 
-		return $this->view('Page::menu_form')->data(compact('mode', 'row', 'models'))->title('Menu '.$mode);
+		// Load needed javascripts
+		$scripts = [
+			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
+			'bootstrap-datepicker'=>asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
+			'ckeditor'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
+			'library'=>asset('themes/ace-admin/js/library.js')
+		];
+
+		// Load needed stylesheets
+		$styles = [
+			'stylesheet-datepicker'=> asset('themes/ace-admin/css/datepicker.min.css')
+		];
+
+		return $this->view('Page::menu_form')->data(compact('mode', 'row', 'model'))->scripts($scripts)->styles($styles)->title('Menu '.$mode);
 	}
 
 	/**

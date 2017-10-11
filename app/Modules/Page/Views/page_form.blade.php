@@ -36,19 +36,19 @@
 
 	<div class="form-group{{ $errors->first('description', ' has-error') }}">
 		<label for="description">Description</label>
-		<textarea class="form-control" name="description" id="description" placeholder="Enter the page description.">{{ Input::old('description', $row->description) }}</textarea>
+		<textarea class="form-control ckeditor" name="description" id="description" placeholder="Enter the page description.">{{ Input::old('description', $row->description) }}</textarea>
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 
-	<div class="form-group{{ $errors->first('status', ' has-error') }}">
-		<label for="status">Status</label>
-		<select id="status" name="status" class="form-control input-sm">
-			<option value="">&nbsp;</option>
-			@foreach (config('setting.status') as $config => $val)
-				<option value="{{ $val ? $val : Input::old('status', $row->status) }}" {{ $val == $row->status ? 'selected' : '' }}>{{$config}}</option>
-			@endforeach
-		</select>
-	</div>
+<div class="form-group{{ $errors->first('status', ' has-error') }}">
+	<label for="status">Status</label>
+	<select id="status" name="status" class="form-control input-sm">
+		<option value="">&nbsp;</option>
+		@foreach (config('setting.status') as $config => $val)
+			<option value="{{ $config ? $config : Input::old('status', $row->status) }}" {{ ($config == 1 || $config == $row->status) ? 'selected' : '' }}>{{$val}}</option>
+		@endforeach
+	</select>
+</div>
 
 	<button type="submit" class="btn btn-default">Submit</button>
 {!! Form::close() !!}

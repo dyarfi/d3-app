@@ -28,7 +28,7 @@
 			'placeholder'=>'Enter the Menu Description.',
 			'name'=>'description',
 			'id'=>'description',
-			'class'=>'form-control']); !!}
+			'class'=>'form-control ckeditor']); !!}
 		<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>
 	</div>
 

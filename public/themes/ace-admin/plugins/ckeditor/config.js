@@ -23,7 +23,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
 		{ name: 'styles' },
 		{ name: 'colors' },
-		{ name: 'about' }
+		//{ name: 'about' }
 	];
 
 	// Remove some buttons, provided by the standard plugins, which we don't
@@ -31,6 +31,9 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Underline,Subscript,Superscript';
 
 	config.extraPlugins = 'mediaembed';
+
+	// Whether to escape HTML when the editor updates the original input element.
+	config.htmlEncodeOutput = false;
 
 	config.filebrowserBrowseUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=files';
 	config.filebrowserImageBrowseUrl = base_URL + '/themes/ace-admin/plugins/kcfinder/browse.php?opener=ckeditor&type=images';

@@ -54,9 +54,15 @@
     @else
         <!--span class="label label-danger label-sm">No Permissions</span-->
     @endif
+    @if(sizeof($row->owner) > 0)
     <h4 class="red">Owner</h4>
     <div>{{ @$row->owner->first_name .' '. @$row->owner->last_name }}</div>
-    <div class="space-10 clearfix"></div>
+    @endif
+    @if(sizeof($row->description) > 0)
+    <h4 class="red">Description</h4>
+    <div>{!! $row->description !!}</div>
+    @endif
+    <div class="space-10 clearfix"></div>    
     <div class="row">
         <div class="col-md-5 col-xs-6">
             <a href="{{ route('admin.teams.index') }}" class="btn btn-info btn-xs">Back to all teams</a>

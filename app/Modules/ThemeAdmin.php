@@ -1,7 +1,7 @@
 <?php namespace App\Modules;
 
 // Load Laravel classes
-use Illuminate\Foundation\Bus\DispatchesCommands;
+//use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Request, Session, Input, URL, View;
@@ -9,6 +9,8 @@ use Request, Session, Input, URL, View;
 abstract class ThemeAdmin extends BaseController {
 
 	//use DispatchesCommands, ValidatesRequests;
+
+	use ValidatesRequests;
 
 	public $namespace = 'App\Modules';
 	/**

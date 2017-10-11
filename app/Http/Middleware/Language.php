@@ -4,9 +4,9 @@ use Closure;
 use Illuminate\Routing\Redirector;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
-use Illuminate\Contracts\Routing\Middleware;
+//use Illuminate\Contracts\Routing\Middleware;
 
-class Language implements Middleware {
+class Language {
 	
 	/**
 	 * The Router implementation.

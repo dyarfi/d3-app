@@ -162,6 +162,7 @@ class Portfolios extends BaseAdmin {
 					'.config('setting.status')[$row->status].'
 				</span>';
             })
+			->rawColumns(['id','action','status'])
             ->make(true);
     }
 
@@ -323,9 +324,9 @@ class Portfolios extends BaseAdmin {
 
 		$model	 	= $this->portfolios;
 
-		$clients 	= $this->clients->lists('name', 'id')->all();
+		$clients 	= $this->clients->pluck('name', 'id')->all();
 
-		$projects 	= $this->projects->lists('name', 'id')->all();
+		$projects 	= $this->projects->pluck('name', 'id')->all();
 
 		$tags		= $tags;
 
@@ -363,7 +364,7 @@ class Portfolios extends BaseAdmin {
 			'name' 	   	  => 'required',
 			//'slug' 		   => 'required',
 			'description'  => 'required',
-			'status'	   => 'boolean',
+			'status'	   => 'numeric',
 			'image' 	   => ($mode == 'create' ? 'required|' : '').'mimes:jpg,jpeg,png|max:999',
 			'index'	   	   => 'numeric|digits_between:1,999',
 		];
@@ -484,11 +485,11 @@ class Portfolios extends BaseAdmin {
 		if ($id) {
 			if ($portfolio = $this->portfolios->find($id)) {
 				// Return Json Response with specific item
-				return response()->json($portfolio->tags->lists('name'), 200);
+				return response()->json($portfolio->tags->pluck('name'), 200);
 			}
 		} else {
 			// Return Json Response
-			return response()->json($this->portfolios->allTags()->lists('name'), 200);
+			return response()->json($this->portfolios->allTags()->pluck('name'), 200);
 		}
 	}
 

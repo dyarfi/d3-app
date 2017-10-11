@@ -13,10 +13,10 @@
 <!--small class="grey">@if ($rows) Page {{ @$rows->currentPage() }} of {{ @$rows->lastPage() }} @endif</small-->
 <table class="table table-bordered table-hover">
 	<thead>
-		<th class="col-lg-2">Name</th>
-		<th class="col-lg-2">Created At</th>
-		<th class="col-lg-2">Updated At</th>
-		<th class="col-lg-4">Teams</a>
+		<th class="col-lg-2">Name</th>	
+		<th class="col-lg-2">Description</th>
+		<th class="col-lg-1">Status</th>
+		<th class="col-lg-5">Teams</a>
 		<th class="col-lg-4">Actions</th>
 	</thead>
 	<tbody>
@@ -29,16 +29,14 @@
 				@endif
 			</td>
 			<td>
-				<!-- {{ Carbon::parse($row->created_at)->format('l, jS M Y') }} -->
-				{{ $row->created_at }}
-				<!--
-				{!! (!empty($row->permissions['admin']) && $row->permissions['admin'] === true) ? '<span class="label label-success arrowed-in arrowed-in-right"><span class="fa fa-user fa-sm"></span> Superadmin</span>'
-				: '<span class="label label-danger arrowed-in arrowed-in-right"><span class="fa fa-ban fa-sm"></span> General</span>' !!}</td>
-				-->
-			</td>
+				{{ str_limit(strip_tags($row->description),50,'') }}
+			</td>			
 			<td>
-				{{ $row->created_at }}
-			</td>
+				<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
+					<span class="fa fa-{{$row->status == 1 ? 'flag' : 'exclamation-circle'}} fa-sm"></span>
+					{{ config('setting.status')[$row->status]}}
+				</span>
+			</td>			
 			<td>
 				<?php
 				//print_r($row->users->count());

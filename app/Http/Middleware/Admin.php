@@ -4,11 +4,8 @@ use Closure;
 //use Illuminate\Contracts\Auth\Guard;
 //use App\Db\User;
 use Illuminate\Routing\Router;
-use Sentinel;
-use Response;
-use Route;
-use Redirect;
-
+use Sentinel, Response, Route, Redirect;
+//use Request;
 
 class Admin {
 
@@ -29,6 +26,7 @@ class Admin {
     public function __construct(/*User $user, */Router $router)
     {
         $this->router = $router;
+
     }
 
 	/**
@@ -67,7 +65,7 @@ class Admin {
 		// Sentinel auth check
 		if (! Sentinel::check()) {
 
-			return Redirect::intended('apanel/noaccess')->withErrors(['Only admins can access this page.']);
+			return redirect(route('admin.noaccess'))->withErrors(['Only admins can access this page.']);
 
 		} else if (Sentinel::hasAccess($accessRoutes)) {
 
@@ -75,7 +73,7 @@ class Admin {
 
 		} else {
 
-			return Redirect::intended(route('admin.noaccess'))->withErrors(['Luke.. you do not have access permission to this page!']);
+			return redirect(route('admin.noaccess'))->withErrors(['Luke.. you do not have access permission to this page!']);
 		}
 
 		return $next($request);

@@ -14,6 +14,7 @@
  */
 
 var CKBUILDER_CONFIG = {
+	//fullPage: true,
 	skin: 'moono',
 	preset: 'standard',
 	ignore: [
@@ -134,5 +135,5 @@ var CKBUILDER_CONFIG = {
 		'uk' : 1,
 		'vi' : 1,
 		'cy' : 1,
-	}
+	}	
 };

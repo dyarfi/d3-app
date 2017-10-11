@@ -221,7 +221,18 @@ class Teams extends BaseAdmin {
 			$row = $this->teams;
 		}
 
-		return $this->view('User::sentinel.teams.form')->data(compact('mode', 'row'))->title('Teams '.$mode);
+		// Load needed javascripts
+		$scripts = [
+			'ckeditor'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
+			'library'=>asset('themes/ace-admin/js/library.js')
+		];
+
+		// Load needed stylesheets
+		$styles = [
+			'stylesheet-datepicker'=> asset('themes/ace-admin/css/datepicker.min.css')
+		];
+
+		return $this->view('User::sentinel.teams.form')->data(compact('mode', 'row'))->scripts($scripts)->styles($styles)->title('Teams '.$mode);
 	}
 
 	/**
@@ -237,7 +248,9 @@ class Teams extends BaseAdmin {
 		$input = Input::all();
 
 		$rules = [
-			'name' => 'required|max:32'
+			'name' => 'required|max:32',
+			'description' => 'required|min:10|max:1000',			
+			'status'	   => 'numeric'
 		];
 
 		if ($id)
@@ -270,6 +283,8 @@ class Teams extends BaseAdmin {
 				$team	= new Team();
 				$team->owner_id = $this->user->id;
 				$team->name = $input['name'];
+				$team->description = $input['description'];				
+				$team->status = $input['status'];
 				$team->save();
 
 			}
@@ -308,7 +323,7 @@ class Teams extends BaseAdmin {
 	protected function invitation()
 	{
  		// Set data to view
-		$data = ['teams'=>Team::all()->lists('name','id')];
+		$data = ['teams'=>Team::all()->pluck('name','id')];
 
 		// Set inline script or style
 		$inlines = [

@@ -3,6 +3,31 @@
 return [
 
 	/*
+    |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application. This value is used when the
+    | framework needs to place the application's name in a notification or
+    | any other location as required by the application or its packages.
+    */
+
+    'name' => env('APP_NAME', 'LaravelD3'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Environment
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the "environment" your application is currently
+    | running in. This may determine how you prefer to configure various
+    | services your application utilizes. Set this in your ".env" file.
+    |
+    */
+
+    'env' => env('APP_ENV', 'production'),
+
+	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
 	|--------------------------------------------------------------------------
@@ -16,17 +41,17 @@ return [
 	'debug' => env('APP_DEBUG',true),
 
 	/*
-	|--------------------------------------------------------------------------
-	| Application URL
-	|--------------------------------------------------------------------------
-	|
-	| This URL is used by the console to properly generate URLs when using
-	| the Artisan command line tool. You should set this to the root of
-	| your application so that it is used when running Artisan tasks.
-	|
-	*/
+    |--------------------------------------------------------------------------
+    | Application URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the console to properly generate URLs when using
+    | the Artisan command line tool. You should set this to the root of
+    | your application so that it is used when running Artisan tasks.
+    |
+    */
 
-	'url' => 'http://localhost/d3-app/',
+    'url' => env('APP_URL', 'http://localhost/d3-app'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,23 +105,27 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', 'RandStringLaravelApanel'),
-	'cipher' => MCRYPT_RIJNDAEL_128,
+	'key' => env('APP_KEY', 'RandStringLaravelApanelD3'),
+	//'cipher' => MCRYPT_RIJNDAEL_128,
+	'cipher' => 'AES-256-CBC',
+
 
 	/*
-	|--------------------------------------------------------------------------
-	| Logging Configuration
-	|--------------------------------------------------------------------------
-	|
-	| Here you may configure the log settings for your application. Out of
-	| the box, Laravel uses the Monolog PHP logging library. This gives
-	| you a variety of powerful log handlers / formatters to utilize.
-	|
-	| Available Settings: "single", "daily", "syslog", "errorlog"
-	|
-	*/
+    |--------------------------------------------------------------------------
+    | Logging Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the log settings for your application. Out of
+    | the box, Laravel uses the Monolog PHP logging library. This gives
+    | you a variety of powerful log handlers / formatters to utilize.
+    |
+    | Available Settings: "single", "daily", "syslog", "errorlog"
+    |
+    */
 
-	'log' => 'daily',
+    'log' => env('APP_LOG', 'single'),
+
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -114,13 +143,13 @@ return [
 		/*
          * Laravel Framework Service Providers...
          */
-        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
-        Illuminate\Auth\AuthServiceProvider::class,
+		Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
+	 	Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Routing\ControllerServiceProvider::class,
+        //Illuminate\Routing\ControllerServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -137,6 +166,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+		/*
+		 * Package Service Providers...
+		 */
+		Laravel\Tinker\TinkerServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
 		/*
@@ -187,17 +220,34 @@ return [
 		 * https://datatables.yajrabox.com/starter
 		 */
 		Yajra\Datatables\DatatablesServiceProvider::class,
+		Yajra\Datatables\ButtonsServiceProvider::class,
 
 		/*
 		 * https://github.com/plank/laravel-mediable
 		 */
 		Plank\Mediable\MediableServiceProvider::class,
 
-
 		/*
 		 * https://github.com/mpociot/teamwork
 		 */
-		Mpociot\Teamwork\TeamworkServiceProvider::class
+		Mpociot\Teamwork\TeamworkServiceProvider::class,
+
+		/*
+		 * https://github.com/spatie/laravel-analytics
+		 */
+		//Spatie\Analytics\LaravelAnalyticsServiceProvider::class,
+		Spatie\LaravelAnalytics\LaravelAnalyticsServiceProvider::class,
+
+		/*
+		 * https://github.com/spatie/laravel-newsletter
+		 */
+		Spatie\Newsletter\NewsletterServiceProvider::class,
+
+		/*
+		 * http://lavacharts.com/#install
+		 */
+		Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
+
 	],
 
 	/*
@@ -219,7 +269,8 @@ return [
         'Auth'      => Illuminate\Support\Facades\Auth::class,
 		//'Auth'		=> Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 		// ------- Original Laravel Auth Class - end ----------------
-        'Blade'     => Illuminate\Support\Facades\Blade::class,
+        'Blade'     => Illuminate\Support\Facades\Blade::class,        
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus'       => Illuminate\Support\Facades\Bus::class,
         'Cache'     => Illuminate\Support\Facades\Cache::class,
 		// ------- Original Laravel Config Class - end ----------------
@@ -238,7 +289,8 @@ return [
         'Input'     => Illuminate\Support\Facades\Input::class,
         'Lang'      => Illuminate\Support\Facades\Lang::class,
         'Log'       => Illuminate\Support\Facades\Log::class,
-        'Mail'      => Illuminate\Support\Facades\Mail::class,
+        'Mail'      => Illuminate\Support\Facades\Mail::class,        
+        'Notification' => Illuminate\Support\Facades\Notification::class,
         'Password'  => Illuminate\Support\Facades\Password::class,
         'Queue'     => Illuminate\Support\Facades\Queue::class,
         'Redirect'  => Illuminate\Support\Facades\Redirect::class,
@@ -277,7 +329,7 @@ return [
 		'Excel' 		=> Maatwebsite\Excel\Facades\Excel::class,
 
 		// Modular service provider
-		//'Modules'		=> Modules\ModulesServiceProvider::class,
+		// 'Modules'		=> Modules\ModulesServiceProvider::class,
 
 		// Datatables jquery
 		'Datatables' => Yajra\Datatables\Facades\Datatables::class,
@@ -288,6 +340,14 @@ return [
 		// Attach Alias for Teamwork provider
 		'Teamwork' => Mpociot\Teamwork\Facades\Teamwork::class,
 
+		// Attach Spatie Analytics
+		'Analytics' => Spatie\LaravelAnalytics\LaravelAnalyticsFacade::class,
+
+		// Attach Spatie Newsletter
+		'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
+
+		// Attach Laravel Charts
+		'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class
 	],
 
 ];

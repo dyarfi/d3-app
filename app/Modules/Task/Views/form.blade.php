@@ -41,7 +41,7 @@
 		'placeholder'=>'Enter the Task Description.',
 		'name'=>'description',
 		'id'=>'description',
-		'class' => 'form-control',
+		'class' => 'form-control ckeditor',
 		'rows' => '4'
 	]); !!}
 	<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>

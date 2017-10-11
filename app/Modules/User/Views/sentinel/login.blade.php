@@ -5,11 +5,9 @@ Login
 @stop
 
 @section('body')
-
 <div class="page-header">
 	<h1>Login</h1>
 </div>
-
 {!! Form::open(array('class' => 'form-horizontal', 'autocomplete' => 'on')) !!}
 
 	<div class="form-group{{ $errors->has('email') ? ' has-error' : null }}">
@@ -30,7 +28,7 @@ Login
 
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-push-4">
-			<label class="text-warning" for="remember">{!! Form::checkbox('remember','','',['class'=>'input']) !!} Remember me
+			<label class="text-warning" for="remember">{!! Form::checkbox('remember',1,'',['class'=>'input']) !!} Remember me
 			</label>
 		</div>
 	</div>

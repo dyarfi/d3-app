@@ -11,6 +11,17 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+		// Load config/setting.php file
+		$setting = config('setting');
+
+		// Share a var with all views : $admin_url
+		view()->share('admin_url', $setting['admin_url']);
+
+		// Share a var with all views : $admin_url
+		view()->share('admin_app', $setting['admin_app']);
+
+		// Share a var with all views : $admin_url
+		view()->share('company_name', $setting['company_name']);
 
 		// Returning the current class name and action
 		app('view')->composer('admin.template', function($view)

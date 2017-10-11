@@ -166,6 +166,7 @@ class Projects extends BaseAdmin {
 					'.config('setting.status')[$row->status].'
 				</span>';
 			})
+			->rawColumns(['id','client','action','status'])
 			->make(true);
 	}
 
@@ -325,7 +326,7 @@ class Projects extends BaseAdmin {
 			$row = $this->projects;
 		}
 
-		$clients = $this->clients->lists('name', 'id')->all();
+		$clients = $this->clients->pluck('name', 'id')->all();
 
 		return $this->view('Portfolio::project_form')->data(compact('mode', 'row', 'clients'))->title('Project '.$mode);
 	}

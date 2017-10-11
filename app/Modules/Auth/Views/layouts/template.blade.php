@@ -27,7 +27,7 @@
   @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach
 @endif
     <!-- inline styles related to this page -->
-    <script>var base_URL = '{{ url() }}'; var base_ADM = '{{ url(config("setting.admin_url")) }}';</script>
+    <script>var base_URL = '{{ url('/') }}/'; var base_ADM = '{{ url(config("setting.admin_url")) }}/';</script>
     <!-- ace settings handler -->
     <script src="{{ asset('themes/ace-admin/js/ace-extra.min.js') }}"></script>
     <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->

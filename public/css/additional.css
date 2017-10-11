@@ -6,3 +6,4 @@ span.help-block { line-height: 1.25em}
 .contact-form-result { margin-bottom: 15px; }
 #portfolio #entry-listing .entry { margin: 0; padding: 0; border: 0}
 .related-posts { display: inline-block;}
+.slider-parallax .slider-caption h2, .slider-parallax .slider-caption p {  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);}

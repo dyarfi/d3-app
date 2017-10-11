@@ -69,7 +69,7 @@
 			'placeholder'=>'Enter the Participant about.',
 			'name'=>'about',
 			'id'=>'about',
-			'class'=>'form-control']); !!}
+			'class'=>'form-control ckeditor']); !!}
 		<span class="help-block">{{{ $errors->first('about', ':message') }}}</span>
 	</div>
 

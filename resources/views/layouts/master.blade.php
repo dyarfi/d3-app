@@ -6,30 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <title>{{ @$title }}</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-<!-- Latest compiled and minified JavaScript -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" />
-    <!--link rel="stylesheet" href="{{ asset('css/all.css') }}"/-->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/swiper.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/dark.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/font-icons.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/animate.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/additional.css') }}" type="text/css" />
+    <!--link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css"/-->
+    <?php /* LARAVEL Mix see webpack.mix.js for the files */ ?>
+    <link rel="stylesheet" href="{{ mix('css/d3all.css') }}">
 @if(isset($styles)) @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="{{ asset("js/jquery.min.js") }}"><\/script>')</script>
-    <!-- <script src="{{ asset('js/jquery.easing.min.js') }}"></script> -->
-    <!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
-    <!-- <script src="{{ asset('js/jquery.ias.min.js') }}"></script> -->
-    <script type="text/javascript">var base_URL = '{{ url() }}/';</script>
+    <script type="text/javascript">var base_URL = '{{ url('/') }}/';</script>
 </head>
 <body class="stretched">
 <div id="wrapper" class="clearfix">
@@ -48,18 +31,22 @@
                         @foreach ($menus as $menu)
                             <li {{ $menu->slug == Route::current()->getName() || str_is(Request::segment(1), $menu->slug)? 'class=current' : '' }}><a href="{{ $menu->slug == route('home') ? '' : route($menu->slug) }}">{{ $menu->name }}</a></li>
                         @endforeach
-                        @if (Auth::guest())
+                        <?php /*
+                        @if (!Auth::check())
                             <!--li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li-->
                         @else
                             <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu2" role="button">{{ Auth::getUser()->username }} <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu2" role="button">
+                                {{ Auth::check()}} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                                   <li><a href="{{ route('profile') }}">Profile</a></li>
                                   <li><a href="{{ route('logout') }}">Logout</a></li>
                                 </ul>
                             </li>
                         @endif
+                        */
+                        ?>
                     </ul>
                     <div id="top-search">
 						<a href="#" id="top-search-trigger"><i class="icon-search3"></i><i class="icon-line-cross"></i></a>
@@ -96,7 +83,13 @@
                 </div>
                 <div class="col_half col_last tright">
                     <div class="fright clearfix">
-                        <a href="#" class="social-icon si-small si-borderless si-facebook">
+                        @foreach ($socials as $social)
+                        <a href="{{ $social->value }}" class="social-icon si-small si-borderless si-{{ $social->key }}">
+                            <i class="icon-{{ @$social->key }}"></i>
+                            <i class="icon-{{ @$social->key }}"></i>
+                        </a>
+                        @endforeach
+                        <!--a href="#" class="social-icon si-small si-borderless si-facebook">
                             <i class="icon-facebook"></i>
                             <i class="icon-facebook"></i>
                         </a>
@@ -115,7 +108,7 @@
                         <a href="#" class="social-icon si-small si-borderless si-linkedin">
                             <i class="icon-linkedin"></i>
                             <i class="icon-linkedin"></i>
-                        </a>
+                        </a-->
                     </div>
                     <div class="clear"></div>
                     <i class="icon-envelope2"></i>&nbsp;<a href="mailto:info@dentsu.digital"> info@dentsu.digital </a><span class="middot">&middot;</span> <i class="icon-headphones"></i> +62-21-6541-6369 <span class="middot">&middot;</span>

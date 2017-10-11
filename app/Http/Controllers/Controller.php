@@ -1,41 +1,39 @@
 <?php namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesCommands;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-//use Session;
-//use Input;
-//use URL;
+
 use View;
 
 abstract class Controller extends BaseController {
 
-	use DispatchesCommands, ValidatesRequests;
+	use DispatchesJobs, ValidatesRequests;
 
 	/**
 	* Master layout
 	* @var string
 	*/
 		protected $layout = 'layouts.master';
-	 
+
 	 /**
 	* View to render
 	* @var string
 	*/
 		protected $view;
-	 
+
 	 /**
 	* Array of data passed to view
 	* @var array
 	*/
 		protected $data = array();
-	 
+
 	 /**
 	* Page scripts
 	* @var string
 	*/
 		protected $scripts = array();
-	 
+
 	 /**
 	* Page styles
 	* @var string
@@ -47,29 +45,29 @@ abstract class Controller extends BaseController {
 	* @var string
 	*/
 		protected $subview;
-	 
+
 	 /**
 	* Array of data to be passed to subview
 	* @var array
 	*/
 		protected $subdata = array();
-	 
+
 	 /**
 	* Page title
 	* @var string
 	*/
 		protected $title;
-	 
+
 	 /**
 	* Set default subview layout
 	* @param string $sublayout
 	*/
 	 public function __construct($sublayout = null)
-	 {	 	
+	 {
 		$this->view = $sublayout;
-		
+
 	 }
-	 
+
 	 /**
 	* Set view to render
 	* @param string $view
@@ -80,7 +78,7 @@ abstract class Controller extends BaseController {
 		$this->view = $view;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set data to pass to view
 	* @param array $data
@@ -91,7 +89,7 @@ abstract class Controller extends BaseController {
 	 	$this->data = $data;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set subview to render
 	* @param string $subview
@@ -102,7 +100,7 @@ abstract class Controller extends BaseController {
 		$this->subview = $subview;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set data to pass to subview
 	* @param array $subdata
@@ -113,7 +111,7 @@ abstract class Controller extends BaseController {
 		$this->subdata = $subdata;
 	 	return $this;
 	 }
-	 
+
 	 /**
 	* Set page title
 	* @param string $title
@@ -122,12 +120,12 @@ abstract class Controller extends BaseController {
 	 protected function title($title)
 	 {
 		 $this->title = $title;
-	 
+
 		 // title method must be called last so it can call the render method
 		 // this allows us to skip calling the render method
 		 return $this->render();
 	 }
-	 
+
  	/**
 	* Set page script
 	* @param string $script
@@ -135,8 +133,8 @@ abstract class Controller extends BaseController {
 	*/
 	 protected function scripts(array $scripts)
 	 {
-		 	 	
-		 // Define scripts variables 	 	
+
+		 // Define scripts variables
 		 $this->scripts = $scripts;
 		 // append subview data to view data
 		 $this->data['scripts'] = $this->scripts;
@@ -151,8 +149,8 @@ abstract class Controller extends BaseController {
 	*/
 	 protected function styles(array $styles)
 	 {
-		 	 	
-		 // Define styles variables 	 	
+
+		 // Define styles variables
 		 $this->styles = $styles;
 		 // append subview data to view data
 		 $this->data['styles'] = $this->styles;
@@ -167,11 +165,11 @@ abstract class Controller extends BaseController {
 	 private function rendersubview()
 	 {
 		 $this->subview = array('subview' => View::make($this->subview)->with($this->subdata));
-	 
+
 		 // append subview data to view data
 		 return $this->data = $this->data + $this->subview;
 	 }
-	 
+
 	 /**
 	* Render the view
 	* @return Response

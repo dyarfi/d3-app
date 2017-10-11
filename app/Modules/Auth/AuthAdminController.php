@@ -1,19 +1,23 @@
 <?php namespace App\Modules\Auth;
 
 use App\Http\Controllers\Controller;
+//use App\Modules\BaseAdmin;
 //use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 //use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 //use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 //use Cartalyst\Sentinel\Activations;
+use Illuminate\Http\Request as Request;
 use Sentinel, Email, Teamwork;
 
 // Load Laravel classes
-use Input, View, Validator, Redirect;
+use View, Validator, Redirect;
+//use Request, View, Validator, Redirect;
 
 // Load User models
 use App\Modules\User\Model\User;
 
 class AuthAdminController extends Controller {
+//class AuthAdminController extends BaseAdmin {
 
 	//protected $auth = '';
 	protected $setting = '';
@@ -31,7 +35,6 @@ class AuthAdminController extends Controller {
 	 */
 	public function __construct(Sentinel $auth)
 	{
-
 		$this->middleware('auth.admin', ['only' => 'getLogin','getLogout','getIndex','getInvitation']);
 
 		$this->setting 		= config('setting');
@@ -71,11 +74,16 @@ class AuthAdminController extends Controller {
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function processLogin()
+	public function processLogin(Request $request)
 	{
+		// set default
+		$errors ='';
+
 		try
 		{
-			$input = Input::all();
+			//$input = Input::all();
+			$input = $request->all();
+			//dd($input);
 
 			$rules = [
 				'email'    => 'required|email',
@@ -83,15 +91,17 @@ class AuthAdminController extends Controller {
 			];
 
 			$validator = Validator::make($input, $rules);
-
+			//$validator = $this->validate($request, $rules);
+			//dd($validator->errors());
+			//$remember = (bool) Input::get('remember', false);
+			//dd(Sentinel::authenticate($input, $remember));
+			//dd($validator->errors()->has('email'));
 			if ($validator->fails())
 			{
-				return Redirect::back()
-					->withInput()
-					->withErrors($validator);
+				return back()->withErrors($validator);
 			}
 
-			$remember = (bool) Input::get('remember', false);
+			$remember = (bool) $request->input('remember', false);
 
 			if (Sentinel::authenticate($input, $remember))
 			{
@@ -101,7 +111,7 @@ class AuthAdminController extends Controller {
 					return Redirect::intended($input['previous_url']);
 				} else {
 					// Or redirect to dashboard
-					return Redirect::intended($this->admin_url.'/dashboard');
+					return Redirect::intended(route('admin.dashboard'));
 				}
 			}
 
@@ -120,9 +130,7 @@ class AuthAdminController extends Controller {
 			$errors = "Your account is blocked for {$delay} second(s).";
 		}
 
-		return Redirect::back()
-			->withInput()
-			->withErrors($errors);
+		return back()->withErrors($errors);
 	}
 
 	/**

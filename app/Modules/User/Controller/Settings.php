@@ -50,10 +50,10 @@ class Settings extends BaseAdmin {
 
 		//dd($api->call('campaigns/list',1));
 
-		//$lists = Newsletter::getApi();
-		//$campaigns = element('data',$lists);
+		//$pluck = Newsletter::getApi();
+		//$campaigns = element('data',$pluck);
 
-		//dd($lists->call('campaigns/list',true));
+		//dd($pluck->call('campaigns/list',true));
 
 	}
 
@@ -228,7 +228,7 @@ class Settings extends BaseAdmin {
 		}
 
 		// Get all group in setting database
-		$groups_tmp = array_unique(head($this->settings->get()->lists('group')));
+		$groups_tmp = array_unique(head($this->settings->get()->pluck('group')));
 		$groups = '';
 		foreach ($groups_tmp as $tmp) {
 			$groups[$tmp] = ucfirst($tmp);
@@ -306,7 +306,7 @@ class Settings extends BaseAdmin {
 	 * @param  mixed  $id
 	 * @return boolean
 	 */
-	public function change($id=null) {
+	public function change() {
 
 		// Catch all input post
 		$input = array_filter(Input::all());

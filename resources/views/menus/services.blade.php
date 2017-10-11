@@ -23,7 +23,7 @@
 								<img src="images/services/1.jpg" alt="Why choose Us?">
 							</div>
 							<div class="fbox-desc">
-								<h3>Why choose Us.<span class="subtitle">Because we are Reliable.</span></h3>
+								<h3>Social Media.<span class="subtitle">Because we are Social Reliable.</span></h3>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi rem, facilis nobis voluptatum est voluptatem accusamus molestiae eaque perspiciatis mollitia.</p>
 							</div>
 						</div>
@@ -34,7 +34,7 @@
 								<img src="images/services/2.jpg" alt="Why choose Us?">
 							</div>
 							<div class="fbox-desc">
-								<h3>Our Mission.<span class="subtitle">To Redefine your Brand.</span></h3>
+								<h3>Media Manager.<span class="subtitle">To Redefine your Brand.</span></h3>
 								<p>Quos, non, esse eligendi ab accusantium voluptatem. Maxime eligendi beatae, atque tempora ullam. Vitae delectus quia, consequuntur rerum molestias quo.</p>
 							</div>
 						</div>
@@ -45,7 +45,7 @@
 								<img src="images/services/3.jpg" alt="Why choose Us?">
 							</div>
 							<div class="fbox-desc">
-								<h3>What we Do.<span class="subtitle">Make our Customers Happy.</span></h3>
+								<h3>Web &amp; Apps Development.<span class="subtitle">Make our Customers Happy.</span></h3>
 								<p>Porro repellat vero sapiente amet vitae quibusdam necessitatibus consectetur, labore totam. Accusamus perspiciatis asperiores labore esse ab accusantium ea modi ut.</p>
 							</div>
 						</div>

@@ -221,7 +221,7 @@ class Careers extends BaseAdmin {
 		}
 
 		// Set division model to name and id only for lookup input
-		$divisions = $this->divisions->lists('name', 'id')->all();
+		$divisions = $this->divisions->pluck('name', 'id')->all();
 
 	   	// Load needed javascripts
 	   	$scripts = ['bootstrap-datepicker'=> 'themes/ace-admin/js/bootstrap-datepicker.min.js'];

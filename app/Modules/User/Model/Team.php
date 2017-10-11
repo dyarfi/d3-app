@@ -21,7 +21,7 @@ class Team extends TeamworkTeam
      *
      * @var array
      */
-    protected $fillable = ['owner_id','name','created_at','updated_at'];
+    protected $fillable = ['owner_id','name','description','index','status','created_at','updated_at'];
 
 
      /**
@@ -45,4 +45,12 @@ class Team extends TeamworkTeam
        //return $this->belongsToMany('App\Modules\User\Model\User','team_user','team_id','user_id');
 
    }
+
+    // Scope query for active status field
+    public function scopeActive($query) {
+
+      return $query->where('status', 1);
+
+    }
+
 }

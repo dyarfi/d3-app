@@ -17,18 +17,18 @@
  * Administrator panel routes
  *
  */
-Route::group(['prefix' => config('setting.admin_url')], function()
-{
 
+Route::prefix(config('setting.admin_url'))->group( function()
+{
     // Get no access pages
-    Route::get('noaccess', ['as'=>'admin.noaccess','uses'=>'App\Modules\BaseAdmin@unauthorize']);
-    Route::get('noaccess', ['as'=>'admin.access.index','uses'=>'App\Modules\BaseAdmin@index']);
+    Route::get('noaccess', 'App\Modules\BaseAdmin@unauthorize')->name('admin.noaccess');
+    Route::get('noaccess', 'App\Modules\BaseAdmin@index')->name('admin.noaccess');
 
     // ******************* Shortcut for Developer Setup ******************** //
 
     // Get main administrator lgin
-    Route::get('setup/first/migrate', 'App\Modules\BaseAdmin@setup');
-    Route::post('setup/first/migrate', 'App\Modules\BaseAdmin@setup');
+    Route::get('setup/first/migrate', 'App\Modules\BaseAdmin@setup')->name('first.migrate');
+    Route::post('setup/first/migrate', 'App\Modules\BaseAdmin@setup')->name('first.migrate.post');
 
     // ******************* Auth\AuthAdminController ********************* { //
 
@@ -36,30 +36,30 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('/', 'App\Modules\Auth\AuthAdminController@index');
 
     // ByPass to admin auth controller in middleware | Login
-    Route::get('login', [ 'as' => 'admin.login', 'uses' => 'App\Modules\Auth\AuthAdminController@login']);
-    Route::post('login', 'App\Modules\Auth\AuthAdminController@processLogin');
+    Route::get('login', 'App\Modules\Auth\AuthAdminController@login')->name('admin.login');
+    Route::post('login', 'App\Modules\Auth\AuthAdminController@processLogin')->name('admin.login');
 
     // ByPass to admin auth controller in middleware | Logout
-    Route::get('logout', [ 'as' => 'admin.logout', 'uses' => 'App\Modules\Auth\AuthAdminController@logout']);
+    Route::get('logout', 'App\Modules\Auth\AuthAdminController@logout')->name('admin.logout');
 
     // ByPass to admin auth controller in middleware | Register
     Route::get('register', 'App\Modules\Auth\AuthAdminController@register');
     Route::post('register', 'App\Modules\Auth\AuthAdminController@processRegistration');
 
     // Get users team invitation process
-    Route::get('invitation/{id}/{action}', ['as'=>'admin.invitation','uses'=>'App\Modules\Auth\AuthAdminController@invitation']);
+    Route::get('invitation/{id}/{action}', 'App\Modules\Auth\AuthAdminController@invitation')->name('admin.invitation');
 
     //Route::get('invitation', ['as'=>'admin.invitation','uses'=>'App\Modules\Auth\AuthAdminController@invitation']);
 
     // } ****************** Auth\AuthAdminController ****************** //
 
     // Users Controller
-    Route::get('account', ['as'=>'admin.account','uses'=>'App\Modules\User\Controller\Users@profile']);
+    Route::get('account', 'App\Modules\User\Controller\Users@profile')->name('admin.account');
     // Get admin panel controllers routes
-    Route::get('profile', 'App\Modules\User\Controller\Users@profile');
+    Route::get('profile', 'App\Modules\User\Controller\Users@profile')->name('admin.profile');
 
     // Get admin panel controllers routes
-    Route::get('dashboard', ['as'=>'admin.dashboard','uses'=>'App\Modules\User\Controller\Users@dashboard']);
+    Route::get('dashboard', 'App\Modules\User\Controller\Users@dashboard')->name('admin.dashboard');
 
     Route::get('user', ['as'=>'admin.users.index','uses'=>'App\Modules\User\Controller\Users@index']);
     Route::get('user/export', ['as'=>'admin.users.export','uses'=>'App\Modules\User\Controller\Users@export']);
@@ -120,6 +120,8 @@ Route::group(['prefix' => config('setting.admin_url')], function()
 
     // Settings Controller routes
     Route::get('setting', ['as'=>'admin.settings.index','uses'=>'App\Modules\User\Controller\Settings@index']);
+    // Ajax Controller
+    Route::post('setting/change', 'App\Modules\User\Controller\Settings@change')->name('admin.settings.change');
     Route::get('setting/create', ['as'=>'admin.settings.create','uses'=>'App\Modules\User\Controller\Settings@create']);
     Route::post('setting/create', ['as'=>'admin.settings.store','uses'=>'App\Modules\User\Controller\Settings@store']);
     Route::get('setting/{id}/show', ['as'=>'admin.settings.show', 'uses'=>'App\Modules\User\Controller\Settings@show']);
@@ -128,8 +130,6 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('setting/{id}/trash', ['as'=>'admin.settings.trash','uses'=>'App\Modules\User\Controller\Settings@trash']);
     Route::get('setting/{id}/restored', ['as'=>'admin.settings.restored','uses'=>'App\Modules\User\Controller\Settings@restored']);
     Route::get('setting/{id}/delete', ['as'=>'admin.settings.delete','uses'=>'App\Modules\User\Controller\Settings@delete']);
-    // Ajax Controller
-    Route::post('setting/{id}/change', ['as'=>'admin.settings.change','uses'=>'App\Modules\User\Controller\Settings@change']);
 
 
 });

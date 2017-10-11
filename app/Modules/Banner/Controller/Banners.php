@@ -175,6 +175,7 @@ class Banners extends BaseAdmin {
 					'.config('setting.status')[$row->status].'
 				</span>';
 			})
+			->rawColumns(['id','image','action','status'])
 			->make(true);
 	}
 
@@ -333,7 +334,7 @@ class Banners extends BaseAdmin {
 		$model	 	= $this->banners;
 
 		// Set division model to name and id only for lookup input
-		//$divisions = $this->divisions->lists('name', 'id')->all();
+		//$divisions = $this->divisions->pluck('name', 'id')->all();
 
 	   	// Load needed javascripts
 	   	$scripts = [

@@ -3,7 +3,7 @@
 {{-- Page content --}}
 @section('body')
 
-@if($errors->has())
+@if(count($errors))
 <div>
    @foreach ($errors->all() as $error)
       <span class="label label-danger"><span class="fa fa-exclamation-triangle"></span> {{ $error }}</span>
@@ -43,8 +43,8 @@
 		{!! Form::textarea('about',Input::old('about', $row->about),[
 			'placeholder'=>'Enter the about User.',
 			'name'=>'about',
-			'id'=>'ckeditor',
-			'class' => 'form-control',
+			'class' => 'form-control ckeditor',			
+			'id'=>'about',
 			'rows' => '4'
 		]); !!}
 		<span class="help-block">{{{ $errors->first('about', ':message') }}}</span>

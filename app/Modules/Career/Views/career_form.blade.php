@@ -46,8 +46,8 @@
 	{!! Form::textarea('description',Input::old('description', $row->description),[
 		'placeholder'=>'Enter the Career Description.',
 		'name'=>'description',
-		'id'=>'ckeditor',
-		'class' => 'form-control',
+		'id'=>'description',
+		'class' => 'form-control ckeditor',
 		'rows' => '4'
 	]); !!}
 	<span class="help-block">{{{ $errors->first('description', ':message') }}}</span>

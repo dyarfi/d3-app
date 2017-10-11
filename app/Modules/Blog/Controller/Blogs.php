@@ -175,6 +175,7 @@ class Blogs extends BaseAdmin {
 					'.config('setting.status')[$row->status].'
 				</span>';
 			})
+			->rawColumns(['id','name','action','status'])
 			->make(true);
 	}
 
@@ -334,9 +335,9 @@ class Blogs extends BaseAdmin {
 
 		$model	 	= $this->blogs;
 
-		$categories = $this->categories->lists('name', 'id')->all();
+		$categories = $this->categories->pluck('name', 'id')->all();
 
-		//$projects 	= $this->projects->lists('name', 'id')->all();
+		//$projects 	= $this->projects->pluck('name', 'id')->all();
 
 		$tags		= $tags;
 
@@ -503,11 +504,11 @@ class Blogs extends BaseAdmin {
 		if ($id) {
 			if ($blog = $this->blogs->find($id)) {
 				// Return Json Response
-				return response()->json($blog->tags->lists('name'), 200);
+				return response()->json($blog->tags->pluck('name'), 200);
 			}
 		} else {
 			// Return Json Response
-			return response()->json($this->blogs->allTags()->lists('name'), 200);
+			return response()->json($this->blogs->allTags()->pluck('name'), 200);
 		}
 	}
 

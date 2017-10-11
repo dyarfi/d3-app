@@ -2,6 +2,11 @@
 
 // Load Laravel classes
 use Route, Request, Session, Redirect, Activation, Sentinel, Input, Validator, View, Excel, File;
+// Lavachart
+use Lava;
+use Khill\Lavacharts\Lavacharts;
+// Spatie Google Analytics
+use Analytics, Newsletter;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -30,7 +35,7 @@ class Users extends BaseAdmin {
 		parent::__construct();
 
 		// Load Http/Middleware/Admin controller
-		$this->middleware('auth.admin',['except'=>['profile','crop']]);
+		$this->middleware(['auth.admin'],['except'=>['profile','crop']]);
 
 		// Load users and get repository data from Sentinel
 		$this->users = new User;
@@ -281,8 +286,8 @@ class Users extends BaseAdmin {
 	protected function showForm($mode, $id = null)
 	{
 
-		$roles = array_merge(['0'=>' -- NO ROLE -- '], $this->roles->lists('name', 'id')->all());
-		$teams = array_merge(['0'=>' -- NO TEAM -- '], $this->teams->lists('name', 'id')->all());
+		$roles = array_merge(['0'=>' -- NO ROLE -- '], $this->roles->pluck('name', 'id')->all());
+		$teams = array_merge(['0'=>' -- NO TEAM -- '], $this->teams->pluck('name', 'id')->all());
 		$user_teams = '';
 
 		if ($id)
@@ -292,7 +297,7 @@ class Users extends BaseAdmin {
 				return Redirect::to(route('admin.users'));
 			}
 			// Check if users had teams
-			$user_teams = User::find($row->id)->teams()->lists('team_id')->toArray();
+			$user_teams = User::find($row->id)->teams()->pluck('team_id')->toArray();
 		}
 		else
 		{
@@ -395,7 +400,7 @@ class Users extends BaseAdmin {
 					User::find($user->id)->teams()->attach($input['team_id']);
 				} else {
 					// Detach Teams
-					$team_ids = User::find($user->id)->teams()->lists('team_id')->toArray();
+					$team_ids = User::find($user->id)->teams()->pluck('team_id')->toArray();
 					User::find($user->id)->detachTeams($team_ids);
 				}
 			}
@@ -466,11 +471,45 @@ class Users extends BaseAdmin {
 	 */
 	public function dashboard() {
 
+		//$analyticsData = Analytics::getVisitorsAndPageViews(7);
+		//$api = Newsletter::getApi();
+		//$api = Newsletter::getLists('lists');
+		//akiyuki.tabuse@uniqlo.co.jp
+		//$api = Newsletter::getMembers();
+		//$api = Newsletter::getMember('akiyuki.tabuse@uniqlo.co.jp');
+		//dd($api);
+
+		
 		// Set return data
 	   	$user = $this->user;
 
+$lava = new Lavacharts; // See note below for Laravel
+
+$population = $lava->DataTable();
+
+$population->addDateColumn('Year')
+           ->addNumberColumn('Number of People')
+           ->addRow(['2006', 623452])
+           ->addRow(['2007', 685034])
+           ->addRow(['2008', 716845])
+           ->addRow(['2009', 757254])
+           ->addRow(['2010', 778034])
+           ->addRow(['2011', 792353])
+           ->addRow(['2012', 839657])
+           ->addRow(['2013', 842367])
+           ->addRow(['2014', 873490]);
+
+$lava->AreaChart('Population', $population, [
+    'title' => 'Population Growth',
+    'legend' => [
+        'position' => 'in'
+    ]
+]);
+
+
+
 	   	// Set data to return
-	   	$data = ['user'=>$user];
+	   	$data = ['user'=>$user, 'lava' =>$lava];
 
 	   	$scripts = ['easypiechart'=>'themes/ace-admin/js/jquery.easypiechart.min.js',
     				'sparkline' => 'themes/ace-admin/js/jquery.sparkline.min.js',

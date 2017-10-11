@@ -6,6 +6,10 @@
   <div class="space-6"></div>
 
   <div class="col-sm-7 infobox-container">
+
+    <div id="pop_div"></div>
+    <?php echo $lava->render('AreaChart', 'Population', 'pop_div') ?>
+
     <div class="infobox infobox-green">
       <div class="infobox-icon">
         <i class="ace-icon fa fa-comments"></i>
