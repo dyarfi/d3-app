@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cartalyst\Tags\TaggableTrait;
 use Cartalyst\Tags\TaggableInterface;
+use Plank\Mediable\Mediable;
 
 class Portfolio extends Model implements TaggableInterface {
 
@@ -12,6 +13,9 @@ class Portfolio extends Model implements TaggableInterface {
 
 	// Soft deleting a model, it is not actually removed from your database.
     use SoftDeletes;
+
+    // Mediable Eloquent Model from Plank
+    use Mediable;
 
 	/**
 	 * The database table used by the model.

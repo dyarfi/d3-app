@@ -49,9 +49,11 @@ return [
 		],
 
 		'local_uploads' => [
-		   'driver' => 'local',
-		   //'root'   => public_path('uploads'),
-		   'root'   => storage_path().'/app/public/uploads',
+		   	'driver' => 'local',
+		   	//'root'   => public_path('uploads'),
+		   	'root'   => storage_path().'/app/public/uploads',
+		   	'url' => env('APP_URL').'/uploads',
+        	'visibility' => 'public',
 	    ],
 
 	    'public' => [

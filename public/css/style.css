@@ -6638,12 +6638,13 @@ body:not(.device-touch) .button {
 }
 
 .button:hover {
-	background-color: #444;
+	/*background-color: #444;*/
+	background-color: #ff0000;
 	color: #FFF;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 }
 
-.button.button-dark:hover { background-color: #0636b0; }
+.button.button-dark:hover { background-color: #ff0000;/*background-color: #0636b0;*/ }
 
 .button.button-mini {
 	padding: 0 14px;

@@ -11,7 +11,8 @@ return [
     /*
      * Filesystem disk to use if none is specified
      */
-    'default_disk' => 'uploads',
+    'default_disk' => 'local_uploads',    
+    //'default_disk' => 'uploads',
 
     /*
      * Filesystems that can be used for media storage

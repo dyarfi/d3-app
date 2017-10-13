@@ -54,9 +54,16 @@
 				</div>
 			</div>
 		</div>
+		<!--
+		parallax dark" style="background-image: url('{{ asset("images/services/slider-testi.jpg") }}'); padding: 100px 0;" data-stellar-background-ratio="0.4"
+		-->
 		<div class="section nobottommargin">
 			<div class="container clear-bottommargin clearfix">
-				<div class="row topmargin-sm clearfix">
+				<div class="row clearfix">
+					<div class="heading-block center">
+						<h2>What you get from us</h2>
+						<span class="divcenter">Our team will turn your ideas into reality.</span>
+					</div>
 					@foreach ($teams as $team)
 					<div class="col-md-4 bottommargin">
 						<?php echo $team->description;?>
@@ -68,30 +75,32 @@
 		<div class="container clearfix">
 			<div class="row topmargin-lg bottommargin-sm">
 				<div class="heading-block center">
-					<h2>We love building awesome apps too</h2>
-					<span class="divcenter">Transforming your ideas to reality.</span>
+					<h2>We love building ideas into reality</h2>
+					<span class="divcenter">Talk to us what you want for your needs.</span>
 				</div>
 				<div class="col-md-4 col-sm-6 bottommargin">
 					<div class="feature-box fbox-right topmargin" data-animate="fadeIn">
 						<div class="fbox-icon">
 							<a href="#"><i class="icon-line-heart"></i></a>
 						</div>
-						<h3>Boxed &amp; Wide Layouts</h3>
-						<p>Stretch your Website to the Full Width or make it boxed to surprise your visitors.</p>
+						<h3>Social Media Campaign</h3>
+						<p>Stretch your users reach to the max and surprise your users.</p>
 					</div>
 					<div class="feature-box fbox-right topmargin" data-animate="fadeIn" data-delay="200">
 						<div class="fbox-icon">
 							<a href="#"><i class="icon-line-paper"></i></a>
 						</div>
-						<h3>Extensive Documentation</h3>
-						<p>We have covered each &amp; everything in our Docs including Videos &amp; Screenshots.</p>
+						<h3>Creative Media</h3>
+						<p>Developing ideas and we will get your Creative Media.</p>
 					</div>
 					<div class="feature-box fbox-right topmargin" data-animate="fadeIn" data-delay="400">
 						<div class="fbox-icon">
 							<a href="#"><i class="icon-line-layers"></i></a>
 						</div>
-						<h3>Parallax Support</h3>
-						<p>Display your Content attractively using Parallax Sections with HTML5 Videos.</p>
+						<h3>Website &amp; Microsite</h3>
+						<p>
+							Service oriented site that scales &amp; allows the world to get know you better
+						</p>
 					</div>
 				</div>
 				<div class="col-md-4 hidden-sm bottommargin center">
@@ -102,27 +111,27 @@
 						<div class="fbox-icon">
 							<a href="#"><i class="icon-line-power"></i></a>
 						</div>
-						<h3>HTML5 Video</h3>
-						<p>Canvas provides support for Native HTML5 Videos that can be added to a Background.</p>
+						<h3>Offline &amp; Online</h3>
+						<p>We provides support for your campaign offline and online.</p>
 					</div>
 					<div class="feature-box topmargin" data-animate="fadeIn" data-delay="200">
 						<div class="fbox-icon">
 							<a href="#"><i class="icon-line-check"></i></a>
 						</div>
-						<h3>Endless Possibilities</h3>
-						<p>Complete control on each &amp; every element that provides endless customization.</p>
+						<h3>Digital Marketing</h3>
+						<p>Get your brand campaign on digitalized world.</p>
 					</div>
 					<div class="feature-box topmargin" data-animate="fadeIn" data-delay="400">
 						<div class="fbox-icon">
 							<a href="#"><i class="icon-bulb"></i></a>
 						</div>
-						<h3>Light &amp; Dark Color Schemes</h3>
-						<p>Change your Website's Primary Scheme instantly by simply adding the dark class.</p>
+						<h3>Collaborate ideas</h3>
+						<p>You have the ideas and we can accelerate and optimized it.</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row clearfix common-height">
+		<div class="row clearfix common-height hide">
 			<div class="col-md-6 center col-padding" style="background: url('{{ asset("images/services/main-bg_.jpg") }}') center center no-repeat; background-size: cover;">
 				<div>&nbsp;</div>
 			</div>
@@ -143,7 +152,7 @@ What do you think makes a great site building and customization experience? Outs
 				</div>
 			</div>
 		</div>
-		<div class="row clearfix bottommargin-lg common-height">
+		<div class="row clearfix bottommargin-lg common-height hide">
 			<div class="col-md-3 col-sm-6 dark center col-padding" style="background-color: #515875;">
 				<div>
 					<i class="i-plain i-xlarge divcenter icon-line2-directions"></i>
@@ -173,7 +182,7 @@ What do you think makes a great site building and customization experience? Outs
 				</div>
 			</div>
 		</div>
-		<div class="container clearfix">
+		<div class="container clearfix hide">
 			<div class="col_one_third">
 				<div class="feature-box fbox-small fbox-plain" data-animate="fadeIn">
 					<div class="fbox-icon">
@@ -411,7 +420,7 @@ What do you think makes a great site building and customization experience? Outs
 				<a href="#" class="button button-border button-dark button-rounded button-large noleftmargin topmargin-sm">Learn more</a>
 			</div>
 		</div>
-		<div class="section parallax dark nobottommargin" style="background-image: url('{{ asset("images/services/slider-testi.jpg") }}'); padding: 100px 0;" data-stellar-background-ratio="0.4">
+		<div class="section parallax dark nobottommargin hide" style="background-image: url('{{ asset("images/services/slider-testi.jpg") }}'); padding: 100px 0;" data-stellar-background-ratio="0.4">			
 			<div class="heading-block center">
 				<h3>What Clients Say About Us?</h3>
 			</div>

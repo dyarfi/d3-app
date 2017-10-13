@@ -358,6 +358,9 @@ class Portfolios extends BaseAdmin {
 		// Set portfolio slug
 		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'_') : '';
 
+    	// Set empty array
+        $medias = [];
+
 		$rules = [
 			'client_id'   => 'required',
 			'project_id'  => 'required',
@@ -376,14 +379,33 @@ class Portfolios extends BaseAdmin {
 			// Set validation messages
 			$messages 	= $this->validatePortfolio($input, $rules);
 
-			// If user upload a file
+			// If user upload a featured file
 			if (isset($input['image']) && Input::hasFile('image')) {
 
 				// Set filename
 				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'portfolio_');
 
 			}
-
+			/*
+			// If user upload a file
+	        if (isset($input['albums']) && Input::hasFile('albums')) {
+	        	// Loop the medias
+	            foreach($input['albums'] as $media){
+	                // Set filename
+	                $medias[] = MediaUploader::fromSource($media)	                
+				    // whether to allow the 'other' aggregate type
+				    ->setAllowUnrecognizedTypes(false)
+	                // only allow files of specific MIME types
+	                ->setAllowedMimeTypes(['image/jpeg'])
+	                // only allow files of specific extensions
+	                ->setAllowedExtensions(['jpg', 'jpeg'])
+	                // only allow files of specific aggregate types
+	                ->setAllowedAggregateTypes(['image'])
+	                // Upload the medias
+	                ->upload();   
+	            }
+	        }
+			*/
 			// If validation message empty
 			if ($messages->isEmpty())
 			{
@@ -401,6 +423,13 @@ class Portfolios extends BaseAdmin {
 
 				// Using the `slug` column
 				$portfolio->setTags($result['tags']);
+
+				// Attach mediaable data
+	            if ($medias) {
+	                foreach($medias as $media){
+	                    $portfolio->attachMedia($media, 'albums');
+	                }
+	            }
 
 			}
 
