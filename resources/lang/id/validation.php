@@ -38,7 +38,7 @@ return [
 	"filled"               => "The :attribute field is required.",
 	"exists"               => "The selected :attribute is invalid.",
 	"image"                => "The :attribute must be an image.",
-	"in"                   => "The selected :attribute is invalid.",
+	"in"                   => "The selected :attribute is invalid. :values",
 	"integer"              => "The :attribute must be an integer.",
 	"ip"                   => "The :attribute must be a valid IP address.",
 	"max"                  => [
@@ -116,7 +116,8 @@ return [
 		'site-admin-theme' 		=> 'Site Admin Theme',
 		'site-tagline' 			=> 'Site Tagline',
 		'site-timezone' 		=> 'Site Timezone',
-		'site-country' 			=> 'Site Country',
+		'site-country' 			=> 'Site Country',		
+		'maintenance-mode' 		=> 'Maintenance Mode',
 		'socmed-facebook' 		=> 'Socmed Facebook',
 		'socmed-twitter' 		=> 'Socmed Twitter',
 		'image-logo'			=> 'Image Logo',
