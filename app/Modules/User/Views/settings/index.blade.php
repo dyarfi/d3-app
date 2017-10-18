@@ -107,6 +107,13 @@
 ?>
 <!-- PAGE CONTENT BEGINS -->
 <div class="row">
+	<?php 
+		$path_country = database_path() . "/country.json";
+		$country = json_decode(file_get_contents($path_country), false); 
+
+		$path_timezone = database_path() . "/timezones.json";
+		$timezones = json_decode(file_get_contents($path_timezone), false); 
+	?>
 	<div class="col-sm-12">
 		{!! Form::open(['route'=>'admin.settings.change','files' => true]) !!}
 		{!! Form::hidden('setting_form',base64_encode(Session::getId())) !!}

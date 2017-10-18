@@ -317,7 +317,7 @@ class Settings extends BaseAdmin {
 			'email-info' 			=> 'required|min:5|email',
 			'email-administrator'	=> 'required|min:5|email',
 		  	'smtp-server' 			=> 'required|ip',
-			'site-name' 			=> 'required',
+			'site-name' 			=> 'required|max:32',
 			'site-locale' 			=> 'required|max:3',
 			'site-theme' 			=> 'required',
 			'site-admin-theme' 		=> 'required',
