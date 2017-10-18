@@ -16,45 +16,51 @@
 		<section id="content">
 			<div class="content-wrap">
 				<div class="container clearfix">
+					<?php
+					$i = 1;
+					$c = count($careers);
+					?>
 					<div class="col_three_fifth nobottommargin" id="entry-listing">
 						<div class="entry isotope-item">
-							<?php
-							$i = 1;
-							$c = count($careers);
-							?>
-							@foreach($careers as $career)
-							<div class="fancy-title title-bottom-border">
-								<h3>{{ $career->name }} <span class="pull-right"><i class="icon-ok"></i> {{ $career->end_date }}</span></h3>
-							</div>
-							<p>{{ str_limit($career->description, 500,' [...]')}}</p>
-							<div class="accordion accordion-bg clearfix">
-								@if ($career->requirement)
-								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Requirements</div>
-								<div class="acc_content clearfix">
-									{!! $career->requirement !!}
+							@if($c > 0)
+								@foreach($careers as $career)
+								<div class="fancy-title title-bottom-border">
+									<h3>{{ $career->name }} <span class="pull-right"><i class="icon-ok"></i> {{ $career->end_date }}</span></h3>
 								</div>
-								@endif
-								@if ($career->responsibility)
-								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Responsibility</div>
-								<div class="acc_content clearfix">
-									{!! $career->responsibility !!}
+								<p>{{ str_limit($career->description, 500,' [...]')}}</p>
+								<div class="accordion accordion-bg clearfix">
+									@if ($career->requirement)
+									<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Requirements</div>
+									<div class="acc_content clearfix">
+										{!! $career->requirement !!}
+									</div>
+									@endif
+									@if ($career->responsibility)
+									<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Responsibility</div>
+									<div class="acc_content clearfix">
+										{!! $career->responsibility !!}
+									</div>
+									@endif
+									@if($career->facility)
+									<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Facility</div>
+									<div class="acc_content clearfix">
+										{!! $career->facility !!}
+									</div>
+									@endif
 								</div>
-								@endif
-								@if($career->facility)
-								<div class="acctitle"><i class="acc-closed icon-ok-circle"></i><i class="acc-open icon-remove-circle"></i>Facility</div>
-								<div class="acc_content clearfix">
-									{!! $career->facility !!}
-								</div>
-								@endif
-							</div>
-							<a href="#" data-scrollto="#job-apply" class="button button-3d button-black nomargin apply" data-rel="{!! $career->slug !!}">Apply Now</a>
-							@if ($i != $c)
-								<div class="divider divider-short"><i class="icon-star3"></i></div>
-						 	@endif
-							<?php $i++ ;?>
-							@endforeach
+								<a href="#" data-scrollto="#job-apply" class="button button-3d button-black nomargin apply" data-rel="{!! $career->slug !!}">Apply Now</a>
+								@if ($i != $c)
+									<div class="divider divider-short"><i class="icon-star3"></i></div>
+							 	@endif
+								<?php $i++ ;?>
+								@endforeach
+
+							@else
+								<h4>No vacancy at the moment</h4>
+							@endif
 						</div>
 					</div>
+					@if($c > 0)
 					<div class="col_two_fifth nobottommargin col_last">
 						<div id="job-apply" class="heading-block highlight-me">
 							<h3>Apply Now</h3>
@@ -164,6 +170,7 @@
 							{!! Form::close() !!}
 						</div>
 					</div>
+					@endif
 				</div>
 				{!! $careers->render() !!}
 			</div>

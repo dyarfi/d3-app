@@ -527,7 +527,7 @@
 		background-color: transparent !important;
 		font-weight: 600;
 		padding-left: 5px;
-		color: #2004cc;
+		/*color: #2004cc;*/ color: #ff0000;
 	}
 
 	#primary-menu ul li .mega-menu-content,
@@ -587,10 +587,10 @@
 
 	#primary-menu ul li .mega-menu-content.style-2 ul.mega-menu-column > li.mega-menu-title:hover > a {
 		background-color: transparent;
-		color: #2004cc !important;
+		/*color: #2004cc;*/ color: #ff0000 !important;
 	}
 
-	#primary-menu ul li .mega-menu-content.style-2 ul.mega-menu-column > li.mega-menu-title > a:hover { color: #2004cc !important; }
+	#primary-menu ul li .mega-menu-content.style-2 ul.mega-menu-column > li.mega-menu-title > a:hover { /*color: #2004cc;*/ color: #ff0000 !important; }
 
 	#primary-menu ul li .mega-menu-content.style-2 li { border-top: 1px solid #EEE; }
 
@@ -684,7 +684,7 @@
 		left: auto;
 		right: 15px;
 		height: auto;
-		background-color: #2004cc;
+		background-color: #ff0000; /*#2004cc;*/
 		z-index: 11;
 	}
 
@@ -1260,7 +1260,7 @@
 		border-radius: 2px !important;
 	}
 
-	.portfolio-filter li a:hover { color: #2004cc; }
+	.portfolio-filter li a:hover { /*color: #2004cc;*/ color: #ff0000; }
 
 	.portfolio-filter li.activeFilter a {
 		color: #FFF;

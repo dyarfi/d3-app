@@ -61,7 +61,9 @@ class Careers extends BaseAdmin {
 	   				'dataTables'=> 'themes/ace-admin/js/jquery.dataTables.min.js',
 	   				'dataTableBootstrap'=> 'themes/ace-admin/js/jquery.dataTables.bootstrap.min.js',
 	   				'dataTableTools'=> 'themes/ace-admin/js/dataTables.tableTools.min.js',
-	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js'
+	   				'dataTablesColVis'=> 'themes/ace-admin/js/dataTables.colVis.min.js',
+				   	// Load needed javascripts
+					'library' => asset('themes/ace-admin/js/library.js')
 	   				];
 
 		// Return data and view

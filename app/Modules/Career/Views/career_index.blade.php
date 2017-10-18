@@ -43,9 +43,7 @@
 		        	<td>
 						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
 							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span>
-							@foreach (config('setting.status') as $config => $val)
-								{{ $config == $row->status ? $val : '' }}
-							@endforeach
+							{{ config('setting.status')[$row->status] }}
 		                </span>
 					</td>
 					<!-- <td>{{ $row->updated_at }}</td> -->

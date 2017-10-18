@@ -47,7 +47,7 @@
                         @foreach (current($tmp)['action'] as $access)
                            <li class="{{ preg_match('/\b'.Request::segment(2).'\b/i', route("admin.{$access}")) || str_is(str_replace('admin.','',Route::getCurrentRoute()->getName()), $access) ? 'active' : '' }}">
                             <a href="{{ route("admin.{$access}") }}">
-                                <i class="menu-icon fa fa-caret-right"></i>{{ key($tmp) }}<!--b class="arrow fa fa-user"></b-->
+                                <i class="menu-icon fa fa-caret-right"></i>{{ key($tmp) }} <!--b class="arrow fa fa-user"></b-->
                             </a>
                             <b class="arrow"></b>
                           </li>

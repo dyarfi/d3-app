@@ -10,8 +10,6 @@
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('themes/ace-admin/font-awesome/4.2.0/css/font-awesome.min.css') }}" />
-    <!-- page specific plugin styles -->
-    <!--link rel="stylesheet" href="{{ asset('themes/ace-admin/css/jquery-ui.custom.min.css') }}" /-->
     <!-- text fonts -->
     <link rel="stylesheet" href="{{ asset('themes/ace-admin/fonts/fonts.googleapis.com.css') }}" />
     <!-- ace styles -->
@@ -76,7 +74,7 @@
                 <li><a href="#">More Pages</a></li>
                 <li class="active">User Profile</li>
             </ul><!-- /.breadcrumb -->
-            <div class="nav-search hidden" id="nav-search">
+            <div class="nav-search" id="nav-search">
               <form class="form-search">
                 <span class="input-icon">
                   <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
@@ -103,7 +101,7 @@
           @endif
           <div class="page-content">
             @if(Sentinel::check())
-            <div class="ace-settings-container" id="ace-settings-container">
+            <div class="ace-settings-container hide" id="ace-settings-container">
               <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
                 <i class="ace-icon fa fa-cog bigger-130"></i>
               </div>
@@ -174,7 +172,9 @@
               </div><!-- /.ace-settings-box -->
             </div><!-- /.ace-settings-container -->
             @endif
-            <div class="space-16"></div>
+
+            <!--div class="space-16"></div-->
+
             <div class="row">
               <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
@@ -190,6 +190,7 @@
                   </strong>,
   легкий, много-функциональный и простой в использовании шаблон для админки на bootstrap 3.3. Загрузить исходники с <a href="https://github.com/bopoda/ace">github</a> (with minified ace js files).
                 </div-->
+
                 @include('Auth::partials.notification')
                 @yield('body')
                 <!-- PAGE CONTENT ENDS -->
@@ -206,7 +207,6 @@
                   {{ @app('App\Modules\User\Model\Setting')->slug('site-name')->value }}
               </span> &copy; 2013-{{ date('Y') }}
             </span>
-
             &nbsp; &nbsp;
             <span class="action-buttons">
                 @foreach (@app('App\Modules\User\Model\Setting')->group('socmed') as $socmed)
@@ -218,39 +218,31 @@
           </div>
         </div>
       </div>
-
       <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
       </a>
     </div><!-- /.main-container -->
-
     <!-- basic scripts -->
-
     <!--[if !IE]> -->
     <script src="{{ asset('themes/ace-admin/js/jquery.2.1.1.min.js') }}"></script>
     <!-- <![endif]-->
-
     <!--[if IE]>
       <script src="{{ asset('themes/ace-admin/js/jquery.1.11.1.min.js') }}"></script>
     <![endif]-->
-
     <!--[if !IE]> -->
     <script type="text/javascript">
       window.jQuery || document.write("<script src='{{ asset('themes/ace-admin/js/jquery.min.js') }}>"+"<"+"/script>");
     </script>
     <!-- <![endif]-->
-
     <!--[if IE]>
     <script type="text/javascript">
      window.jQuery || document.write("<script src='{{ asset('themes/ace-admin/js/jquery1x.min.js') }}>"+"<"+"/script>");
     </script>
     <![endif]-->
-
     <script type="text/javascript">
       if('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('themes/ace-admin/js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
     </script>
     <script src="{{ asset('themes/ace-admin/js/bootstrap.min.js') }}"></script>
-
 @if(isset($scripts)) @foreach($scripts as $script => $js) {!! Html::script($js, ['rel'=>$script]) !!} @endforeach @endif
 @if(isset($inlines))
     <!-- page specific plugin scripts and styles -->
@@ -260,11 +252,7 @@
         @endif
     @endforeach
 @endif
-
-    <!--[if lte IE 8]>
-      <script src="{{ asset('themes/ace-admin/js/excanvas.min.js') }}"></script>
-    <![endif]-->
-
+    <!--[if lte IE 8]><script src="{{ asset('themes/ace-admin/js/excanvas.min.js') }}"></script><![endif]-->
     <!-- bootstrap assets -->
     <!--script src="{{ asset('themes/ace-admin/js/jquery-ui.custom.min.js') }}"></script-->
     <script src="{{ asset('themes/ace-admin/js/bootbox.min.js') }}"></script>
@@ -273,7 +261,6 @@
     <!-- ace scripts -->
     <script src="{{ asset('themes/ace-admin/js/ace-elements.min.js') }}"></script>
     <script src="{{ asset('themes/ace-admin/js/ace.min.js') }}"></script>
-
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
       jQuery(function($) {
@@ -411,8 +398,6 @@
             $(document).one('ajaxloadstart.page', function(e) {
               $tooltip.remove();
             });
-
-
 
 
             var d1 = [];
@@ -609,7 +594,6 @@
     $(document).one('ajaxloadstart.page', function(e) {
         $('#colorbox, #cboxOverlay').remove();
     });
-
 
 })
 </script>
