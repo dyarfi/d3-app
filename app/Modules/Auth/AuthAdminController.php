@@ -12,6 +12,8 @@ use Sentinel, Email, Teamwork;
 // Load Laravel classes
 use View, Validator, Redirect;
 //use Request, View, Validator, Redirect;
+// User Activity Logs
+use Activity;
 
 // Load User models
 use App\Modules\User\Model\User;
@@ -105,6 +107,9 @@ class AuthAdminController extends Controller {
 
 			if (Sentinel::authenticate($input, $remember))
 			{
+				// Log it first
+        		Activity::log(__FUNCTION__);
+
 				// Check if previous url is valid
 				if ($input['previous_url'] && $input['previous_url'] !== route('admin.noaccess')) {
 					// Redirect to previous url
@@ -113,6 +118,7 @@ class AuthAdminController extends Controller {
 					// Or redirect to dashboard
 					return Redirect::intended(route('admin.dashboard'));
 				}
+
 			}
 
 			$errors = 'Invalid login or password.';
@@ -297,6 +303,9 @@ class AuthAdminController extends Controller {
 	 */
 	public function logout() {
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+        		
         // Sentinel Logout
         Sentinel::logout();
 

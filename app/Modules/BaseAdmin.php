@@ -4,7 +4,8 @@
 use Request, Redirect, Response, View, Route;
 use Sentinel, Artisan, Session;
 // User for debugging
-use Event;
+//use Event;
+use Activity;
 
 class BaseAdmin extends ThemeAdmin {
 

@@ -51,6 +51,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	];
 
 	/**
+	 * A user can have many logs.
+	 *
+	 */
+	public function logs()
+	{
+		return $this->hasMany('App\Modules\Blog\Model\Log','user_id');
+	}
+
+	/**
 	 * A user can have many tasks.
 	 *
 	 */

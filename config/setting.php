@@ -80,7 +80,7 @@ return [
 								// Action for first index
 								'action' => ['logs.index'],
 								// Controller method list
-								'method' => ['logs.index','logs.edit','logs.create','logs.store','logs.show']
+								'method' => ['logs.index','logs.edit','logs.create','logs.store','logs.export','logs.show']
 							]
 						]
 					]

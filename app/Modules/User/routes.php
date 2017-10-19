@@ -109,6 +109,7 @@ Route::prefix(config('setting.admin_url'))->group( function()
     Route::post('permission/{id}/change', ['as'=>'admin.permissions.change','uses'=>'App\Modules\User\Controller\Permissions@change']);
 
     Route::get('log', ['as'=>'admin.logs.index','uses'=>'App\Modules\User\Controller\Logs@index']);
+    Route::get('log/export', ['as'=>'admin.logs.export','uses'=>'App\Modules\User\Controller\Logs@export']);
     Route::get('log/create', ['as'=>'admin.logs.create','uses'=>'App\Modules\User\Controller\Logs@create']);
     Route::post('log/create', ['as'=>'admin.logs.store','uses'=>'App\Modules\User\Controller\Logs@store']);
     Route::get('log/{id}/show', ['as'=>'admin.logs.show', 'uses'=>'App\Modules\User\Controller\Logs@show']);

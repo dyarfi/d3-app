@@ -1,22 +1,22 @@
 <?php namespace App\Modules\User\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View;
+use Route, Request, Session, Redirect, Input, Validator, Excel, View;
 // Load Auth and Socialite classes
 use Sentinel;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
-use App\Modules\User\Model\Role;
+use App\Modules\User\Model\Log;
 
 class Logs extends BaseAdmin {
 
 	/**
-	 * Holds the Sentinel Roles repository.
+	 * Holds the Sentinel Logs repository.
 	 *
-	 * @var \Cartalyst\Sentinel\Roles\EloquentRole
+	 * @var \Cartalyst\Sentinel\Logs\EloquentLog
 	 */
-	protected $roles;
+	protected $logs;
 
 	/**
 	 * Constructor.
@@ -32,13 +32,13 @@ class Logs extends BaseAdmin {
 		// Load Http/Middleware/Admin controller
 		$this->middleware('auth.admin');
 
-		// Load roles and create model from Auth
-		$this->roles = Sentinel::getRoleRepository()->createModel();
+		// Load logs and create model from Auth
+		$this->logs = new Log;
 		
 	}
 
 	/**
-	 * Display a listing of roles.
+	 * Display a listing of logs.
 	 *
 	 * @return \Illuminate\View\View
 	 */
@@ -46,15 +46,15 @@ class Logs extends BaseAdmin {
 	{
 
 		// Set return data 
-	   	$rows = Input::get('path') === 'trashed' ? Role::onlyTrashed()->paginate(4) : Role::paginate(4);
-
+	   	$rows = Input::get('path') === 'trashed' ? Log::onlyTrashed()->orderBy('created_at', 'desc')->paginate(15) : Log::with('user')->orderBy('created_at', 'desc')->paginate(15);
+	   	
 	   	// Get deleted count
-		$deleted = Role::onlyTrashed()->get()->count();
+		$deleted = Log::onlyTrashed()->get()->count();
 
 		// Get trashed mode
 		$junked  = Input::get('path');
 
-		return $this->view('Logs::index')->data(compact('rows','deleted','junked'))->title('Logs Listing');
+		return $this->view('User::sentinel.logs.index')->data(compact('rows','deleted','junked'))->title('Logs Listing');
 	}
 
 	/**
@@ -66,21 +66,21 @@ class Logs extends BaseAdmin {
 	public function show($id)
 	{
 		// Get data from database
-        $role = $this->roles->findOrFail($id);
+        $log = $this->logs->findOrFail($id);
         
         // Read ACL settings config for any permission access
         $acl = config('setting.acl');
 	               	      
 		// Set data to return
-	   	$data = ['role'=>$role,'acl'=>$acl];
+	   	$data = ['log'=>$log,'acl'=>$acl];
 
 	   	// Return data and view
-	   	return $this->view('admin.sentinel.roles.show')->data($data)->title('View Role'); 
+	   	return $this->view('User::sentinel.logs.show')->data($data)->title('View Log'); 
 
 	}
 
 	/**
-	 * Show the form for creating new role.
+	 * Show the form for creating new log.
 	 *
 	 * @return \Illuminate\View\View
 	 */
@@ -90,7 +90,7 @@ class Logs extends BaseAdmin {
 	}
 
 	/**
-	 * Handle posting of the form for creating new role.
+	 * Handle posting of the form for creating new log.
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
@@ -100,7 +100,7 @@ class Logs extends BaseAdmin {
 	}
 
 	/**
-	 * Show the form for updating role.
+	 * Show the form for updating log.
 	 *
 	 * @param  int  $id
 	 * @return mixed
@@ -111,7 +111,7 @@ class Logs extends BaseAdmin {
 	}
 
 	/**
-	 * Handle posting of the form for updating role.
+	 * Handle posting of the form for updating log.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
@@ -122,24 +122,24 @@ class Logs extends BaseAdmin {
 	}
 	
 	/**
-	 * Remove the specified role.
+	 * Remove the specified log.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function trash($id)
 	{
-		if ($role = Role::find($id))
+		if ($log = Log::find($id))
 		{
 
 			// Add deleted_at and not completely delete
-			$role->delete();
+			$log->delete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Trashed!');
+			return Redirect::to(route('admin.logs.index'))->with('success', 'Log Trashed!');
 		}
 
-		return Redirect::to(route('admin.roles.index'))->with('error', 'Role Not Found!');;
+		return Redirect::to(route('admin.logs.index'))->with('error', 'Log Not Found!');;
 	}
 
 	/**
@@ -150,39 +150,39 @@ class Logs extends BaseAdmin {
 	 */
 	public function restored($id)
 	{
-		if ($role = Role::onlyTrashed()->find($id))
+		if ($log = Log::onlyTrashed()->find($id))
 		{
 
 			// Restored back from deleted_at database
-			$role->restore();
+			$log->restore();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Restored!');
+			return Redirect::to(route('admin.logs.index'))->with('success', 'Log Restored!');
 		}
 
-		return Redirect::to(route('admin.roles.index'))->with('error', 'Role Not Found!');
+		return Redirect::to(route('admin.logs.index'))->with('error', 'Log Not Found!');
 	}
 
 	/**
-	 * Remove the specified role.
+	 * Remove the specified log.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function delete($id)
 	{
-		if ($role = Role::onlyTrashed()->find($id))
+		if ($log = Log::onlyTrashed()->find($id))
 		{
 
 			// Completely delete from database
-			$role->forceDelete();
+			$log->forceDelete();
 
 			// Redirect with messages
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Permanently Deleted!');
+			return Redirect::to(route('admin.logs.index'))->with('success', 'Log Permanently Deleted!');
 
 		}
 
-		return Redirect::to(route('admin.roles.index'))->with('error', 'Role Not Found!');;
+		return Redirect::to(route('admin.logs.index'))->with('error', 'Log Not Found!');;
 	}
 
 	/**
@@ -196,26 +196,26 @@ class Logs extends BaseAdmin {
 	{
 		if ($id)
 		{
-			if ( ! $role = $this->roles->find($id))
+			if ( ! $log = $this->logs->find($id))
 			{
-				return Redirect::to(route('admin.roles.index'));
+				return Redirect::to(route('admin.logs.index'));
 			}
 		}
 		else
 		{
-			$role = $this->roles;
+			$log = $this->logs;
 		}
 
 		
-		$role_access = config('setting.acl');
+		$log_access = config('setting.acl');
 		
-		$role = Sentinel::findRoleById($this->user->roles()->first()->id);
+		$log = Sentinel::findLogById($this->user->logs()->first()->id);
 
-		//dd (array_keys($role_access));
+		//dd (array_keys($log_access));
 
-		// dd ($role->hasAccess('tasks'));
+		// dd ($log->hasAccess('tasks'));
 		
-		return $this->view('admin.sentinel.roles.form')->data(compact('mode', 'role'))->title('Roles '.$mode);
+		return $this->view('User::sentinel.logs.form')->data(compact('mode', 'log'))->title('Logs '.$mode);
 	}
 
 	/**
@@ -229,8 +229,6 @@ class Logs extends BaseAdmin {
 	{
 		$input = Input::all();	 
 
-		//dd ($input);
-
 		if ($input['permissions'] === 'true') {
 
 			$input['permissions'] = ['admin'=>true];
@@ -243,54 +241,54 @@ class Logs extends BaseAdmin {
 
 		$rules = [
 			'name' => 'required',
-			'slug' => 'required|unique:roles'
+			'slug' => 'required|unique:logs'
 		];
 		
 		if ($id)
 		{
 
-			$role = $this->roles->find($id);
+			$log = $this->logs->find($id);
 
-			$rules['slug'] .= ",slug,{$role->slug},slug";
+			$rules['slug'] .= ",slug,{$log->slug},slug";
 
-			$messages = $this->validateRole($input, $rules);
+			$messages = $this->validateLog($input, $rules);
 
 			if ($messages->isEmpty())
 			{
-				$role->fill($input);
+				$log->fill($input);
 
-				$role->save();
+				$log->save();
 			}
 		}
 		else
 		{
 
-			$messages = $this->validateRole($input, $rules);
+			$messages = $this->validateLog($input, $rules);
 
 			if ($messages->isEmpty())
 			{	
 
-				$role = $this->roles->create($input);				
+				$log = $this->logs->create($input);				
 
 			}
 		}
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Updated!');;
+			return Redirect::to(route('admin.logs.index'))->with('success', 'Log Updated!');;
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
 	}
 
 	/**
-	 * Validates a role.
+	 * Validates a log.
 	 *
 	 * @param  array  $data
 	 * @param  mixed  $id
 	 * @return \Illuminate\Support\MessageBag
 	 */
-	protected function validateRole($data, $rules)
+	protected function validateLog($data, $rules)
 	{
 		$validator = Validator::make($data, $rules);
 
@@ -298,5 +296,30 @@ class Logs extends BaseAdmin {
 
 		return $validator->errors();
 	}
+
+	/**
+	 * Process a file generated headers for logs tables.
+	 *
+	 * @param  void
+	 * @return header .xls
+	 */
+	public function export() {
+		// Get type file to export
+		$type = Input::get('rel');
+		// Get data to export
+		$logs = $this->logs->select('id', 'user_id', 'description','created_at')->get();
+		// Export file to type
+		Excel::create('logs', function($excel) use($logs) {
+			// Set the spreadsheet title, creator, and description
+	        $excel->setTitle('Export List');
+	        $excel->setCreator('Laravel')->setCompany('laravel.com');
+	        $excel->setDescription('export file');
+
+		    $excel->sheet('Sheet 1', function($sheet) use($logs) {
+		        $sheet->fromArray($logs);
+		    });
+		})->export($type);
+	}
+
 
 }

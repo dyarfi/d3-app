@@ -246,7 +246,13 @@ return [
 		/*
 		 * http://lavacharts.com/#install
 		 */
-		Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
+		Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+
+
+		/*
+		 * Custom User Activity Logs
+		 */
+        App\Providers\ActivityServiceProvider::class
 
 	],
 
@@ -347,7 +353,10 @@ return [
 		'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
 
 		// Attach Laravel Charts
-		'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class
+		'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
+
+		// Attach Activity log facade
+	    'Activity' => App\Facades\Activity::class,
 	],
 
 ];
