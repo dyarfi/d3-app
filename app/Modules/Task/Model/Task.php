@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Plank\Mediable\Mediable;
+use Uuid;
 
 class Task extends Model {
 
@@ -25,6 +26,7 @@ class Task extends Model {
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'title',
         'slug',
         'description',
@@ -45,6 +47,22 @@ class Task extends Model {
         //'attributes'  => 'object',
         //'status'      => 'boolean'
     ];
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot() {
+        // Parent boot
+        parent::boot();
+        // Set model
+        $model = new Self;        
+        // Set new Uuid
+        self::saving(function ($model) {
+            if (!$model->uuid){
+                $model->uuid = (string) Uuid::generate(4);
+            }
+        });        
+    }
 
     // a task is owned by a user
     public function user()  {

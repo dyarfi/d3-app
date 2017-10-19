@@ -41,29 +41,38 @@ $n = count($category);
 				<h1 class="clearfix nopadding">Category : {{ $category->name }}</h1>
 				@endif
 				<div id="posts" class="post-grid grid-container clearfix" data-layout="fitRows">
-					@foreach ($blogs as $blog)
-					<div class="entry clearfix">
-						@if($blog->image)
-						<div class="entry-image">
-							<a href="{{ asset('uploads/'.$blog->image) }}" data-lightbox="image"><img class="image_fade" src="{{asset('uploads/'.$blog->image)}}" alt="{{ $blog->name }}"></a>
+					<?php 
+					$m = count($blogs);
+					?>
+					@if($m)
+						@foreach ($blogs as $blog)
+						<div class="entry clearfix">
+							@if($blog->image)
+							<div class="entry-image">
+								<a href="{{ asset('uploads/'.$blog->image) }}" data-lightbox="image"><img class="image_fade" src="{{asset('uploads/'.$blog->image)}}" alt="{{ $blog->name }}"></a>
+							</div>
+							@endif
+							<div class="entry-title">
+								<h2><a href="{{ route('blog.show', $blog->slug) }}">{{ $blog->name }}</a></h2>
+							</div>
+							<ul class="entry-meta clearfix">
+								<li><i class="icon-calendar3"></i>
+									{{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}
+								</li>
+								<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
+								<li><a href="#"><i class="icon-camera-retro"></i></a></li>
+							</ul>
+							<div class="entry-content">
+								<p>{{ str_limit(strip_tags($blog->description),200) }}</p>
+								<a href="blog-single-full.html" class="more-link">Read More</a>
+							</div>
 						</div>
-						@endif
-						<div class="entry-title">
-							<h2><a href="{{ route('blog.show', $blog->slug) }}">{{ $blog->name }}</a></h2>
-						</div>
-						<ul class="entry-meta clearfix">
-							<li><i class="icon-calendar3"></i>
-								{{ Carbon::parse($blog->publish_date)->format('l, jS M Y') }}
-							</li>
-							<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
-							<li><a href="#"><i class="icon-camera-retro"></i></a></li>
-						</ul>
-						<div class="entry-content">
-							<p>{{ str_limit(strip_tags($blog->description),200) }}</p>
-							<a href="blog-single-full.html" class="more-link">Read More</a>
-						</div>
+						@endforeach
+					@else
+					<div class="bottommargin-lg">
+						<h3>No blog post at the time</h3>
 					</div>
-					@endforeach
+					@endif
 				</div><!-- #posts end -->
 				<!-- Pagination
 				============================================= -->

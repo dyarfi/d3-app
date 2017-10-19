@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Uuid;
 
 class Project extends Model {
 
@@ -21,6 +22,7 @@ class Project extends Model {
      * @var array
      */
     protected $fillable = [
+        'uuid',        
         'client_id',
         'slug',
         'name',
@@ -44,6 +46,22 @@ class Project extends Model {
         // 'permissions' => 'array'
         // 'is_admin' => 'boolean',
     ];
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot() {
+        // Parent boot
+        parent::boot();
+        // Set model
+        $model = new Self;        
+        // Set new Uuid
+        self::saving(function ($model) {
+            if (!$model->uuid){
+                $model->uuid = (string) Uuid::generate(4);
+            }
+        });        
+    }
 
     /**
      * A project belongs to a menu.

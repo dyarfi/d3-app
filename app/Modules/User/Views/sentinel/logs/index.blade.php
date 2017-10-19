@@ -37,7 +37,7 @@
 					<th class="col-lg-2">User</th>
 					<th class="col-lg-1">Description</th>
 					<th class="col-lg-6">Request</th>
-					<th class="col-lg-2">Created At</th>
+					<th class="col-lg-2">Logged At</th>
 					<th class="col-lg-5 col-xs-2">Actions</th>
 				</tr>
 			</thead>

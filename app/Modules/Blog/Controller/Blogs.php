@@ -125,7 +125,7 @@ class Blogs extends BaseAdmin {
 	 */
 	public function datatable(Request $request)
 	{
-		$rows = Input::get('path') === 'trashed' ? $this->blogs->with('category')->onlyTrashed()->get() : $this->blogs->with('category')->orderBy('index', 'asc')->get();
+		$rows = Input::get('path') === 'trashed' ? $this->blogs->with('category')->with('user')->onlyTrashed()->get() : $this->blogs->with('category')->with('user')->orderBy('index', 'asc')->get();
 
 		return Datatables::of($rows)
 			// Set action buttons
@@ -171,8 +171,9 @@ class Blogs extends BaseAdmin {
 			})
 			// Set status icon and text
 			->editColumn('status', function ($row) {
+				$user = $row->user->email;
 				return '
-				<span class="label label-'.($row->status == 1 ? 'success' : 'warning').' arrowed-in arrowed-in-right">
+				<span data-rel="tooltip" data-original-title="'.$user.'" class="label label-'.($row->status == 1 ? 'success' : 'warning').' arrowed-in arrowed-in-right tooltip-default">
 					<span class="fa fa-'.($row->status == 1 ? 'flag' : 'exclamation-circle').' fa-sm"></span>
 					'.config('setting.status')[$row->status].'
 				</span>';

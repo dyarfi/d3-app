@@ -5422,13 +5422,14 @@ body:not(.device-touch) .entry-link {
 
 .more-link {
 	display: inline-block;
-	border-bottom: 1px solid #0636b0;
+	/*border-bottom: 1px solid #0636b0;*/
+	border-bottom: 1px solid #990000;
 	padding: 0 2px;
 	font-family: 'Crete Round', serif;
 	font-style: italic;
 }
 
-.more-link:hover { border-bottom-color: #555; }
+.more-link:hover { /*border-bottom-color: #555;*/ border-bottom-color: #990000; color: #990000; }
 
 
 /* Related Posts

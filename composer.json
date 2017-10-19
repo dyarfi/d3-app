@@ -26,7 +26,8 @@
 		"spatie/laravel-analytics": "^1.4",
 		"spatie/laravel-newsletter": "^3.7",
 		"khill/lavacharts": "3.0.*",
-		"tightenco/ziggy": "^0.4.1"
+		"tightenco/ziggy": "^0.4.1",
+		"webpatser/laravel-uuid": "2.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

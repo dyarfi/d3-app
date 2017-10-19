@@ -23,8 +23,8 @@
 				<tr>
 					<th class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></th>
 					<th class="col-lg-3">Title</th>
-					<th class="col-lg-3">Description</th>
-					<th class="col-lg-2">Status</th>
+					<th class="col-lg-4">Description</th>
+					<th class="col-lg-1">Status</th>
 					<th class="col-lg-2">Created At</th>
 					<th class="col-lg-6 col-xs-3">Actions</th>
 				</tr>
@@ -39,7 +39,7 @@
 						</label>
 					</td>
 					<td>{{ str_limit($row->title,30) }}</td>
-					<td>{{ str_limit($row->description, 30, '...') }}</td>
+					<td>{{ str_limit($row->description, 45, '...') }}</td>
 					<td>
 						<span class="label label-{{ $row->status == 1 ? 'success' : 'warning'}} arrowed-in arrowed-in-right">
 							<span class="fa fa-{{ $row->status == 1 ? 'flag' : 'exclamation-circle' }} fa-sm"></span>

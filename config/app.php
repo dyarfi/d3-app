@@ -357,6 +357,9 @@ return [
 
 		// Attach Activity log facade
 	    'Activity' => App\Facades\Activity::class,
+
+	    // Attach https://github.com/webpatser/laravel-uuid/tree/2.1.1
+	    'Uuid' => Webpatser\Uuid\Uuid::class,
 	],
 
 ];

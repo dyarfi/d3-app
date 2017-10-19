@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Cartalyst\Tags\TaggableTrait;
 use Cartalyst\Tags\TaggableInterface;
 use Plank\Mediable\Mediable;
+use Uuid;
 
 class Portfolio extends Model implements TaggableInterface {
 
@@ -30,6 +31,7 @@ class Portfolio extends Model implements TaggableInterface {
      * @var array
      */
     protected $fillable = [
+        'uuid',        
         'project_id',
         'client_id',
         'slug',
@@ -56,6 +58,22 @@ class Portfolio extends Model implements TaggableInterface {
 	    // 'permissions' => 'array',
 	    // 'is_admin' => 'boolean',
 	];
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot() {
+        // Parent boot
+        parent::boot();
+        // Set model
+        $model = new Self;        
+        // Set new Uuid
+        self::saving(function ($model) {
+            if (!$model->uuid){
+                $model->uuid = (string) Uuid::generate(4);
+            }
+        });        
+    }
 
 	/**
 	 * A portfolio can have many clients.
