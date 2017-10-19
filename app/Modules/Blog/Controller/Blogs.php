@@ -9,6 +9,8 @@ use App\Modules\Blog\Model\Blog,
 	App\Modules\Blog\Model\BlogCategory;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Blogs extends BaseAdmin {
 	/**
@@ -253,6 +255,9 @@ class Blogs extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$blog->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.blogs.index'))->with('success', 'Blog Trashed!');
 		}
@@ -273,6 +278,9 @@ class Blogs extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$blog->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.blogs.index'))->with('success', 'Blog Restored!');
@@ -301,6 +309,9 @@ class Blogs extends BaseAdmin {
 
 			// Completely delete from database
 			$blog->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.blogs.index','path=trashed'))->with('success', 'Blog Permanently Deleted!');
@@ -458,6 +469,9 @@ class Blogs extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.blogs.show', $blog->id))->with('success', 'Blog Updated!');
@@ -473,6 +487,9 @@ class Blogs extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -552,6 +569,9 @@ class Blogs extends BaseAdmin {
 	 * @return $file export
 	 */
 	public function export() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		// Get type file to export
 		$type = Input::get('rel');

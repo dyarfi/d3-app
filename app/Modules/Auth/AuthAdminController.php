@@ -280,6 +280,9 @@ class AuthAdminController extends Controller {
 				$m->to($user->email)->subject('Activate Your Account');
 			});
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			if ($sent === 0)
 			{
 				return Redirect::to('register')
@@ -305,7 +308,7 @@ class AuthAdminController extends Controller {
 
 		// Log it first
 		Activity::log(__FUNCTION__);
-        		
+
         // Sentinel Logout
         Sentinel::logout();
 

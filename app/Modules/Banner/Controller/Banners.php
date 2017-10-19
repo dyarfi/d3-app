@@ -10,6 +10,8 @@ use App\Modules\BaseAdmin;
 use App\Modules\Banner\Model\Banner;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Banners extends BaseAdmin {
 
@@ -253,6 +255,9 @@ class Banners extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$banner->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.banners.index'))->with('success', 'Banner Trashed!');
 		}
@@ -273,6 +278,9 @@ class Banners extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$banner->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.banners.index'))->with('success', 'Banner Restored!');
@@ -300,6 +308,9 @@ class Banners extends BaseAdmin {
 
 			// Completely delete from database
 			$banner->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.banners.index','path=trashed'))->with('success', 'Banner Permanently Deleted!');
@@ -431,6 +442,9 @@ class Banners extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.banners.show', $banner->id))->with('success', 'Banner Updated!');
@@ -446,6 +460,9 @@ class Banners extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -507,6 +524,9 @@ class Banners extends BaseAdmin {
 	 */
 	public function export() {
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+			
 		// Get type file to export
 		$type = Input::get('rel');
 		// Get data to export

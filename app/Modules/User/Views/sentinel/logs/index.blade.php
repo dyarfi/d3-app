@@ -36,9 +36,9 @@
 					<th class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></th>
 					<th class="col-lg-2">User</th>
 					<th class="col-lg-1">Description</th>
-					<th class="col-lg-5">Request</th>
+					<th class="col-lg-6">Request</th>
 					<th class="col-lg-2">Created At</th>
-					<th class="col-lg-6 col-xs-3">Actions</th>
+					<th class="col-lg-5 col-xs-2">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,17 +59,18 @@
 					</td>
 					<td>
 						@if ($row->description)
-							{{ $row->description }}
+							<span class="label label-success label-sm">{{ $row->description }}</span>
 						@endif
 					</td>
 					<td>
 						@if ($row->request)
 							URL : {{ $row->request->url }} <br/>
 							METHOD : {{ $row->request->method }} <br/>
+							QUERY : {{ $row->request->query }} <br/>							
 							IP ADDRESS : {{ $row->request->client_ip }} <br/>
-							SSL : {{ $row->request->secure }} <br/>
+							SSL : {{ $row->request->secure ? 'Yes' : 'No' }} <br/>
 							@if($row->request->payload)
-							PAYLOAD : True
+							PAYLOAD : [{{$row->request->payload->_token}}]
 							@endif
 						@endif
 					</td>					

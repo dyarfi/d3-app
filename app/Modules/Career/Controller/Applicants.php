@@ -9,6 +9,8 @@ use App\Modules\Career\Model\Career,
 	App\Modules\Career\Model\Applicant;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Applicants extends BaseAdmin {
 
@@ -146,6 +148,9 @@ class Applicants extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$applicant->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.applicants.index'))->with('success', 'Applicant Trashed!');
 		}
@@ -166,6 +171,9 @@ class Applicants extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$applicant->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.applicants.index'))->with('success', 'Applicant Restored!');
@@ -195,6 +203,9 @@ class Applicants extends BaseAdmin {
 
 			// Permanently delete
 			$applicant->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			return Redirect::to(route('admin.applicants.index','path=trashed'))->with('success', 'Applicant Permanently Deleted!');
 		}
@@ -296,6 +307,9 @@ class Applicants extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.applicants.show',$applicant->id))->with('success', 'Applicant Updated!');
@@ -311,6 +325,9 @@ class Applicants extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -349,6 +366,9 @@ class Applicants extends BaseAdmin {
 
 	public function export() {
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+			
 		// Get type file to export
 		$type = Input::get('rel');
 		// Get data to export

@@ -6,6 +6,8 @@ use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, File;
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\Page\Model\Menu;
+// User Activity Logs
+use Activity;
 
 class Menus extends BaseAdmin {
 
@@ -137,6 +139,9 @@ class Menus extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$menu->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.menus.index'))->with('success', 'Menu Trashed!');
 		}
@@ -157,6 +162,9 @@ class Menus extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$menu->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.menus.index'))->with('success', 'Menu Restored!');
@@ -185,6 +193,9 @@ class Menus extends BaseAdmin {
 
 			// Completely delete from database
 			$menu->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.menus.index','path=trashed'))->with('success', 'Menu Permanently Deleted!');
@@ -361,6 +372,9 @@ class Menus extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.menus.show', $menu->id))->with('success', 'Menu Updated!');
@@ -376,6 +390,9 @@ class Menus extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 

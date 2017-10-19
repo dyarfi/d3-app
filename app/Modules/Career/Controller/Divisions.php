@@ -8,6 +8,8 @@ use App\Modules\BaseAdmin;
 use App\Modules\Career\Model\Division;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Divisions extends BaseAdmin {
 
@@ -146,6 +148,9 @@ class Divisions extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$division->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.divisions.index'))->with('success', 'Division Trashed!');
 		}
@@ -166,6 +171,9 @@ class Divisions extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$division->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.divisions.index'))->with('success', 'Division Restored!');
@@ -198,6 +206,9 @@ class Divisions extends BaseAdmin {
 
 			// Permanently delete
 			$division->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			return Redirect::to(route('admin.divisions.index','path=trashed'))->with('success', 'Division Permanently Deleted!');
 		}
@@ -284,6 +295,9 @@ class Divisions extends BaseAdmin {
 
 			}
 		}
+		
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if ($messages->isEmpty())
 		{
@@ -300,6 +314,9 @@ class Divisions extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -338,6 +355,9 @@ class Divisions extends BaseAdmin {
 
 	public function export() {
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+			
 		// Get type file to export
 		$type = Input::get('rel');
 		// Get data to export

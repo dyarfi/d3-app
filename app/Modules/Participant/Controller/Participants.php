@@ -8,6 +8,8 @@ use App\Modules\BaseAdmin;
 use App\Modules\Participant\Model\Participant;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Participants extends BaseAdmin {
 
@@ -240,6 +242,9 @@ class Participants extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$participant->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.participants.index'))->with('success', 'Participant Trashed!');
 		}
@@ -260,6 +265,9 @@ class Participants extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$participant->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.participants.index'))->with('success', 'Participant Restored!');
@@ -292,6 +300,9 @@ class Participants extends BaseAdmin {
 
 			// Permanently delete
 			$participant->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			return Redirect::to(route('admin.participants.index','path=trashed'))->with('success', 'Participant Permanently Deleted!');
 		}
@@ -389,6 +400,9 @@ class Participants extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.participants.show', $participant->id))->with('success', 'Participant Updated!');;
@@ -404,6 +418,9 @@ class Participants extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -430,6 +447,9 @@ class Participants extends BaseAdmin {
 	 * @return $file export
 	 */
 	public function export() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		// Get type file to export
 		$type = Input::get('rel');

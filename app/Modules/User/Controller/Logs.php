@@ -8,6 +8,8 @@ use Sentinel;
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\User\Model\Log;
+// User Activity Logs
+use Activity;
 
 class Logs extends BaseAdmin {
 

@@ -8,6 +8,8 @@ use App\Modules\BaseAdmin;
 use App\Modules\Participant\Model\Image;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Images extends BaseAdmin {
 
@@ -147,6 +149,9 @@ class Images extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$image->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.images.index'))->with('success', 'Image Trashed!');
 		}
@@ -167,6 +172,9 @@ class Images extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$image->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.images.index'))->with('success', 'Image Restored!');
@@ -199,6 +207,9 @@ class Images extends BaseAdmin {
 
 			// Permanently delete
 			$image->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			return Redirect::to(route('admin.images.index','path=trashed'))->with('success', 'Image Permanently Deleted!');
 		}
@@ -296,6 +307,9 @@ class Images extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.images.show'))->with('success', 'Image Updated!');;
@@ -311,6 +325,9 @@ class Images extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 

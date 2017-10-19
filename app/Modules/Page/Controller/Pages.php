@@ -6,6 +6,8 @@ use Route, Request, Sentinel, Session, Redirect, Input, Validator, View, File;
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\Page\Model\Menu, App\Modules\Page\Model\Page;
+// User Activity Logs
+use Activity;
 
 class Pages extends BaseAdmin {
 
@@ -139,6 +141,9 @@ class Pages extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$page->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Trashed!');
 		}
@@ -159,6 +164,9 @@ class Pages extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$page->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.pages.index'))->with('success', 'Page Restored!');
@@ -191,6 +199,9 @@ class Pages extends BaseAdmin {
 
 			// Permanently delete
 			$page->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			return Redirect::to(route('admin.pages.index','path=trashed'))->with('success', 'Page Permanently Deleted!');
 		}
@@ -283,6 +294,9 @@ class Pages extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.pages.show',$page->id))->with('success', 'Page Updated!');;
@@ -299,6 +313,9 @@ class Pages extends BaseAdmin {
 	 */
 	protected function change() {
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+			
 		if (Input::get('check') !='') {
 
 		    $rows	= Input::get('check');

@@ -13,6 +13,8 @@ use App\Modules\BaseAdmin;
 use App\Modules\User\Model\Role;
 use App\Modules\User\Model\User;
 use App\Modules\User\Model\Team;
+// User Activity Logs
+use Activity;
 
 class Users extends BaseAdmin {
 
@@ -439,6 +441,9 @@ class Users extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.users.show', $user->id))->with('success', 'User Updated!');
@@ -483,28 +488,28 @@ class Users extends BaseAdmin {
 		// Set return data
 	   	$user = $this->user;
 
-$lava = new Lavacharts; // See note below for Laravel
+		$lava = new Lavacharts; // See note below for Laravel
 
-$population = $lava->DataTable();
+		$population = $lava->DataTable();
 
-$population->addDateColumn('Year')
-           ->addNumberColumn('Number of People')
-           ->addRow(['2006', 623452])
-           ->addRow(['2007', 685034])
-           ->addRow(['2008', 716845])
-           ->addRow(['2009', 757254])
-           ->addRow(['2010', 778034])
-           ->addRow(['2011', 792353])
-           ->addRow(['2012', 839657])
-           ->addRow(['2013', 842367])
-           ->addRow(['2014', 873490]);
+		$population->addDateColumn('Year')
+		           ->addNumberColumn('Number of People')
+		           ->addRow(['2006', 623452])
+		           ->addRow(['2007', 685034])
+		           ->addRow(['2008', 716845])
+		           ->addRow(['2009', 757254])
+		           ->addRow(['2010', 778034])
+		           ->addRow(['2011', 792353])
+		           ->addRow(['2012', 839657])
+		           ->addRow(['2013', 842367])
+		           ->addRow(['2014', 873490]);
 
-$lava->AreaChart('Population', $population, [
-    'title' => 'Population Growth',
-    'legend' => [
-        'position' => 'in'
-    ]
-]);
+		$lava->AreaChart('Population', $population, [
+		    'title' => 'Population Growth',
+		    'legend' => [
+		        'position' => 'in'
+		    ]
+		]);
 
 
 
@@ -529,8 +534,7 @@ $lava->AreaChart('Population', $population, [
 	 * @param  string $type
 	 * @return $filename
 	 */
-	protected function imageUploadToDb($file='', $path='', $type='')
-		{
+	protected function imageUploadToDb($file='', $path='', $type='') {
 		// Set filename upload
 		$filename = '';
 		// Check if input and upload already assigned
@@ -562,6 +566,8 @@ $lava->AreaChart('Population', $population, [
 	 * @return header .xls
 	 */
 	public function export() {
+		// Log it first
+		Activity::log(__FUNCTION__);
 		// Get type file to export
 		$type = Input::get('rel');
 		// Get data to export
@@ -587,6 +593,9 @@ $lava->AreaChart('Population', $population, [
 	 * @return void
 	 */
 	public function crop($id='') {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 		/**
 		 * Jcrop image cropping plugin for jQuery
 		 * Example cropping script

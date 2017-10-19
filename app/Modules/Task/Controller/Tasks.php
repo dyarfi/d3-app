@@ -8,6 +8,8 @@ use App\Modules\BaseAdmin;
 use App\Modules\Task\Model\Task, App\Modules\User\Model\User;
 // MediaAble Uploader
 use MediaUploader;
+// User Activity Logs
+use Activity;
 
 class Tasks extends BaseAdmin {
 	/**
@@ -138,6 +140,9 @@ class Tasks extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$task->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.tasks.index'))->with('success', 'Task Trashed!');
 		}
@@ -158,6 +163,9 @@ class Tasks extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$task->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.tasks.index'))->with('success', 'Task Restored!');
@@ -186,6 +194,9 @@ class Tasks extends BaseAdmin {
 
 			// Completely delete from database
 			$task->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);			
 
 			// Redirect with messages
 			return Redirect::to(route('admin.tasks.index','path=trashed'))->with('success', 'Task Permanently Deleted!');
@@ -312,6 +323,9 @@ class Tasks extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.tasks.show', $task->id))->with('success', 'Task Updated!');
@@ -327,6 +341,9 @@ class Tasks extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 

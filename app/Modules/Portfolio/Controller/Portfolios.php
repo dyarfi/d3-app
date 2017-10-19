@@ -10,6 +10,8 @@ use App\Modules\Portfolio\Model\Portfolio,
 	App\Modules\Portfolio\Model\Client;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Portfolios extends BaseAdmin {
 
@@ -242,6 +244,9 @@ class Portfolios extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$portfolio->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Trashed!');
 		}
@@ -262,6 +267,9 @@ class Portfolios extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$portfolio->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Restored!');
@@ -290,6 +298,9 @@ class Portfolios extends BaseAdmin {
 
 			// Completely delete from database
 			$portfolio->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.portfolios.index','path=trashed'))->with('success', 'Portfolio Permanently Deleted!');
@@ -468,6 +479,9 @@ class Portfolios extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.portfolios.show', $portfolio->id))->with('success', 'Portfolio Updated!');
@@ -483,6 +497,9 @@ class Portfolios extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -528,6 +545,9 @@ class Portfolios extends BaseAdmin {
 	 * @return $file export
 	 */
 	public function export() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		// Get type file to export
 		$type = Input::get('rel');

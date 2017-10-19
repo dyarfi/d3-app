@@ -10,6 +10,8 @@ use App\Modules\Career\Model\Career,
 	App\Modules\Career\Model\Applicant;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Careers extends BaseAdmin {
 
@@ -144,6 +146,9 @@ class Careers extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$career->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.careers.index'))->with('success', 'Career Trashed!');
 		}
@@ -164,6 +169,9 @@ class Careers extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$career->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.careers.index'))->with('success', 'Career Restored!');
@@ -192,6 +200,9 @@ class Careers extends BaseAdmin {
 
 			// Completely delete from database
 			$career->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.careers.index','path=trashed'))->with('success', 'Career Permanently Deleted!');
@@ -343,6 +354,9 @@ class Careers extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.careers.show', $career->id))->with('success', 'Career Updated!');
@@ -358,6 +372,9 @@ class Careers extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 

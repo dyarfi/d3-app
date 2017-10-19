@@ -10,6 +10,8 @@ use App\Modules\Portfolio\Model\Portfolio,
 	App\Modules\Portfolio\Model\Client;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Clients extends BaseAdmin {
 
@@ -272,6 +274,9 @@ class Clients extends BaseAdmin {
 			// Restored back from deleted_at database
 			$client->restore();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.clients.index'))->with('success', 'Client Restored!');
 		}
@@ -299,6 +304,9 @@ class Clients extends BaseAdmin {
 
 			// Completely delete from database
 			$client->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.clients.index','path=trashed'))->with('success', 'Client Permanently Deleted!');
@@ -422,6 +430,9 @@ class Clients extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.clients.show',$client->id))->with('success', 'Client Updated!');
@@ -437,6 +448,9 @@ class Clients extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -497,6 +511,9 @@ class Clients extends BaseAdmin {
 	 * @return $file export
 	 */
 	public function export() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		// Get type file to export
 		$type = Input::get('rel');

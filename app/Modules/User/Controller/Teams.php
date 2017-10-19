@@ -9,6 +9,8 @@ use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\User\Model\User;
 use App\Modules\User\Model\Team;
+// User Activity Logs
+use Activity;
 
 class Teams extends BaseAdmin {
 
@@ -146,6 +148,9 @@ class Teams extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$team->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.teams.index'))->with('success', 'Team Trashed!');
 		}
@@ -167,6 +172,9 @@ class Teams extends BaseAdmin {
 			// Restored back from deleted_at database
 			$team->restore();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.teams.index'))->with('success', 'Team Restored!');
 		}
@@ -187,6 +195,9 @@ class Teams extends BaseAdmin {
 
 			// Completely delete from database
 			$team->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.teams.index','path=trashed'))->with('success', 'Team Permanently Deleted!');
@@ -289,6 +300,9 @@ class Teams extends BaseAdmin {
 
 			}
 		}
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if ($messages->isEmpty())
 		{

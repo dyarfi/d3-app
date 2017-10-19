@@ -3,11 +3,13 @@
 // Load Laravel classes
 use Route, Request, Session, Redirect, Input, Validator, View;
 // Load Sentinel and Socialite classes
-use Sentinel, Socialite;
+use Sentinel, Socialite, Activity;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\User\Model\Role;
+// User Activity Logs
+use Activity;
 
 class Roles extends BaseAdmin {
 
@@ -163,6 +165,9 @@ class Roles extends BaseAdmin {
 			// Restored back from deleted_at database
 			$role->restore();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.roles.index'))->with('success', 'Role Restored!');
 		}
@@ -183,6 +188,9 @@ class Roles extends BaseAdmin {
 
 			// Completely delete from database
 			$role->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.roles.index','path=trashed'))->with('success', 'Role Permanently Deleted!');
@@ -278,6 +286,9 @@ class Roles extends BaseAdmin {
 
 			}
 		}
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if ($messages->isEmpty())
 		{

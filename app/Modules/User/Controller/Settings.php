@@ -6,6 +6,8 @@ use Route, Request, Auth, Session, Redirect, Input, Validator, View;
 use App\Modules\BaseAdmin;
 // Load main models
 use App\Modules\User\Model\Setting, App\Modules\User\Model\User;
+// User Activity Logs
+use Activity;
 
 class Settings extends BaseAdmin {
 
@@ -156,6 +158,9 @@ class Settings extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$setting->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.settings.index'))->with('success', 'Setting Trashed!');
 		}
@@ -177,6 +182,9 @@ class Settings extends BaseAdmin {
 			// Restored back from deleted_at database
 			$setting->restore();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.settings.index'))->with('success', 'Setting Restored!');
 		}
@@ -197,6 +205,9 @@ class Settings extends BaseAdmin {
 
 			// Completely delete from database
 			$setting->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.settings.index'))->with('success', 'Setting Permanently Deleted!');
@@ -290,6 +301,9 @@ class Settings extends BaseAdmin {
 				$setting = $this->settings->create($input);
 			}
 		}
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if ($messages->isEmpty())
 		{
@@ -402,6 +416,8 @@ class Settings extends BaseAdmin {
 
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if ($updated) {
 

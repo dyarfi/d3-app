@@ -10,6 +10,8 @@ use App\Modules\Portfolio\Model\Portfolio,
 	App\Modules\Portfolio\Model\Client;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Projects extends BaseAdmin {
 
@@ -245,6 +247,9 @@ class Projects extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$project->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Trashed!');
 		}
@@ -265,6 +270,9 @@ class Projects extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$project->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);	
 
 			// Redirect with messages
 			return Redirect::to(route('admin.projects.index'))->with('success', 'Project Restored!');
@@ -297,6 +305,9 @@ class Projects extends BaseAdmin {
 
 			// Permanently delete
 			$project->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			return Redirect::to(route('admin.projects.index','path=trashed'))->with('success', 'Project Permanently Deleted!');
 		}
@@ -376,6 +387,9 @@ class Projects extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.projects.show', $project->id))->with('success', 'Project Updated!');;
@@ -391,6 +405,9 @@ class Projects extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -417,6 +434,9 @@ class Projects extends BaseAdmin {
 	 * @return $file export
 	 */
 	public function export() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		// Get type file to export
 		$type = Input::get('rel');

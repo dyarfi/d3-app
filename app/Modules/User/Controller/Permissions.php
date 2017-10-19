@@ -11,6 +11,8 @@ use App\Modules\User\Model\User,
 	App\Modules\User\Model\Role;
 // Load Larapack config writer
 use Config, ConfigWriter;
+// User Activity Logs
+use Activity;
 
 class Permissions extends BaseAdmin {
 
@@ -171,6 +173,9 @@ class Permissions extends BaseAdmin {
 
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($updated) {
 
 			return response()->json(['status'=>'200','message'=>'Update Successfull!']);
@@ -234,6 +239,10 @@ class Permissions extends BaseAdmin {
 	 */
 	public function delete($id)
 	{
+		
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($role = $this->permissions->find($id))
 		{
 			$role->delete();
@@ -336,6 +345,9 @@ class Permissions extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+		
 		if ($messages->isEmpty())
 		{
 			return Redirect::to('permissions');

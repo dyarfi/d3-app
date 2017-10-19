@@ -9,6 +9,8 @@ use App\Modules\Contact\Model\Contact,
 	App\Modules\User\Model\User;
 // Load Datatable
 use Datatables;
+// User Activity Logs
+use Activity;
 
 class Contacts extends BaseAdmin {
 
@@ -243,6 +245,9 @@ class Contacts extends BaseAdmin {
 			// Add deleted_at and not completely delete
 			$contact->delete();
 
+			// Log it first
+			Activity::log(__FUNCTION__);
+
 			// Redirect with messages
 			return Redirect::to(route('admin.contacts.index'))->with('success', 'Contact Trashed!');
 		}
@@ -263,6 +268,9 @@ class Contacts extends BaseAdmin {
 
 			// Restored back from deleted_at database
 			$contact->restore();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.contacts.index'))->with('success', 'Contact Restored!');
@@ -291,6 +299,9 @@ class Contacts extends BaseAdmin {
 
 			// Completely delete from database
 			$contact->forceDelete();
+
+			// Log it first
+			Activity::log(__FUNCTION__);
 
 			// Redirect with messages
 			return Redirect::to(route('admin.contacts.index','path=trashed'))->with('success', 'Contact Permanently Deleted!');
@@ -427,6 +438,9 @@ class Contacts extends BaseAdmin {
 			}
 		}
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+
 		if ($messages->isEmpty())
 		{
 			return Redirect::to(route('admin.contacts.show', $contact->id))->with('success', 'Contact Updated!');
@@ -442,6 +456,9 @@ class Contacts extends BaseAdmin {
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
 
 		if (Input::get('check') !='') {
 
@@ -469,6 +486,9 @@ class Contacts extends BaseAdmin {
 	 */
 	public function export() {
 
+		// Log it first
+		Activity::log(__FUNCTION__);
+			
 		// Get type file to export
 		$type = Input::get('rel');
 		// Get data to export
