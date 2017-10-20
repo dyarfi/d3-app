@@ -34,7 +34,7 @@
                 @if (!empty( Sentinel::getUser()->roles()->first()->permissions[strtolower(head(array_keys($values)))] ))
                 <li class="">
                     <a href="#" class="dropdown-toggle">
-                        <!--i class="menu-icon fa fa-users"></i-->&nbsp;&nbsp;
+                        <span class="menu-icon fa fa-bars"></span> 
                         <span class="menu-text">{{ head(array_keys($values)) }}</span>
                         <b class="arrow fa fa-angle-down"></b>
                     </a>

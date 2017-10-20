@@ -7,7 +7,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <title>{{ @$title }}</title>
     <!--link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css"/-->
-    <?php /* LARAVEL Mix see webpack.mix.js for the files */ ?>
+    <?php /* LARAVEL Mix see webpack.mix.js for recompile the files */ ?>
     <link rel="stylesheet" href="{{ mix('css/d3all.css') }}">
 @if(isset($styles)) @foreach ($styles as $style => $css) {!! Html::style($css, ['rel'=>'stylesheet']) !!} @endforeach @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -88,27 +88,7 @@
                             <i class="icon-{{ @$social->key }}"></i>
                             <i class="icon-{{ @$social->key }}"></i>
                         </a>
-                        @endforeach
-                        <!--a href="#" class="social-icon si-small si-borderless si-facebook">
-                            <i class="icon-facebook"></i>
-                            <i class="icon-facebook"></i>
-                        </a>
-                        <a href="#" class="social-icon si-small si-borderless si-twitter">
-                            <i class="icon-twitter"></i>
-                            <i class="icon-twitter"></i>
-                        </a>
-                        <a href="#" class="social-icon si-small si-borderless si-gplus">
-                            <i class="icon-gplus"></i>
-                            <i class="icon-gplus"></i>
-                        </a>
-                        <a href="#" class="social-icon si-small si-borderless si-github">
-                            <i class="icon-github"></i>
-                            <i class="icon-github"></i>
-                        </a>
-                        <a href="#" class="social-icon si-small si-borderless si-linkedin">
-                            <i class="icon-linkedin"></i>
-                            <i class="icon-linkedin"></i>
-                        </a-->
+                        @endforeach                       
                     </div>
                     <div class="clear"></div>
                     <i class="icon-envelope2"></i>&nbsp;<a href="mailto:info@dentsu.digital"> info@dentsu.digital </a><span class="middot">&middot;</span> <i class="icon-headphones"></i> +62-21-6541-6369 <span class="middot">&middot;</span>
@@ -118,8 +98,8 @@
     </footer>
 </div>
 <div id="gotoTop" class="icon-angle-up"></div>
-<script src="{{ asset('js/plugins.js') }}"></script>
-<script src="{{ asset('js/functions.js') }}"></script>
+<?php /* LARAVEL Mix see webpack.mix.js for recompile the files */?>
+<script src="{{ mix('js/d3all.js') }}"></script>
 @if(isset($scripts)) @foreach($scripts as $script => $js) {!! Html::script($js, ['rel'=>$script]) !!} @endforeach @endif
 <script type="text/javascript">
 /*

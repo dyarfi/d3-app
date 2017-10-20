@@ -3,7 +3,7 @@
 // Load Laravel classes
 use Route, Request, Session, Redirect, Input, Validator, View;
 // Load Sentinel and Socialite classes
-use Sentinel, Socialite, Activity;
+use Sentinel, Socialite;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models

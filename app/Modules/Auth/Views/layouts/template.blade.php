@@ -7,14 +7,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description" content="overview &amp; stats" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('themes/ace-admin/font-awesome/4.2.0/css/font-awesome.min.css') }}" />
-    <!-- text fonts -->
     <link rel="stylesheet" href="{{ asset('themes/ace-admin/fonts/fonts.googleapis.com.css') }}" />
-    <!-- ace styles -->
-    <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/default.css') }}"/>
+    <?php /* LARAVEL Mix see webpack.mix.js for recompile the files */ ?>
+    <link rel="stylesheet" href="{{ mix('themes/ace-admin/css/d3all.css') }}">
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="{{ asset('themes/ace-admin/css/css/ace-part2.min.css') }}" class="ace-main-stylesheet" />
     <![endif]-->
@@ -218,9 +214,7 @@
           </div>
         </div>
       </div>
-      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-      </a>
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"><i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i></a>
     </div><!-- /.main-container -->
     <!-- basic scripts -->
     <!--[if !IE]> -->
@@ -241,8 +235,11 @@
     <![endif]-->
     <script type="text/javascript">
       if('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('themes/ace-admin/js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
-    </script>
-    <script src="{{ asset('themes/ace-admin/js/bootstrap.min.js') }}"></script>
+    </script>    
+    <?php /* LARAVEL Mix see webpack.mix.js for recompile the files */ ?>    
+    <script src="{{ mix('themes/ace-admin/js/d3all.js') }}"></script>
+    <!--[if lte IE 8]><script src="{{ asset('themes/ace-admin/js/excanvas.min.js') }}"></script><![endif]-->
+    
 @if(isset($scripts)) @foreach($scripts as $script => $js) {!! Html::script($js, ['rel'=>$script]) !!} @endforeach @endif
 @if(isset($inlines))
     <!-- page specific plugin scripts and styles -->
@@ -251,16 +248,7 @@
         @elseif($inline == 'style')<style type="text/css">{!! $line !!}</style>
         @endif
     @endforeach
-@endif
-    <!--[if lte IE 8]><script src="{{ asset('themes/ace-admin/js/excanvas.min.js') }}"></script><![endif]-->
-    <!-- bootstrap assets -->
-    <!--script src="{{ asset('themes/ace-admin/js/jquery-ui.custom.min.js') }}"></script-->
-    <script src="{{ asset('themes/ace-admin/js/bootbox.min.js') }}"></script>
-    <script src="{{ asset('themes/ace-admin/js/jquery-ui.custom.min.js') }}"></script>
-    <script src="{{ asset('themes/ace-admin/js/jquery.ui.touch-punch.min.js') }}"></script>
-    <!-- ace scripts -->
-    <script src="{{ asset('themes/ace-admin/js/ace-elements.min.js') }}"></script>
-    <script src="{{ asset('themes/ace-admin/js/ace.min.js') }}"></script>
+@endif    
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
       jQuery(function($) {

@@ -58,8 +58,11 @@
 						@endif
 					</td>
 					<td>
+						<?php
+						$label = ($row->description == 'processForm') ? 'label-warning' : 'label-success';
+						?>
 						@if ($row->description)
-							<span class="label label-success label-sm">{{ $row->description }}</span>
+							<span class="label {{$label}} label-sm">{{ $row->description }}</span>
 						@endif
 					</td>
 					<td>
