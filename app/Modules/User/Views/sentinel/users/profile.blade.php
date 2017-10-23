@@ -1,4 +1,4 @@
-@extends('Auth::layouts.template')
+@extends('Admin::layouts.template')
 
 @section('body')
 <h1 class="green">Profile <small>{{ $row->email }}</small></h1>

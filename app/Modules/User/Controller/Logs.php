@@ -71,7 +71,7 @@ class Logs extends BaseAdmin {
         $log = $this->logs->findOrFail($id);
         
         // Read ACL settings config for any permission access
-        $acl = config('setting.acl');
+        $acl = config('setting.modules');
 	               	      
 		// Set data to return
 	   	$data = ['log'=>$log,'acl'=>$acl];
@@ -209,7 +209,7 @@ class Logs extends BaseAdmin {
 		}
 
 		
-		$log_access = config('setting.acl');
+		$log_access = config('setting.modules');
 		
 		$log = Sentinel::findLogById($this->user->logs()->first()->id);
 

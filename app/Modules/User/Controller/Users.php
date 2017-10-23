@@ -153,7 +153,7 @@ class Users extends BaseAdmin {
         $user = $this->users->findOrFail($id);
 
         // Read ACL settings config for any permission access
-        $acl = config('setting.acl');
+        $acl = config('setting.modules');
 
 		// Set data to return
 	   	$data = ['row'=>$user,'acl'=>$acl];

@@ -113,7 +113,7 @@ class BasePublic extends Controller {
 
 				$set_acl = [];
 
-				foreach (config('setting.acl') as $acl) {
+				foreach (config('setting.modules') as $acl) {
 					if (isset($acl['Admin'])) {
 						$set_acl = array_flatten($acl['Admin']);
 					}

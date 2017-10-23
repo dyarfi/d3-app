@@ -78,7 +78,7 @@ class Roles extends BaseAdmin {
         $role = $this->roles->findOrFail($id);
 
         // Read ACL settings config for any permission access
-        $acl = config('setting.acl');
+        $acl = config('setting.modules');
 
 		// Set data to return
 	   	$data = ['row'=>$role,'acl'=>$acl];
@@ -225,7 +225,7 @@ class Roles extends BaseAdmin {
 			$row = $this->roles;
 		}
 
-		$acl = config('setting.acl');
+		$acl = config('setting.modules');
 
 		return $this->view('User::sentinel.roles.form')->data(compact('mode', 'row', 'acl'))->title('Roles '.$mode);
 	}

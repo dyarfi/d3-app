@@ -82,7 +82,7 @@ class Teams extends BaseAdmin {
         $team = $this->teams->with('owner')->findOrFail($id);
 
         // Read ACL settings config for any permission access
-        $acl = config('setting.acl');
+        $acl = config('setting.modules');
 
 		// Set data to return
 	   	$data = ['row'=>$team,'acl'=>$acl];

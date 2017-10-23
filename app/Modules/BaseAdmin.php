@@ -63,7 +63,7 @@ class BaseAdmin extends ThemeAdmin {
 				return Redirect::intended(route('admin.dashboard'));
 			}
 
-			return View::make('Auth::errors.noaccess')->withErrors('Unauthorized access!');
+			return View::make('Admin::errors.noaccess')->withErrors('Unauthorized access!');
 
 		} else {
 
@@ -99,7 +99,7 @@ class BaseAdmin extends ThemeAdmin {
 
 				$set_acl = [];
 
-				foreach (config('setting.acl') as $acl) {
+				foreach (config('setting.modules') as $acl) {
 					if (isset($acl['Admin'])) {
 						$set_acl = array_flatten($acl['Admin']);
 					}
@@ -167,7 +167,7 @@ class BaseAdmin extends ThemeAdmin {
  		//Session::forget('success');
 
  		 // Set layout template
- 		$this->layout = 'Auth::layouts.template_login';
+ 		$this->layout = 'Admin::layouts.template_login';
 
 		// Return no access view
 		return $this->view('User::sentinel.account.first_time')->title('First Setup and Migrate!');

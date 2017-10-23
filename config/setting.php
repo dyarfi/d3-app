@@ -24,7 +24,7 @@ return [
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | Access Controller Lists in administrator panel
+	 | Access Controller Lists in administrator panel modules
 	 |--------------------------------------------------------------------------
 	 |
 	 | Modify or add new configuration
@@ -32,10 +32,10 @@ return [
 	 |
 	 */
 
-	'acl' => [
+	'modules' => [
 				// Admin modules will be in the App Modules directory
 				['Admin' => [
-						//------ Admin users controller
+						//------ Admin users controller @ see ModuleServiceProviders for flagged User Module
 						['Users' => [
 								// Action for first index
 								'action' => ['users.index'],
@@ -175,7 +175,6 @@ return [
 								'method' => ['applicants.index','applicants.edit','applicants.update','applicants.change','applicants.create','applicants.store','applicants.trash','applicants.delete','applicants.restored','applicants.show']
 							]
 						]
-
 					]
 				],
 				// Contact modules will be in the App Modules directory
@@ -239,7 +238,7 @@ return [
 					]
 				]
 
-			 ],
+	 ],
 
 
  	/*

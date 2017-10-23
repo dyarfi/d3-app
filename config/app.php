@@ -105,7 +105,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', 'RandStringLaravelApanelD3'),
+	'key' => env('APP_KEY', 'RandStrEncLaravelApanelD3'),
 	//'cipher' => MCRYPT_RIJNDAEL_128,
 	'cipher' => 'AES-256-CBC',
 

@@ -17,9 +17,11 @@
  * Administrator panel routes
  *
  */
+//exit;
 
 Route::prefix(config('setting.admin_url'))->group( function()
 {
+
     // Get no access pages
     Route::get('noaccess', 'App\Modules\BaseAdmin@unauthorize')->name('admin.noaccess');
     Route::get('noaccess', 'App\Modules\BaseAdmin@index')->name('admin.noaccess');
@@ -30,28 +32,28 @@ Route::prefix(config('setting.admin_url'))->group( function()
     Route::get('setup/first/migrate', 'App\Modules\BaseAdmin@setup')->name('first.migrate');
     Route::post('setup/first/migrate', 'App\Modules\BaseAdmin@setup')->name('first.migrate.post');
 
-    // ******************* Auth\AuthAdminController ********************* { //
+    // ******************* Admin\AuthAdminController ********************* { //
 
     // Get main administrator login
-    Route::get('/', 'App\Modules\Auth\AuthAdminController@index');
+    Route::get('/', 'App\Modules\Admin\AuthAdminController@index');
 
     // ByPass to admin auth controller in middleware | Login
-    Route::get('login', 'App\Modules\Auth\AuthAdminController@login')->name('admin.login');
-    Route::post('login', 'App\Modules\Auth\AuthAdminController@processLogin')->name('admin.login');
+    Route::get('login', 'App\Modules\Admin\AuthAdminController@login')->name('admin.login');
+    Route::post('login', 'App\Modules\Admin\AuthAdminController@processLogin')->name('admin.login');
 
     // ByPass to admin auth controller in middleware | Logout
-    Route::get('logout', 'App\Modules\Auth\AuthAdminController@logout')->name('admin.logout');
+    Route::get('logout', 'App\Modules\Admin\AuthAdminController@logout')->name('admin.logout');
 
     // ByPass to admin auth controller in middleware | Register
-    Route::get('register', 'App\Modules\Auth\AuthAdminController@register');
-    Route::post('register', 'App\Modules\Auth\AuthAdminController@processRegistration');
+    Route::get('register', 'App\Modules\Admin\AuthAdminController@register')->name('admin.register');
+    Route::post('register', 'App\Modules\Admin\AuthAdminController@processRegistration')->name('admin.register');
 
     // Get users team invitation process
-    Route::get('invitation/{id}/{action}', 'App\Modules\Auth\AuthAdminController@invitation')->name('admin.invitation');
+    Route::get('invitation/{id}/{action}', 'App\Modules\Admin\AuthAdminController@invitation')->name('admin.invitation');
 
-    //Route::get('invitation', ['as'=>'admin.invitation','uses'=>'App\Modules\Auth\AuthAdminController@invitation']);
+    //Route::get('invitation', ['as'=>'admin.invitation','uses'=>'App\Modules\Admin\AuthAdminController@invitation']);
 
-    // } ****************** Auth\AuthAdminController ****************** //
+    // } ****************** Admin\AuthAdminController ****************** //
 
     // Users Controller
     Route::get('account', 'App\Modules\User\Controller\Users@profile')->name('admin.account');

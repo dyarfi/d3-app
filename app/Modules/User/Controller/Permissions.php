@@ -293,7 +293,7 @@ class Permissions extends BaseAdmin {
 		}
 
 		// Read ACL settings config for any permission access
-    	$acl = config('setting.acl');
+    	$acl = config('setting.modules');
 
 		// Load needed scripts
 		$scripts = ['library' => asset("themes/ace-admin/js/library.js")];

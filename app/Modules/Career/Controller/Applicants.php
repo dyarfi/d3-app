@@ -82,7 +82,7 @@ class Applicants extends BaseAdmin {
         $applicant = $this->applicants->findOrFail($id);
 
         // Read ACL settings config for any permission access
-        $acl = config('setting.acl');
+        $acl = config('setting.modules');
 
 		// Set data to return
 	   	$data = ['row'=>$applicant,'acl'=>$acl];

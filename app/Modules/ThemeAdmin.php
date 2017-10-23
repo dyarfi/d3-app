@@ -17,7 +17,7 @@ abstract class ThemeAdmin extends BaseController {
 	* Master layout
 	* @var string
 	*/
-		protected $layout = 'Auth::layouts.template';
+		protected $layout = 'Admin::layouts.template';
 
 	 /**
 	* View to render

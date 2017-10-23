@@ -14,7 +14,7 @@
 
 	return  [
 	    'modules' => [
-	    		'Auth' => [
+	    		'Admin' => [
 		       		// Controller
 		       		'Controller' => '',
 		       		// Model
@@ -44,12 +44,12 @@
 		       		// Model
 		       		'Model' => ['Contact']
 		       	],
-		       	'Employee' => [
+		       	//'Employee' => [
 		       		// Controller
-		       		'Controller' => ['Employees'],
+		       		//'Controller' => ['Employees'],
 		       		// Model
-		       		'Model' => ''
-		       	],
+		       		//'Model' => ''
+		       	//],
 		       	'Page' => [
 		       		// Controller
 		       		'Controller' => ['Menus','Pages'],

@@ -1,4 +1,4 @@
-@extends('Auth::layouts.template_login')
+@extends('Admin::layouts.template_login')
 
 @section('title')
 First Setup

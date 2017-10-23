@@ -1,4 +1,4 @@
-@extends('Auth::layouts.template')
+@extends('Admin::layouts.template')
 
 @section('body')
 <p class="lead">

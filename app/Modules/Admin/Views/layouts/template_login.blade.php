@@ -54,7 +54,7 @@
               </div>
 
               <!-- [notifications] -->
-              @include('Auth::partials.notification')
+              @include('Admin::partials.notification')
               <!-- [notifications] -->
 
               <div class="space-6"></div>

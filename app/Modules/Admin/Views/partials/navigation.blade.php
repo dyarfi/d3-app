@@ -30,7 +30,7 @@
                     <span class="menu-text"> Dashboard </span>
                 </a>
             </li>
-            @foreach (config('setting.acl') as $key => $values)
+            @foreach (config('setting.modules') as $key => $values)
                 @if (!empty( Sentinel::getUser()->roles()->first()->permissions[strtolower(head(array_keys($values)))] ))
                 <li class="">
                     <a href="#" class="dropdown-toggle">

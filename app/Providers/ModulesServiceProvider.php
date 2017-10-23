@@ -1,7 +1,8 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Routing\RouteCollection as RouteCollection;
+use Illuminate\Routing\Route;
 /**
 * ServiceProvider
 *
@@ -30,25 +31,34 @@ class ModulesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        // For each of the registered modules, include their routes and Views
-        $modules = config('module.modules');
-
+        
+        // For each of the registered modules, include their routes and Views        
+        $modules = config('setting.modules');
+        // Loop modules to load
         while (list($module, $dir) = each($modules)) {
-
+            // Load key variable to string
+            $key = key($dir);            
             // Load the routes for each of the modules
-            if(file_exists(app_path('/Modules/'.$module.'/routes.php'))) {
-                // include __DIR__.'/'.$module.'/routes.php';
-                include app_path('/Modules/'.$module.'/routes.php');
+            if(file_exists(app_path('/Modules/'.$key.'/routes.php'))) {
+                include app_path('/Modules/'.$key.'/routes.php');
             }
-
             // Load the views
-            if(is_dir(app_path('/Modules/'.$module.'/Views'))) {
-                // $this->loadViewsFrom(__DIR__.'/'.$module.'/Views', $module);
-                $this->loadViewsFrom(app_path('/Modules/'.$module.'/Views'), $module);
+            if(is_dir(app_path('/Modules/'.$key.'/Views'))) {
+                // The package views have been published - use those views.
+                $this->loadViewsFrom(app_path('/Modules/'.$key.'/Views'), $key);
+            }
+            // Flagged User Module if Admin String existed
+            if($key === 'Admin' 
+                && file_exists(app_path('/Modules/User/routes.php')) 
+                    && is_dir(app_path('/Modules/User/Views'))) {
+                // Include User Module Directory
+                include app_path('/Modules/User/routes.php');     
+                // The package views have been published - use those views.
+                $this->loadViewsFrom(app_path('/Modules/User/Views'), 'User');  
             }
 
         }
+
     }
 
     /**

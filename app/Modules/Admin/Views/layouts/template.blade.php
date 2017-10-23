@@ -51,14 +51,14 @@
             </small>
           </a>
         </div>
-        @include('Auth::partials.property')
+        @include('Admin::partials.property')
       </div><!-- /.navbar-container -->
     </div>
     <div class="main-container" id="main-container">
       <script type="text/javascript">
         try{ace.settings.check('main-container' , 'fixed')}catch(e){}
       </script>
-      @include('Auth::partials.navigation')
+      @include('Admin::partials.navigation')
       <div class="main-content">
         <div class="main-content-inner">
           <div class="breadcrumbs hidden" id="breadcrumbs">
@@ -187,7 +187,7 @@
   легкий, много-функциональный и простой в использовании шаблон для админки на bootstrap 3.3. Загрузить исходники с <a href="https://github.com/bopoda/ace">github</a> (with minified ace js files).
                 </div-->
 
-                @include('Auth::partials.notification')
+                @include('Admin::partials.notification')
                 @yield('body')
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->

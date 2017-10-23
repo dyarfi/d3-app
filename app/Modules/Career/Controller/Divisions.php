@@ -82,7 +82,7 @@ class Divisions extends BaseAdmin {
         $division = $this->division->findOrFail($id);
 
         // Read ACL settings config for any permission access
-        $acl = config('setting.acl');
+        $acl = config('setting.modules');
 
 		// Set data to return
 	   	$data = ['row'=>$division,'acl'=>$acl];

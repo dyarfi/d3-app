@@ -17,7 +17,7 @@
 
     <div class="col-lg-12">
         <div class="space-6"></div>
-        @include('Auth::partials.alerts.success')
+        @include('Admin::partials.alerts.success')
         <div class="space-6"></div>
     </div>
 

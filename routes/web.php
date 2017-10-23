@@ -114,6 +114,9 @@ Route::post('auth/password/email','Auth\PasswordController@postEmail');
 Route::get('register', ['as'=>'register','uses'=>'Auth\AuthController@getRegister']);
 Route::post('register', ['as'=>'register.post','uses'=>'Auth\AuthController@postRegister']);
 
+Route::get('routes',function(){
+    dd(Route::getRoutes());
+});
 /*
 // Display all SQL executed in Eloquent
 Event::listen('illuminate.query', function($query)

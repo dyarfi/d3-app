@@ -1,17 +1,13 @@
-<?php namespace App\Modules\Auth;
+<?php namespace App\Modules\Admin;
 
 use App\Http\Controllers\Controller;
-//use App\Modules\BaseAdmin;
-//use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
-//use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
-//use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
-//use Cartalyst\Sentinel\Activations;
+use Route;
 use Illuminate\Http\Request as Request;
 use Sentinel, Email, Teamwork;
 
 // Load Laravel classes
 use View, Validator, Redirect;
-//use Request, View, Validator, Redirect;
+
 // User Activity Logs
 use Activity;
 
@@ -48,7 +44,6 @@ class AuthAdminController extends Controller {
 	}
 
 	public function index() {
-
 		if( ! Sentinel::check() ) {
 
 			 return Redirect::to(route('admin.login'));
@@ -146,7 +141,7 @@ class AuthAdminController extends Controller {
 	 */
 	public function register()
 	{
-		return View::make('User::sentinel.register');
+		return View::make('User::sentinel.register',['title'=>'User Register Page']);
 	}
 
 	/**
