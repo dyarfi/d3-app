@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'LaravelD3'),
+    'name' => env('APP_NAME', 'Auto Web Apps'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/d3-app'),
+    'url' => env('APP_URL', 'http://localhost/autowapps'),
 
 	/*
 	|--------------------------------------------------------------------------
