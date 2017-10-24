@@ -68,13 +68,10 @@ class Logs extends BaseAdmin {
 	public function show($id)
 	{
 		// Get data from database
-        $log = $this->logs->findOrFail($id);
+        $log = $this->logs->with('user')->findOrFail($id);
         
-        // Read ACL settings config for any permission access
-        $acl = config('setting.modules');
-	               	      
-		// Set data to return
-	   	$data = ['log'=>$log,'acl'=>$acl];
+        // Set data to return
+	   	$data = ['row'=>$log];
 
 	   	// Return data and view
 	   	return $this->view('User::sentinel.logs.show')->data($data)->title('View Log'); 

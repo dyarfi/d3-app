@@ -1,6 +1,9 @@
 <?php namespace App\Providers;
 
+// Load Service Provider Support
 use Illuminate\Support\ServiceProvider;
+// Load App Setting Model
+use App\Modules\User\Model\Setting;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -11,20 +14,23 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+		// Load from setting from DB
+		$dbset = new Setting;
+
 		// Load config/setting.php file
 		$setting = config('setting');
 
 		// Share a var with all views : $admin_url
 		view()->share('admin_url', $setting['admin_url']);
 
-		// Share a var with all views : $admin_url
-		view()->share('admin_app', $setting['admin_app']);
+		// Share a var with all views : $admin_app
+		view()->share('admin_app', $dbset->slug('site-name') ? $dbset->slug('site-name')->value : $setting['admin_app']);
 
 		// Share a var with all views : $admin_url
 		view()->share('company_name', $setting['company_name']);
 
 		// Returning the current class name and action
-		app('view')->composer('admin.template', function($view)
+		app('view')->composer('Admin::layouts.template', function($view)
 	    {
 	    	// $basename =  explode("@", str_replace('Controller','',class_basename(Route::getCurrentRoute()->getActionName())));
 	        // $action = app('request')->route()->getAction();

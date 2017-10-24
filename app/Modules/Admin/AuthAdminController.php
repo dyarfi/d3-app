@@ -1,12 +1,11 @@
 <?php namespace App\Modules\Admin;
 
 use App\Http\Controllers\Controller;
-use Route;
 use Illuminate\Http\Request as Request;
 use Sentinel, Email, Teamwork;
 
 // Load Laravel classes
-use View, Validator, Redirect;
+use View, Validator, Redirect, Route;
 
 // User Activity Logs
 use Activity;
@@ -17,7 +16,6 @@ use App\Modules\User\Model\User;
 class AuthAdminController extends Controller {
 //class AuthAdminController extends BaseAdmin {
 
-	//protected $auth = '';
 	protected $setting = '';
 
 	protected $admin_app = '';

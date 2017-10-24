@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Modules\User\Model\Log;
 use Illuminate\Support\Facades\Schema;
-// If auth()user_id does not exist use Sentinel Auth or other Auth class
+// If auth()->user_id does not exist use Sentinel Auth or other Auth class
 use Sentinel;
 
 class ActivityService

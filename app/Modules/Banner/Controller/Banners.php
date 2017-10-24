@@ -1,7 +1,8 @@
 <?php namespace App\Modules\Banner\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Image, Validator, View, Excel, File;
+use Route, Request, Session, Redirect, Input, Image, Validator, View, Excel, Storage, File;
+use Illuminate\Validation\Rule;
 //use Illuminate\Support\Facades\Storage;
 //use Illuminate\Support\Facades\File;
 // Load main base controller
@@ -369,12 +370,16 @@ class Banners extends BaseAdmin {
 	protected function processForm($mode, $id = null) {
 
 		$input = array_filter(Input::all());
-
+		
 		$rules = [
 			'name' 	   	   => 'required',
 			'slug' 		   => 'required',
 			'description'  => 'required',
-			'image'  	   => ($mode == 'create') ? 'required' : '',
+			//'image'  	   => 'required|file', Rule::dimensions()->maxWidth(10)->maxHeight(10),
+			//'image'  	   => (($mode == 'create') ? 'required|' : '') . 'dimensions:max_width=10,max_height=10',
+			'image'  	   => (($mode == 'create') ? 'image|required|' : '') . 'dimensions:max_width=10,max_height=10',
+			
+			// dimensions:min_width=100,min_height=200
 			'index'	   	   => 'numeric|digits_between:1,999',
 			'status'	   => 'boolean'
 		];
@@ -409,6 +414,7 @@ class Banners extends BaseAdmin {
 				// Slip image file
 				$result = isset($filename) ? array_set($input, 'image', $filename) : $result;
 
+				// Update Banenr
 				$banner->update($result);
 			}
 
@@ -441,6 +447,11 @@ class Banners extends BaseAdmin {
 
 			}
 		}
+		
+		//if($_POST) {
+			//var_dump($messages->messages());
+			//exit;
+		//}
 
 		// Log it first
 		Activity::log(__FUNCTION__);
@@ -557,7 +568,7 @@ class Banners extends BaseAdmin {
 		$validator = Validator::make($data, $rules);
 
 		$validator->passes();
-
+		
 		return $validator->errors();
 	}
 

@@ -76,6 +76,13 @@
 	<span class="help-block">{{{ $errors->first('end_date', ':message') }}}</span>
 </div>
 
+{{-- @if ($errors->has('image')) --}}
+{{-- {{ dd($errors) }} --}}
+	{{-- @foreach ($errors->get('image') as $_errors => $_message) --}}
+	    {{-- {{ dd($_message) }} --}}
+	{{-- @endforeach --}}
+{{-- @endif --}}
+
 <div class="form-group{{ $errors->first('image', ' has-error') }}">
 	@if ($row->image)
 		<img src="{{ asset('uploads/'.$row->image) }}" alt="{{ $row->image }}" class="image-alt img-thumbnail" style="width:300px"/>

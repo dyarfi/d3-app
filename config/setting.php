@@ -20,7 +20,7 @@ return [
 	'admin_app' => 'Admin Panel',
 
 	// Administrator url
-	'admin_url' => 'apanel',
+	'admin_url' => 'admin-panel',
 
 	/*
 	 |--------------------------------------------------------------------------

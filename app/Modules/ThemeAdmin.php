@@ -1,61 +1,59 @@
 <?php namespace App\Modules;
 
 // Load Laravel classes
-//use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Request, Session, Input, URL, View;
 
 abstract class ThemeAdmin extends BaseController {
 
-	//use DispatchesCommands, ValidatesRequests;
-
 	use ValidatesRequests;
 
 	public $namespace = 'App\Modules';
+
 	/**
 	* Master layout
 	* @var string
 	*/
 		protected $layout = 'Admin::layouts.template';
 
-	 /**
+ 	/**
 	* View to render
 	* @var string
 	*/
 		protected $view;
 
-	 /**
+ 	/**
 	* Array of data passed to view
 	* @var array
 	*/
 		protected $data = array();
 
-	 /**
+ 	/**
 	* Subview to render
 	* @var string
 	*/
 		protected $subview;
 
-	 /**
+ 	/**
 	* Array of data to be passed to subview
 	* @var array
 	*/
 		protected $subdata = array();
 
-	 /**
+ 	/**
 	* Page title
 	* @var string
 	*/
 		protected $title;
 
-	 /**
+ 	/**
 	* Page scripts
 	* @var string
 	*/
 		protected $scripts = array();
 
-	 /**
+	/**
 	* Page styles
 	* @var string
 	*/
@@ -67,7 +65,7 @@ abstract class ThemeAdmin extends BaseController {
 	*/
 	   protected $inlines = array();
 
-	 /**
+ 	/**
 	* Set default subview layout
 	* @param string $sublayout
 	*/
@@ -76,7 +74,7 @@ abstract class ThemeAdmin extends BaseController {
 		$this->view = $sublayout;
 	 }
 
-	 /**
+ 	/**
 	* Set view to render
 	* @param string $view
 	* @return self
@@ -87,7 +85,7 @@ abstract class ThemeAdmin extends BaseController {
 	 	return $this;
 	 }
 
-	 /**
+ 	/**
 	* Set data to pass to view
 	* @param array $data
 	* @return self
@@ -98,7 +96,7 @@ abstract class ThemeAdmin extends BaseController {
 	 	return $this;
 	 }
 
-	 /**
+ 	/**
 	* Set subview to render
 	* @param string $subview
 	* @return self
@@ -109,7 +107,7 @@ abstract class ThemeAdmin extends BaseController {
 	 	return $this;
 	 }
 
-	 /**
+ 	/**
 	* Set data to pass to subview
 	* @param array $subdata
 	* @return self
@@ -120,7 +118,7 @@ abstract class ThemeAdmin extends BaseController {
 	 	return $this;
 	 }
 
-	 /**
+ 	/**
 	* Set page title
 	* @param string $title
 	* @return Response
@@ -134,7 +132,7 @@ abstract class ThemeAdmin extends BaseController {
 		 return $this->render();
 	 }
 
-	 /**
+ 	/**
 	* Set page script
 	* @param string $script
 	* @return Response
@@ -150,7 +148,7 @@ abstract class ThemeAdmin extends BaseController {
 		 return $this;
 	 }
 
-	 /**
+ 	/**
 	* Set page style
 	* @param string $style
 	* @return Response
@@ -166,7 +164,7 @@ abstract class ThemeAdmin extends BaseController {
 		 return $this;
 	 }
 
-	 /**
+ 	/**
 	* Set page inline style or script
 	* @param string $inlines
 	* @return Response
@@ -182,7 +180,7 @@ abstract class ThemeAdmin extends BaseController {
 		 return $this;
 	 }
 
-	 /**
+ 	/**
 	* Render the subview
 	* @return Response
 	*/
@@ -194,7 +192,7 @@ abstract class ThemeAdmin extends BaseController {
 		 return $this->data = $this->data + $this->subview;
 	 }
 
-	 /**
+ 	/**
 	* Render the view
 	* @return Response
 	*/

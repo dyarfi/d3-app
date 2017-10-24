@@ -112,13 +112,13 @@ Route::prefix(config('setting.admin_url'))->group( function()
 
     Route::get('log', ['as'=>'admin.logs.index','uses'=>'App\Modules\User\Controller\Logs@index']);
     Route::get('log/export', ['as'=>'admin.logs.export','uses'=>'App\Modules\User\Controller\Logs@export']);
-    Route::get('log/create', ['as'=>'admin.logs.create','uses'=>'App\Modules\User\Controller\Logs@create']);
-    Route::post('log/create', ['as'=>'admin.logs.store','uses'=>'App\Modules\User\Controller\Logs@store']);
+    //Route::get('log/create', ['as'=>'admin.logs.create','uses'=>'App\Modules\User\Controller\Logs@create']);
+    //Route::post('log/create', ['as'=>'admin.logs.store','uses'=>'App\Modules\User\Controller\Logs@store']);
     Route::get('log/{id}/show', ['as'=>'admin.logs.show', 'uses'=>'App\Modules\User\Controller\Logs@show']);
-    Route::get('log/{id}', ['as'=>'admin.logs.edit','uses'=>'App\Modules\User\Controller\Logs@edit']);
-    Route::post('log/{id}', ['as'=>'admin.logs.update','uses'=>'App\Modules\User\Controller\Logs@update']);
+    //Route::get('log/{id}', ['as'=>'admin.logs.edit','uses'=>'App\Modules\User\Controller\Logs@edit']);
+    //Route::post('log/{id}', ['as'=>'admin.logs.update','uses'=>'App\Modules\User\Controller\Logs@update']);
     Route::get('log/{id}/trash', ['as'=>'admin.logs.trash','uses'=>'App\Modules\User\Controller\Logs@trash']);
-    Route::get('log/{id}/restored', ['as'=>'admin.logs.restored','uses'=>'App\Modules\User\Controller\Logs@restored']);
+    //Route::get('log/{id}/restored', ['as'=>'admin.logs.restored','uses'=>'App\Modules\User\Controller\Logs@restored']);
     Route::get('log/{id}/delete', ['as'=>'admin.logs.delete','uses'=>'App\Modules\User\Controller\Logs@delete']);
 
     // Settings Controller routes

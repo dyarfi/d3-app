@@ -106,15 +106,12 @@ class Permissions extends BaseAdmin {
 				//$user->removePermission('*.*')->save();
 				$user->permissions = [];
 
-
 				// Save user data
 				$user->save();
 
 				//dd ($user->permissions);
 
-
 			}
-
 
 			// Saved checking
 			$updated = true;

@@ -1,8 +1,7 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Routing\RouteCollection as RouteCollection;
-use Illuminate\Routing\Route;
+
 /**
 * ServiceProvider
 *

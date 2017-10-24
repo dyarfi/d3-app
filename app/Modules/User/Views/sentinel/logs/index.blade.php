@@ -3,7 +3,7 @@
 {{-- Page content --}}
 @section('body')
 <div class="page-header">
-	<h1>Logs <span class="pull-right"><a href="{{ route('admin.logs.create') }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Create</a></span>{{$junked ? ' &raquo; Trashed' :''}}
+	<h1>Logs <span class="pull-right"><!--a href="{{-- {{ route('admin.logs.create') }} --}}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Create</a></span-->{{$junked ? ' &raquo; Trashed' :''}}
 		<div class="pull-right">
 		   <div class="col-md-6 dropdown">
 			   <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -73,8 +73,22 @@
 							IP ADDRESS : {{ $row->request->client_ip }} <br/>
 							SSL : {{ $row->request->secure ? 'Yes' : 'No' }} <br/>
 							@if($row->request->payload)
-							PAYLOAD : [{{$row->request->payload->_token}}]
+							PAYLOAD : [{{$row->request->payload->_token}}]								
 							@endif
+							<?php 
+							/*
+							@if($row->request->payload)
+							PAYLOAD : [<a href="javascript:;" onclick="$(this).next('.description').toggleClass('hide');">{{$row->request->payload->_token}}</a>]
+								<div class="description hide">
+									@foreach ($row->request->payload as $payload => $value)
+										@if(isset($value))
+										[{{ $payload }}] : {!! $value !!} <br/>
+										@endif
+									@endforeach
+								</div>
+							@endif
+							*/ 
+							?>
 						@endif
 					</td>					
 		        	<td>
@@ -86,9 +100,13 @@
 							<a data-rel="tooltip" data-original-title="View" title="" href="{{ route('admin.logs.show', $row->id) }}" class="btn btn-xs btn-success tooltip-default">
 								<i class="ace-icon fa fa-check bigger-120"></i>
 							</a>
+							<?php 
+							/*
 							<a data-rel="tooltip" data-original-title="Edit"  href="{{ route('admin.logs.edit', $row->id) }}" class="btn btn-xs btn-info tooltip-default">
 								<i class="ace-icon fa fa-pencil bigger-120"></i>
 							</a>
+							*/
+							?>
 							@if(Sentinel::getUser()->id != $row->user_id)
 							<a data-rel="tooltip" data-original-title="Trashed"  href="{{ route('admin.logs.trash', $row->id) }}" class="btn btn-xs btn-danger tooltip-default">
 								<i class="ace-icon fa fa-trash-o bigger-120"></i>

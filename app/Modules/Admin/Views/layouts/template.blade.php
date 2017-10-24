@@ -80,20 +80,22 @@
             </div><!-- /.nav-search -->
           </div>
           @if (isset($controller) && isset($action) && $controller != 'BaseAdmin')
-          <ul class="breadcrumb">
-            <li>
-              <i class="ace-icon fa fa-home home-icon"></i>
-              <a href="{{ route('admin.dashboard') }}">Home</a>
-            </li>
-            <li class="active">
-              <a href="{{ route('admin.'.strtolower(@$controller).'.index') }}">{{ ucfirst(@$controller) }}</a>
-            </li>
-              @if(@$action)
-              <li class="">
-                {{ ucfirst(@$action) }}
-              </li>
-              @endif
-          </ul><!-- /.breadcrumb -->
+            <div class="breadcrumbs">
+              <ul class="breadcrumb">
+                <li>
+                  <i class="ace-icon fa fa-home home-icon"></i>
+                  <a href="{{ route('admin.dashboard') }}">Home</a>
+                </li>
+                <li class="active">
+                  <a href="{{ route('admin.'.strtolower(@$controller).'.index') }}">{{ ucfirst(@$controller) }}</a>
+                </li>
+                  @if(@$action)
+                  <li class="">
+                    {{ ucfirst(@$action) }}
+                  </li>
+                  @endif
+              </ul><!-- /.breadcrumb -->
+            </div>
           @endif
           <div class="page-content">
             @if(Sentinel::check())
@@ -174,6 +176,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
+                
                 <!--div class="alert alert-block alert-success">
                   <button type="button" class="close" data-dismiss="alert">
                     <i class="ace-icon fa fa-times"></i>

@@ -36,12 +36,6 @@ class Banner extends Model {
     // Instead, a deleted_at timestamp is set on the record.
     protected $dates = ['deleted_at'];
 
-    public function division() {
-
-        return $this->belongsTo('App\Modules\Banner\Model\Division','division_id','id');
-
-    }
-
     // Scope query for active status field
     public function scopeActive($query) {
 

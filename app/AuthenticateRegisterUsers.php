@@ -3,13 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
-//use Illuminate\Foundation\Validation\ValidatesRequests;
-//use Illuminate\Validation\Validator;
 use Validator, URL;
 
 trait AuthenticateRegisterUsers {
-
-    //use ValidatesRequests;
 
     /**
      * The Guard implementation.
