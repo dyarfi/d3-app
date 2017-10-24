@@ -73,7 +73,7 @@
                         @if (Auth::guest())
                             <li class="dropdown" id="dropdown3">
                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown2" role="button" aria-expanded="false">
-                                    &nbsp;<i class="fa fa-bars"></i>
+                                    &nbsp;<i class="fa fa-cogs"></i>
                                 </a>
                                 <ul>
                                     <li><a href="{{ route('login') }}">Login</a></li>
@@ -83,7 +83,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->username }} <span class="caret"></span>
+                                    &nbsp;{{ Auth::user()->username }}
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
