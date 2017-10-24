@@ -65,6 +65,44 @@
                             <?php endforeach; ?>
                         </ul>
                     </menu-->
+
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            <li class="dropdown" id="dropdown3">
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown2" role="button" aria-expanded="false">
+                                    &nbsp;<i class="fa fa-bars"></i>
+                                </a>
+                                <ul>
+                                    <li><a href="{{ route('login') }}">Login</a></li>
+                                    <li><a href="{{ route('register') }}">Register</a></li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown2" role="button" aria-expanded="false">
+                                    {{ Auth::user()->email }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
+                    </ul>
+
                 </nav>
             </div>
         </div>
