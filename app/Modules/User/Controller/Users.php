@@ -13,6 +13,8 @@ use App\Modules\BaseAdmin;
 use App\Modules\User\Model\Role;
 use App\Modules\User\Model\User;
 use App\Modules\User\Model\Team;
+use App\Modules\Blog\Model\Blog;
+use App\Modules\Contact\Model\Contact;
 // User Activity Logs
 use Activity;
 
@@ -510,11 +512,14 @@ class Users extends BaseAdmin {
 		        'position' => 'in'
 		    ]
 		]);
-
-
-
+		
 	   	// Set data to return
-	   	$data = ['user'=>$user, 'lava' =>$lava];
+	   	$data = [
+	   			'contact' => new Contact,	   			
+	   			'blog' 	  => new Blog,
+	   			'user' =>$user,
+	   			'lava' =>$lava
+	   			];
 
 	   	$scripts = ['easypiechart'=>'themes/ace-admin/js/jquery.easypiechart.min.js',
     				'sparkline' => 'themes/ace-admin/js/jquery.sparkline.min.js',
@@ -639,6 +644,36 @@ class Users extends BaseAdmin {
 			// header('Content-type: image/jpeg');
 			imagejpeg($dst_r,$file,$jpeg_quality);
 			exit;
+		}
+	}
+	
+	/**
+	 * Change the data status.
+	 *
+	 * @param  int     $id
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	protected function change() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
+
+		if (Input::get('check') !='') {
+
+		    $rows	= Input::get('check');
+
+		    foreach ($rows as $row) {
+				// Set id for load and change status
+				$this->users->find($row)->update(['status' => Input::get('select_action')]);
+		    }
+
+		    // Set message
+		    return Redirect::to(route('admin.users.index'))->with('success', 'User Status Changed!');
+
+		} else {
+
+		    // Set message
+		    return Redirect::to(route('admin.users.index'))->with('error','Data not Available!');
 		}
 	}
 

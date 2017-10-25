@@ -3,12 +3,202 @@
 @section('body')
 
 <div class="row">
-  <div class="space-6"></div>
+    <div class="col-sm-5">
+        <div class="widget-box transparent">
+              <div class="widget-header widget-header-flat">
+                <h4 class="widget-title lighter">
+                  <i class="ace-icon fa fa-bar-chart-o green"></i>
+                  Summary
+                </h4>
+                <div class="widget-toolbar hide">
+                  <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-up"></i>
+                  </a>
+                </div>
+              </div>
+            <div class="widget-body">
+                <div id="faq-tab-1" class="tab-pane fade active in">
+                    <div class="space-8"></div>
+                    <div id="faq-list-1" class="panel-group accordion-style1 accordion-style2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="#faq-1-1" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
+                                    <i class="pull-right ace-icon fa fa-chevron-left" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
+                                    <i class="ace-icon fa fa-users bigger-130"></i>
+                                    &nbsp; Users
+                                </a>
+                            </div>
+                            <div class="panel-collapse collapse" id="faq-1-1" aria-expanded="false" style="height: 0px;">
+                                <div class="panel-body">
+                                    <span class="label label-info arrowed arrowed-right">
+                                        {{ $user->where('status',1)->count() }} {{ config('setting.status')[1] }}
+                                    </span>
+                                    <span class="label label-warning arrowed arrowed-right">
+                                        {{ $user->where('status',2)->count() }} {{ config('setting.status')[2] }}
+                                    </span>
+                                    <span class="pull-right text-primary">
+                                        <i class="glyphicon glyphicon-ok"></i>&nbsp;
+                                        <a href="{{route('admin.users.index')}}">See Users ({{ $user->all()->count() }})</a>
+                                    </span>
+                                    <div class="space-4"></div>
+                                    <span class="text-success">Last Login :</span>
+                                    <div class="space-2"></div>
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead class="thin-border-bottom">
+                                            <tr>
+                                                <th><i class="ace-icon fa fa-user"></i>User</th>
+                                                <th><i>@</i> Email</th>
+                                                <th class="hidden-480"><i class="ace-icon fa fa-key"></i>Last Login</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($user->where('last_login','<', Carbon::now())->orderBy('last_login','desc')->take(3)->get() as $last)
+                                                <tr>
+                                                    <td class="text-info">{{ ($last->username) ? $last->username : $last->email }}</td>
+                                                    <td><span class="text-success">{{ $last->email }}</span></td>
+                                                    <td class="hidden-480">
+                                                        <span class="label label-warning label-sm">{{ $last->last_login}}</span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="#faq-1-2" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
+                                    <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
+                                    <i class="ace-icon fa fa-pencil-square-o bigger-130"></i>
+                                    &nbsp; Blogs 
+                                </a>
+                            </div>
+
+                            <div class="panel-collapse collapse" id="faq-1-2" aria-expanded="false">
+                                <div class="panel-body">
+                                    <div id="faq-list-nested-1" class="panel-group accordion-style1 accordion-style2">
+                                        <?php
+                                        $f = 0;                                        
+                                        ?>
+                                        @foreach ($blog->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $post)
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <a href="#faq-list-1-sub-{{$f}}" data-parent="#faq-list-nested-{{$f}}" data-toggle="collapse" class="accordion-toggle collapsed">
+                                                        <i class="ace-icon fa fa-plus smaller-80 middle" data-icon-hide="ace-icon fa fa-minus" data-icon-show="ace-icon fa fa-plus"></i>&nbsp;
+                                                        {{ str_limit($post->name,48,'--') }}
+                                                    </a>
+                                                </div>
+                                                <div class="panel-collapse collapse" id="faq-list-1-sub-{{$f}}">
+                                                    <div class="panel-body">
+                                                        {{ str_limit(strip_tags($post->description),'100') }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php 
+                                            $f++;
+                                            ?>
+                                        @endforeach
+                                        <div class="space-6"></div>
+                                        <span class="pull-right text-primary">
+                                            <i class="glyphicon glyphicon-ok"></i>&nbsp;
+                                            <a href="{{route('admin.blogs.index')}}">See Blogs ({{ $blog->all()->count() }})</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="#faq-1-3" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
+                                    <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
+                                    <i class="ace-icon fa fa-envelope-o bigger-130"></i>
+                                    &nbsp; Contacts
+                                </a>
+                            </div>
+                            <div class="panel-collapse collapse" id="faq-1-3" aria-expanded="false">
+                                <div class="panel-body">
+                                   <table class="table table-striped table-bordered table-hover">
+                                        <thead class="thin-border-bottom">
+                                            <tr>
+                                                <th><i class="ace-icon fa fa-user"></i>Name</th>
+                                                {{-- <th><i>@</i> Email</th> --}}
+                                                <th><i class="ace-icon fa fa-fire"></i>Subject</th>
+                                                <th class="hidden-480"><i class="ace-icon fa fa-inbox"></i>Created</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($contact->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $mails)
+                                                <tr>
+                                                    <td class="text-info">{{ $mails->name }}</td>
+                                                    {{-- <td>{{ $mails->email }}</td> --}}
+                                                    <td>{{ $mails->subject }}</td>
+                                                    <td class="hidden-480">
+                                                        <span class="label label-warning label-sm">{{ $mails->created_at}}</span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <span class="pull-right text-primary">
+                                        <i class="glyphicon glyphicon-ok"></i>&nbsp;
+                                        <a href="{{route('admin.contacts.index')}}">See Contacts ({{ $contact->all()->count() }})</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="#faq-1-4" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
+                                    <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
+
+                                    <i class="ace-icon fa fa-files-o bigger-130"></i>
+                                    &nbsp; Sunt aliqua put a bird on it squid?
+                                </a>
+                            </div>
+
+                            <div class="panel-collapse collapse" id="faq-1-4" aria-expanded="false">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="#faq-1-5" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
+                                    <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
+
+                                    <i class="ace-icon fa fa-cog bigger-130"></i>
+                                    &nbsp; Brunch 3 wolf moon tempor sunt aliqua put?
+                                </a>
+                            </div>
+
+                            <div class="panel-collapse collapse" id="faq-1-5" aria-expanded="false">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.widget-body -->
+        </div>
+    </div>
+
+    <div class="col-sm-7">
+        <div id="pop_div"></div>
+        <?php echo $lava->render('AreaChart', 'Population', 'pop_div') ?>
+    </div>
+
+    <div class="space-6"></div>
 
   <div class="col-sm-7 infobox-container">
-
-    <div id="pop_div"></div>
-    <?php echo $lava->render('AreaChart', 'Population', 'pop_div') ?>
 
     <div class="infobox infobox-green">
       <div class="infobox-icon">

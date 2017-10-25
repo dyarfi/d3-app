@@ -54,9 +54,9 @@ class BaseAdmin extends ThemeAdmin {
 				// return Redirect::back()->withInput()->withErrors('Unauthorized access!');
 
 			}
-
 			// Check if user visited the access with referer or not and has access to dashboard
-			if ((Request::server('HTTP_REFERER') == '' || Request::server('HTTP_REFERER') == route('admin.noaccess'))
+			if ((Request::server('HTTP_REFERER') == null 
+				|| str_is(Request::server('HTTP_REFERER'), route('admin.noaccess')))
 					&& Sentinel::hasAccess(['admin.dashboard'])) {
 
 				// If yes redirect to dashboard
