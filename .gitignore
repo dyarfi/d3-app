@@ -12,6 +12,9 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 
+composer.phar
+composer.lock
+
 # Laravel 4 specific
 bootstrap/compiled.php
 app/storage/
