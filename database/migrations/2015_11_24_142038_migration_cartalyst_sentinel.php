@@ -12,7 +12,7 @@ class MigrationCartalystSentinel extends Migration {
      */
     public function up()
     {
-    	
+        
         Schema::create('activations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
@@ -94,7 +94,9 @@ class MigrationCartalystSentinel extends Migration {
             $table->string('provider')->default('email');
             $table->string('provider_id')->nullable()->unique();
             $table->string('about', 1000)->nullable();
-            $table->string('remember_token')->nullable();
+            $table->string('attributes', 2000)->string();
+            $table->string('remember_token')->nullable();            
+            $table->boolean('status')->default(1);
             $table->softDeletes();            
             $table->nullableTimestamps();
 
