@@ -78,6 +78,7 @@ class AuthAdminController extends Controller {
 		{
 			//$input = Input::all();
 			$input = $request->all();
+			//dd(route('admin.noaccess'));
 			//dd($input);
 
 			$rules = [
@@ -102,9 +103,9 @@ class AuthAdminController extends Controller {
 			{
 				// Log it first
         		Activity::log(__FUNCTION__);
-
 				// Check if previous url is valid
-				if ($input['previous_url'] && $input['previous_url'] !== route('admin.noaccess')) {
+				//if ($input['previous_url'] && $input['previous_url'] !== route('admin.noaccess')) {
+        		if ($input['previous_url'] && !str_is($input['previous_url'],route('admin.noaccess'))) {
 					// Redirect to previous url
 					return Redirect::intended($input['previous_url']);
 				} else {

@@ -67,6 +67,7 @@ Route::prefix(config('setting.admin_url'))->group( function()
     Route::get('user/export', ['as'=>'admin.users.export','uses'=>'App\Modules\User\Controller\Users@export']);
     Route::get('user/create', ['as'=>'admin.users.create', 'uses'=>'App\Modules\User\Controller\Users@create']);
     Route::post('user/create', ['as'=>'admin.users.store', 'uses'=>'App\Modules\User\Controller\Users@store']);
+    Route::post('user/change', ['as'=>'admin.users.change','uses'=>'App\Modules\User\Controller\Users@change']);        
     Route::get('user/{id}/show', ['as'=>'admin.users.show', 'uses'=>'App\Modules\User\Controller\Users@show']);
     Route::get('user/{id}', ['as'=>'admin.users.edit', 'uses'=>'App\Modules\User\Controller\Users@edit']);
     Route::post('user/{id}', ['as'=>'admin.users.update', 'uses'=>'App\Modules\User\Controller\Users@update']);
