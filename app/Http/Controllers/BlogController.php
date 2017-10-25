@@ -84,7 +84,8 @@ class BlogController extends BasePublic {
 			'blog' => $blog,
 			'blogs' => $blogs,
 			'portfolios' => Portfolio::active()->with('client')->with('project')->orderBy('created_at','DESC')->take(10)->get(),
-			'tags' => Blog::allTags()->get()
+			'tags' => Blog::allTags()->get(),
+			'categories' => BlogCategory::active()->get()
 		];
 
 	   	// Return data and view

@@ -13,8 +13,11 @@ use App\Modules\BaseAdmin;
 use App\Modules\User\Model\Role;
 use App\Modules\User\Model\User;
 use App\Modules\User\Model\Team;
+use App\Modules\User\Model\Log;
 use App\Modules\Blog\Model\Blog;
 use App\Modules\Contact\Model\Contact;
+use App\Modules\Career\Model\Applicant;
+
 // User Activity Logs
 use Activity;
 
@@ -323,12 +326,12 @@ class Users extends BaseAdmin {
 	{
 
 		$input = array_filter(Input::all());
-		// dd($input);
+		
 		$rules = [
 			'first_name' => 'required',
 			'last_name'  => 'required',
 			'role_id'  	 => 'required',
-			'team_id'  	 => 'required',
+			'team_id'  	 => ($mode == 'create') ? 'required' : '',
 			'image' 	 => ($mode == 'update') ? '' : 'image|mimes:jpg,jpeg|max:500kb',
 			'email'      => ($id) ? 'email|required' : 'email|required|unique:users'
 		];
@@ -515,7 +518,9 @@ class Users extends BaseAdmin {
 		
 	   	// Set data to return
 	   	$data = [
-	   			'contact' => new Contact,	   			
+	   			'log' => new Log,
+	   			'applicant' 	  => new Applicant,	   		
+	   			'contact' => new Contact,
 	   			'blog' 	  => new Blog,
 	   			'user' =>$user,
 	   			'lava' =>$lava

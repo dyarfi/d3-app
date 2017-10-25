@@ -36,6 +36,20 @@
         {!! $row->description !!}
     </div>
     @endif
+    @if($row->tags && count($row->tags) > 0)
+    <h4 class="red">Tags</h4>
+    <div class="row-fluid">
+        @if(count($row->tags) > 1)
+            @foreach ($row->tags as $tags)
+                <span class="green">{{ $tags->name }}</span><br/>
+            @endforeach
+        @else
+            <span class="green">
+                {{ $row->tags[0]->name }}
+            </span>
+        @endif
+    </div>
+    @endif
     @if($row->publish_date)
     <h4 class="red">Publish Date</h4>
     <div class="row-fluid">
@@ -47,7 +61,7 @@
     <div class="row-fluid">
         {{ $row->created_at }}
     </div>
-    @endif
+    @endif    
     <hr/>
     <div class="row">
         <div class="col-md-5 col-xs-6">

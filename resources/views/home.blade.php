@@ -57,7 +57,7 @@
 		<!--
 		parallax dark" style="background-image: url('{{ asset("images/services/slider-testi.jpg") }}'); padding: 100px 0;" data-stellar-background-ratio="0.4"
 		-->
-		<div class="section nobottommargin">
+		<div class="section nomargin">
 			<div class="container clear-bottommargin clearfix">
 				<div class="row clearfix">
 					<div class="heading-block center">
@@ -72,8 +72,148 @@
 				</div>
 			</div>
 		</div>
+		<div class="section nomargin">
+			<div class="container clearfix">
+				<div class="heading-block center nomargin">
+					<h3>Our Latest Works</h3>
+					<span class="divcenter">We crafted our ideas with love and passion.</span>
+				</div>
+			</div>
+		</div>
+		<div id="portfolio" class="portfolio portfolio-nomargin grid-container portfolio-notitle portfolio-full grid-container clearfix">
+			<article class="portfolio-item pf-media pf-icons">
+				<div class="portfolio-image">
+					<a href="#portfolio-single.html">
+						<img src="{{ asset('images/portfolio/4/1.jpg') }}" alt="Open Imagination">
+					</a>
+					<div class="portfolio-overlay">
+						<a href="{{ asset('images/portfolio/full/1.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single.html">Open Imagination</a></h3>
+					<span><a href="#">Media</a>, <a href="#">Icons</a></span>
+				</div>
+			</article>
+			<article class="portfolio-item pf-illustrations">
+				<div class="portfolio-image">
+					<a href="portfolio-single.html">
+						<img src="{{ asset('images/portfolio/4/2.jpg') }}" alt="Locked Steel Gate">
+					</a>
+					<div class="portfolio-overlay">
+						<a href="{{ asset('images/portfolio/full/2.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single.html">Locked Steel Gate</a></h3>
+					<span><a href="#">Illustrations</a></span>
+				</div>
+			</article>
+			<article class="portfolio-item pf-graphics pf-uielements">
+				<div class="portfolio-image">
+					<a href="#">
+						<img src="{{ asset('images/portfolio/4/3.jpg') }}" alt="Mac Sunglasses">
+					</a>
+					<div class="portfolio-overlay">
+						<a href="http://vimeo.com/89396394" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+						<a href="#portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single-video.html">Mac Sunglasses</a></h3>
+					<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
+				</div>
+			</article>
+			<article class="portfolio-item pf-icons pf-illustrations">
+				<div class="portfolio-image">
+					<a href="#portfolio-single.html">
+						<img src="{{ asset('images/portfolio/4/4.jpg') }}" alt="Open Imagination">
+					</a>
+					<div class="portfolio-overlay" data-lightbox="gallery">
+						<a href="{{ asset('images/portfolio/full/4.jpg') }}" class="left-icon" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+						<a href="{{ asset('images/portfolio/full/4-1.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
+						<a href="#portfolio-single-gallery.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single-gallery.html">Morning Dew</a></h3>
+					<span><a href="#"><a href="#">Icons</a>, <a href="#">Illustrations</a></span>
+				</div>
+			</article>
+			<article class="portfolio-item pf-uielements pf-media">
+				<div class="portfolio-image">
+					<a href="#portfolio-single.html">
+						<img src="{{ asset('images/portfolio/4/5.jpg') }}" alt="Console Activity">
+					</a>
+					<div class="portfolio-overlay">
+						<a href="{{ asset('images/portfolio/full/5.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single.html">Console Activity</a></h3>
+					<span><a href="#">UI Elements</a>, <a href="#">Media</a></span>
+				</div>
+			</article>
+			<article class="portfolio-item pf-graphics pf-illustrations">
+				<div class="portfolio-image">
+					<a href="#portfolio-single.html">
+						<img src="{{ asset('images/portfolio/4/6.jpg') }}" alt="Open Imagination">
+					</a>
+					<div class="portfolio-overlay" data-lightbox="gallery">
+						<a href="{{ asset('images/portfolio/full/6.jpg') }}" class="left-icon" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+						<a href="{{ asset('images/portfolio/full/6-1.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
+						<a href="{{ asset('images/portfolio/full/6-2.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
+						<a href="{{ asset('images/portfolio/full/6-3.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
+						<a href="#portfolio-single-gallery.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single-gallery.html">Shake It!</a></h3>
+					<span><a href="#">Illustrations</a>, <a href="#">Graphics</a></span>
+				</div>
+			</article>
+			<article class="portfolio-item pf-uielements pf-icons">
+				<div class="portfolio-image">
+					<a href="portfolio-single-video.html">
+						<img src="{{ asset('images/portfolio/4/7.jpg') }}" alt="Backpack Contents">
+					</a>
+					<div class="portfolio-overlay">
+						<a href="https://www.youtube.com/watch?v=kuceVNBTJio" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+						<a href="#portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single-video.html">Backpack Contents</a></h3>
+					<span><a href="#">UI Elements</a>, <a href="#">Icons</a></span>
+				</div>
+			</article>
+			<article class="portfolio-item pf-graphics">
+				<div class="portfolio-image">
+					<a href="#portfolio-single.html">
+						<img src="{{ asset('images/portfolio/4/8.jpg') }}" alt="Sunset Bulb Glow">
+					</a>
+					<div class="portfolio-overlay">
+						<a href="{{ asset('images/portfolio/full/8.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+					</div>
+				</div>
+				<div class="portfolio-desc">
+					<h3><a href="#portfolio-single.html">Sunset Bulb Glow</a></h3>
+					<span><a href="#">Graphics</a></span>
+				</div>
+			</article>
+		</div>
+		<div class="clear"></div>
+		<a href="#portfolio-parallax.html" class="button button-full button-dark center tright bottommargin-lg">
+			<div class="container clearfix">
+				Full list of our works. <strong>See More</strong> <i class="icon-caret-right" style="top:4px;"></i>
+			</div>
+		</a>
 		<div class="container clearfix">
-			<div class="row topmargin-lg bottommargin-sm">
+			<div class="row topmargin-xs bottommargin-sm">
 				<div class="heading-block center">
 					<h2>We love building ideas into reality</h2>
 					<span class="divcenter">Talk to us what you want for your needs.</span>
@@ -268,145 +408,6 @@ What do you think makes a great site building and customization experience? Outs
 			</div>
 			<div class="clear"></div>
 		</div>
-		<div class="section topmargin nobottommargin nobottomborder">
-			<div class="container clearfix">
-				<div class="heading-block center nomargin">
-					<h3>Our Latest Works</h3>
-				</div>
-			</div>
-		</div>
-		<div id="portfolio" class="portfolio portfolio-nomargin grid-container portfolio-notitle portfolio-full grid-container clearfix">
-			<article class="portfolio-item pf-media pf-icons">
-				<div class="portfolio-image">
-					<a href="#portfolio-single.html">
-						<img src="{{ asset('images/portfolio/4/1.jpg') }}" alt="Open Imagination">
-					</a>
-					<div class="portfolio-overlay">
-						<a href="{{ asset('images/portfolio/full/1.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single.html">Open Imagination</a></h3>
-					<span><a href="#">Media</a>, <a href="#">Icons</a></span>
-				</div>
-			</article>
-			<article class="portfolio-item pf-illustrations">
-				<div class="portfolio-image">
-					<a href="portfolio-single.html">
-						<img src="{{ asset('images/portfolio/4/2.jpg') }}" alt="Locked Steel Gate">
-					</a>
-					<div class="portfolio-overlay">
-						<a href="{{ asset('images/portfolio/full/2.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single.html">Locked Steel Gate</a></h3>
-					<span><a href="#">Illustrations</a></span>
-				</div>
-			</article>
-			<article class="portfolio-item pf-graphics pf-uielements">
-				<div class="portfolio-image">
-					<a href="#">
-						<img src="{{ asset('images/portfolio/4/3.jpg') }}" alt="Mac Sunglasses">
-					</a>
-					<div class="portfolio-overlay">
-						<a href="http://vimeo.com/89396394" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-						<a href="#portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single-video.html">Mac Sunglasses</a></h3>
-					<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
-				</div>
-			</article>
-			<article class="portfolio-item pf-icons pf-illustrations">
-				<div class="portfolio-image">
-					<a href="#portfolio-single.html">
-						<img src="{{ asset('images/portfolio/4/4.jpg') }}" alt="Open Imagination">
-					</a>
-					<div class="portfolio-overlay" data-lightbox="gallery">
-						<a href="{{ asset('images/portfolio/full/4.jpg') }}" class="left-icon" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
-						<a href="{{ asset('images/portfolio/full/4-1.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
-						<a href="#portfolio-single-gallery.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single-gallery.html">Morning Dew</a></h3>
-					<span><a href="#"><a href="#">Icons</a>, <a href="#">Illustrations</a></span>
-				</div>
-			</article>
-			<article class="portfolio-item pf-uielements pf-media">
-				<div class="portfolio-image">
-					<a href="#portfolio-single.html">
-						<img src="{{ asset('images/portfolio/4/5.jpg') }}" alt="Console Activity">
-					</a>
-					<div class="portfolio-overlay">
-						<a href="{{ asset('images/portfolio/full/5.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single.html">Console Activity</a></h3>
-					<span><a href="#">UI Elements</a>, <a href="#">Media</a></span>
-				</div>
-			</article>
-			<article class="portfolio-item pf-graphics pf-illustrations">
-				<div class="portfolio-image">
-					<a href="#portfolio-single.html">
-						<img src="{{ asset('images/portfolio/4/6.jpg') }}" alt="Open Imagination">
-					</a>
-					<div class="portfolio-overlay" data-lightbox="gallery">
-						<a href="{{ asset('images/portfolio/full/6.jpg') }}" class="left-icon" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
-						<a href="{{ asset('images/portfolio/full/6-1.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
-						<a href="{{ asset('images/portfolio/full/6-2.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
-						<a href="{{ asset('images/portfolio/full/6-3.jpg') }}" class="hidden" data-lightbox="gallery-item"></a>
-						<a href="#portfolio-single-gallery.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single-gallery.html">Shake It!</a></h3>
-					<span><a href="#">Illustrations</a>, <a href="#">Graphics</a></span>
-				</div>
-			</article>
-			<article class="portfolio-item pf-uielements pf-icons">
-				<div class="portfolio-image">
-					<a href="portfolio-single-video.html">
-						<img src="{{ asset('images/portfolio/4/7.jpg') }}" alt="Backpack Contents">
-					</a>
-					<div class="portfolio-overlay">
-						<a href="https://www.youtube.com/watch?v=kuceVNBTJio" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-						<a href="#portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single-video.html">Backpack Contents</a></h3>
-					<span><a href="#">UI Elements</a>, <a href="#">Icons</a></span>
-				</div>
-			</article>
-			<article class="portfolio-item pf-graphics">
-				<div class="portfolio-image">
-					<a href="#portfolio-single.html">
-						<img src="{{ asset('images/portfolio/4/8.jpg') }}" alt="Sunset Bulb Glow">
-					</a>
-					<div class="portfolio-overlay">
-						<a href="{{ asset('images/portfolio/full/8.jpg') }}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-						<a href="#portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-					</div>
-				</div>
-				<div class="portfolio-desc">
-					<h3><a href="#portfolio-single.html">Sunset Bulb Glow</a></h3>
-					<span><a href="#">Graphics</a></span>
-				</div>
-			</article>
-		</div>
-		<div class="clear"></div>
-		<a href="#portfolio-parallax.html" class="button button-full button-dark center tright bottommargin-lg">
-			<div class="container clearfix">
-				Full list of our works. <strong>See More</strong> <i class="icon-caret-right" style="top:4px;"></i>
-			</div>
-		</a>
 		<div class="container clearfix">
 			<div class="col_one_third bottommargin-sm center">
 				<img data-animate="fadeInLeft" src="{{ asset('images/services/responsive2.png') }}" alt="responsive2">

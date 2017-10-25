@@ -68,7 +68,7 @@
 							============================================= -->
 							<div class="tagcloud clearfix bottommargin">
 								@foreach($blog->tags as $tag)
-									<a href="{{ route('blog.tag',$tag->slug) }}">{{ $tag->name }}</a>&nbsp;
+									<a href="{{ route('blog.tag',$tag->slug) }}"><span class="icon-tag"></span> {{ $tag->name }}</a>&nbsp;
 								@endforeach
 							</div><!-- .tagcloud end -->
 							<div class="clear"></div>
@@ -534,7 +534,15 @@
 						<h4>Tag Cloud</h4>
 						<div class="tagcloud">
 							@foreach ($tags as $tag)
-								<a href="{{ route('blog.tag',$tag->slug) }}" title="Blog Tag : {{$tag->name}}">{{$tag->name}}</a>
+								<a href="{{ route('blog.tag',$tag->slug) }}" title="Blog Tag : {{$tag->name}}"><span class="icon-tags"></span> {{$tag->name}}</a>
+							@endforeach
+						</div>
+					</div>
+					<div class="widget clearfix">
+						<h4>Categories</h4>
+						<div class="tagcloud">
+							@foreach ($categories as $category)
+								<a href="{{ route('blog.category',$category->slug) }}" title="Blog Category : {{$category->name}}"><span class="icon-folder-close"></span>&nbsp;{{$category->name}}</a>
 							@endforeach
 						</div>
 					</div>

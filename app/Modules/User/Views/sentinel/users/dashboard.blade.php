@@ -7,7 +7,7 @@
         <div class="widget-box transparent">
               <div class="widget-header widget-header-flat">
                 <h4 class="widget-title lighter">
-                  <i class="ace-icon fa fa-bar-chart-o green"></i>
+                  <i class="ace-icon fa fa-bar-chart-o blue"></i>
                   Summary
                 </h4>
                 <div class="widget-toolbar hide">
@@ -75,14 +75,13 @@
                                     &nbsp; Blogs 
                                 </a>
                             </div>
-
                             <div class="panel-collapse collapse" id="faq-1-2" aria-expanded="false">
                                 <div class="panel-body">
                                     <div id="faq-list-nested-1" class="panel-group accordion-style1 accordion-style2">
                                         <?php
                                         $f = 0;                                        
                                         ?>
-                                        @foreach ($blog->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $post)
+                                        @foreach ($blog->with('user')->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $post)
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <a href="#faq-list-1-sub-{{$f}}" data-parent="#faq-list-nested-{{$f}}" data-toggle="collapse" class="accordion-toggle collapsed">
@@ -93,6 +92,7 @@
                                                 <div class="panel-collapse collapse" id="faq-list-1-sub-{{$f}}">
                                                     <div class="panel-body">
                                                         {{ str_limit(strip_tags($post->description),'100') }}
+                                                        <span class="clearfix lighter green">By : {{$post->user->email}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,8 +108,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="panel panel-default">
@@ -156,15 +154,38 @@
                             <div class="panel-heading">
                                 <a href="#faq-1-4" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
                                     <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
-
-                                    <i class="ace-icon fa fa-files-o bigger-130"></i>
-                                    &nbsp; Sunt aliqua put a bird on it squid?
+                                    <i class="ace-icon fa fa-leaf bigger-130"></i>
+                                    &nbsp; Applicants
                                 </a>
                             </div>
-
                             <div class="panel-collapse collapse" id="faq-1-4" aria-expanded="false">
                                 <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead class="thin-border-bottom">
+                                            <tr>
+                                                <th><i class="ace-icon fa fa-user"></i>Name</th>
+                                                <th><i>@</i> Career</th>
+                                                <th><i class="ace-icon fa fa-phone"></i>Phone</th>
+                                                <th class="hidden-480"><i class="ace-icon fa fa-inbox"></i>Applied At</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($applicant->with('career')->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $applied)
+                                                <tr>
+                                                    <td class="text-info">{{ $applied->name }}</td>
+                                                    <td>{{ $applied->career->name }}</td>
+                                                    <td class="green">{{ $applied->phone_number }}</td>
+                                                    <td class="hidden-480">
+                                                        <span class="label label-warning label-sm">{{ $applied->created_at}}</span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <span class="pull-right text-primary">
+                                        <i class="glyphicon glyphicon-ok"></i>&nbsp;
+                                        <a href="{{route('admin.applicants.index')}}">See Applicants ({{ $applicant->all()->count() }})</a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -173,15 +194,45 @@
                             <div class="panel-heading">
                                 <a href="#faq-1-5" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
                                     <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
-
-                                    <i class="ace-icon fa fa-cog bigger-130"></i>
-                                    &nbsp; Brunch 3 wolf moon tempor sunt aliqua put?
+                                    <i class="ace-icon fa fa-exchange bigger-130"></i>
+                                    &nbsp; Logs
                                 </a>
                             </div>
-
                             <div class="panel-collapse collapse" id="faq-1-5" aria-expanded="false">
                                 <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead class="thin-border-bottom">
+                                            <tr>
+                                                <th><i class="ace-icon fa fa-user"></i>User</th>
+                                                <th><i>@</i> Description</th>
+                                                {{-- <th><i class="ace-icon fa fa-phone"></i>Phone</th> --}}
+                                                <th class="hidden-480"><i class="ace-icon fa fa-inbox"></i>logged At</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($log->with('user')->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $logged)
+                                                <tr>
+                                                    <td class="text-info">{{ $logged->user->email }}</td>
+                                                    <td>
+                                                    <?php
+                                                    $label = ($logged->description == 'processForm') ? 'label-warning' : 'label-success';
+                                                    ?>
+                                                    @if ($logged->description)
+                                                        <span class="label {{$label}} label-sm">{{ $logged->description }}</span>
+                                                    @endif
+                                                </td>
+                                                    {{-- <td class="green">{{ $logged->phone_number }}</td> --}}
+                                                    <td class="hidden-480">
+                                                        <span class="label label-warning label-sm">{{ $logged->created_at}}</span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <span class="pull-right text-primary">
+                                        <i class="glyphicon glyphicon-ok"></i>&nbsp;
+                                        <a href="{{route('admin.logs.index')}}">See Logs ({{ $log->all()->count() }})</a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
