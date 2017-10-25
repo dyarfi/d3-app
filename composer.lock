@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cc43e48590aaafa7ccd241c0c1a913a4",
-    "content-hash": "491d2dcd1e404b3fb25d23c0c780db90",
+    "hash": "6e3ff1dd53ec1c55fb01ef6c5c195f64",
+    "content-hash": "8544eba19de846340516aa41ce57dc5e",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -257,32 +257,32 @@
         },
         {
             "name": "cartalyst/tags",
-            "version": "v2.0.2",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cartalyst/tags.git",
-                "reference": "3b85fe736a2f67b724428d939c0953a535806867"
+                "reference": "df4134977bb1906738801829b056e9eded4a1f94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/tags/zipball/3b85fe736a2f67b724428d939c0953a535806867",
-                "reference": "3b85fe736a2f67b724428d939c0953a535806867",
+                "url": "https://api.github.com/repos/cartalyst/tags/zipball/df4134977bb1906738801829b056e9eded4a1f94",
+                "reference": "df4134977bb1906738801829b056e9eded4a1f94",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "~5.1",
-                "php": ">=5.5.9"
+                "illuminate/database": "5.4.*",
+                "php": ">=5.6.4"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9",
-                "patchwork/utf8": "~1.1",
-                "phpunit/phpunit": "~4.0"
+                "orchestra/database": "^3.3@dev",
+                "orchestra/testbench": "^3.4",
+                "phpunit/phpunit": "^5.0"
             },
             "type": "library",
             "extra": {
                 "component": "package",
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "4.0.x-dev"
                 }
             },
             "autoload": {
@@ -297,22 +297,8 @@
             "authors": [
                 {
                     "name": "Cartalyst LLC",
-                    "email": "help@cartalyst.com"
-                },
-                {
-                    "name": "Bruno Gaspar",
-                    "email": "bruno.gaspar@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Dan Syme",
-                    "email": "dan.syme@cartalyst.com",
-                    "role": "Project Lead"
-                },
-                {
-                    "name": "Suhayb Wardany",
-                    "email": "su.wardany@cartalyst.com",
-                    "role": "Developer"
+                    "email": "help@cartalyst.com",
+                    "homepage": "https://cartalyst.com"
                 }
             ],
             "description": "Easily add tags to your Eloquent models.",
@@ -322,7 +308,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2015-07-24 18:31:17"
+            "time": "2017-04-28 22:48:38"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2207,16 +2193,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.12",
+            "version": "v0.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "1502354ebc70d59d8e3a87c325b0eb78a79da25b"
+                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/1502354ebc70d59d8e3a87c325b0eb78a79da25b",
-                "reference": "1502354ebc70d59d8e3a87c325b0eb78a79da25b",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
+                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
                 "shasum": ""
             },
             "require": {
@@ -2276,7 +2262,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-10-14 17:14:13"
+            "time": "2017-10-19 06:13:20"
         },
         {
             "name": "ramsey/uuid",
