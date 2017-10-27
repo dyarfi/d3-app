@@ -15,7 +15,21 @@
 			<div class="content-wrap">
 				<div class="container clearfix">
 					<div class="col_two_third portfolio-single-image nobottommargin">
+						@if(!sizeof($portfolio->media)>0)
 						<a href="#"><img src="{{ asset('uploads/1200x1200px_'.$portfolio->image) }}" alt=""></a>
+						@else
+						<div class="fslider" data-arrows="false" data-thumbs="true" data-animation="fade">
+							<div class="flexslider">
+								<div class="slider-wrap">
+									<div class="slide" data-thumb="{{ asset('uploads/'.$portfolio->image) }}"><a href="#"><img src="{{ asset('uploads/1200x1200px_'.$portfolio->image) }}" alt=""></a></div>
+									@foreach ($portfolio->media as $media)
+									<!-- this should be a thumb sizes -->
+									<div class="slide" data-thumb="{{ url($media->getDiskPath()) }}"><a href="#"><img src="{{ url($media->getDiskPath()) }}" alt=""></a></div>
+									@endforeach
+								</div>
+							</div>
+						</div>
+						@endif
 					</div>
 					<div class="col_one_third portfolio-single-content col_last nobottommargin">
 						<div class="fancy-title title-bottom-border">

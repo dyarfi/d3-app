@@ -11,7 +11,7 @@ return [
     /*
      * Filesystem disk to use if none is specified
      */
-    'default_disk' => 'local_uploads',    
+    'default_disk' => 'mediables',    
     //'default_disk' => 'uploads',
 
     /*
@@ -20,8 +20,7 @@ return [
      * Uploader will throw an exception if a disk not in this list is selected
      */
     'allowed_disks' => [
-        'uploads',
-        //'public',
+        'mediables',
     ],
 
     /*
@@ -54,17 +53,17 @@ return [
     /*
      * Only allow files with specific MIME type(s) to be uploaded
      */
-    'allowed_mime_types' => [],
+    'allowed_mime_types' => ['image/jpg','image/pjpeg','image/jpeg','image/png','image/gif'],
 
     /*
      * Only allow files with specific file extension(s) to be uploaded
      */
-    'allowed_extensions' => [],
+    'allowed_extensions' => ['jpg','jpeg','png','gif'],
 
     /*
      * Only allow files matching specific aggregate type(s) to be uploaded
      */
-    'allowed_aggregate_types' => [],
+    'allowed_aggregate_types' => ['image'],
 
     /*
      * List of aggregate types recognized by the application

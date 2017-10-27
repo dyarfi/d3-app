@@ -448,11 +448,7 @@ class Banners extends BaseAdmin {
 			}
 		}
 		
-		//if($_POST) {
-			//var_dump($messages->messages());
-			//exit;
-		//}
-
+	
 		// Log it first
 		Activity::log(__FUNCTION__);
 

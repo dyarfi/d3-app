@@ -70,7 +70,7 @@ class PortfolioController extends BasePublic {
 	{
 
 		// Get data from database
-        $portfolio = Portfolio::where('slug',$slug)->with('client')->first();
+        $portfolio = Portfolio::where('slug',$slug)->with('client')->with('media')->first();
 	   	$data = ['portfolio'=>$portfolio,'portfolios'=>Portfolio::where('id','!=',$portfolio->id)->with('client')->with('tags')->get()];
 
 	   	// Return data and view

@@ -18,6 +18,14 @@
         <img src="{{ asset('uploads/'.$row->image) }}" class="img-responsive"/>
     </div>
     @endif
+    @if(sizeof($row->media) > 0)
+        <h4 class="red">Gallery</h4>    
+        <div class="row-fluid">
+        @foreach ($row->media as $media)
+            <span class="img-thumbnail"><img src="{{ url($media->getDiskPath()) }}" class="img-responsive"/></span>
+        @endforeach
+        </div>
+    @endif
     @if($row->description)
     <h4 class="red">Description</h4>
     <div class="row-fluid">

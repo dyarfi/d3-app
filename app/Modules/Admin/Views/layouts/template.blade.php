@@ -47,7 +47,7 @@
           <a href="{{ URL::to($admin_url) }}" class="navbar-brand">
             <small>
               <i class="fa fa-leaf"></i>
-              Apanel
+              {{ $admin_app }}
             </small>
           </a>
         </div>
@@ -242,7 +242,7 @@
     <?php /* LARAVEL Mix see webpack.mix.js for recompile the files */ ?>    
     <script src="{{ mix('themes/ace-admin/js/d3all.js') }}"></script>
     <!--[if lte IE 8]><script src="{{ asset('themes/ace-admin/js/excanvas.min.js') }}"></script><![endif]-->
-    
+    <script src="{{ asset('themes/ace-admin/js/dropzone.min.js') }}"></script>
 @if(isset($scripts)) @foreach($scripts as $script => $js) {!! Html::script($js, ['rel'=>$script]) !!} @endforeach @endif
 @if(isset($inlines))
     <!-- page specific plugin scripts and styles -->
@@ -588,5 +588,8 @@
 
 })
 </script>
+
+@stack('scripts')
+
 </body>
 </html>

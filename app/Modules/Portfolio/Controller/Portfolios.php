@@ -12,6 +12,8 @@ use App\Modules\Portfolio\Model\Portfolio,
 use Datatables;
 // User Activity Logs
 use Activity;
+// MediaAble Uploader
+use MediaUploader;
 
 class Portfolios extends BaseAdmin {
 
@@ -365,7 +367,7 @@ class Portfolios extends BaseAdmin {
 
 		// Filter all input
 		$input = array_filter(Input::all());
-
+		
 		// Set portfolio slug
 		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'_') : '';
 
@@ -397,11 +399,11 @@ class Portfolios extends BaseAdmin {
 				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'portfolio_');
 
 			}
-			/*
+			
 			// If user upload a file
-	        if (isset($input['albums']) && Input::hasFile('albums')) {
+	        if (isset($input['gallery']) && Input::hasFile('gallery')) {
 	        	// Loop the medias
-	            foreach($input['albums'] as $media){
+	            foreach($input['gallery'] as $media){
 	                // Set filename
 	                $medias[] = MediaUploader::fromSource($media)	                
 				    // whether to allow the 'other' aggregate type
@@ -412,11 +414,13 @@ class Portfolios extends BaseAdmin {
 	                ->setAllowedExtensions(['jpg', 'jpeg'])
 	                // only allow files of specific aggregate types
 	                ->setAllowedAggregateTypes(['image'])
+                	// place the file in a directory relative to the disk root
+                	->toDirectory('uploads')
 	                // Upload the medias
 	                ->upload();   
 	            }
 	        }
-			*/
+
 			// If validation message empty
 			if ($messages->isEmpty())
 			{
