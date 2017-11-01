@@ -53,6 +53,8 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     // Put other methods
     Route::get('portfolio/tags/all', ['as'=>'admin.portfolios.tags','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tags']);
     Route::get('portfolio/tags/{id}/show', ['as'=>'admin.portfolios.tags.show','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tagsShow']);
+    Route::get('portfolio/media/{id}/delete', ['as'=>'admin.portfolios.deleteMedia','uses'=>'App\Modules\Portfolio\Controller\Portfolios@deleteMedia']);
+
 
     // Portfolios DataTables routes
     Route::get('project/datatable', ['as'=>'admin.projects.datatable','uses'=>'App\Modules\Portfolio\Controller\Projects@datatable']);

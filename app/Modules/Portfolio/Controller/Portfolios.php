@@ -495,6 +495,36 @@ class Portfolios extends BaseAdmin {
 	}
 
 	/**
+	 * Delete media on the item.
+	 *
+	 * @param  int     $id
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	protected function deleteMedia() {
+
+		// Log it first
+		Activity::log(__FUNCTION__);
+
+		if (Input::get('check') !='') {
+
+		    $rows	= Input::get('check');
+
+		    foreach ($rows as $row) {
+				// Set id for load and change status
+				$this->portfolios->find($row)->update(['status' => Input::get('select_action')]);
+		    }
+
+		    // Set message
+		    return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Status Changed!');
+
+		} else {
+
+		    // Set message
+		    return Redirect::to(route('admin.portfolios.index'))->with('error','Data not Available!');
+		}
+	}
+
+	/**
 	 * Change the data status.
 	 *
 	 * @param  int     $id

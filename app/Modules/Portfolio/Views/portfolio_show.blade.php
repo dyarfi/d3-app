@@ -22,7 +22,10 @@
         <h4 class="red">Gallery</h4>    
         <div class="row-fluid">
         @foreach ($row->media as $media)
-            <span class="img-thumbnail"><img src="{{ url($media->getDiskPath()) }}" class="img-responsive"/></span>
+            <span class="img-thumbnail media-handler">
+                <img src="{{ url($media->getDiskPath()) }}" class="img-responsive"/>
+                <a href="#{{route('admin.portfolios.deleteMedia',$media->id)}}" class="btn btn-danger btn-xs media-delete" title="Delete Media"><span class="fa fa-times"></span></a>
+            </span>
         @endforeach
         </div>
     @endif
