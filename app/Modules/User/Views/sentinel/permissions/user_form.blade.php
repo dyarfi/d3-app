@@ -73,7 +73,7 @@
                                                     @else
                                                         <input type="checkbox" class="checked" id="access_permission[{{$access}}]" name="access_permission[{{$access}}]" value="false" {{ $readonly }} />
                                                     @endif
-                                                    <label for="access_permission[{{$access}}]">{{ ucwords(str_replace('_',' ',str_replace('.',' ',$access))) }}</label><br/>
+                                                    <label for="access_permission[{{$access}}]">{{ ucwords(str_replace('_',' ',str_replace(['.','_','-','@'],' ',$access))) }}</label><br/>
                                                 <?php
                                                 }
                                                 ?>

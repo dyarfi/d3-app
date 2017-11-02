@@ -59,7 +59,7 @@
                                             @else
                                                 <input type="checkbox" class="checked" id="role_permission[{{$_access}}]" name="role_permission[{{$_access}}]" value="false" {{ $readonly }} />
                                             @endif
-                                            <label for="role_permission[{{$_access}}]">{{ ucwords(str_replace('.',' ',$_access)) }}</label>
+                                            <label for="role_permission[{{$_access}}]">{{ ucwords(str_replace(['.','_','-','@'],' ',$_access)) }}</label>
                                         </div>
                                     </div>
                                 </li>

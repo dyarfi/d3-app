@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel, File;
+use Route, Request, Session, Sentinel, Redirect, Input, Validator, View, Image, Excel, File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -35,7 +35,7 @@ class Portfolios extends BaseAdmin {
 		parent::__construct();
 
 		// Load Http/Middleware/Admin controller
-		$this->middleware('auth.admin');
+		$this->middleware('auth.admin'/*,['except' => 'mediaRemove']*/);
 
 		// Load portfolios and get repository data from database
 		$this->portfolios 	= new Portfolio;
@@ -184,9 +184,14 @@ class Portfolios extends BaseAdmin {
 		// Set data to return
 	   	$data = ['row'=>$portfolio];
 
+		$scripts = [
+			'library'=>asset("themes/ace-admin/js/library.js")
+		];
+
 	   	// Return data and view
 	   	return $this->view('Portfolio::portfolio_show')
 		->data($data)
+		->scripts($scripts)
 		->title('View Portfolio');
 
 	}
@@ -310,6 +315,39 @@ class Portfolios extends BaseAdmin {
 
 		return Redirect::to(route('admin.portfolios.index','path=trashed'))->with('error', 'Portfolio Not Found!');
 	}
+
+	/**
+	 * Delete media on the item.
+	 *
+	 * @param  int     $id
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function mediaList() {
+		
+		//exit('foobar');
+		return response()->json(['message'=>$_POST['_token'],'status'=>200], 200);
+		// Log it first
+		Activity::log(__FUNCTION__);
+
+		if (Input::get('check') !='') {
+
+		    $rows	= Input::get('check');
+
+		    foreach ($rows as $row) {
+				// Set id for load and change status
+				$this->portfolios->find($row)->update(['status' => Input::get('select_action')]);
+		    }
+
+		    // Set message
+		    return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Status Changed!');
+
+		} else {
+
+		    // Set message
+		    return Redirect::to(route('admin.portfolios.index'))->with('error','Data not Available!');
+		}
+	}
+
 
 	/**
 	 * Shows the form.
@@ -492,36 +530,6 @@ class Portfolios extends BaseAdmin {
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);
-	}
-
-	/**
-	 * Delete media on the item.
-	 *
-	 * @param  int     $id
-	 * @return \Illuminate\Http\RedirectResponse
-	 */
-	protected function deleteMedia() {
-
-		// Log it first
-		Activity::log(__FUNCTION__);
-
-		if (Input::get('check') !='') {
-
-		    $rows	= Input::get('check');
-
-		    foreach ($rows as $row) {
-				// Set id for load and change status
-				$this->portfolios->find($row)->update(['status' => Input::get('select_action')]);
-		    }
-
-		    // Set message
-		    return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Status Changed!');
-
-		} else {
-
-		    // Set message
-		    return Redirect::to(route('admin.portfolios.index'))->with('error','Data not Available!');
-		}
 	}
 
 	/**
