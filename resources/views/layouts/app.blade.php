@@ -10,6 +10,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -36,7 +38,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li>&nbsp; </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -48,7 +50,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->email }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -71,6 +73,43 @@
             </div>
         </nav>
 
+        @if ($errors->any())
+            <div class="space-6"></div>
+            <div class="col-lg-12">
+              <div class="alert alert-danger alert-block" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-minus-square"></i></button>
+                <!--strong>Error</strong-->
+                @if ($message = $errors->first(0, ':message'))
+                {{ $message }}
+                @else
+                Please check the form below for errors
+                @endif
+              </div>
+            </div>
+            <div class="space-6"></div>
+        @endif
+
+        @if ($message = Session::get('success'))
+          <div class="space-6"></div>
+            <div class="col-lg-12">
+              <div class="alert alert-success alert-block" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-minus-square"></i></button>
+                <strong>Success :</strong> {{ $message }}
+              </div>
+            </div>
+          <div class="space-6"></div>
+          @endif
+
+          @if ($message = Session::get('error'))
+          <div class="space-6"></div>
+            <div class="col-lg-12">
+              <div class="alert alert-warning alert-block" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-minus-square"></i></button>
+                <strong>Error :</strong> {{ $message }}
+              </div>
+            </div>
+          <div class="space-6"></div>
+        @endif
         @yield('content')
     </div>
 

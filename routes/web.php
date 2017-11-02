@@ -26,6 +26,11 @@ Route::get('/', [
     'uses' => 'HomeController@index'
 ]);
 
+Route::get('/dashboard', [
+    'as' => 'user.dashboard',
+    'uses' => 'UsersController@dashboard'
+]);
+
 Route::get('page', [
     'as' => 'page',
     'uses' => 'PagesController@index'
@@ -131,113 +136,6 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
-/*
-|--------------------------------------------------------------------------
-| Registration & Activation
-|--------------------------------------------------------------------------
-*/
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-
-Route::get('activate/token/{token}', 'Auth\ActivateController@activate');
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('activate', 'Auth\ActivateController@showActivate');
-    Route::get('activate/send-token', 'Auth\ActivateController@sendToken');
-});
-
-/*
-|--------------------------------------------------------------------------
-| Authenticated Routes
-|--------------------------------------------------------------------------
-*/
-Route::group(['middleware' => ['auth', 'active']], function () {
-
-    /*
-    |--------------------------------------------------------------------------
-    | General
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/users/switch-back', 'Admin\UserController@switchUserBack');
-
-    /*
-    |--------------------------------------------------------------------------
-    | User
-    |--------------------------------------------------------------------------
-    */
-
-    Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
-        Route::get('settings', 'SettingsController@settings');
-        Route::post('settings', 'SettingsController@update');
-        Route::get('password', 'PasswordController@password');
-        Route::post('password', 'PasswordController@update');
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Dashboard
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/dashboard', 'PagesController@dashboard');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Team Routes
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('team/{name}', 'TeamController@showByName');
-    Route::resource('teams', 'TeamController', ['except' => ['show']]);
-    Route::post('teams/search', 'TeamController@search');
-    Route::post('teams/{id}/invite', 'TeamController@inviteMember');
-    Route::get('teams/{id}/remove/{userId}', 'TeamController@removeMember');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Admin
-    |--------------------------------------------------------------------------
-    */
-
-    Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
-
-        /*
-        |--------------------------------------------------------------------------
-        | Features
-        |--------------------------------------------------------------------------
-        */
-        Route::resource('features', 'FeatureController', [
-            'except' => [
-                'show',
-            ],
-            'as' => 'admin',
-        ]);
-        Route::post('features/search', 'FeatureController@search');
-        Route::get('dashboard', 'DashboardController@index');
-
-        /*
-        |--------------------------------------------------------------------------
-        | Users
-        |--------------------------------------------------------------------------
-        */
-        Route::resource('users', 'UserController', ['except' => ['create', 'show']]);
-        Route::post('users/search', 'UserController@search');
-        Route::get('users/search', 'UserController@index');
-        Route::get('users/invite', 'UserController@getInvite');
-        Route::get('users/switch/{id}', 'UserController@switchToUser');
-        Route::post('users/invite', 'UserController@postInvite');
-
-        /*
-        |--------------------------------------------------------------------------
-        | Roles
-        |--------------------------------------------------------------------------
-        */
-        Route::resource('roles', 'RoleController', ['except' => ['show']]);
-        Route::post('roles/search', 'RoleController@search');
-        Route::get('roles/search', 'RoleController@index');
-    });
-});
 
 
 // User related routes...

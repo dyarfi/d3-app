@@ -9,6 +9,12 @@ use Auth;
 use Route;
 use Session;
 
+// use GuzzleHttp\Exception\GuzzleException;
+// use GuzzleHttp\Client;
+// use GuzzleHttp\HandlerStack;
+// use GuzzleHttp\Subscriber\Oauth\Oauth1;
+
+use App\Tweet;
 //use Socialite;
 
 class UsersController extends BasePublic {
@@ -42,6 +48,32 @@ class UsersController extends BasePublic {
 
 	   	// Return data and view
 	   	return $this->view('users.index')->data($data)->title('User List - Laravel Users');
+	}
+
+	/**
+	 * Display user dashboard of the website.
+	 *
+	 * @return Response
+	 */
+	public function dashboard() {
+
+	 	if (Auth::check()) {
+	        $tweets = Tweet::orderBy('created_at','desc')->paginate(5);
+	    } else {
+	        $tweets = Tweet::where('approved',1)->orderBy('created_at','desc')->take(5)->get();
+	    }
+
+		// Set return data
+	   	$user = Auth::user();
+
+	   	// Set data to return
+	   	$data = ['user'=>$user,'tweets' => $tweets];
+
+	   	// Set different layout in the template
+	   	$this->layout = 'layouts.app';
+
+	   	// Return data and view
+	   	return $this->view('users.profile')->data($data)->title('User Profile - Laravel Users');
 	}
 
 	/**
@@ -167,6 +199,26 @@ class UsersController extends BasePublic {
 	    Session::flash('flash_message', 'User successfully deleted!');
 
 	    return redirect()->route('Users.index');
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function searchBoard($id, $setup)
+	{
+	    
+
+
+	    //$User = User::findOrFail($id);
+
+	    //$User->delete();
+
+	    //Session::flash('flash_message', 'User successfully deleted!');
+
+	    //return redirect()->route('Users.index');
 	}
 
 }

@@ -56,7 +56,7 @@ mix.scripts([
 //mix.js('public/js/functions.js','public/js/d3functions.js').version();
 
 mix.browserSync({
-    proxy:'d3-app.dev',
+    proxy:'autowapps.dev',
     // Open the site in Chrome & Firefox
     browser: ["google chrome", "firefox"],
     // Don't show any notifications in the browser.

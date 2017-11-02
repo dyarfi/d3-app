@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Auto Web Apps'),
+    'name' => env('APP_NAME', 'Web Apps'),
 
     /*
     |--------------------------------------------------------------------------
@@ -105,7 +105,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', 'RandStrEncLaravelApanelD3'),
+	'key' => env('APP_KEY', 'RandStrEncLaravelApanelAw'),
 	//'cipher' => MCRYPT_RIJNDAEL_128,
 	'cipher' => 'AES-256-CBC',
 

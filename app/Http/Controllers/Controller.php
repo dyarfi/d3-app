@@ -15,7 +15,8 @@ abstract class Controller extends BaseController {
 	* Master layout
 	* @var string
 	*/
-		protected $layout = 'layouts.master';
+		//protected $layout = 'layouts.master';
+		protected $layout = 'layouts.app';
 
 	 /**
 	* View to render
