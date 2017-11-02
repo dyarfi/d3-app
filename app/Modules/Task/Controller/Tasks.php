@@ -226,7 +226,14 @@ class Tasks extends BaseAdmin {
 		{
 			$row = $this->tasks;
 		}
-		$scripts = ['library' => asset('themes/ace-admin/js/library.js')];
+		
+		// Load needed javascripts
+		$scripts = [
+			'bootstrap-tag'=>asset("themes/ace-admin/js/bootstrap-tag.min.js"),
+			'bootstrap-datepicker'=>asset('themes/ace-admin/js/bootstrap-datepicker.min.js'),
+			'ckeditor'=>asset('themes/ace-admin/plugins/ckeditor/ckeditor.js'),
+			'library'=>asset('themes/ace-admin/js/library.js')
+		];
 
 		return $this->view('Task::form')->data(compact('mode', 'row'))->scripts($scripts)->title('Task '.$mode);
 	}

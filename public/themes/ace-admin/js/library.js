@@ -299,6 +299,39 @@ $(document).ready(function() {
         location.href = base_ADM + '/permission/'+$(this).val()+'?access=user';
     });
 
+    $('.media-handler a.media-delete').click(function(){
+        var link = $(this).data('url');
+        var media = $(this).data('id');
+        var token = $('meta[name="csrf-token"]').attr('content');
+        if(link) { 
+            $.ajax({
+                type: "POST",
+                url: link,
+                dataType: "JSON",
+                headers: {
+                    'X-CSRF-TOKEN': token
+                },
+                data:{                     
+                    "_method": 'POST',
+                    "_token": token,
+                    'media_id':media 
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    bootbox.alert(errorThrown, function(result) {
+                        //if (result === null) {
+                        //} else {
+                        //}
+                    });
+                }
+            }).done(function(message) {
+                if (message.status == 200) {
+                    bootbox.alert(message.message, function(result) {});
+                    //location.reload();
+                }
+            });
+        }
+    });
+
     // Set and find form Slug input from Name input
     if ($('input[id="name"], input[id="title"]').size() > 0 && $('input[id="slug"]').size() > 0) {
       // Detects if user type on the input

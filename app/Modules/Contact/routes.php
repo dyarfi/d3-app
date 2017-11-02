@@ -20,20 +20,20 @@
 Route::group(['prefix' => config('setting.admin_url')], function()
 {
     // Portfolios DataTables routes
-    Route::get('contact/datatable', ['as'=>'admin.contacts.datatable','uses'=>'App\Modules\Contact\Controller\Contacts@datatable']);
+    Route::get('contact/datatable', 'App\Modules\Contact\Controller\Contacts@datatable')->name('admin.contacts.datatable');
 
     // Contacts Controller routes
-    Route::get('contact', ['as'=>'admin.contacts.index','uses'=>'App\Modules\Contact\Controller\Contacts@index']);
-    Route::get('contact/export', ['as'=>'admin.contacts.export','uses'=>'App\Modules\Contact\Controller\Contacts@export']);
-    Route::get('contact/create', ['as'=>'admin.contacts.create','uses'=>'App\Modules\Contact\Controller\Contacts@create']);
-    Route::post('contact/create', ['as'=>'admin.contacts.store','uses'=>'App\Modules\Contact\Controller\Contacts@store']);
-    Route::post('contact/change', ['as'=>'admin.contacts.change','uses'=>'App\Modules\Contact\Controller\Contacts@change']);
+    Route::get('contact', 'App\Modules\Contact\Controller\Contacts@index')->name('admin.contacts.index');
+    Route::get('contact/export', 'App\Modules\Contact\Controller\Contacts@export')->name('admin.contacts.export');
+    Route::get('contact/create', 'App\Modules\Contact\Controller\Contacts@create')->name('admin.contacts.create');
+    Route::post('contact/create', 'App\Modules\Contact\Controller\Contacts@store')->name('admin.contacts.store');
+    Route::post('contact/change', 'App\Modules\Contact\Controller\Contacts@change')->name('admin.contacts.change');
     // Put the method with the parameter below the static method
-    Route::get('contact/{id}/show', ['as'=>'admin.contacts.show', 'uses'=>'App\Modules\Contact\Controller\Contacts@show']);
-    Route::get('contact/{id}', ['as'=>'admin.contacts.edit','uses'=>'App\Modules\Contact\Controller\Contacts@edit']);
-    Route::post('contact/{id}', ['as'=>'admin.contacts.update','uses'=>'App\Modules\Contact\Controller\Contacts@update']);
-    Route::get('contact/{id}/trash', ['as'=>'admin.contacts.trash','uses'=>'App\Modules\Contact\Controller\Contacts@trash']);
-    Route::get('contact/{id}/restored', ['as'=>'admin.contacts.restored','uses'=>'App\Modules\Contact\Controller\Contacts@restored']);
-    Route::get('contact/{id}/delete', ['as'=>'admin.contacts.delete','uses'=>'App\Modules\Contact\Controller\Contacts@delete']);
+    Route::get('contact/{id}/show', 'App\Modules\Contact\Controller\Contacts@show')->name('admin.contacts.show');
+    Route::get('contact/{id}', 'App\Modules\Contact\Controller\Contacts@edit')->name('admin.contacts.edit');
+    Route::post('contact/{id}', 'App\Modules\Contact\Controller\Contacts@update')->name('admin.contacts.update');
+    Route::get('contact/{id}/trash', 'App\Modules\Contact\Controller\Contacts@trash')->name('admin.contacts.trash');
+    Route::get('contact/{id}/restored', 'App\Modules\Contact\Controller\Contacts@restored')->name('admin.contacts.restored');
+    Route::get('contact/{id}/delete', 'App\Modules\Contact\Controller\Contacts@delete')->name('admin.contacts.delete');
 
 });

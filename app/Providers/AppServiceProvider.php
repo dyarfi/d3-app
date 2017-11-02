@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider {
 		view()->share('admin_app', $dbset->slug('site-name') ? $dbset->slug('site-name')->value : $setting['admin_app']);
 
 		// Share a var with all views : $admin_url
-		view()->share('company_name', $setting['company_name']);
+		view()->share('company_name',  $dbset->slug('company-name') ? $dbset->slug('company-name')->value : $setting['company_name']);
 
 		// Returning the current class name and action
 		app('view')->composer('Admin::layouts.template', function($view)

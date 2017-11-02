@@ -18,6 +18,17 @@
         <img src="{{ asset('uploads/'.$row->image) }}" class="img-responsive"/>
     </div>
     @endif
+    @if(sizeof($row->media) > 0)
+        <h4 class="red">Gallery</h4>    
+        <div class="row-fluid">
+        @foreach ($row->media as $media)
+            <span class="img-thumbnail media-handler">
+                <img src="{{ url($media->getDiskPath()) }}" class="img-responsive"/>
+                <a href="#" class="btn btn-danger btn-xs media-delete" title="Delete Media" data-url="{{route('admin.portfolios.medialist',$media->id)}}" data-id="{{$media->id}}"><span class="fa fa-times"></span></a>
+            </span>
+        @endforeach
+        </div>
+    @endif
     @if($row->description)
     <h4 class="red">Description</h4>
     <div class="row-fluid">

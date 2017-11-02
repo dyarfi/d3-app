@@ -232,7 +232,7 @@ return [
 								// Action for first index
 								'action' => ['portfolios.index'],
 								// Controller method list
-								'method' => ['portfolios.index','portfolios.edit','portfolios.update','portfolios.change','portfolios.create','portfolios.store','portfolios.trash','portfolios.delete','portfolios.restored','portfolios.show','portfolios.tags','portfolios.tags.show','portfolios.datatable','portfolios.export']
+								'method' => ['portfolios.index','portfolios.edit','portfolios.update','portfolios.change','portfolios.create','portfolios.store','portfolios.trash','portfolios.delete','portfolios.restored','portfolios.show','portfolios.tags','portfolios.tags.show','portfolios.datatable','portfolios.export','portfolios.medialist']
 							]
 						]
 					]

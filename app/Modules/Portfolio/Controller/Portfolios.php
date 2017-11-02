@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Portfolio\Controller;
 
 // Load Laravel classes
-use Route, Request, Session, Redirect, Input, Validator, View, Image, Excel, File;
+use Route, Request, Session, Sentinel, Redirect, Input, Validator, View, Image, Excel, File;
 // Load main base controller
 use App\Modules\BaseAdmin;
 // Load main models
@@ -12,6 +12,8 @@ use App\Modules\Portfolio\Model\Portfolio,
 use Datatables;
 // User Activity Logs
 use Activity;
+// MediaAble Uploader
+use MediaUploader;
 
 class Portfolios extends BaseAdmin {
 
@@ -33,7 +35,7 @@ class Portfolios extends BaseAdmin {
 		parent::__construct();
 
 		// Load Http/Middleware/Admin controller
-		$this->middleware('auth.admin');
+		$this->middleware('auth.admin'/*,['except' => 'mediaRemove']*/);
 
 		// Load portfolios and get repository data from database
 		$this->portfolios 	= new Portfolio;
@@ -182,9 +184,14 @@ class Portfolios extends BaseAdmin {
 		// Set data to return
 	   	$data = ['row'=>$portfolio];
 
+		$scripts = [
+			'library'=>asset("themes/ace-admin/js/library.js")
+		];
+
 	   	// Return data and view
 	   	return $this->view('Portfolio::portfolio_show')
 		->data($data)
+		->scripts($scripts)
 		->title('View Portfolio');
 
 	}
@@ -310,6 +317,39 @@ class Portfolios extends BaseAdmin {
 	}
 
 	/**
+	 * Delete media on the item.
+	 *
+	 * @param  int     $id
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function mediaList() {
+		
+		//exit('foobar');
+		return response()->json(['message'=>$_POST['_token'],'status'=>200], 200);
+		// Log it first
+		Activity::log(__FUNCTION__);
+
+		if (Input::get('check') !='') {
+
+		    $rows	= Input::get('check');
+
+		    foreach ($rows as $row) {
+				// Set id for load and change status
+				$this->portfolios->find($row)->update(['status' => Input::get('select_action')]);
+		    }
+
+		    // Set message
+		    return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Status Changed!');
+
+		} else {
+
+		    // Set message
+		    return Redirect::to(route('admin.portfolios.index'))->with('error','Data not Available!');
+		}
+	}
+
+
+	/**
 	 * Shows the form.
 	 *
 	 * @param  string  $mode
@@ -365,7 +405,7 @@ class Portfolios extends BaseAdmin {
 
 		// Filter all input
 		$input = array_filter(Input::all());
-
+		
 		// Set portfolio slug
 		$input['slug'] = isset($input['name']) ? str_slug($input['name'],'_') : '';
 
@@ -397,11 +437,11 @@ class Portfolios extends BaseAdmin {
 				$filename = $this->imageUploadToDb($input['image'], 'uploads', 'portfolio_');
 
 			}
-			/*
+			
 			// If user upload a file
-	        if (isset($input['albums']) && Input::hasFile('albums')) {
+	        if (isset($input['gallery']) && Input::hasFile('gallery')) {
 	        	// Loop the medias
-	            foreach($input['albums'] as $media){
+	            foreach($input['gallery'] as $media){
 	                // Set filename
 	                $medias[] = MediaUploader::fromSource($media)	                
 				    // whether to allow the 'other' aggregate type
@@ -412,11 +452,13 @@ class Portfolios extends BaseAdmin {
 	                ->setAllowedExtensions(['jpg', 'jpeg'])
 	                // only allow files of specific aggregate types
 	                ->setAllowedAggregateTypes(['image'])
+                	// place the file in a directory relative to the disk root
+                	->toDirectory('uploads')
 	                // Upload the medias
 	                ->upload();   
 	            }
 	        }
-			*/
+
 			// If validation message empty
 			if ($messages->isEmpty())
 			{

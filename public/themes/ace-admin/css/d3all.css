@@ -43,3 +43,12 @@ html{min-height:100%;position:relative}body{background-color:#e4e6e9;min-height:
     width: 100%;
     z-index: 100;
 }
+span.media-handler {
+    position: relative;
+}
+span.media-handler a.media-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4px 4px 0 0;
+}

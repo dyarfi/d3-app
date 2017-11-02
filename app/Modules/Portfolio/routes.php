@@ -17,8 +17,9 @@
  * Administrator panel routes
  *
  */
-Route::group(['prefix' => config('setting.admin_url')], function()
+Route::prefix(config('setting.admin_url'))->group( function()
 {
+    
     // Portfolios DataTables routes
     Route::get('client/datatable', ['as'=>'admin.clients.datatable','uses'=>'App\Modules\Portfolio\Controller\Clients@datatable']);
     // Clients Controller routes
@@ -34,41 +35,44 @@ Route::group(['prefix' => config('setting.admin_url')], function()
     Route::get('client/{id}/trash', ['as'=>'admin.clients.trash','uses'=>'App\Modules\Portfolio\Controller\Clients@trash']);
     Route::get('client/{id}/restored', ['as'=>'admin.clients.restored','uses'=>'App\Modules\Portfolio\Controller\Clients@restored']);
     Route::get('client/{id}/delete', ['as'=>'admin.clients.delete','uses'=>'App\Modules\Portfolio\Controller\Clients@delete']);
-
+    
     // Portfolios DataTables routes
-    Route::get('portfolio/datatable', ['as'=>'admin.portfolios.datatable','uses'=>'App\Modules\Portfolio\Controller\Portfolios@datatable']);
+    Route::get('portfolio/datatable', 'App\Modules\Portfolio\Controller\Portfolios@datatable')->name('admin.portfolios.datatable');
     // Portfolios Main Controller routes
-    Route::get('portfolio', ['as'=>'admin.portfolios.index','uses'=>'App\Modules\Portfolio\Controller\Portfolios@index']);
-    Route::get('portfolio/export', ['as'=>'admin.portfolios.export','uses'=>'App\Modules\Portfolio\Controller\Portfolios@export']);
-    Route::get('portfolio/create', ['as'=>'admin.portfolios.create','uses'=>'App\Modules\Portfolio\Controller\Portfolios@create']);
-    Route::post('portfolio/create', ['as'=>'admin.portfolios.store','uses'=>'App\Modules\Portfolio\Controller\Portfolios@store']);
-    Route::post('portfolio/change', ['as'=>'admin.portfolios.change','uses'=>'App\Modules\Portfolio\Controller\Portfolios@change']);
+    Route::get('portfolio', 'App\Modules\Portfolio\Controller\Portfolios@index')->name('admin.portfolios.index');
+
+    Route::get('portfolio/export', 'App\Modules\Portfolio\Controller\Portfolios@export')->name('admin.portfolios.export');
+    Route::get('portfolio/create', 'App\Modules\Portfolio\Controller\Portfolios@create')->name('admin.portfolios.create');
+    Route::post('portfolio/create', 'App\Modules\Portfolio\Controller\Portfolios@store')->name('admin.portfolios.store');
+    Route::post('portfolio/change', 'App\Modules\Portfolio\Controller\Portfolios@change')->name('admin.portfolios.change');
+
     // Put the method with the parameter below the static method
-    Route::get('portfolio/{id}/show', ['as'=>'admin.portfolios.show', 'uses'=>'App\Modules\Portfolio\Controller\Portfolios@show']);
-    Route::get('portfolio/{id}', ['as'=>'admin.portfolios.edit','uses'=>'App\Modules\Portfolio\Controller\Portfolios@edit']);
-    Route::post('portfolio/{id}', ['as'=>'admin.portfolios.update','uses'=>'App\Modules\Portfolio\Controller\Portfolios@update']);
-    Route::get('portfolio/{id}/trash', ['as'=>'admin.portfolios.trash','uses'=>'App\Modules\Portfolio\Controller\Portfolios@trash']);
-    Route::get('portfolio/{id}/restored', ['as'=>'admin.portfolios.restored','uses'=>'App\Modules\Portfolio\Controller\Portfolios@restored']);
-    Route::get('portfolio/{id}/delete', ['as'=>'admin.portfolios.delete','uses'=>'App\Modules\Portfolio\Controller\Portfolios@delete']);
+    Route::get('portfolio/{id}/show', 'App\Modules\Portfolio\Controller\Portfolios@show')->name('admin.portfolios.show');
+    Route::get('portfolio/{id}', 'App\Modules\Portfolio\Controller\Portfolios@edit')->name('admin.portfolios.edit');
+    Route::post('portfolio/{id}', 'App\Modules\Portfolio\Controller\Portfolios@update')->name('admin.portfolios.update');
+    Route::get('portfolio/{id}/trash', 'App\Modules\Portfolio\Controller\Portfolios@trash')->name('admin.portfolios.trash');
+    Route::get('portfolio/{id}/restored', 'App\Modules\Portfolio\Controller\Portfolios@restored')->name('admin.portfolios.restored');
+    Route::get('portfolio/{id}/delete', 'App\Modules\Portfolio\Controller\Portfolios@delete')->name('admin.portfolios.delete');
     // Put other methods
-    Route::get('portfolio/tags/all', ['as'=>'admin.portfolios.tags','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tags']);
-    Route::get('portfolio/tags/{id}/show', ['as'=>'admin.portfolios.tags.show','uses'=>'App\Modules\Portfolio\Controller\Portfolios@tagsShow']);
-
+    Route::get('portfolio/tags/all', 'App\Modules\Portfolio\Controller\Portfolios@tags')->name('admin.portfolios.tags');
+    Route::get('portfolio/tags/{id}/show', 'App\Modules\Portfolio\Controller\Portfolios@tagsShow')->name('admin.portfolios.tags.show');
+    Route::post('portfolio/media:list/{id}', 'App\Modules\Portfolio\Controller\Portfolios@mediaList')->name('admin.portfolios.medialist');
+        
     // Portfolios DataTables routes
-    Route::get('project/datatable', ['as'=>'admin.projects.datatable','uses'=>'App\Modules\Portfolio\Controller\Projects@datatable']);
+    Route::get('project/datatable', 'App\Modules\Portfolio\Controller\Projects@datatable')->name('admin.projects.datatable');
     // Portfolios Main Controller routes
-    Route::get('project', ['as'=>'admin.projects.index','uses'=>'App\Modules\Portfolio\Controller\Projects@index']);
-    Route::get('project/export', ['as'=>'admin.projects.export','uses'=>'App\Modules\Portfolio\Controller\Projects@export']);
-    Route::get('project/create', ['as'=>'admin.projects.create','uses'=>'App\Modules\Portfolio\Controller\Projects@create']);
-    Route::post('project/create', ['as'=>'admin.projects.store','uses'=>'App\Modules\Portfolio\Controller\Projects@store']);
-    Route::post('project/change', ['as'=>'admin.projects.change','uses'=>'App\Modules\Portfolio\Controller\Projects@change']);
+    Route::get('project', 'App\Modules\Portfolio\Controller\Projects@index')->name('admin.projects.index');
+    Route::get('project/export', 'App\Modules\Portfolio\Controller\Projects@export')->name('admin.projects.export');
+    Route::get('project/create', 'App\Modules\Portfolio\Controller\Projects@create')->name('admin.projects.create');
+    Route::post('project/create', 'App\Modules\Portfolio\Controller\Projects@store')->name('admin.projects.store');
+    Route::post('project/change', 'App\Modules\Portfolio\Controller\Projects@change')->name('admin.projects.change');
     // Put the method with the parameter below the static method
-    Route::get('project/{id}/show', ['as'=>'admin.projects.show', 'uses'=>'App\Modules\Portfolio\Controller\Projects@show']);
-    Route::get('project/{id}', ['as'=>'admin.projects.edit','uses'=>'App\Modules\Portfolio\Controller\Projects@edit']);
-    Route::post('project/{id}', ['as'=>'admin.projects.update','uses'=>'App\Modules\Portfolio\Controller\Projects@update']);
-    Route::get('project/{id}/trash', ['as'=>'admin.projects.trash','uses'=>'App\Modules\Portfolio\Controller\Projects@trash']);
-    Route::get('project/{id}/restored', ['as'=>'admin.projects.restored','uses'=>'App\Modules\Portfolio\Controller\Projects@restored']);
-    Route::get('project/{id}/delete', ['as'=>'admin.projects.delete','uses'=>'App\Modules\Portfolio\Controller\Projects@delete']);
+    Route::get('project/{id}/show', 'App\Modules\Portfolio\Controller\Projects@show')->name('admin.projects.show');
+    Route::get('project/{id}', 'App\Modules\Portfolio\Controller\Projects@edit')->name('admin.projects.edit');
+    Route::post('project/{id}', 'App\Modules\Portfolio\Controller\Projects@update')->name('admin.projects.update');
+    Route::get('project/{id}/trash','App\Modules\Portfolio\Controller\Projects@trash')->name('admin.projects.trash');
+    Route::get('project/{id}/restored', 'App\Modules\Portfolio\Controller\Projects@restored')->name('admin.projects.restored');
+    Route::get('project/{id}/delete', 'App\Modules\Portfolio\Controller\Projects@delete')->name('admin.projects.delete');
 
 
 });
