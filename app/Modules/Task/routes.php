@@ -17,19 +17,19 @@
  * Administrator panel routes
  *
  */
-Route::group(['prefix' => config('setting.admin_url')], function()
-{        
+Route::prefix(config('setting.admin_url'))->group( function()
+{
     // Tasks Controller routes
-    Route::get('task', ['as'=>'admin.tasks.index','uses'=>'App\Modules\Task\Controller\Tasks@index']);
-    Route::get('task/create', ['as'=>'admin.tasks.create','uses'=>'App\Modules\Task\Controller\Tasks@create']);
-    Route::post('task/create', ['as'=>'admin.tasks.store','uses'=>'App\Modules\Task\Controller\Tasks@store']);
-    Route::post('task/change', ['as'=>'admin.tasks.change','uses'=>'App\Modules\Task\Controller\Tasks@change']);    
+    Route::get('task', 'App\Modules\Task\Controller\Tasks@index')->name('admin.tasks.index');
+    Route::get('task/create', 'App\Modules\Task\Controller\Tasks@create')->name('admin.tasks.create');
+    Route::post('task/create', 'App\Modules\Task\Controller\Tasks@store')->name('admin.tasks.store');
+    Route::post('task/change', 'App\Modules\Task\Controller\Tasks@change')->name('admin.tasks.change');
     // Put the method with the parameter below the static method         
-    Route::get('task/{id}/show', ['as'=>'admin.tasks.show', 'uses'=>'App\Modules\Task\Controller\Tasks@show']);
-    Route::get('task/{id}', ['as'=>'admin.tasks.edit','uses'=>'App\Modules\Task\Controller\Tasks@edit']);
-    Route::post('task/{id}', ['as'=>'admin.tasks.update','uses'=>'App\Modules\Task\Controller\Tasks@update']);
-    Route::get('task/{id}/trash', ['as'=>'admin.tasks.trash','uses'=>'App\Modules\Task\Controller\Tasks@trash']);    
-    Route::get('task/{id}/restored', ['as'=>'admin.tasks.restored','uses'=>'App\Modules\Task\Controller\Tasks@restored']);
-    Route::get('task/{id}/delete', ['as'=>'admin.tasks.delete','uses'=>'App\Modules\Task\Controller\Tasks@delete']);
+    Route::get('task/{id}/show', 'App\Modules\Task\Controller\Tasks@show')->name('admin.tasks.show');
+    Route::get('task/{id}', 'App\Modules\Task\Controller\Tasks@edit')->name('admin.tasks.edit');
+    Route::post('task/{id}', 'App\Modules\Task\Controller\Tasks@update')->name('admin.tasks.update');
+    Route::get('task/{id}/trash', 'App\Modules\Task\Controller\Tasks@trash')->name('admin.tasks.trash');
+    Route::get('task/{id}/restored', 'App\Modules\Task\Controller\Tasks@restored')->name('admin.tasks.restored');
+    Route::get('task/{id}/delete', 'App\Modules\Task\Controller\Tasks@delete')->name('admin.tasks.delete');
 
 });

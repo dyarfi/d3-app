@@ -322,30 +322,29 @@ class Portfolios extends BaseAdmin {
 	 * @param  int     $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function mediaList() {
+	public function mediaList($id) {
 		
-		//exit('foobar');
-		return response()->json(['message'=>$_POST['_token'],'status'=>200], 200);
 		// Log it first
 		Activity::log(__FUNCTION__);
 
-		if (Input::get('check') !='') {
+		if (Input::get('media_id') !='' && $id) {
 
-		    $rows	= Input::get('check');
-
-		    foreach ($rows as $row) {
-				// Set id for load and change status
-				$this->portfolios->find($row)->update(['status' => Input::get('select_action')]);
-		    }
+	    	// Set id for load and change status
+	    	// Detach a single media from the portfolio
+			$message = $this->portfolios->find($id)->media()->detach(Input::get('media_id'));		    
 
 		    // Set message
-		    return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Status Changed!');
+		    //return Redirect::to(route('admin.portfolios.index'))->with('success', 'Portfolio Status Changed!');
 
 		} else {
 
+			$message = 0;
 		    // Set message
-		    return Redirect::to(route('admin.portfolios.index'))->with('error','Data not Available!');
+		    //return Redirect::to(route('admin.portfolios.index'))->with('error','Data not Available!');
 		}
+
+		return response()->json(['message'=>$message == 1 ? 'Media Removed' : 'Cannot Remove','status'=>200], 200);
+		
 	}
 
 

@@ -17,33 +17,33 @@
  * Administrator panel routes
  *
  */
-Route::group(['prefix' => config('setting.admin_url')], function()
+Route::prefix(config('setting.admin_url'))->group( function()
 {
    
     // Pages Controller routes
-    Route::get('page', ['as'=>'admin.pages.index','uses'=>'App\Modules\Page\Controller\Pages@index']);
-    Route::get('page/create', ['as'=>'admin.pages.create','uses'=>'App\Modules\Page\Controller\Pages@create']);
-    Route::post('page/create', ['as'=>'admin.pages.store','uses'=>'App\Modules\Page\Controller\Pages@store']);
-    Route::post('page/change', ['as'=>'admin.pages.change','uses'=>'App\Modules\Page\Controller\Pages@change']);    
+    Route::get('page', 'App\Modules\Page\Controller\Pages@index')->name('admin.pages.index');
+    Route::get('page/create', 'App\Modules\Page\Controller\Pages@create')->name('admin.pages.create');
+    Route::post('page/create', 'App\Modules\Page\Controller\Pages@store')->name('admin.pages.store');
+    Route::post('page/change', 'App\Modules\Page\Controller\Pages@change')->name('admin.pages.change'); 
     // Put the method with the parameter below the static method     
-    Route::get('page/{id}/show', ['as'=>'admin.pages.show', 'uses'=>'App\Modules\Page\Controller\Pages@show']);
-    Route::get('page/{id}', ['as'=>'admin.pages.edit','uses'=>'App\Modules\Page\Controller\Pages@edit']);
-    Route::post('page/{id}', ['as'=>'admin.pages.update','uses'=>'App\Modules\Page\Controller\Pages@update']);
-    Route::get('page/{id}/trash', ['as'=>'admin.pages.trash','uses'=>'App\Modules\Page\Controller\Pages@trash']);    
-    Route::get('page/{id}/restored', ['as'=>'admin.pages.restored','uses'=>'App\Modules\Page\Controller\Pages@restored']);
-    Route::get('page/{id}/delete', ['as'=>'admin.pages.delete','uses'=>'App\Modules\Page\Controller\Pages@delete']);
+    Route::get('page/{id}/show', 'App\Modules\Page\Controller\Pages@show')->name('admin.pages.show');
+    Route::get('page/{id}', 'App\Modules\Page\Controller\Pages@edit')->name('admin.pages.edit');
+    Route::post('page/{id}', 'App\Modules\Page\Controller\Pages@update')->name('admin.pages.update');
+    Route::get('page/{id}/trash', 'App\Modules\Page\Controller\Pages@trash')->name('admin.pages.trash');
+    Route::get('page/{id}/restored', 'App\Modules\Page\Controller\Pages@restored')->name('admin.pages.restored');
+    Route::get('page/{id}/delete', 'App\Modules\Page\Controller\Pages@delete')->name('admin.pages.delete');
 
     // Menus Controller routes
-    Route::get('menu', ['as'=>'admin.menus.index','uses'=>'App\Modules\Page\Controller\Menus@index']);
-    Route::get('menu/create', ['as'=>'admin.menus.create','uses'=>'App\Modules\Page\Controller\Menus@create']);
-    Route::post('menu/create', ['as'=>'admin.menus.store','uses'=>'App\Modules\Page\Controller\Menus@store']);
-    Route::post('menu/change', ['as'=>'admin.menus.change','uses'=>'App\Modules\Page\Controller\Menus@change']);
+    Route::get('menu', 'App\Modules\Page\Controller\Menus@index')->name('admin.menus.index');
+    Route::get('menu/create', 'App\Modules\Page\Controller\Menus@create')->name('admin.menus.create');
+    Route::post('menu/create', 'App\Modules\Page\Controller\Menus@store')->name('admin.menus.store');
+    Route::post('menu/change', 'App\Modules\Page\Controller\Menus@change')->name('admin.menus.change');
     // Put the method with the parameter below the static method 
-    Route::get('menu/{id}/show', ['as'=>'admin.menus.show', 'uses'=>'App\Modules\Page\Controller\Menus@show']);
-    Route::get('menu/{id}', ['as'=>'admin.menus.edit','uses'=>'App\Modules\Page\Controller\Menus@edit']);
-    Route::post('menu/{id}', ['as'=>'admin.menus.update','uses'=>'App\Modules\Page\Controller\Menus@update']);
-    Route::get('menu/{id}/trash', ['as'=>'admin.menus.trash','uses'=>'App\Modules\Page\Controller\Menus@trash']);    
-    Route::get('menu/{id}/restored', ['as'=>'admin.menus.restored','uses'=>'App\Modules\Page\Controller\Menus@restored']);
-    Route::get('menu/{id}/delete', ['as'=>'admin.menus.delete','uses'=>'App\Modules\Page\Controller\Menus@delete']);
+    Route::get('menu/{id}/show', 'App\Modules\Page\Controller\Menus@show')->name('admin.menus.show');
+    Route::get('menu/{id}', 'App\Modules\Page\Controller\Menus@edit')->name('admin.menus.edit');
+    Route::post('menu/{id}', 'App\Modules\Page\Controller\Menus@update')->name('admin.menus.update');
+    Route::get('menu/{id}/trash', 'App\Modules\Page\Controller\Menus@trash')->name('admin.menus.trash');
+    Route::get('menu/{id}/restored', 'App\Modules\Page\Controller\Menus@restored')->name('admin.menus.restored');
+    Route::get('menu/{id}/delete', 'App\Modules\Page\Controller\Menus@delete')->name('admin.menus.delete');
     
 });

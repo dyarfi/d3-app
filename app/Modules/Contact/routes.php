@@ -17,8 +17,9 @@
  * Administrator panel routes
  *
  */
-Route::group(['prefix' => config('setting.admin_url')], function()
+Route::prefix(config('setting.admin_url'))->group( function()
 {
+
     // Portfolios DataTables routes
     Route::get('contact/datatable', 'App\Modules\Contact\Controller\Contacts@datatable')->name('admin.contacts.datatable');
 
