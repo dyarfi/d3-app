@@ -37,20 +37,23 @@ class ActivityService
      * @return  Log
      */
     public function log($description = '')
-    {
-        $payload = [
-            'user_id' => isset(auth()->id) ? auth()->id() : Sentinel::getUser()->id,
-            'description' => $description,
-            'request' => [
-                'url' => request()->url(),
-                'method' => request()->method(),
-                'query' => request()->fullUrl(),
-                'secure' => request()->secure(),
-                'client_ip' => request()->ip(),
-                'payload' => request()->all(),
-            ],
-        ];
+    {   
+        
+        if(Sentinel::getUser() != null || auth()->id() != false) {
+            $payload = [
+                'user_id' => isset(auth()->id) ? auth()->id() : Sentinel::getUser()->id,
+                'description' => $description,
+                'request' => [
+                    'url' => request()->url(),
+                    'method' => request()->method(),
+                    'query' => request()->fullUrl(),
+                    'secure' => request()->secure(),
+                    'client_ip' => request()->ip(),
+                    'payload' => request()->all(),
+                ],
+            ];
 
-        return $this->model->create($payload);
+            return $this->model->create($payload);
+        }
     }
 }

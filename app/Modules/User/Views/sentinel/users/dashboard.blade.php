@@ -1346,5 +1346,11 @@
     </div><!-- /.widget-box -->
   </div><!-- /.col -->
 </div><!-- /.row -->
-
+@push('scripts')
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.panel-group .panel-heading a.accordion-toggle').each(function(){ /* do nothing */ }).eq(0).click();
+});
+</script>
+@endpush
 @stop

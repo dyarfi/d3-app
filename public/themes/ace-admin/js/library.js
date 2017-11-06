@@ -326,12 +326,12 @@ $(document).ready(function() {
             }).done(function(message) {
                 if (message.status == 200) {
                     bootbox.alert(message.message, function(result) {});
-                    //location.reload();
+                    location.reload();
                 }
             });
         }
     });
-
+        
     // Set and find form Slug input from Name input
     if ($('input[id="name"], input[id="title"]').size() > 0 && $('input[id="slug"]').size() > 0) {
       // Detects if user type on the input

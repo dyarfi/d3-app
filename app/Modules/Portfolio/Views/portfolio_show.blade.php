@@ -24,7 +24,7 @@
         @foreach ($row->media as $media)
             <span class="img-thumbnail media-handler">
                 <img src="{{ url($media->getDiskPath()) }}" class="img-responsive"/>
-                <a href="#" class="btn btn-danger btn-xs media-delete" title="Delete Media" data-url="{{route('admin.portfolios.medialist',$media->id)}}" data-id="{{$media->id}}"><span class="fa fa-times"></span></a>
+                <a href="#" class="btn btn-danger btn-xs media-delete" title="Delete Media" data-url="{{route('admin.portfolios.medialist',$row->id)}}" data-id="{{$media->id}}"><span class="fa fa-times"></span></a>
             </span>
         @endforeach
         </div>
