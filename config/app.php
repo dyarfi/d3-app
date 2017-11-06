@@ -189,7 +189,7 @@ return [
 		/*
 		 * Laravel Localization View Composer Provider
 		 */
-		App\Providers\ViewComposerServiceProvider::class,
+		//App\Providers\ViewComposerServiceProvider::class,
 
 		/*
 		 * Laravel Socialite Class
@@ -252,7 +252,17 @@ return [
 		/*
 		 * Custom User Activity Logs
 		 */
-        App\Providers\ActivityServiceProvider::class
+        App\Providers\ActivityServiceProvider::class,
+
+        /*
+         * https://github.com/mcamara/laravel-localization
+         */
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+
+        /*
+         * https://github.com/barryvdh/laravel-translation-manager
+         */
+        Barryvdh\TranslationManager\ManagerServiceProvider::class,
 
 	],
 
@@ -360,6 +370,9 @@ return [
 
 	    // Attach https://github.com/webpatser/laravel-uuid/tree/2.1.1
 	    'Uuid' => Webpatser\Uuid\Uuid::class,
+
+	    // https://github.com/mcamara/laravel-localization
+	    'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class
 	],
 
 ];

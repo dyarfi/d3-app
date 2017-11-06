@@ -29,7 +29,8 @@ return [
 	"reset_password" => "Your password has been reset!",
 	// Action Labels
 	'submit' => 'Submit',
-	'login' => 'Login',
+	'login' => 'Login',	
+	'register'=>'Register',
 	'reset' => 'Reset',
 	'cancel' => 'Cancel',
 	'back' => 'Back',

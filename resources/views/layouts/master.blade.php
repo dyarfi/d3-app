@@ -54,7 +54,9 @@
 							<input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter..">
 						</form>
 					</div>
-                    <!--menu class="language_switcher">
+                    <?php 
+                    /*
+                    <menu class="language_switcher">
                         <ul class="list-inline">
                             <?php foreach (Config::get('app.locales') as $locale => $language): ?>
                             @if ($locale != App::getLocale())
@@ -64,8 +66,8 @@
                             @endif
                             <?php endforeach; ?>
                         </ul>
-                    </menu-->
-
+                    </menu> */
+                    ?>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">

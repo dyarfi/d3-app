@@ -17,24 +17,112 @@ Route::get('/', function () {
 */
 
 //Route::get('/', 'WelcomeController@index');
-//Route::get('home', 'HomeController@index');
+//
 
 
 // Front routes endpoint for home page
-Route::get('/', [
-    'as' => 'home',
-    'uses' => 'HomeController@index'
-]);
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
 
-Route::get('/dashboard', [
-    'as' => 'user.dashboard',
-    'uses' => 'UsersController@dashboard'
-]);
+    Route::get('/', 'HomeController@index');
 
-Route::get('page', [
-    'as' => 'page',
-    'uses' => 'PagesController@index'
-]);
+    Route::get('home', 'HomeController@index')->name('home');
+
+    Route::get('dashboard', [
+        'as' => 'user.dashboard',
+        'uses' => 'UsersController@dashboard'
+    ]);
+
+    Route::get('page', [
+        'as' => 'page',
+        'uses' => 'PagesController@index'
+    ]);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login/ Logout/ Password
+    |--------------------------------------------------------------------------
+    */
+    Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\LoginController@login');
+    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+    // Password Reset Routes...
+    Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
+    // User related routes...
+    Route::get('profile',['as'=>'profile','uses'=>'UsersController@profile']);
+    Route::get('profile/{id}', ['as'=>'profile.edit', 'uses'=>'UsersController@edit']);
+    Route::patch('profile/{id}', ['as'=>'profile.update', 'uses'=>'UsersController@update']);
+    // Route::get('auth/profile', 'Auth\AuthSocialController@profile');
+    // Route::get('auth/logout', 'Auth\AuthSocialController@logout');
+    // Sentinel Routes...
+    Route::get('auth/social/{provider}', 'Auth\AuthSocialController@redirectToProvider');
+    Route::get('auth/social', 'Auth\AuthSocialController@handleProviderCallback');
+
+    // Authentication routes...
+    // Route::get('auth/login', ['as'=>'login','uses'=>'Auth\AuthController@getLogin']);
+    // Route::post('auth/login', ['as'=>'login.post','uses'=>'Auth\AuthController@postLogin']);
+    // Route::get('auth/logout', ['as'=>'logout','uses'=>'Auth\AuthController@getLogout']);
+
+    // Password forgotten routes...
+    Route::get('auth/password/email','Auth\PasswordController@getEmail');
+    Route::post('auth/password/email','Auth\PasswordController@postEmail');
+    //Route::post('auth/register', 'Auth\AuthController@postRegister');
+    // Registration routes...
+    Route::get('register', ['as'=>'register','uses'=>'Auth\AuthController@getRegister']);
+    Route::post('register', ['as'=>'register.post','uses'=>'Auth\AuthController@postRegister']);
+
+    Auth::routes();
+
+
+
+
+    /*** Site Menus ***/
+    // About Us page routes...
+    Route::get('about_us', ['as'=>'about_us','uses'=>'AboutUsController@index']);
+    // Service page routes...
+    Route::get('services', ['as'=>'services','uses'=>'ServicesController@index']);
+    // Portfolio page routes...
+    Route::get('portfolio', ['as'=>'portfolio','uses'=>'PortfolioController@index']);
+    Route::get('portfolio/{slug}', ['as'=>'portfolio.show','uses'=>'PortfolioController@show']);
+    // Blog page routes...
+    Route::get('blog/tag/{slug}', ['as'=>'blog.tag','uses'=>'BlogController@tag']);
+    Route::get('blog/tags', ['as'=>'blog.tags','uses'=>'BlogController@tags']);
+    Route::get('blog/category/{slug}', ['as'=>'blog.category','uses'=>'BlogController@category']);
+    Route::get('blog/categories', ['as'=>'blog.categories','uses'=>'BlogController@categories']);
+    Route::get('blog', ['as'=>'blog','uses'=>'BlogController@index']);
+    Route::get('blog/{slug}', ['as'=>'blog.show','uses'=>'BlogController@show']);
+    // Career page routes...
+    Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
+    Route::post('career/post', ['as'=>'career.post','uses'=>'CareerController@post']);
+
+    //Route::get('career/{slug}', ['as'=>'career.show','uses'=>'CareerController@show']);
+    //Route::get('career/detail/{slug}', ['as'=>'career.detail','uses'=>'CareerController@detail']);
+    //Route::get('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@apply']);
+    //Route::post('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@store']);
+
+    // Gallery page routes...
+    Route::get('gallery', ['as'=>'gallery','uses'=>'GalleryController@index']);
+    Route::get('gallery/upload', ['as'=>'gallery.upload','uses'=>'GalleryController@upload']);
+    Route::post('gallery/response', ['as'=>'gallery.response','uses'=>'GalleryController@response']);
+    Route::get('gallery/response', ['as'=>'gallery.response','uses'=>'GalleryController@response']);
+    // Contact page routes...
+    Route::get('contact', ['as'=>'contact','uses'=>'ContactController@index']);
+    Route::post('contact', ['as'=>'contact.send','uses'=>'ContactController@sendContact']);
+
+    //Route::get('gallery/{slug}', ['as'=>'gallery.show','uses'=>'GalleryController@show']);
+    //Route::get('gallery/{slug}/make', ['as'=>'gallery.make','uses'=>'GalleryController@make']);
+
+
+});
+
+
 
 // Public User routes ...
 //Route::get('user', 'UsersController@index');
@@ -62,45 +150,6 @@ Route::get('page', [
 // Disable checkpoints (throttling, activation) for demo purposes
 Sentinel::disableCheckpoints();
 
-/*** Site Menus ***/
-// About Us page routes...
-Route::get('about_us', ['as'=>'about_us','uses'=>'AboutUsController@index']);
-// Service page routes...
-Route::get('services', ['as'=>'services','uses'=>'ServicesController@index']);
-// Portfolio page routes...
-Route::get('portfolio', ['as'=>'portfolio','uses'=>'PortfolioController@index']);
-Route::get('portfolio/{slug}', ['as'=>'portfolio.show','uses'=>'PortfolioController@show']);
-// Blog page routes...
-Route::get('blog/tag/{slug}', ['as'=>'blog.tag','uses'=>'BlogController@tag']);
-Route::get('blog/tags', ['as'=>'blog.tags','uses'=>'BlogController@tags']);
-Route::get('blog/category/{slug}', ['as'=>'blog.category','uses'=>'BlogController@category']);
-Route::get('blog/categories', ['as'=>'blog.categories','uses'=>'BlogController@categories']);
-Route::get('blog', ['as'=>'blog','uses'=>'BlogController@index']);
-Route::get('blog/{slug}', ['as'=>'blog.show','uses'=>'BlogController@show']);
-// Career page routes...
-Route::get('career', ['as'=>'career','uses'=>'CareerController@index']);
-Route::post('career/post', ['as'=>'career.post','uses'=>'CareerController@post']);
-
-//Route::get('career/{slug}', ['as'=>'career.show','uses'=>'CareerController@show']);
-//Route::get('career/detail/{slug}', ['as'=>'career.detail','uses'=>'CareerController@detail']);
-//Route::get('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@apply']);
-//Route::post('career/{slug}/apply', ['as'=>'career.apply','uses'=>'CareerController@store']);
-
-// Gallery page routes...
-Route::get('gallery', ['as'=>'gallery','uses'=>'GalleryController@index']);
-Route::get('gallery/upload', ['as'=>'gallery.upload','uses'=>'GalleryController@upload']);
-Route::post('gallery/response', ['as'=>'gallery.response','uses'=>'GalleryController@response']);
-Route::get('gallery/response', ['as'=>'gallery.response','uses'=>'GalleryController@response']);
-// Contact page routes...
-Route::get('contact', ['as'=>'contact','uses'=>'ContactController@index']);
-Route::post('contact', ['as'=>'contact.send','uses'=>'ContactController@sendContact']);
-
-//Route::get('gallery/{slug}', ['as'=>'gallery.show','uses'=>'GalleryController@show']);
-//Route::get('gallery/{slug}/make', ['as'=>'gallery.make','uses'=>'GalleryController@make']);
-
-
-
-
 
 
 /*
@@ -121,45 +170,6 @@ Route::post('contact', ['as'=>'contact.send','uses'=>'ContactController@sendCont
 */
 
 //Route::get('/', 'PagesController@home');
-
-/*
-|--------------------------------------------------------------------------
-| Login/ Logout/ Password
-|--------------------------------------------------------------------------
-*/
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
-
-// User related routes...
-Route::get('profile',['as'=>'profile','uses'=>'UsersController@profile']);
-Route::get('profile/{id}', ['as'=>'profile.edit', 'uses'=>'UsersController@edit']);
-Route::patch('profile/{id}', ['as'=>'profile.update', 'uses'=>'UsersController@update']);
-// Route::get('auth/profile', 'Auth\AuthSocialController@profile');
-// Route::get('auth/logout', 'Auth\AuthSocialController@logout');
-// Sentinel Routes...
-Route::get('auth/social/{provider}', 'Auth\AuthSocialController@redirectToProvider');
-Route::get('auth/social', 'Auth\AuthSocialController@handleProviderCallback');
-
-// Authentication routes...
-// Route::get('auth/login', ['as'=>'login','uses'=>'Auth\AuthController@getLogin']);
-// Route::post('auth/login', ['as'=>'login.post','uses'=>'Auth\AuthController@postLogin']);
-// Route::get('auth/logout', ['as'=>'logout','uses'=>'Auth\AuthController@getLogout']);
-
-// Password forgotten routes...
-Route::get('auth/password/email','Auth\PasswordController@getEmail');
-Route::post('auth/password/email','Auth\PasswordController@postEmail');
-//Route::post('auth/register', 'Auth\AuthController@postRegister');
-// Registration routes...
-Route::get('register', ['as'=>'register','uses'=>'Auth\AuthController@getRegister']);
-Route::post('register', ['as'=>'register.post','uses'=>'Auth\AuthController@postRegister']);
 
 Route::get('routes',function(){
     dd(Route::getRoutes());
@@ -417,10 +427,4 @@ Route::get('profile/update', [
 ]);
 */
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

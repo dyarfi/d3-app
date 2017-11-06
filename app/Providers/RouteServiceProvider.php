@@ -35,6 +35,7 @@ class RouteServiceProvider extends ServiceProvider {
 	public function map(Router $router, Request $request)
 	{
 
+		/*
 		$locale = $request->segment(1);
 
 		$routes = ['namespace' => $this->namespace];
@@ -56,18 +57,18 @@ class RouteServiceProvider extends ServiceProvider {
 		$router->group($routes, function($router) {
 			require base_path('routes/web.php');
 		});
-		
+		*/
+
 		$this->mapApiRoutes();
 
         $this->mapWebRoutes();
 
 
-
-		 //Route::middleware('web')
+	 	//Route::middleware('web')
              //->namespace($this->namespace)
              //->group(base_path('routes/web.php'));
 
-//dd($router);
+		//dd($router);
 
 		//Route::middleware('web')
              //->namespace($this->namespace)

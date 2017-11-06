@@ -30,6 +30,7 @@ return [
 	// Action Labels
 	'submit' => 'Kirim',
 	'login' => 'Masuk',
+	'register'=>'Daftar',
 	'reset' => 'Ulang',
 	'cancel' => 'Batal',
 	'back' => 'Kembali',
