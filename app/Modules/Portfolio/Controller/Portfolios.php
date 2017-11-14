@@ -14,6 +14,8 @@ use Datatables;
 use Activity;
 // MediaAble Uploader
 use MediaUploader;
+// Mediables upload handler
+use Uploader;
 
 class Portfolios extends BaseAdmin {
 
@@ -43,8 +45,13 @@ class Portfolios extends BaseAdmin {
 		$this->projects 	= new Project;
 
 		// Crop to fit image size
-		$this->imgFit 		= [1200,1200];
+		$this->imgFit 		 = [1200,1200];
 
+		//$config['save_path'] = '/tmp/';
+		//$config['thumb_path'] = '/tmp/thumb';
+		
+		//$nfiles = Uploader::config($config);
+		//dd($nfiles);
 	}
 
 	/**
@@ -446,9 +453,9 @@ class Portfolios extends BaseAdmin {
 				    // whether to allow the 'other' aggregate type
 				    ->setAllowUnrecognizedTypes(false)
 	                // only allow files of specific MIME types
-	                ->setAllowedMimeTypes(['image/jpeg'])
+	                ->setAllowedMimeTypes(['image/jpeg', 'image/png'])
 	                // only allow files of specific extensions
-	                ->setAllowedExtensions(['jpg', 'jpeg'])
+	                ->setAllowedExtensions(['jpg', 'jpeg', 'png'])
 	                // only allow files of specific aggregate types
 	                ->setAllowedAggregateTypes(['image'])
                 	// place the file in a directory relative to the disk root
@@ -605,6 +612,18 @@ class Portfolios extends BaseAdmin {
 				$sheet->fromArray($portfolios);
 		    });
 		})->export($type);
+
+	}
+
+	/**
+	 * Mediables handler
+	 *
+	 * @param  array  $data
+	 * @param  mixed  $id
+	 * @return \Illuminate\Support\MessageBag
+	 */
+	protected function mediableUploads($data, $rules)
+	{
 
 	}
 

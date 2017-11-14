@@ -218,14 +218,14 @@ $(document).ready(function() {
 
     // ---------------------- ADMINISTRATOR Javascript Custom Function -- start [ --------------------------
     // File name in input form
-    if($('.ace-file-input input[type="file"]').size() > 0) {
+    if($('.ace-file-input.ace-file-single input[type="file"]').size() > 0) {
 
-        $('.ace-file-input input[type="file"]').change(function() {
-            $('.ace-file-name').attr('data-title',$(this).val());
+        $('.ace-file-input.ace-file-single input[type="file"]').change(function() {
+            $('.ace-file-single .ace-file-name').attr('data-title',$(this).val());
         });
 
         if ($('.image-alt').size() > 0) {
-           $('.ace-file-name').attr('data-title',$('.image-alt').attr('alt'));
+           $('.ace-file-single .ace-file-name').attr('data-title',$('.image-alt').attr('alt'));
         }
     }
 

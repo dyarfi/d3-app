@@ -54,7 +54,7 @@
 		@endif
 		<div class="row">
 			<div class="col-xs-6">
-				<label class="ace-file-input">
+				<label class="ace-file-input ace-file-single">
 					{!! Form::file('image','',['class'=>'form-controls','id'=>'id-input-file-2']) !!}
 					<span class="ace-file-container" data-title="Choose">
 						<span class="ace-file-name" data-title="No File ...">
@@ -72,7 +72,7 @@
 		<label class="control-label" for="id-input-file-3">Gallery :</label>
 		<label class="ace-file-input ace-file-multiple">
 			<input multiple="" id="id-input-file-3" type="file" name="gallery[]">
-			<a class="remove" href="#"><i class=" ace-icon fa fa-times"></i>&nbsp;</a>
+			<a class="remove" href="#"><i class=" ace-icon fa fa-times"></i>&nbsp;</a>			
 		</label>
 		<div>
 			@if(sizeof($row->media) > 0)
@@ -127,10 +127,10 @@ $(document).ready(function(){
 		var file_input = $form.find('#id-input-file-3');
 		file_input.ace_file_input({
 			style:'well',
-			btn_choose:'Drop files here or click to choose',
+			btn_choose:'Choose Images',
 			btn_change:null,
 			no_icon:'ace-icon fa fa-cloud-upload',
-			droppable:true,
+			droppable:false,
 			thumbnail:'small',//large | fit
 			maxSize:{!! config("mediable.max_size") !!},//bytes
 			//allowExt:["jpeg", "jpg", "png", "gif"],

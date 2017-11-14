@@ -17,6 +17,10 @@ let mix = require('laravel-mix').mix;
     // proxy: 'd3-app.dev'
 // });
 
+mix.sass('resources/assets/theme/sass/style.scss', 'assets/css/app.min.css').options({
+    processCssUrls: false
+});
+
 mix.combine([
     'public/css/bootstrap.min.css',
     'public/css/font-awesome.min.css',

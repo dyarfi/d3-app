@@ -252,7 +252,13 @@ return [
 		/*
 		 * Custom User Activity Logs
 		 */
-        App\Providers\ActivityServiceProvider::class
+        App\Providers\ActivityServiceProvider::class,
+
+
+		/*
+		 * Custom Mediables Upload provides
+		 */
+        App\Providers\UploaderServiceProvider::class
 
 	],
 
@@ -355,11 +361,15 @@ return [
 		// Attach Laravel Charts
 		'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
 
-		// Attach Activity log facade
+		// Attach https://github.com/webpatser/laravel-uuid/tree/2.1.1
+	    'Uuid' => Webpatser\Uuid\Uuid::class,
+
+	    // Attach Activity log facade
 	    'Activity' => App\Facades\Activity::class,
 
-	    // Attach https://github.com/webpatser/laravel-uuid/tree/2.1.1
-	    'Uuid' => Webpatser\Uuid\Uuid::class,
+	    // Attach Uploader for mediables
+	    'Uploader' => App\Facades\Uploader::class
+	    
 	],
 
 ];
