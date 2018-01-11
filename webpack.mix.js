@@ -17,7 +17,7 @@ let mix = require('laravel-mix').mix;
     // proxy: 'd3-app.dev'
 // });
 
-mix.sass('resources/assets/theme/sass/style.scss', 'assets/css/app.min.css').options({
+mix.sass('resources/assets/theme/sass/style.scss', 'public/css/app.min.css').options({
     processCssUrls: false
 });
 
