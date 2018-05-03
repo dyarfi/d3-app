@@ -3,76 +3,70 @@
 @section('body')
 
 <div class="row">
-    <div class="col-sm-5">
+    {{-- <div class="col-sm-5"> --}}
+    <div class="col-sm-6">
         <div class="widget-box transparent">
-              <div class="widget-header widget-header-flat">
-                <h4 class="widget-title lighter">
-                  <i class="ace-icon fa fa-bar-chart-o blue"></i>
-                  Summary
-                </h4>
-                <div class="widget-toolbar hide">
-                  <a href="#" data-action="collapse">
-                    <i class="ace-icon fa fa-chevron-up"></i>
-                  </a>
-                </div>
-              </div>
+			<div class="widget-header widget-header-flat">
+			<h4 class="widget-title lighter">
+				<i class="ace-icon fa fa-bar-chart-o blue"></i>
+				Summary
+			</h4>
+			<div class="widget-toolbar hide">
+				<a href="#" data-action="collapse">
+				<i class="ace-icon fa fa-chevron-up"></i>
+				</a>
+			</div>
+			</div>
             <div class="widget-body">
                 <div id="faq-tab-1" class="tab-pane fade active in">
                     <div class="space-8"></div>
                     <div id="faq-list-1" class="panel-group accordion-style1 accordion-style2">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a href="#faq-1-1" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
-                                    <i class="pull-right ace-icon fa fa-chevron-left" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
-                                    <i class="ace-icon fa fa-users bigger-130"></i>
-                                    &nbsp; Users
-                                </a>
-                            </div>
-                            <div class="panel-collapse collapse" id="faq-1-1" aria-expanded="false" style="height: 0px;">
-                                <div class="panel-body">
-                                    <span class="label label-info arrowed arrowed-right">
-                                        {{ $user->where('status',1)->count() }} {{ config('setting.status')[1] }}
-                                    </span>
-                                    <span class="label label-warning arrowed arrowed-right">
-                                        {{ $user->where('status',2)->count() }} {{ config('setting.status')[2] }}
-                                    </span>
-                                    <span class="pull-right text-primary">
-                                        <i class="glyphicon glyphicon-ok"></i>&nbsp;
-                                        <a href="{{route('admin.users.index')}}">See Users ({{ $user->all()->count() }})</a>
-                                    </span>
-                                    <div class="space-4"></div>
-                                    <span class="text-success">Last Login :</span>
-                                    <div class="space-2"></div>
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <thead class="thin-border-bottom">
-                                            <tr>
-                                                <th><i class="ace-icon fa fa-user"></i>User</th>
-                                                <th><i>@</i> Email</th>
-                                                <th class="hidden-480"><i class="ace-icon fa fa-key"></i>Last Login</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($user->where('last_login','<', Carbon::now())->orderBy('last_login','desc')->take(3)->get() as $last)
-                                                <tr>
-                                                    <td class="text-info">{{ ($last->username) ? $last->username : $last->email }}</td>
-                                                    <td><span class="text-success">{{ $last->email }}</span></td>
-                                                    <td class="hidden-480">
-                                                        <span class="label label-warning label-sm">{{ $last->last_login}}</span>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a href="#faq-1-4" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle" aria-expanded="true">
+									<i class="ace-icon fa fa-chevron-down pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
+									<i class="ace-icon fa fa-leaf bigger-130"></i>
+									&nbsp; Participants
+								</a>
+							</div>
+							<div class="panel-collapse collapse in" id="faq-1-4" aria-expanded="true">
+								<div class="panel-body">
+									<table class="table table-striped table-bordered table-hover">
+										<thead class="thin-border-bottom">
+											<tr>
+												<th><i class="ace-icon fa fa-user"></i>Name</th>
+												<th><i>@</i> Participant</th>
+												{{-- <th><i class="ace-icon fa fa-phone"></i>Phone</th> --}}
+												<th class="hidden-480"><i class="ace-icon fa fa-inbox"></i>Created At</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($participants->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $participant)
+												<tr>
+													<td class="text-info">{{ ($participant->name) ? $participant->name : $participant->first_name .' '.$participant->last_name }}</td>
+													<td>{{ $participant->email }}</td>
+													{{-- <td class="green">{{ $participant->phone_number }}</td> --}}
+													<td class="hidden-480">
+														<span class="label label-warning label-sm">{{ $participant->created_at}}</span>
+													</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+									<span class="pull-right text-primary">
+										<i class="glyphicon glyphicon-ok"></i>&nbsp;
+										<a href="{{route('admin.participants.index')}}">See Participants ({{ $participants->all()->count() }})</a>
+									</span>
+								</div>
+							</div>
+						</div>
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a href="#faq-1-2" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
                                     <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
                                     <i class="ace-icon fa fa-pencil-square-o bigger-130"></i>
-                                    &nbsp; Blogs 
+                                    &nbsp; News 
                                 </a>
                             </div>
                             <div class="panel-collapse collapse" id="faq-1-2" aria-expanded="false">
@@ -81,18 +75,18 @@
                                         <?php
                                         $f = 0;                                        
                                         ?>
-                                        @foreach ($blog->with('user')->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $post)
+                                        @foreach ($news->with('user')->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $row)
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <a href="#faq-list-1-sub-{{$f}}" data-parent="#faq-list-nested-{{$f}}" data-toggle="collapse" class="accordion-toggle collapsed">
                                                         <i class="ace-icon fa fa-plus smaller-80 middle" data-icon-hide="ace-icon fa fa-minus" data-icon-show="ace-icon fa fa-plus"></i>&nbsp;
-                                                        {{ str_limit($post->name,48,'--') }}
+                                                        {{ str_limit($row->name,48,'--') }}
                                                     </a>
                                                 </div>
                                                 <div class="panel-collapse collapse" id="faq-list-1-sub-{{$f}}">
                                                     <div class="panel-body">
-                                                        {{ str_limit(strip_tags($post->description),'100') }}
-                                                        <span class="clearfix lighter green">By : {{$post->user->email}}</span>
+                                                        {{ str_limit(strip_tags($row->description),'100') }}
+                                                        <span class="clearfix lighter green">By : {{$row->user->email}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,93 +97,60 @@
                                         <div class="space-6"></div>
                                         <span class="pull-right text-primary">
                                             <i class="glyphicon glyphicon-ok"></i>&nbsp;
-                                            <a href="{{route('admin.blogs.index')}}">See Blogs ({{ $blog->all()->count() }})</a>
+                                            <a href="{{route('admin.news.index')}}">See News ({{ $row->all()->count() }})</a>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+						</div>
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a href="#faq-1-3" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
-                                    <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
-                                    <i class="ace-icon fa fa-envelope-o bigger-130"></i>
-                                    &nbsp; Contacts
-                                </a>
-                            </div>
-                            <div class="panel-collapse collapse" id="faq-1-3" aria-expanded="false">
-                                <div class="panel-body">
-                                   <table class="table table-striped table-bordered table-hover">
-                                        <thead class="thin-border-bottom">
-                                            <tr>
-                                                <th><i class="ace-icon fa fa-user"></i>Name</th>
-                                                {{-- <th><i>@</i> Email</th> --}}
-                                                <th><i class="ace-icon fa fa-fire"></i>Subject</th>
-                                                <th class="hidden-480"><i class="ace-icon fa fa-inbox"></i>Created</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($contact->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $mails)
-                                                <tr>
-                                                    <td class="text-info">{{ $mails->name }}</td>
-                                                    {{-- <td>{{ $mails->email }}</td> --}}
-                                                    <td>{{ $mails->subject }}</td>
-                                                    <td class="hidden-480">
-                                                        <span class="label label-warning label-sm">{{ $mails->created_at}}</span>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <span class="pull-right text-primary">
-                                        <i class="glyphicon glyphicon-ok"></i>&nbsp;
-                                        <a href="{{route('admin.contacts.index')}}">See Contacts ({{ $contact->all()->count() }})</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a href="#faq-1-4" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
-                                    <i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
-                                    <i class="ace-icon fa fa-leaf bigger-130"></i>
-                                    &nbsp; Applicants
-                                </a>
-                            </div>
-                            <div class="panel-collapse collapse" id="faq-1-4" aria-expanded="false">
-                                <div class="panel-body">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <thead class="thin-border-bottom">
-                                            <tr>
-                                                <th><i class="ace-icon fa fa-user"></i>Name</th>
-                                                <th><i>@</i> Career</th>
-                                                <th><i class="ace-icon fa fa-phone"></i>Phone</th>
-                                                <th class="hidden-480"><i class="ace-icon fa fa-inbox"></i>Applied At</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($applicant->with('career')->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(3)->get() as $applied)
-                                                <tr>
-                                                    <td class="text-info">{{ $applied->name }}</td>
-                                                    <td>{{ $applied->career->name }}</td>
-                                                    <td class="green">{{ $applied->phone_number }}</td>
-                                                    <td class="hidden-480">
-                                                        <span class="label label-warning label-sm">{{ $applied->created_at}}</span>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <span class="pull-right text-primary">
-                                        <i class="glyphicon glyphicon-ok"></i>&nbsp;
-                                        <a href="{{route('admin.applicants.index')}}">See Applicants ({{ $applicant->all()->count() }})</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
+							<div class="panel-heading">
+								<a href="#faq-1-1" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
+									<i class="pull-right ace-icon fa fa-chevron-left" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left"></i>
+									<i class="ace-icon fa fa-users bigger-130"></i>
+									&nbsp; Users
+								</a>
+							</div>
+							<div class="panel-collapse collapse" id="faq-1-1" aria-expanded="false" style="height: 0px;">
+								<div class="panel-body">
+									<span class="label label-info arrowed arrowed-right">
+										{{ $user->where('status',1)->count() }} {{ config('setting.status')[1] }}
+									</span>
+									<span class="label label-warning arrowed arrowed-right">
+										{{ $user->where('status',2)->count() }} {{ config('setting.status')[2] }}
+									</span>
+									<span class="pull-right text-primary">
+										<i class="glyphicon glyphicon-ok"></i>&nbsp;
+										<a href="{{route('admin.users.index')}}">See Users ({{ $user->all()->count() }})</a>
+									</span>
+									<div class="space-4"></div>
+									<span class="text-success">Last Login :</span>
+									<div class="space-2"></div>
+									<table class="table table-striped table-bordered table-hover">
+										<thead class="thin-border-bottom">
+											<tr>
+												<th><i class="ace-icon fa fa-user"></i>User</th>
+												<th><i>@</i> Email</th>
+												<th class="hidden-480"><i class="ace-icon fa fa-key"></i>Last Login</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($user->where('last_login','<', Carbon::now())->orderBy('last_login','desc')->take(3)->get() as $last)
+												<tr>
+													<td class="text-info">{{ ($last->username) ? $last->username : $last->email }}</td>
+													<td><span class="text-success">{{ $last->email }}</span></td>
+													<td class="hidden-480">
+														<span class="label label-warning label-sm">{{ $last->last_login}}</span>
+													</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+							
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a href="#faq-1-5" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
@@ -240,366 +201,58 @@
                 </div>
             </div><!-- /.widget-body -->
         </div>
-    </div>
-
-    <div class="col-sm-7">
-        <div id="pop_div"></div>
-        <?php echo $lava->render('AreaChart', 'Population', 'pop_div') ?>
-    </div>
-
+	</div>
+	<div class="col-sm-6">
+		<div class="widget-box">
+		<div class="widget-header">
+			<h4 class="widget-title lighter smaller">
+			<i class="ace-icon fa fa-comment blue"></i>
+			Recent Participant
+			</h4>
+		</div>
+		<div class="widget-body">
+			<div class="widget-main no-padding">
+			<div class="dialogs">			
+				<div class="space-12"></div>
+				@foreach ($participants->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(5)->get() as $participant)
+					<div class="itemdiv dialogdiv">
+						<div class="user">
+							<img alt="{{$participant->email}} Avatar" src="{{ asset('themes/ace-admin/avatars/avatar2.png') }}" />
+						</div>
+						<div class="body">
+							<div class="time">
+								<i class="ace-icon fa fa-clock-o"></i>
+								<span class="green">
+									{{ Carbon::parse($participant->created_at)->diffForHumans(Carbon::now()) }}
+								</span>
+							</div>	  
+							<div class="name">
+								<a href="{{ route('admin.participants.show',$participant->id) }}">{{ $participant->email }}</a>
+							</div>
+							<div class="text">
+								{{ @$participant->first_name .' '.@$participant->last_name }}
+								<div class="text-right text-muted small bold">Provider @ {{ $participant->provider }}</div>
+							</div>	  
+							<div class="tools">
+								<a href="#" class="btn btn-minier btn-info">
+								<i class="icon-only ace-icon fa fa-share"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				@endforeach			
+			</div>
+		</div>	
+		<!--div class="col-sm-7">
+			<div id="pop_div"></div>
+			<?php echo $lava->render('AreaChart', 'Population', 'pop_div') ?>
+		</div-->
     <div class="space-6"></div>
-
-  <div class="col-sm-7 infobox-container">
-
-    <div class="infobox infobox-green">
-      <div class="infobox-icon">
-        <i class="ace-icon fa fa-comments"></i>
-      </div>
-
-      <div class="infobox-data">
-        <span class="infobox-data-number">32</span>
-        <div class="infobox-content">comments + 2 reviews</div>
-      </div>
-
-      <div class="stat stat-success">8%</div>
-    </div>
-
-    <div class="infobox infobox-blue">
-      <div class="infobox-icon">
-        <i class="ace-icon fa fa-twitter"></i>
-      </div>
-
-      <div class="infobox-data">
-        <span class="infobox-data-number">11</span>
-        <div class="infobox-content">new followers</div>
-      </div>
-
-      <div class="badge badge-success">
-        +32%
-        <i class="ace-icon fa fa-arrow-up"></i>
-      </div>
-    </div>
-
-    <div class="infobox infobox-pink">
-      <div class="infobox-icon">
-        <i class="ace-icon fa fa-shopping-cart"></i>
-      </div>
-
-      <div class="infobox-data">
-        <span class="infobox-data-number">8</span>
-        <div class="infobox-content">new orders</div>
-      </div>
-      <div class="stat stat-important">4%</div>
-    </div>
-
-    <div class="infobox infobox-red">
-      <div class="infobox-icon">
-        <i class="ace-icon fa fa-flask"></i>
-      </div>
-
-      <div class="infobox-data">
-        <span class="infobox-data-number">7</span>
-        <div class="infobox-content">experiments</div>
-      </div>
-    </div>
-
-    <div class="infobox infobox-orange2">
-      <div class="infobox-chart">
-        <span class="sparkline" data-values="196,128,202,177,154,94,100,170,224"></span>
-      </div>
-
-      <div class="infobox-data">
-        <span class="infobox-data-number">6,251</span>
-        <div class="infobox-content">pageviews</div>
-      </div>
-
-      <div class="badge badge-success">
-        7.2%
-        <i class="ace-icon fa fa-arrow-up"></i>
-      </div>
-    </div>
-
-    <div class="infobox infobox-blue2">
-      <div class="infobox-progress">
-        <div class="easy-pie-chart percentage" data-percent="42" data-size="46">
-          <span class="percent">42</span>%
-        </div>
-      </div>
-
-      <div class="infobox-data">
-        <span class="infobox-text">traffic used</span>
-
-        <div class="infobox-content">
-          <span class="bigger-110">~</span>
-          58GB remaining
-        </div>
-      </div>
-    </div>
-
-    <div class="space-6"></div>
-
-    <div class="infobox infobox-green infobox-small infobox-dark">
-      <div class="infobox-progress">
-        <div class="easy-pie-chart percentage" data-percent="61" data-size="39">
-          <span class="percent">61</span>%
-        </div>
-      </div>
-
-      <div class="infobox-data">
-        <div class="infobox-content">Task</div>
-        <div class="infobox-content">Completion</div>
-      </div>
-    </div>
-
-    <div class="infobox infobox-blue infobox-small infobox-dark">
-      <div class="infobox-chart">
-        <span class="sparkline" data-values="3,4,2,3,4,4,2,2"></span>
-      </div>
-
-      <div class="infobox-data">
-        <div class="infobox-content">Earnings</div>
-        <div class="infobox-content">$32,000</div>
-      </div>
-    </div>
-
-    <div class="infobox infobox-grey infobox-small infobox-dark">
-      <div class="infobox-icon">
-        <i class="ace-icon fa fa-download"></i>
-      </div>
-
-      <div class="infobox-data">
-        <div class="infobox-content">Downloads</div>
-        <div class="infobox-content">1,205</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="vspace-12-sm"></div>
-
-  <div class="col-sm-5">
-    <div class="widget-box">
-      <div class="widget-header widget-header-flat widget-header-small">
-        <h5 class="widget-title">
-          <i class="ace-icon fa fa-signal"></i>
-          Traffic Sources
-        </h5>
-
-        <div class="widget-toolbar no-border">
-          <div class="inline dropdown-hover">
-            <button class="btn btn-minier btn-primary">
-              This Week
-              <i class="ace-icon fa fa-angle-down icon-on-right bigger-110"></i>
-            </button>
-
-            <ul class="dropdown-menu dropdown-menu-right dropdown-125 dropdown-lighter dropdown-close dropdown-caret">
-              <li class="active">
-                <a href="#" class="blue">
-                  <i class="ace-icon fa fa-caret-right bigger-110">&nbsp;</i>
-                  This Week
-                </a>
-              </li>
-
-              <li>
-                <a href="#">
-                  <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                  Last Week
-                </a>
-              </li>
-
-              <li>
-                <a href="#">
-                  <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                  This Month
-                </a>
-              </li>
-
-              <li>
-                <a href="#">
-                  <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                  Last Month
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="widget-body">
-        <div class="widget-main">
-          <div id="piechart-placeholder"></div>
-
-          <div class="hr hr8 hr-double"></div>
-
-          <div class="clearfix">
-            <div class="grid3">
-              <span class="grey">
-                <i class="ace-icon fa fa-facebook-square fa-2x blue"></i>
-                &nbsp; likes
-              </span>
-              <h4 class="bigger pull-right">1,255</h4>
-            </div>
-
-            <div class="grid3">
-              <span class="grey">
-                <i class="ace-icon fa fa-twitter-square fa-2x purple"></i>
-                &nbsp; tweets
-              </span>
-              <h4 class="bigger pull-right">941</h4>
-            </div>
-
-            <div class="grid3">
-              <span class="grey">
-                <i class="ace-icon fa fa-pinterest-square fa-2x red"></i>
-                &nbsp; pins
-              </span>
-              <h4 class="bigger pull-right">1,050</h4>
-            </div>
-          </div>
-        </div><!-- /.widget-main -->
-      </div><!-- /.widget-body -->
-    </div><!-- /.widget-box -->
-  </div><!-- /.col -->
 </div><!-- /.row -->
 
-<div class="hr hr32 hr-dotted"></div>
+<div class="hr hr16 hr-dotted"></div>
 
-<div class="row">
-  <div class="col-sm-5">
-    <div class="widget-box transparent">
-      <div class="widget-header widget-header-flat">
-        <h4 class="widget-title lighter">
-          <i class="ace-icon fa fa-star orange"></i>
-          Popular Domains
-        </h4>
-
-        <div class="widget-toolbar">
-          <a href="#" data-action="collapse">
-            <i class="ace-icon fa fa-chevron-up"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="widget-body">
-        <div class="widget-main no-padding">
-          <table class="table table-bordered table-striped">
-            <thead class="thin-border-bottom">
-              <tr>
-                <th>
-                  <i class="ace-icon fa fa-caret-right blue"></i>name
-                </th>
-
-                <th>
-                  <i class="ace-icon fa fa-caret-right blue"></i>price
-                </th>
-
-                <th class="hidden-480">
-                  <i class="ace-icon fa fa-caret-right blue"></i>status
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>internet.com</td>
-
-                <td>
-                  <small>
-                    <s class="red">$29.99</s>
-                  </small>
-                  <b class="green">$19.99</b>
-                </td>
-
-                <td class="hidden-480">
-                  <span class="label label-info arrowed-right arrowed-in">on sale</span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>online.com</td>
-
-                <td>
-                  <b class="blue">$16.45</b>
-                </td>
-
-                <td class="hidden-480">
-                  <span class="label label-success arrowed-in arrowed-in-right">approved</span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>newnet.com</td>
-
-                <td>
-                  <b class="blue">$15.00</b>
-                </td>
-
-                <td class="hidden-480">
-                  <span class="label label-danger arrowed">pending</span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>web.com</td>
-
-                <td>
-                  <small>
-                    <s class="red">$24.99</s>
-                  </small>
-                  <b class="green">$19.95</b>
-                </td>
-
-                <td class="hidden-480">
-                  <span class="label arrowed">
-                    <s>out of stock</s>
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>domain.com</td>
-
-                <td>
-                  <b class="blue">$12.00</b>
-                </td>
-
-                <td class="hidden-480">
-                  <span class="label label-warning arrowed arrowed-right">SOLD</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div><!-- /.widget-main -->
-      </div><!-- /.widget-body -->
-    </div><!-- /.widget-box -->
-  </div><!-- /.col -->
-
-  <div class="col-sm-7">
-    <div class="widget-box transparent">
-      <div class="widget-header widget-header-flat">
-        <h4 class="widget-title lighter">
-          <i class="ace-icon fa fa-signal"></i>
-          Sale Stats
-        </h4>
-
-        <div class="widget-toolbar">
-          <a href="#" data-action="collapse">
-            <i class="ace-icon fa fa-chevron-up"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="widget-body">
-        <div class="widget-main padding-4">
-          <div id="sales-charts"></div>
-        </div><!-- /.widget-main -->
-      </div><!-- /.widget-body -->
-    </div><!-- /.widget-box -->
-  </div><!-- /.col -->
-</div><!-- /.row -->
-
-<div class="hr hr32 hr-dotted"></div>
-
-<div class="row">
+<div class="row hide">
   <div class="col-sm-6">
     <div class="widget-box transparent" id="recent-box">
       <div class="widget-header">
@@ -735,7 +388,7 @@
               <div class="clearfix">
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Bob Doe's avatar" src="{{ asset('assets.admin/avatars/user.jpg') }}" />
+                    <img alt="Bob Doe's avatar" src="{{ asset('themes/ace-admin/avatars/avatar3.png') }}" />
                   </div>
 
                   <div class="body">
@@ -788,7 +441,7 @@
 
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Joe Doe's avatar" src="{{ asset('assets.admin/avatars/avatar2.png') }}" />
+                    <img alt="Joe Doe's avatar" src="{{ asset('themes/ace-admin/avatars/avatar2.png') }}" />
                   </div>
 
                   <div class="body">
@@ -841,7 +494,7 @@
 
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Jim Doe's avatar" src="{{ asset('assets.admin/avatars/avatar.png') }}" />
+                    <img alt="Jim Doe's avatar" src="{{ asset('themes/ace-admin/avatars/avatar.png') }}" />
                   </div>
 
                   <div class="body">
@@ -894,7 +547,7 @@
 
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Alex Doe's avatar" src="{{ asset('assets.admin/avatars/avatar5.png') }}" />
+                    <img alt="Alex Doe's avatar" src="{{ asset('themes/ace-admin/avatars/avatar5.png') }}" />
                   </div>
 
                   <div class="body">
@@ -915,7 +568,7 @@
 
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Bob Doe's avatar" src="{{ asset('assets.admin/avatars/avatar2.png') }}" />
+                    <img alt="Bob Doe's avatar" src="{{ asset('themes/ace-admin/avatars/avatar3.png') }}" />
                   </div>
 
                   <div class="body">
@@ -936,7 +589,7 @@
 
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Susan's avatar" src="{{ asset('assets.admin/avatars/avatar3.png') }}" />
+                    <img alt="Susan's avatar" src="{{ asset('themes/ace-admin/avatars/avatar1.png') }}" />
                   </div>
 
                   <div class="body">
@@ -953,11 +606,11 @@
                       <span class="label label-success label-sm arrowed-in">approved</span>
                     </div>
                   </div>
-                </div>
-
+				</div>
+				
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Phil Doe's avatar" src="{{ asset('assets.admin/avatars/avatar4.png') }}" />
+                    <img alt="Phil Doe's avatar" src="{{ asset('themes/ace-admin/avatars/avatar4.png') }}" />
                   </div>
 
                   <div class="body">
@@ -978,7 +631,7 @@
 
                 <div class="itemdiv memberdiv">
                   <div class="user">
-                    <img alt="Alexa Doe's avatar" src="{{ asset('assets.admin/avatars/avatar1.png') }}" />
+                    <img alt="Alexa Doe's avatar" src="{{ asset('themes/ace-admin/avatars/avatar1.png') }}" />
                   </div>
 
                   <div class="body">
@@ -1017,7 +670,7 @@
               <div class="comments">
                 <div class="itemdiv commentdiv">
                   <div class="user">
-                    <img alt="Bob Doe's Avatar" src="{{ asset('assets.admin/avatars/avatar.png') }}" />
+                    <img alt="Bob Doe's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar2.png') }}" />
                   </div>
 
                   <div class="body">
@@ -1073,7 +726,7 @@
 
                 <div class="itemdiv commentdiv">
                   <div class="user">
-                    <img alt="Jennifer's Avatar" src="{{ asset('assets.admin/avatars/avatar1.png') }}" />
+                    <img alt="Jennifer's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar1.png') }}" />
                   </div>
 
                   <div class="body">
@@ -1107,7 +760,7 @@
 
                 <div class="itemdiv commentdiv">
                   <div class="user">
-                    <img alt="Joe's Avatar" src="{{ asset('assets.admin/avatars/avatar2.png') }}" />
+                    <img alt="Joe's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar2.png') }}" />
                   </div>
 
                   <div class="body">
@@ -1141,7 +794,7 @@
 
                 <div class="itemdiv commentdiv">
                   <div class="user">
-                    <img alt="Rita's Avatar" src="{{ asset('assets.admin/avatars/avatar3.png') }}" />
+                    <img alt="Rita's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar3.png') }}" />
                   </div>
 
                   <div class="body">
@@ -1199,18 +852,46 @@
       <div class="widget-header">
         <h4 class="widget-title lighter smaller">
           <i class="ace-icon fa fa-comment blue"></i>
-          Conversation
+          Recent Participant
         </h4>
       </div>
-
       <div class="widget-body">
         <div class="widget-main no-padding">
           <div class="dialogs">
-            <div class="itemdiv dialogdiv">
+			
+				<div class="space-12"></div>
+			@foreach ($participants->where('created_at','<', Carbon::now())->orderBy('created_at','desc')->take(5)->get() as $participant)
+				<div class="itemdiv dialogdiv">
+					<div class="user">
+					  <img alt="{{$participant->email}} Avatar" src="{{ asset('themes/ace-admin/avatars/avatar2.png') }}" />
+					</div>
+					<div class="body">
+						<div class="time">
+							<i class="ace-icon fa fa-clock-o"></i>
+							<span class="green">
+								{{ Carbon::parse($participant->created_at)->diffForHumans(Carbon::now()) }}
+							</span>
+						</div>	  
+						<div class="name">
+							<a href="{{ route('admin.participants.show',$participant->id) }}">{{ $participant->email }}</a>
+						</div>
+					  	<div class="text">
+						  	{{ @$participant->first_name .' '.@$participant->last_name }}
+						  	<div class="text-right text-muted small bold">Provider @ {{ $participant->provider }}</div>
+						</div>	  
+					  	<div class="tools">
+							<a href="#" class="btn btn-minier btn-info">
+							<i class="icon-only ace-icon fa fa-share"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			@endforeach
+			
+            <!--div class="itemdiv dialogdiv">
               <div class="user">
-                <img alt="Alexa's Avatar" src="{{ asset('assets.admin/avatars/avatar1.png') }}" />
+                <img alt="Alexa's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar1.png') }}" />
               </div>
-
               <div class="body">
                 <div class="time">
                   <i class="ace-icon fa fa-clock-o"></i>
@@ -1228,24 +909,21 @@
                   </a>
                 </div>
               </div>
-            </div>
-
+			</div>
+			
             <div class="itemdiv dialogdiv">
               <div class="user">
-                <img alt="John's Avatar" src="{{ asset('assets.admin/avatars/avatar.png') }}" />
+                <img alt="John's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar.png') }}" />
               </div>
-
               <div class="body">
                 <div class="time">
                   <i class="ace-icon fa fa-clock-o"></i>
                   <span class="blue">38 sec</span>
                 </div>
-
                 <div class="name">
                   <a href="#">John</a>
                 </div>
                 <div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
-
                 <div class="tools">
                   <a href="#" class="btn btn-minier btn-info">
                     <i class="icon-only ace-icon fa fa-share"></i>
@@ -1256,21 +934,18 @@
 
             <div class="itemdiv dialogdiv">
               <div class="user">
-                <img alt="Bob's Avatar" src="{{ asset('assets.admin/avatars/user.jpg') }}" />
+                <img alt="Bob's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar2.png') }}"/>
               </div>
-
               <div class="body">
                 <div class="time">
                   <i class="ace-icon fa fa-clock-o"></i>
                   <span class="orange">2 min</span>
                 </div>
-
                 <div class="name">
                   <a href="#">Bob</a>
                   <span class="label label-info arrowed arrowed-in-right">admin</span>
                 </div>
                 <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
-
                 <div class="tools">
                   <a href="#" class="btn btn-minier btn-info">
                     <i class="icon-only ace-icon fa fa-share"></i>
@@ -1281,20 +956,17 @@
 
             <div class="itemdiv dialogdiv">
               <div class="user">
-                <img alt="Jim's Avatar" src="{{ asset('assets.admin/avatars/avatar4.png') }}" />
+                <img alt="Jim's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar3.png') }}"/>
               </div>
-
               <div class="body">
                 <div class="time">
                   <i class="ace-icon fa fa-clock-o"></i>
                   <span class="grey">3 min</span>
                 </div>
-
                 <div class="name">
                   <a href="#">Jim</a>
                 </div>
                 <div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
-
                 <div class="tools">
                   <a href="#" class="btn btn-minier btn-info">
                     <i class="icon-only ace-icon fa fa-share"></i>
@@ -1305,29 +977,27 @@
 
             <div class="itemdiv dialogdiv">
               <div class="user">
-                <img alt="Alexa's Avatar" src="{{ asset('assets.admin/avatars/avatar1.png') }}" />
+                <img alt="Alexa's Avatar" src="{{ asset('themes/ace-admin/avatars/avatar4.png') }}"/>
               </div>
-
               <div class="body">
                 <div class="time">
                   <i class="ace-icon fa fa-clock-o"></i>
                   <span class="green">4 min</span>
                 </div>
-
                 <div class="name">
                   <a href="#">Alexa</a>
                 </div>
                 <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-
                 <div class="tools">
                   <a href="#" class="btn btn-minier btn-info">
                     <i class="icon-only ace-icon fa fa-share"></i>
                   </a>
                 </div>
               </div>
-            </div>
+			</div-->
+			
           </div>
-
+{{-- 
           <form>
             <div class="form-actions">
               <div class="input-group">
@@ -1340,7 +1010,7 @@
                 </span>
               </div>
             </div>
-          </form>
+          </form> --}}
         </div><!-- /.widget-main -->
       </div><!-- /.widget-body -->
     </div><!-- /.widget-box -->

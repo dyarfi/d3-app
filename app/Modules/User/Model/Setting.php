@@ -80,7 +80,18 @@ class Setting extends Model {
     // Scope query for group field
     public function scopeGroup($query, $string) {
 
-        return $query->where('group', $string)->get(['slug','group','key','value']);
+        return $query->where('group', $string)
+        ->where('status',1)
+        ->get(['name','slug','group','key','value','description']);    
+
+    }
+
+    // Scope query for KeyGroup field
+    public function scopeGroupKey($query, $group, $key) {
+
+        return $query->where('group', $group)
+        ->where('key', $key)
+        ->first(['slug','group','key','value','description']);
 
     }
 
@@ -89,5 +100,6 @@ class Setting extends Model {
         return $this->all(['group','key','value','slug','name','description','input_type'])->groupBy('group');
 
     }
+    
 
 }

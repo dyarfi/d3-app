@@ -13,7 +13,7 @@
 @endif
 
 <div class="page-header">
-	<h1>{{ $mode == 'create' ? 'Create User' : 'Update User' }} <small>{{ $mode === 'update' ? $row->name : null }}</small></h1>
+	<h1>{{ $mode == 'create' ? 'Create User' : 'Update User' }} <small>{{ $mode === 'update' ? $row->email : null }}</small></h1>
 </div>
 <!--form method="post" action="" autocomplete="off"-->
 {!! Form::open([
@@ -27,7 +27,7 @@
 	</div>
 
 	<div class="form-group{{ $errors->first('last_name', ' has-error') }}">
-		<label for="name">Last Name</label>
+		<label for="last_name">Last Name</label>
 		<input type="text" class="form-control" name="last_name" id="last_name" value="{{ Input::old('last_name', $row->last_name) }}" placeholder="Enter the user last_name.">
 		<span class="help-block">{{{ $errors->first('last_name', ':message') }}}</span>
 	</div>
@@ -83,7 +83,7 @@
 		<div class="row">
 			<div class="col-xs-6">
 				<label class="ace-file-input">
-					{!! Form::file('image','',['class'=>'form-controls','id'=>'id-input-file-2']) !!}
+					{!! Form::file('image',['class'=>'form-controls','id'=>'id-input-file-2']) !!}
 					<span class="ace-file-container" data-title="Choose">
 						<span class="ace-file-name" data-title="No File ...">
 							<i class=" ace-icon fa fa-upload"></i>

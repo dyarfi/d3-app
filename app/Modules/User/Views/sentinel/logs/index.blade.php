@@ -72,8 +72,8 @@
 							QUERY : {{ $row->request->query }} <br/>							
 							IP ADDRESS : {{ $row->request->client_ip }} <br/>
 							SSL : {{ $row->request->secure ? 'Yes' : 'No' }} <br/>
-							@if($row->request->payload)
-							PAYLOAD : [{{$row->request->payload->_token}}]								
+							@if($row->request->payload && isset($row->request->payload->_token))
+							PAYLOAD : [{{$row->request->payload->_token}}]
 							@endif
 							<?php 
 							/*

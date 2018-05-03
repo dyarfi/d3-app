@@ -29,7 +29,7 @@
 		<div class="clearfix">
 			<div class="pull-right tableTools-container"></div>
 		</div>
-		{!! Form::open(['route'=>'admin.users.change']) !!}
+		{!! Form::open(['route'=>'admin.users.index']) !!}
 		<table id="dynamic-table" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -47,7 +47,7 @@
 					<td class="center">
 						@if(Sentinel::getUser()->id != $row->id)
 							<label class="pos-rel">
-								<input type="checkbox" class="ace" name="check[]" id="check_<?php echo $row->id; ?>" value="{{ $row->id }}" />
+								<input type="checkbox" class="ace" />
 								<span class="lbl"></span>
 							</label>
 						@endif

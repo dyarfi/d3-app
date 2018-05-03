@@ -92,7 +92,7 @@
 					<div class="row">
 						<div class="col-xs-6">
 							<label class="ace-file-input">
-								{!! Form::file('image','',['class'=>'form-controls','id'=>'id-input-file-2']) !!}
+								{!! Form::file('image',['class'=>'form-controls','id'=>'id-input-file-2']) !!}
 								<span class="ace-file-container" data-title="Choose">
 									<span class="ace-file-name" data-title="No File ...">
 										<i class=" ace-icon fa fa-upload"></i>

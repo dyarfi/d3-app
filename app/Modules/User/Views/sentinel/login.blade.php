@@ -41,11 +41,7 @@ Login
 		</div>
 	</div>
 
-	{!! 
-        Form::hidden('previous_url', 
-            (redirect()->back()->getTargetUrl() != Request::fullUrl() ? redirect()->back()->getTargetUrl() : '') 
-        ) 
-    !!}
+	{!! Form::hidden('previous_url', (redirect()->back()->getTargetUrl() != Request::fullUrl() ? redirect()->back()->getTargetUrl() : '') ) !!}
 
 {!! Form::close() !!}
 

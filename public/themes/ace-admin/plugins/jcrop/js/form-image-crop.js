@@ -125,7 +125,7 @@ var FormImageCrop = function () {
             // Send data to crop
             $.ajax({
                 method: "GET",
-                url: base_ADM + '/user/crop/' + image,
+                url: base_ADM + 'user/crop/' + image,
                 data: params
             }).done(function( msg ) {
                 // alert( "Data Saved: " + msg );

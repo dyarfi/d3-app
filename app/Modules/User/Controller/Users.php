@@ -15,8 +15,9 @@ use App\Modules\User\Model\User;
 use App\Modules\User\Model\Team;
 use App\Modules\User\Model\Log;
 use App\Modules\Blog\Model\Blog;
+use App\Modules\News\Model\News;
 use App\Modules\Contact\Model\Contact;
-use App\Modules\Career\Model\Applicant;
+use App\Modules\Participant\Model\Participant;
 
 // User Activity Logs
 use Activity;
@@ -82,8 +83,7 @@ class Users extends BaseAdmin {
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index()
-	{
+	public function index() {
 
 	   	//dd ($this->users->find(1)->roles);
 
@@ -173,8 +173,7 @@ class Users extends BaseAdmin {
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function create()
-	{
+	public function create() {
 		return $this->showForm('create');
 	}
 
@@ -183,8 +182,7 @@ class Users extends BaseAdmin {
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store()
-	{
+	public function store() {
 		return $this->processForm('create');
 	}
 
@@ -194,8 +192,7 @@ class Users extends BaseAdmin {
 	 * @param  int  $id
 	 * @return mixed
 	 */
-	public function edit($id)
-	{
+	public function edit($id) {
 		return $this->showForm('update', $id);
 	}
 
@@ -205,8 +202,7 @@ class Users extends BaseAdmin {
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function update($id)
-	{
+	public function update($id) {
 		return $this->processForm('update', $id);
 	}
 
@@ -216,8 +212,7 @@ class Users extends BaseAdmin {
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function trash($id)
-	{
+	public function trash($id) {
 		if ($user = $this->users->find($id))
 		{
 
@@ -237,8 +232,7 @@ class Users extends BaseAdmin {
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function restored($id)
-	{
+	public function restored($id) {
 		if ($user = $this->users->onlyTrashed()->find($id))
 		{
 
@@ -251,14 +245,14 @@ class Users extends BaseAdmin {
 
 		return Redirect::to(route('admin.users.index'))->with('error', 'User Not Found!');
 	}
+
 	/**
 	 * Remove the specified user.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function delete($id)
-	{
+	public function delete($id) {
 
 		// Get user from id fetch
 		if ($user = $this->users->onlyTrashed()->find($id))
@@ -290,8 +284,7 @@ class Users extends BaseAdmin {
 	 * @param  int     $id
 	 * @return mixed
 	 */
-	protected function showForm($mode, $id = null)
-	{
+	protected function showForm($mode, $id = null) {
 
 		$roles = array_merge(['0'=>' -- NO ROLE -- '], $this->roles->pluck('name', 'id')->all());
 		$teams = array_merge(['0'=>' -- NO TEAM -- '], $this->teams->pluck('name', 'id')->all());
@@ -322,8 +315,7 @@ class Users extends BaseAdmin {
 	 * @param  int     $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	protected function processForm($mode, $id = null)
-	{
+	protected function processForm($mode, $id = null) {
 
 		$input = array_filter(Input::all());
 		
@@ -464,8 +456,7 @@ class Users extends BaseAdmin {
 	 * @param  mixed  $id
 	 * @return \Illuminate\Support\MessageBag
 	 */
-	protected function validateUser($data, $rules)
-	{
+	protected function validateUser($data, $rules) {
 		$validator = Validator::make($data, $rules);
 
 		$validator->passes();
@@ -519,9 +510,9 @@ class Users extends BaseAdmin {
 	   	// Set data to return
 	   	$data = [
 	   			'log' => new Log,
-	   			'applicant' 	  => new Applicant,	   		
+	   			'participants' 	  => new Participant,	   		
 	   			'contact' => new Contact,
-	   			'blog' 	  => new Blog,
+	   			'news' 	  => new News,
 	   			'user' =>$user,
 	   			'lava' =>$lava
 	   			];
@@ -544,7 +535,8 @@ class Users extends BaseAdmin {
 	 * @param  string $type
 	 * @return $filename
 	 */
-	protected function imageUploadToDb($file='', $path='', $type='') {
+	protected function imageUploadToDb($file='', $path='', $type='')
+	{
 		// Set filename upload
 		$filename = '';
 		// Check if input and upload already assigned
@@ -555,19 +547,21 @@ class Users extends BaseAdmin {
 			$filename = $type . rand(11111,99999) . '.' . $extension;
 			// Set intervention image for image manipulation
 			Storage::disk('local_uploads')->put($filename,
-				file_get_contents($file->getRealPath())
+				file_get_contents($file)
 			);
 			// If image has a resize crop data in constructor
 			if (!empty($this->imgFit)) {
-				$image = Image::make($path .'/'. $filename);
+			  $image = Image::make($path .'/'. $filename);
+			  // backup status
+			  $image->backup();
 				foreach ($this->imgFit as $imgFit) {
 					$size = explode('x',$imgFit);
-					$image->fit($size[0],$size[1])->save($path .'/'. $imgFit.'px_'. $filename);
+					$image->fit($size[0],$size[1])->save($path .'/'. $imgFit.'px_'. $filename,100)->reset();
 				}
 			}
 		}
 		return $filename;
-	}
+  	}
 
 	/**
 	 * Process a file generated headers for users tables.
@@ -603,7 +597,7 @@ class Users extends BaseAdmin {
 	 * @return void
 	 */
 	public function crop($id='') {
-
+		
 		// Log it first
 		Activity::log(__FUNCTION__);
 		/**
@@ -613,7 +607,7 @@ class Users extends BaseAdmin {
 		 * More info: http://deepliquid.com/content/Jcrop_Implementation_Theory.html
 		 */
 		$input = array_filter(Input::all());
-
+		
 		if (Request::ajax() && Request::isMethod('get'))
 		{
 
